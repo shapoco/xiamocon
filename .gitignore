@@ -1,0 +1,16 @@
+build/
+bin/
+*.nes
+*.spn
+settings.json
+tmp.*
+tmp.*/
+*.d
+*.o
+
+# for KiCad
+*-backups/
+*.lck
+**/#auto_saved_files#
+_autosave-*.kicad_*
+fp-info-cache
