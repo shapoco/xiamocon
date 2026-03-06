@@ -92,52 +92,64 @@ $(document).ready(function(){initNavTree('i2c_8h_source.html',''); initResizable
   <div class="headertitle"><div class="title">i2c.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XMC_HW_I2C_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XMC_HW_I2C_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;xmc/hw/hw_common.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<a href="i2c_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef XMC_HW_I2C_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define XMC_HW_I2C_H</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  XMC_I2C_DEV_IOEX = (1 &lt;&lt; 1),</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  XMC_I2C_DEV_BAT_MON = (1 &lt;&lt; 2),</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>} xmc_i2c_device_t;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>uint32_t xmc_i2c_get_preferred_frequency(xmc_i2c_device_t device);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>xmc_status_t xmc_i2c_init();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> xmc_i2c_deinit();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>xmc_status_t xmc_i2c_start_transaction();</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>xmc_status_t xmc_i2c_end_transaction();</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>xmc_status_t xmc_i2c_set_baudrate(uint32_t baudrate);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>xmc_status_t xmc_i2c_write_blocking(uint8_t dev_addr, <span class="keyword">const</span> uint8_t *data,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                                    uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>xmc_status_t xmc_i2c_read_blocking(uint8_t dev_addr, uint8_t *data,</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                                   uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;xmc/hw/hw_common.h&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bb">   17</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73">   19</a></span>  <a class="code hl_enumvalue" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73">XMC_I2C_DEV_IOEX</a> = (1 &lt;&lt; 1),</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65">   21</a></span>  <a class="code hl_enumvalue" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65">XMC_I2C_DEV_BAT_MON</a> = (1 &lt;&lt; 2),</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>} <a class="code hl_enumeration" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bb">xmc_i2c_device_t</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="i2c_8h.html#a1941ca3a72d646ab11990e48d31d59a8">   34</a></span>uint32_t <a class="code hl_function" href="i2c_8h.html#a1941ca3a72d646ab11990e48d31d59a8">xmc_i2c_get_preferred_frequency</a>(<a class="code hl_enumeration" href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bb">xmc_i2c_device_t</a> device);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="i2c_8h.html#a18dc0a53a6f63d102f6cf8a07c80398e">   42</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#a18dc0a53a6f63d102f6cf8a07c80398e">xmc_i2c_init</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">   45</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">xmc_i2c_deinit</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">   56</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">xmc_i2c_start_transaction</a>();</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">   66</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">xmc_i2c_end_transaction</a>();</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">   73</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a>(uint32_t baudrate);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">   82</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a>(uint8_t dev_addr, <span class="keyword">const</span> uint8_t *data,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                                    uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">   92</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">xmc_i2c_read_blocking</a>(uint8_t dev_addr, uint8_t *data,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                                   uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>}</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="ai2c_8h_html_a10288675bbb903fce4478ef960dd3ebd"><div class="ttname"><a href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">xmc_i2c_deinit</a></div><div class="ttdeci">void xmc_i2c_deinit()</div></div>
+<div class="ttc" id="ai2c_8h_html_a18dc0a53a6f63d102f6cf8a07c80398e"><div class="ttname"><a href="i2c_8h.html#a18dc0a53a6f63d102f6cf8a07c80398e">xmc_i2c_init</a></div><div class="ttdeci">xmc_status_t xmc_i2c_init()</div></div>
+<div class="ttc" id="ai2c_8h_html_a1941ca3a72d646ab11990e48d31d59a8"><div class="ttname"><a href="i2c_8h.html#a1941ca3a72d646ab11990e48d31d59a8">xmc_i2c_get_preferred_frequency</a></div><div class="ttdeci">uint32_t xmc_i2c_get_preferred_frequency(xmc_i2c_device_t device)</div></div>
+<div class="ttc" id="ai2c_8h_html_a31919419a85b87c3b4c71c6ab3635ef9"><div class="ttname"><a href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">xmc_i2c_start_transaction</a></div><div class="ttdeci">xmc_status_t xmc_i2c_start_transaction()</div></div>
+<div class="ttc" id="ai2c_8h_html_aa0237d0598c8c75669c7e0de798a72d9"><div class="ttname"><a href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a></div><div class="ttdeci">xmc_status_t xmc_i2c_write_blocking(uint8_t dev_addr, const uint8_t *data, uint32_t size, bool nostop)</div></div>
+<div class="ttc" id="ai2c_8h_html_aa4675111625c33fecbd5df01c9450733"><div class="ttname"><a href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">xmc_i2c_end_transaction</a></div><div class="ttdeci">xmc_status_t xmc_i2c_end_transaction()</div></div>
+<div class="ttc" id="ai2c_8h_html_abbbb6e50fd34720e1d96c5c719d6c642"><div class="ttname"><a href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a></div><div class="ttdeci">xmc_status_t xmc_i2c_set_baudrate(uint32_t baudrate)</div></div>
+<div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bb"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bb">xmc_i2c_device_t</a></div><div class="ttdeci">xmc_i2c_device_t</div><div class="ttdef"><b>Definition:</b> i2c.h:17</div></div>
+<div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65">XMC_I2C_DEV_BAT_MON</a></div><div class="ttdeci">@ XMC_I2C_DEV_BAT_MON</div><div class="ttdef"><b>Definition:</b> i2c.h:21</div></div>
+<div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73">XMC_I2C_DEV_IOEX</a></div><div class="ttdeci">@ XMC_I2C_DEV_IOEX</div><div class="ttdef"><b>Definition:</b> i2c.h:19</div></div>
+<div class="ttc" id="ai2c_8h_html_af16f9fed5ab00a6be15644dc247dd6fd"><div class="ttname"><a href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">xmc_i2c_read_blocking</a></div><div class="ttdeci">xmc_status_t xmc_i2c_read_blocking(uint8_t dev_addr, uint8_t *data, uint32_t size, bool nostop)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_81d1abfdb0808278c90c8384b6bc5398.html">common</a></li><li class="navelem"><a class="el" href="dir_0315a367547a252232073ef67b844a28.html">include</a></li><li class="navelem"><a class="el" href="dir_b57e9f68b51a4e790864a89f50ab6f6f.html">xmc</a></li><li class="navelem"><a class="el" href="dir_d9bb46c8b6c147b710be9b26b11ce3e2.html">hw</a></li><li class="navelem"><b>i2c.h</b></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_81d1abfdb0808278c90c8384b6bc5398.html">common</a></li><li class="navelem"><a class="el" href="dir_0315a367547a252232073ef67b844a28.html">include</a></li><li class="navelem"><a class="el" href="dir_b57e9f68b51a4e790864a89f50ab6f6f.html">xmc</a></li><li class="navelem"><a class="el" href="dir_d9bb46c8b6c147b710be9b26b11ce3e2.html">hw</a></li><li class="navelem"><a class="el" href="i2c_8h.html">i2c.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

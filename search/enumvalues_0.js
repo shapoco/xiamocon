@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['xmc_5fi2c_5fdev_5fbat_5fmon_0',['XMC_I2C_DEV_BAT_MON',['../i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65',1,'i2c.h']]],
+  ['xmc_5fi2c_5fdev_5fioex_1',['XMC_I2C_DEV_IOEX',['../i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73',1,'i2c.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fa_2',['XMC_IOEX_PIN_BTN_A',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aacdb7a6dc53bc7b8eb4827ad60e6271c6',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fb_3',['XMC_IOEX_PIN_BTN_B',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa38af9a8b512ba9ffa755c675dac82df0',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fdown_4',['XMC_IOEX_PIN_BTN_DOWN',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa3145ffee9ce1925094ce793027813e44',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5ffunc_5',['XMC_IOEX_PIN_BTN_FUNC',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa37ccda4267197aa96e02293e8b0ec86e',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fleft_6',['XMC_IOEX_PIN_BTN_LEFT',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa9bcb7437a145fe96254ee20e47611b20',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fright_7',['XMC_IOEX_PIN_BTN_RIGHT',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa4ded810cffc00b999eaaca0af0e762c5',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fup_8',['XMC_IOEX_PIN_BTN_UP',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa970d3c28944fb2104093b0f443b58978',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fx_9',['XMC_IOEX_PIN_BTN_X',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aad39035176e9be3d3592f7b55c93c30b9',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fbtn_5fy_10',['XMC_IOEX_PIN_BTN_Y',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aae09c8245b19b89b4f494f3227c583695',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fdisplay_5freset_11',['XMC_IOEX_PIN_DISPLAY_RESET',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa1438cbc9a24ad89f5ee7c7b83af40287',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fint_5fmute_12',['XMC_IOEX_PIN_INT_MUTE',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa18869a7632404630f4109977c481b5ea',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fperi_5fen_13',['XMC_IOEX_PIN_PERI_EN',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa012f7c5a83ca4294895cca0958fb5788',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fuser_5f0_14',['XMC_IOEX_PIN_USER_0',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa33bef3f24526ba170b56e0c0a3bde8dd',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fuser_5f1_15',['XMC_IOEX_PIN_USER_1',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aaaf5abba582d875efbde5b558ca2e457c',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fuser_5f2_16',['XMC_IOEX_PIN_USER_2',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa071e7cbe4fab27ebccce5eaf3b926823',1,'ioex.h']]],
+  ['xmc_5fioex_5fpin_5fuser_5f3_17',['XMC_IOEX_PIN_USER_3',['../ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa6044a29adf66782211fc2ca3c22c8adb',1,'ioex.h']]],
+  ['xmc_5fram_5fcap_5fdma_18',['XMC_RAM_CAP_DMA',['../ram_8h.html#a17a2d62f09b8e7224d8fc135ea91ba27a06ac0eb79a21660d84ac5e2bf7e1c382',1,'ram.h']]],
+  ['xmc_5fram_5fcap_5fnone_19',['XMC_RAM_CAP_NONE',['../ram_8h.html#a17a2d62f09b8e7224d8fc135ea91ba27a9f9b78ee279f44029c4b3b1ddd625832',1,'ram.h']]],
+  ['xmc_5freset_5fmode_5fnormal_20',['XMC_RESET_MODE_NORMAL',['../power_8h.html#a070a5bba11779898c24f3c2128559aaba5f4527b5230640c5060b5e1d4288e675',1,'power.h']]],
+  ['xmc_5fspi_5fdev_5fdisplay_21',['XMC_SPI_DEV_DISPLAY',['../spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e',1,'spi.h']]],
+  ['xmc_5fspi_5fdev_5ftfcard_22',['XMC_SPI_DEV_TFCARD',['../spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9',1,'spi.h']]]
+];

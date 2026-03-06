@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['contains_0',['contains',['../structxmc_1_1rect__t.html#ad58b7f607248c723b720f2899d3f5bfc',1,'xmc::rect_t']]]
+  ['clip_5frect_0',['clip_rect',['../geo__common_8hpp.html#aef6134e7c220585cb151949b39b36198',1,'xmc']]],
+  ['contains_1',['contains',['../structxmc_1_1rect__t.html#ad58b7f607248c723b720f2899d3f5bfc',1,'xmc::rect_t']]]
 ];

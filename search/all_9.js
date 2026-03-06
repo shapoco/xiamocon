@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['width_0',['width',['../structxmc_1_1rect__t.html#a8b1e1d1bb7993f5685e924543ac0c1b9',1,'xmc::rect_t']]]
+  ['pins_2eh_0',['pins.h',['../pins_8h.html',1,'']]],
+  ['power_2eh_1',['power.h',['../power_8h.html',1,'']]],
+  ['ptr_2',['ptr',['../structxmc__dma__config__t.html#ab36f78066962d56c976a4ad6d76dbfc3',1,'xmc_dma_config_t']]]
 ];

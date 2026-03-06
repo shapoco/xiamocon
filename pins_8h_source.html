@@ -92,38 +92,50 @@ $(document).ready(function(){initNavTree('pins_8h_source.html',''); initResizabl
   <div class="headertitle"><div class="title">pins.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XMC_HW_PINS_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XMC_HW_PINS_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_I2C_SDA;</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_I2C_SCL;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_SPI_MOSI;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_SPI_MISO;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_SPI_SCK;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_DISPLAY_CS;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_DISPLAY_DC;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_TFCARD_CS;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_AUDIO_OUT;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_POWER_BUTTON;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> XMC_PIN_GPIO_0;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#endif</span></div>
+<a href="pins_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef XMC_HW_PINS_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define XMC_HW_PINS_H</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a4411e6f326eac6d103e97d7c9b0dbdc8">XMC_PIN_I2C_SDA</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a985835de835534ed3eac42081bf1240b">XMC_PIN_I2C_SCL</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a12b395a36e53ca99c2b9ca31a8ae07e2">XMC_PIN_SPI_MOSI</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#affc3b3ace2510248caecd01f83eca643">XMC_PIN_SPI_MISO</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#af8fce898e948bae4dfcf9f5472190799">XMC_PIN_SPI_SCK</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a343fc223e93e6999790dcc3d358d5634">XMC_PIN_DISPLAY_CS</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a2766f26c21d40632425f4b23bc63d307">XMC_PIN_DISPLAY_DC</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a1ecfcae7acf6098024fcf3af79171c58">XMC_PIN_TFCARD_CS</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a353baf62d80fe3cc16bdcc6ca460ebcb">XMC_PIN_AUDIO_OUT</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#ad4e7052eaf10def5b3c0d08944bdfe37">XMC_PIN_POWER_BUTTON</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="pins_8h.html#a906f7908a07045963cf2ecc497b9c1c5">XMC_PIN_GPIO_0</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="apins_8h_html_a12b395a36e53ca99c2b9ca31a8ae07e2"><div class="ttname"><a href="pins_8h.html#a12b395a36e53ca99c2b9ca31a8ae07e2">XMC_PIN_SPI_MOSI</a></div><div class="ttdeci">const int XMC_PIN_SPI_MOSI</div></div>
+<div class="ttc" id="apins_8h_html_a1ecfcae7acf6098024fcf3af79171c58"><div class="ttname"><a href="pins_8h.html#a1ecfcae7acf6098024fcf3af79171c58">XMC_PIN_TFCARD_CS</a></div><div class="ttdeci">const int XMC_PIN_TFCARD_CS</div></div>
+<div class="ttc" id="apins_8h_html_a2766f26c21d40632425f4b23bc63d307"><div class="ttname"><a href="pins_8h.html#a2766f26c21d40632425f4b23bc63d307">XMC_PIN_DISPLAY_DC</a></div><div class="ttdeci">const int XMC_PIN_DISPLAY_DC</div></div>
+<div class="ttc" id="apins_8h_html_a343fc223e93e6999790dcc3d358d5634"><div class="ttname"><a href="pins_8h.html#a343fc223e93e6999790dcc3d358d5634">XMC_PIN_DISPLAY_CS</a></div><div class="ttdeci">const int XMC_PIN_DISPLAY_CS</div></div>
+<div class="ttc" id="apins_8h_html_a353baf62d80fe3cc16bdcc6ca460ebcb"><div class="ttname"><a href="pins_8h.html#a353baf62d80fe3cc16bdcc6ca460ebcb">XMC_PIN_AUDIO_OUT</a></div><div class="ttdeci">const int XMC_PIN_AUDIO_OUT</div></div>
+<div class="ttc" id="apins_8h_html_a4411e6f326eac6d103e97d7c9b0dbdc8"><div class="ttname"><a href="pins_8h.html#a4411e6f326eac6d103e97d7c9b0dbdc8">XMC_PIN_I2C_SDA</a></div><div class="ttdeci">const int XMC_PIN_I2C_SDA</div></div>
+<div class="ttc" id="apins_8h_html_a906f7908a07045963cf2ecc497b9c1c5"><div class="ttname"><a href="pins_8h.html#a906f7908a07045963cf2ecc497b9c1c5">XMC_PIN_GPIO_0</a></div><div class="ttdeci">const int XMC_PIN_GPIO_0</div></div>
+<div class="ttc" id="apins_8h_html_a985835de835534ed3eac42081bf1240b"><div class="ttname"><a href="pins_8h.html#a985835de835534ed3eac42081bf1240b">XMC_PIN_I2C_SCL</a></div><div class="ttdeci">const int XMC_PIN_I2C_SCL</div></div>
+<div class="ttc" id="apins_8h_html_ad4e7052eaf10def5b3c0d08944bdfe37"><div class="ttname"><a href="pins_8h.html#ad4e7052eaf10def5b3c0d08944bdfe37">XMC_PIN_POWER_BUTTON</a></div><div class="ttdeci">const int XMC_PIN_POWER_BUTTON</div></div>
+<div class="ttc" id="apins_8h_html_af8fce898e948bae4dfcf9f5472190799"><div class="ttname"><a href="pins_8h.html#af8fce898e948bae4dfcf9f5472190799">XMC_PIN_SPI_SCK</a></div><div class="ttdeci">const int XMC_PIN_SPI_SCK</div></div>
+<div class="ttc" id="apins_8h_html_affc3b3ace2510248caecd01f83eca643"><div class="ttname"><a href="pins_8h.html#affc3b3ace2510248caecd01f83eca643">XMC_PIN_SPI_MISO</a></div><div class="ttdeci">const int XMC_PIN_SPI_MISO</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_81d1abfdb0808278c90c8384b6bc5398.html">common</a></li><li class="navelem"><a class="el" href="dir_0315a367547a252232073ef67b844a28.html">include</a></li><li class="navelem"><a class="el" href="dir_b57e9f68b51a4e790864a89f50ab6f6f.html">xmc</a></li><li class="navelem"><a class="el" href="dir_d9bb46c8b6c147b710be9b26b11ce3e2.html">hw</a></li><li class="navelem"><b>pins.h</b></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_81d1abfdb0808278c90c8384b6bc5398.html">common</a></li><li class="navelem"><a class="el" href="dir_0315a367547a252232073ef67b844a28.html">include</a></li><li class="navelem"><a class="el" href="dir_b57e9f68b51a4e790864a89f50ab6f6f.html">xmc</a></li><li class="navelem"><a class="el" href="dir_d9bb46c8b6c147b710be9b26b11ce3e2.html">hw</a></li><li class="navelem"><a class="el" href="pins_8h.html">pins.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
