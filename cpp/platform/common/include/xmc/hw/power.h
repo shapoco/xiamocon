@@ -20,16 +20,34 @@ typedef enum {
   XMC_RESET_MODE_NORMAL = 0,
 } xmc_reset_mode_t;
 
-/** Initialize the power management functionality. */
+/**
+ * Initialize the power management functionality.
+ *
+ * @warning This function is used internally by the System API. It should not
+ * be called from user applications.
+ */
 xmc_status_t xmc_power_init();
 
-/** Service the power management functionality. */
+/**
+ * Service the power management functionality.
+ *
+ * @warning This function is used internally by the System API. It should not
+ * be called from user applications.
+ */
 xmc_status_t xmc_power_service();
 
-/** Enter deep sleep mode. */
+/** Enter deep sleep mode.
+ *
+ * @warning This function is used internally by the System API. It should not
+ * be called from user applications.
+ */
 xmc_status_t xmc_power_deep_sleep();
 
-/** Reset entire system. */
+/** Reset entire system.
+ *
+ * @warning This function is used internally by the System API. It should not
+ * be called from user applications.
+ */
 xmc_status_t xmc_power_reset(xmc_reset_mode_t mode);
 
 #if defined(__cplusplus)
