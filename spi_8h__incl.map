@@ -1,7 +1,8 @@
-<map id="cpp/platform/common/include/xmc/hw/spi.h" name="cpp/platform/common/include/xmc/hw/spi.h">
-<area shape="rect" id="node1" title="SPI hardware interface." alt="" coords="30,5,196,45"/>
-<area shape="rect" id="node2" href="$hw__common_8h_source.html" title=" " alt="" coords="27,93,199,119"/>
-<area shape="rect" id="node4" title=" " alt="" coords="16,240,98,265"/>
-<area shape="rect" id="node5" title=" " alt="" coords="134,240,204,265"/>
-<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="34,167,192,192"/>
+<map id="cpp/platform/decl/include/xmc/hw/spi.h" name="cpp/platform/decl/include/xmc/hw/spi.h">
+<area shape="rect" id="node1" title="SPI hardware interface." alt="" coords="84,5,270,45"/>
+<area shape="rect" id="node2" href="$hw__common_8h_source.html" title=" " alt="" coords="30,93,202,119"/>
+<area shape="rect" id="node4" title=" " alt="" coords="18,240,101,265"/>
+<area shape="rect" id="node5" title=" " alt="" coords="136,240,207,265"/>
+<area shape="rect" id="node6" href="$dma_8h_source.html" title=" " alt="" coords="278,93,396,119"/>
+<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="36,167,195,192"/>
 </map>

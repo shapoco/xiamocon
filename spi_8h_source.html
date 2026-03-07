@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Xiamocon: cpp/platform/common/include/xmc/hw/spi.h Source File</title>
+<title>Xiamocon: cpp/platform/decl/include/xmc/hw/spi.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,47 +99,48 @@ $(document).ready(function(){initNavTree('spi_8h_source.html',''); initResizable
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define XMC_HW_SPI_H</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;xmc/hw/hw_common.h&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">   15</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">   17</a></span>  <a class="code hl_enumvalue" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">XMC_SPI_DEV_DISPLAY</a> = (1 &lt;&lt; 1),</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">   19</a></span>  <a class="code hl_enumvalue" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">XMC_SPI_DEV_TFCARD</a> = (1 &lt;&lt; 2),</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <a class="code hl_enumeration" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="spi_8h.html#a0cdfbf1e13af7752705c361857ab826a">   32</a></span>uint32_t <a class="code hl_function" href="spi_8h.html#a0cdfbf1e13af7752705c361857ab826a">xmc_spi_get_preferred_frequency</a>(<a class="code hl_enumeration" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a> device);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="spi_8h.html#ac960611c5797491fcacf672066527f64">   40</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ac960611c5797491fcacf672066527f64">xmc_spi_init</a>();</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="spi_8h.html#a372478a075f16d167e665a91f9e7daf9">   45</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="spi_8h.html#a372478a075f16d167e665a91f9e7daf9">xmc_spi_deinit</a>();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">   52</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">xmc_spi_begin_transaction</a>();</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">   59</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">xmc_spi_end_transaction</a>();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">   65</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">xmc_spi_set_baudrate</a>(uint32_t baudrate);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">   72</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">xmc_spi_write_blocking</a>(<span class="keyword">const</span> uint8_t *data, uint32_t size);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="spi_8h.html#a70b8d18677aaf28dac17aaa83b7dcd38">   81</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a70b8d18677aaf28dac17aaa83b7dcd38">xmc_spi_read_blocking</a>(uint8_t repeated_byte, uint8_t *data,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                                   uint32_t size);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0">   96</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0">xmc_spi_dma_write_start</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc__dma__config__t.html">xmc_dma_config_t</a> *cfg, <span class="keywordtype">int</span> cs_pin);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="spi_8h.html#ab1d4218196801b2db84b0e08712c0612">  104</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ab1d4218196801b2db84b0e08712c0612">xmc_spi_dma_complete</a>();</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="spi_8h.html#a9dc99658167ee299bf51850b96c3759e">  110</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="spi_8h.html#a9dc99658167ee299bf51850b96c3759e">xmc_spi_dma_is_busy</a>();</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;xmc/hw/dma.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">   16</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">   18</a></span>  <a class="code hl_enumvalue" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">XMC_SPI_DEV_DISPLAY</a> = (1 &lt;&lt; 1),</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">   20</a></span>  <a class="code hl_enumvalue" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">XMC_SPI_DEV_TFCARD</a> = (1 &lt;&lt; 2),</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} <a class="code hl_enumeration" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="spi_8h.html#a0cdfbf1e13af7752705c361857ab826a">   33</a></span>uint32_t <a class="code hl_function" href="spi_8h.html#a0cdfbf1e13af7752705c361857ab826a">xmc_spi_get_preferred_frequency</a>(<a class="code hl_enumeration" href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a> device);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="spi_8h.html#ac960611c5797491fcacf672066527f64">   41</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ac960611c5797491fcacf672066527f64">xmc_spi_init</a>();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="spi_8h.html#a372478a075f16d167e665a91f9e7daf9">   46</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="spi_8h.html#a372478a075f16d167e665a91f9e7daf9">xmc_spi_deinit</a>();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">   53</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">xmc_spi_begin_transaction</a>();</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">   60</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">xmc_spi_end_transaction</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">   66</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">xmc_spi_set_baudrate</a>(uint32_t baudrate);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">   73</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">xmc_spi_write_blocking</a>(<span class="keyword">const</span> uint8_t *data, uint32_t size);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="spi_8h.html#a70b8d18677aaf28dac17aaa83b7dcd38">   82</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a70b8d18677aaf28dac17aaa83b7dcd38">xmc_spi_read_blocking</a>(uint8_t repeated_byte, uint8_t *data,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                                   uint32_t size);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0">   97</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0">xmc_spi_dma_write_start</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc__dma__config__t.html">xmc_dma_config_t</a> *cfg, <span class="keywordtype">int</span> cs_pin);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="spi_8h.html#ab1d4218196801b2db84b0e08712c0612">  105</a></span>xmc_status_t <a class="code hl_function" href="spi_8h.html#ab1d4218196801b2db84b0e08712c0612">xmc_spi_dma_complete</a>();</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="spi_8h.html#a9dc99658167ee299bf51850b96c3759e">  111</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="spi_8h.html#a9dc99658167ee299bf51850b96c3759e">xmc_spi_dma_is_busy</a>();</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aspi_8h_html_a0cdfbf1e13af7752705c361857ab826a"><div class="ttname"><a href="spi_8h.html#a0cdfbf1e13af7752705c361857ab826a">xmc_spi_get_preferred_frequency</a></div><div class="ttdeci">uint32_t xmc_spi_get_preferred_frequency(xmc_spi_device_t device)</div></div>
 <div class="ttc" id="aspi_8h_html_a14be09cedaec2b5ac6fa1062d6ee59ff"><div class="ttname"><a href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">xmc_spi_begin_transaction</a></div><div class="ttdeci">xmc_status_t xmc_spi_begin_transaction()</div></div>
 <div class="ttc" id="aspi_8h_html_a23e37281ce513aebd65203aa4f679839"><div class="ttname"><a href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">xmc_spi_set_baudrate</a></div><div class="ttdeci">xmc_status_t xmc_spi_set_baudrate(uint32_t baudrate)</div></div>
@@ -147,20 +148,20 @@ $(document).ready(function(){initNavTree('spi_8h_source.html',''); initResizable
 <div class="ttc" id="aspi_8h_html_a3edbd0dbcdd3df2da6a836a924d299df"><div class="ttname"><a href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">xmc_spi_write_blocking</a></div><div class="ttdeci">xmc_status_t xmc_spi_write_blocking(const uint8_t *data, uint32_t size)</div></div>
 <div class="ttc" id="aspi_8h_html_a70b8d18677aaf28dac17aaa83b7dcd38"><div class="ttname"><a href="spi_8h.html#a70b8d18677aaf28dac17aaa83b7dcd38">xmc_spi_read_blocking</a></div><div class="ttdeci">xmc_status_t xmc_spi_read_blocking(uint8_t repeated_byte, uint8_t *data, uint32_t size)</div></div>
 <div class="ttc" id="aspi_8h_html_a72b462b80853f1ab3c66e821f79cf5c0"><div class="ttname"><a href="spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0">xmc_spi_dma_write_start</a></div><div class="ttdeci">xmc_status_t xmc_spi_dma_write_start(const xmc_dma_config_t *cfg, int cs_pin)</div></div>
-<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a></div><div class="ttdeci">xmc_spi_device_t</div><div class="ttdef"><b>Definition:</b> spi.h:15</div></div>
-<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">XMC_SPI_DEV_DISPLAY</a></div><div class="ttdeci">@ XMC_SPI_DEV_DISPLAY</div><div class="ttdef"><b>Definition:</b> spi.h:17</div></div>
-<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">XMC_SPI_DEV_TFCARD</a></div><div class="ttdeci">@ XMC_SPI_DEV_TFCARD</div><div class="ttdef"><b>Definition:</b> spi.h:19</div></div>
+<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2">xmc_spi_device_t</a></div><div class="ttdeci">xmc_spi_device_t</div><div class="ttdef"><b>Definition:</b> spi.h:16</div></div>
+<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2a26ec76c921e61470399de70152c5863e">XMC_SPI_DEV_DISPLAY</a></div><div class="ttdeci">@ XMC_SPI_DEV_DISPLAY</div><div class="ttdef"><b>Definition:</b> spi.h:18</div></div>
+<div class="ttc" id="aspi_8h_html_a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9"><div class="ttname"><a href="spi_8h.html#a77fa4f7301bd4dba6d1317ad43e2fdb2aec2b73437dbe5fcfa49f788f9bff4ed9">XMC_SPI_DEV_TFCARD</a></div><div class="ttdeci">@ XMC_SPI_DEV_TFCARD</div><div class="ttdef"><b>Definition:</b> spi.h:20</div></div>
 <div class="ttc" id="aspi_8h_html_a9dc99658167ee299bf51850b96c3759e"><div class="ttname"><a href="spi_8h.html#a9dc99658167ee299bf51850b96c3759e">xmc_spi_dma_is_busy</a></div><div class="ttdeci">bool xmc_spi_dma_is_busy()</div></div>
 <div class="ttc" id="aspi_8h_html_ab1d4218196801b2db84b0e08712c0612"><div class="ttname"><a href="spi_8h.html#ab1d4218196801b2db84b0e08712c0612">xmc_spi_dma_complete</a></div><div class="ttdeci">xmc_status_t xmc_spi_dma_complete()</div></div>
 <div class="ttc" id="aspi_8h_html_ac960611c5797491fcacf672066527f64"><div class="ttname"><a href="spi_8h.html#ac960611c5797491fcacf672066527f64">xmc_spi_init</a></div><div class="ttdeci">xmc_status_t xmc_spi_init()</div></div>
 <div class="ttc" id="aspi_8h_html_ad9aed5740a0b5eb6373ca305fc646d6d"><div class="ttname"><a href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">xmc_spi_end_transaction</a></div><div class="ttdeci">xmc_status_t xmc_spi_end_transaction()</div></div>
-<div class="ttc" id="astructxmc__dma__config__t_html"><div class="ttname"><a href="structxmc__dma__config__t.html">xmc_dma_config_t</a></div><div class="ttdef"><b>Definition:</b> hw_common.h:9</div></div>
+<div class="ttc" id="astructxmc__dma__config__t_html"><div class="ttname"><a href="structxmc__dma__config__t.html">xmc_dma_config_t</a></div><div class="ttdef"><b>Definition:</b> dma.h:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_81d1abfdb0808278c90c8384b6bc5398.html">common</a></li><li class="navelem"><a class="el" href="dir_0315a367547a252232073ef67b844a28.html">include</a></li><li class="navelem"><a class="el" href="dir_b57e9f68b51a4e790864a89f50ab6f6f.html">xmc</a></li><li class="navelem"><a class="el" href="dir_d9bb46c8b6c147b710be9b26b11ce3e2.html">hw</a></li><li class="navelem"><a class="el" href="spi_8h.html">spi.h</a></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_a5322820b81c5d8dc0fae17261f576ae.html">decl</a></li><li class="navelem"><a class="el" href="dir_383bad9a3bbd796814888812a729817a.html">include</a></li><li class="navelem"><a class="el" href="dir_ca493a86ef663f9ce63ae3ea243ead16.html">xmc</a></li><li class="navelem"><a class="el" href="dir_240b6bae18233bf214d22e6396e3e43f.html">hw</a></li><li class="navelem"><a class="el" href="spi_8h.html">spi.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

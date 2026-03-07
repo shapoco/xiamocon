@@ -1,5 +1,5 @@
-<map id="cpp/platform/common/include/xmc/hw/power.h" name="cpp/platform/common/include/xmc/hw/power.h">
-<area shape="rect" id="node1" title="Power management interface." alt="" coords="61,5,244,45"/>
+<map id="cpp/platform/decl/include/xmc/hw/power.h" name="cpp/platform/decl/include/xmc/hw/power.h">
+<area shape="rect" id="node1" title="Power management interface." alt="" coords="59,5,246,45"/>
 <area shape="rect" id="node2" href="$hw__common_8h_source.html" title=" " alt="" coords="5,93,177,119"/>
 <area shape="rect" id="node5" title=" " alt="" coords="169,240,240,265"/>
 <area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="16,167,175,192"/>
