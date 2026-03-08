@@ -1,0 +1,7 @@
+<map id="cpp/library/include/xmc/audio/mixer.hpp" name="cpp/library/include/xmc/audio/mixer.hpp">
+<area shape="rect" id="node1" title="A simple audio mixer that can mix multiple audio sources together." alt="" coords="16,5,179,45"/>
+<area shape="rect" id="node2" href="$audio__common_8h.html" title="Common definitions for audio components in the XMC library." alt="" coords="14,93,181,119"/>
+<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="18,167,177,192"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,240,88,265"/>
+<area shape="rect" id="node5" title=" " alt="" coords="113,240,183,265"/>
+</map>

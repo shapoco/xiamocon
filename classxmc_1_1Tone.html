@@ -97,43 +97,392 @@ $(document).ready(function(){initNavTree('classxmc_1_1Tone.html',''); initResiza
   <div class="headertitle"><div class="title">xmc::Tone Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="tone_8hpp_source.html">tone.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2264033257f27fb84bdb997890517c1c"><td class="memItemLeft" align="right" valign="top"><a id="a2264033257f27fb84bdb997890517c1c" name="a2264033257f27fb84bdb997890517c1c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (uint32_t sample_rate_hz)</td></tr>
+<tr class="memitem:a2264033257f27fb84bdb997890517c1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a2264033257f27fb84bdb997890517c1c">init</a> (uint32_t sample_rate_hz)</td></tr>
 <tr class="separator:a2264033257f27fb84bdb997890517c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09983ad8abdc71f8aab2b812ae118fe9"><td class="memItemLeft" align="right" valign="top"><a id="a09983ad8abdc71f8aab2b812ae118fe9" name="a09983ad8abdc71f8aab2b812ae118fe9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_waveform</b> (Waveform wf)</td></tr>
+<tr class="memitem:a09983ad8abdc71f8aab2b812ae118fe9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a09983ad8abdc71f8aab2b812ae118fe9">set_waveform</a> (<a class="el" href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">Waveform</a> wf)</td></tr>
 <tr class="separator:a09983ad8abdc71f8aab2b812ae118fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd82941359ae3fc9206a026ed99c4f4f"><td class="memItemLeft" align="right" valign="top"><a id="acd82941359ae3fc9206a026ed99c4f4f" name="acd82941359ae3fc9206a026ed99c4f4f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_velocity</b> (uint8_t velo)</td></tr>
+<tr class="memitem:acd82941359ae3fc9206a026ed99c4f4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#acd82941359ae3fc9206a026ed99c4f4f">set_velocity</a> (uint8_t velo)</td></tr>
 <tr class="separator:acd82941359ae3fc9206a026ed99c4f4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a849198f1ea55a359cd6c11b2e78f988d"><td class="memItemLeft" align="right" valign="top"><a id="a849198f1ea55a359cd6c11b2e78f988d" name="a849198f1ea55a359cd6c11b2e78f988d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_envelope</b> (uint16_t attack_ms, uint16_t decay_ms, uint16_t sustain_level, uint16_t release_ms)</td></tr>
+<tr class="memitem:a849198f1ea55a359cd6c11b2e78f988d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a849198f1ea55a359cd6c11b2e78f988d">set_envelope</a> (uint16_t attack_ms, uint16_t decay_ms, uint16_t sustain_level, uint16_t release_ms)</td></tr>
 <tr class="separator:a849198f1ea55a359cd6c11b2e78f988d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6f4e3a1589ef3e8e6cde6fda2c924ce"><td class="memItemLeft" align="right" valign="top"><a id="aa6f4e3a1589ef3e8e6cde6fda2c924ce" name="aa6f4e3a1589ef3e8e6cde6fda2c924ce"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_sweep</b> (int32_t delta, uint32_t period_ms)</td></tr>
+<tr class="memitem:aa6f4e3a1589ef3e8e6cde6fda2c924ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#aa6f4e3a1589ef3e8e6cde6fda2c924ce">set_sweep</a> (int32_t delta, uint32_t period_ms)</td></tr>
 <tr class="separator:aa6f4e3a1589ef3e8e6cde6fda2c924ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3d64bd54357bcb5b56e98f5c3d1416"><td class="memItemLeft" align="right" valign="top"><a id="a5a3d64bd54357bcb5b56e98f5c3d1416" name="a5a3d64bd54357bcb5b56e98f5c3d1416"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>note_on</b> (uint8_t midi_note, uint32_t len_ms=TONE_LENGTH_INFINITE)</td></tr>
+<tr class="memitem:a5a3d64bd54357bcb5b56e98f5c3d1416"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a5a3d64bd54357bcb5b56e98f5c3d1416">note_on</a> (uint8_t midi_note, uint32_t len_ms=TONE_LENGTH_INFINITE)</td></tr>
 <tr class="separator:a5a3d64bd54357bcb5b56e98f5c3d1416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae709d4d759b1cfe69f5a0c1e66002527"><td class="memItemLeft" align="right" valign="top"><a id="ae709d4d759b1cfe69f5a0c1e66002527" name="ae709d4d759b1cfe69f5a0c1e66002527"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>note_on_with_freq</b> (uint32_t freq, uint32_t len_ms=TONE_LENGTH_INFINITE)</td></tr>
+<tr class="memitem:ae709d4d759b1cfe69f5a0c1e66002527"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#ae709d4d759b1cfe69f5a0c1e66002527">note_on_with_freq</a> (uint32_t freq, uint32_t len_ms=TONE_LENGTH_INFINITE)</td></tr>
 <tr class="separator:ae709d4d759b1cfe69f5a0c1e66002527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65032f90e4c5eeeb0b61728f42ab97b8"><td class="memItemLeft" align="right" valign="top"><a id="a65032f90e4c5eeeb0b61728f42ab97b8" name="a65032f90e4c5eeeb0b61728f42ab97b8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>note_off</b> ()</td></tr>
+<tr class="memitem:a65032f90e4c5eeeb0b61728f42ab97b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off</a> ()</td></tr>
 <tr class="separator:a65032f90e4c5eeeb0b61728f42ab97b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cf52cfb761317a115966ce7da16aa87"><td class="memItemLeft" align="right" valign="top"><a id="a5cf52cfb761317a115966ce7da16aa87" name="a5cf52cfb761317a115966ce7da16aa87"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>mute</b> ()</td></tr>
+<tr class="memitem:a5cf52cfb761317a115966ce7da16aa87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute</a> ()</td></tr>
 <tr class="separator:a5cf52cfb761317a115966ce7da16aa87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac43e44f6608db6366be5bd286e5df19f"><td class="memItemLeft" align="right" valign="top"><a id="ac43e44f6608db6366be5bd286e5df19f" name="ac43e44f6608db6366be5bd286e5df19f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (int16_t *buffer, uint32_t num_samples)</td></tr>
+<tr class="memitem:ac43e44f6608db6366be5bd286e5df19f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#ac43e44f6608db6366be5bd286e5df19f">render</a> (int16_t *buffer, uint32_t num_samples)</td></tr>
 <tr class="separator:ac43e44f6608db6366be5bd286e5df19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f0dfd24be143b6b9d68462100443c5b"><td class="memItemLeft" align="right" valign="top"><a id="a3f0dfd24be143b6b9d68462100443c5b" name="a3f0dfd24be143b6b9d68462100443c5b"></a>
-<a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_output_port</b> ()</td></tr>
+<tr class="memitem:a3f0dfd24be143b6b9d68462100443c5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Tone.html#a3f0dfd24be143b6b9d68462100443c5b">get_output_port</a> ()</td></tr>
 <tr class="separator:a3f0dfd24be143b6b9d68462100443c5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A simple audio tone generator that can generate a tone with a given frequency, length, and envelope. The tone can be used as an audio source for the speaker or for mixing with other tones using the mixer. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3f0dfd24be143b6b9d68462100443c5b" name="a3f0dfd24be143b6b9d68462100443c5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f0dfd24be143b6b9d68462100443c5b">&#9670;&#160;</a></span>get_output_port()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> * xmc::Tone::get_output_port </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns a pointer to the output port of the tone. The output port can be connected to the speaker or to a mixer for further processing. </p><dl class="section return"><dt>Returns</dt><dd>A pointer to the output port of the tone. </dd></dl>
+
+</div>
+</div>
+<a id="a2264033257f27fb84bdb997890517c1c" name="a2264033257f27fb84bdb997890517c1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2264033257f27fb84bdb997890517c1c">&#9670;&#160;</a></span>init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::init </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sample_rate_hz</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes the tone generator with the given sample rate. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sample_rate_hz</td><td>The sample rate in Hz. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5cf52cfb761317a115966ce7da16aa87" name="a5cf52cfb761317a115966ce7da16aa87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cf52cfb761317a115966ce7da16aa87">&#9670;&#160;</a></span>mute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::mute </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mutes the tone immediately. This will stop all sound output from the tone immediately, without going through the release phase of the envelope. </p>
+
+</div>
+</div>
+<a id="a65032f90e4c5eeeb0b61728f42ab97b8" name="a65032f90e4c5eeeb0b61728f42ab97b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65032f90e4c5eeeb0b61728f42ab97b8">&#9670;&#160;</a></span>note_off()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::note_off </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops playing the current note. This will trigger the release phase of the envelope, allowing the note to fade out naturally according to the release time set in the envelope. If the note is currently in the attack, decay, or sustain phase, it will transition to the release phase. If the note is already in the release phase or idle, this function will have no effect. </p>
+
+</div>
+</div>
+<a id="a5a3d64bd54357bcb5b56e98f5c3d1416" name="a5a3d64bd54357bcb5b56e98f5c3d1416"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a3d64bd54357bcb5b56e98f5c3d1416">&#9670;&#160;</a></span>note_on()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::note_on </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>midi_note</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len_ms</em> = <code>TONE_LENGTH_INFINITE</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts playing a note with the given MIDI note number and length. The MIDI note number determines the frequency of the tone, with 69 representing A4 (440 Hz). The length determines how long the note will play before it is automatically turned off. If the length is set to TONE_LENGTH_INFINITE, the note will play indefinitely until it is manually turned off with <a class="el" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off()</a> or muted with <a class="el" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">midi_note</td><td>The MIDI note number to play. The MIDI note number must be between 0 and 127, where 69 represents A4 (440 Hz). </td></tr>
+    <tr><td class="paramname">len_ms</td><td>The length of the note in milliseconds. If set to TONE_LENGTH_INFINITE, the note will play indefinitely until it is manually turned off with <a class="el" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off()</a> or muted with <a class="el" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae709d4d759b1cfe69f5a0c1e66002527" name="ae709d4d759b1cfe69f5a0c1e66002527"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae709d4d759b1cfe69f5a0c1e66002527">&#9670;&#160;</a></span>note_on_with_freq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::note_on_with_freq </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>freq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>len_ms</em> = <code>TONE_LENGTH_INFINITE</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts playing a note with the given frequency and length. The frequency is specified in Hz. The length determines how long the note will play before it is automatically turned off. If the length is set to TONE_LENGTH_INFINITE, the note will play indefinitely until it is manually turned off with <a class="el" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off()</a> or muted with <a class="el" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute()</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">freq</td><td>The frequency of the note to play in Hz. </td></tr>
+    <tr><td class="paramname">len_ms</td><td>The length of the note in milliseconds. If set to TONE_LENGTH_INFINITE, the note will play indefinitely until it is manually turned off with <a class="el" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off()</a> or muted with <a class="el" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac43e44f6608db6366be5bd286e5df19f" name="ac43e44f6608db6366be5bd286e5df19f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac43e44f6608db6366be5bd286e5df19f">&#9670;&#160;</a></span>render()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::render </td>
+          <td>(</td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_samples</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Renders the audio samples for the current state of the tone into the provided buffer. The number of samples to render is determined by the num_samples parameter, and the samples will be written to the buffer as 16-bit signed integers. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>The buffer to write the audio samples to. </td></tr>
+    <tr><td class="paramname">num_samples</td><td>The number of audio samples to render into the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a849198f1ea55a359cd6c11b2e78f988d" name="a849198f1ea55a359cd6c11b2e78f988d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a849198f1ea55a359cd6c11b2e78f988d">&#9670;&#160;</a></span>set_envelope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::set_envelope </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>attack_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>decay_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>sustain_level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>release_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the envelope of the tone. The envelope controls the amplitude of the tone over time, allowing for more natural-sounding tones with attack, decay, sustain, and release phases. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">attack_ms</td><td>The duration of the attack phase in milliseconds. </td></tr>
+    <tr><td class="paramname">decay_ms</td><td>The duration of the decay phase in milliseconds. </td></tr>
+    <tr><td class="paramname">sustain_level</td><td>The sustain level as a value between 0 and 256. </td></tr>
+    <tr><td class="paramname">release_ms</td><td>The duration of the release phase in milliseconds. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa6f4e3a1589ef3e8e6cde6fda2c924ce" name="aa6f4e3a1589ef3e8e6cde6fda2c924ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f4e3a1589ef3e8e6cde6fda2c924ce">&#9670;&#160;</a></span>set_sweep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::set_sweep </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>delta</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>period_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the frequency sweep of the tone. The frequency sweep allows for effects such as siren-like sounds. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delta</td><td>The amount of frequency change for the sweep. This is a fixed-point value where 0x10000 represents no change, values less than 0x10000 represent a decrease in frequency, and values greater than 0x10000 represent an increase in frequency. </td></tr>
+    <tr><td class="paramname">period_ms</td><td>The period of the sweep in milliseconds. This determines how fast the frequency changes over time. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acd82941359ae3fc9206a026ed99c4f4f" name="acd82941359ae3fc9206a026ed99c4f4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd82941359ae3fc9206a026ed99c4f4f">&#9670;&#160;</a></span>set_velocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::set_velocity </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>velo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the velocity (volume) of the tone. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">velo</td><td>The velocity to set. The velocity must be between 0 and 127. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a09983ad8abdc71f8aab2b812ae118fe9" name="a09983ad8abdc71f8aab2b812ae118fe9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09983ad8abdc71f8aab2b812ae118fe9">&#9670;&#160;</a></span>set_waveform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Tone::set_waveform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">Waveform</a>&#160;</td>
+          <td class="paramname"><em>wf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the waveform of the tone. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wf</td><td>The waveform to set. This determines the shape of the sound wave and thus the timbre of the sound. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>cpp/library/include/xmc/audio/<a class="el" href="tone_8hpp_source.html">tone.hpp</a></li>
 </ul>

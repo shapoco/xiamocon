@@ -94,50 +94,62 @@ $(document).ready(function(){initNavTree('sdac_8h_source.html',''); initResizabl
   <div class="headertitle"><div class="title">sdac.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XMC_HW_AUDIO_DAC_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XMC_HW_AUDIO_DAC_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;xmc/audio_common.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;xmc/xmc_common.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structxmc__sdac__inst__t.html">   11</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keywordtype">void</span> *hw;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keywordtype">int</span> pin;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> source;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} <a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structxmc__sdac__config__t.html">   17</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_struct" href="structxmc__audio__format__t.html">xmc_audio_format_t</a> format;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  uint32_t latency_samples;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>xmc_audio_sample_format_t xmc_sdac_get_supported_formats(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>xmc_status_t xmc_sdac_init(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst, <span class="keywordtype">int</span> pin,</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                           <span class="keyword">const</span> <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a> *cfg, <span class="keywordtype">float</span> *actual_rate_hz);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>xmc_status_t xmc_sdac_deinit(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>xmc_status_t xmc_sdac_set_source(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                 <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *src);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>xmc_status_t xmc_sdac_service(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="astructxmc__audio__format__t_html"><div class="ttname"><a href="structxmc__audio__format__t.html">xmc_audio_format_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:15</div></div>
-<div class="ttc" id="astructxmc__audio__source__port__t_html"><div class="ttname"><a href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:23</div></div>
-<div class="ttc" id="astructxmc__sdac__config__t_html"><div class="ttname"><a href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:17</div></div>
-<div class="ttc" id="astructxmc__sdac__inst__t_html"><div class="ttname"><a href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:11</div></div>
+<a href="sdac_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef XMC_HW_AUDIO_DAC_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define XMC_HW_AUDIO_DAC_H</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="audio__common_8h.html">xmc/audio_common.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;xmc/xmc_common.h&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structxmc__sdac__inst__t.html">   21</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="keywordtype">void</span> *hw;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keywordtype">int</span> pin;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> source;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structxmc__sdac__config__t.html">   32</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <a class="code hl_struct" href="structxmc__audio__format__t.html">xmc_audio_format_t</a> format;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  uint32_t latency_samples;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>} <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="sdac_8h.html#a30acc5ce06986e9a7b3508904dbeb2a0">   41</a></span><a class="code hl_enumeration" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a> <a class="code hl_function" href="sdac_8h.html#a30acc5ce06986e9a7b3508904dbeb2a0">xmc_sdac_get_supported_formats</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="sdac_8h.html#a8520caa4389b6256f605fc7406884481">   55</a></span>xmc_status_t <a class="code hl_function" href="sdac_8h.html#a8520caa4389b6256f605fc7406884481">xmc_sdac_init</a>(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst, <span class="keywordtype">int</span> pin,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                           <span class="keyword">const</span> <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a> *cfg, <span class="keywordtype">float</span> *actual_rate_hz);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="sdac_8h.html#a79a7ad880492613044401dbaa795744c">   64</a></span>xmc_status_t <a class="code hl_function" href="sdac_8h.html#a79a7ad880492613044401dbaa795744c">xmc_sdac_deinit</a>(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="sdac_8h.html#ab02a22c6c4b2031987dd1b0921e1b2cd">   78</a></span>xmc_status_t <a class="code hl_function" href="sdac_8h.html#ab02a22c6c4b2031987dd1b0921e1b2cd">xmc_sdac_set_source</a>(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                                 <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *src);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="sdac_8h.html#a3e98a2f609584cc1de1a91945e02af49">   88</a></span>xmc_status_t <a class="code hl_function" href="sdac_8h.html#a3e98a2f609584cc1de1a91945e02af49">xmc_sdac_service</a>(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aaudio__common_8h_html"><div class="ttname"><a href="audio__common_8h.html">audio_common.h</a></div><div class="ttdoc">Common definitions for audio components in the XMC library.</div></div>
+<div class="ttc" id="aaudio__common_8h_html_a57da9a2e331fb1975e825d00b854f936"><div class="ttname"><a href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a></div><div class="ttdeci">xmc_audio_sample_format_t</div><div class="ttdef"><b>Definition:</b> audio_common.h:20</div></div>
+<div class="ttc" id="asdac_8h_html_a30acc5ce06986e9a7b3508904dbeb2a0"><div class="ttname"><a href="sdac_8h.html#a30acc5ce06986e9a7b3508904dbeb2a0">xmc_sdac_get_supported_formats</a></div><div class="ttdeci">xmc_audio_sample_format_t xmc_sdac_get_supported_formats(void)</div></div>
+<div class="ttc" id="asdac_8h_html_a3e98a2f609584cc1de1a91945e02af49"><div class="ttname"><a href="sdac_8h.html#a3e98a2f609584cc1de1a91945e02af49">xmc_sdac_service</a></div><div class="ttdeci">xmc_status_t xmc_sdac_service(xmc_sdac_inst_t *inst)</div></div>
+<div class="ttc" id="asdac_8h_html_a79a7ad880492613044401dbaa795744c"><div class="ttname"><a href="sdac_8h.html#a79a7ad880492613044401dbaa795744c">xmc_sdac_deinit</a></div><div class="ttdeci">xmc_status_t xmc_sdac_deinit(xmc_sdac_inst_t *inst)</div></div>
+<div class="ttc" id="asdac_8h_html_a8520caa4389b6256f605fc7406884481"><div class="ttname"><a href="sdac_8h.html#a8520caa4389b6256f605fc7406884481">xmc_sdac_init</a></div><div class="ttdeci">xmc_status_t xmc_sdac_init(xmc_sdac_inst_t *inst, int pin, const xmc_sdac_config_t *cfg, float *actual_rate_hz)</div></div>
+<div class="ttc" id="asdac_8h_html_ab02a22c6c4b2031987dd1b0921e1b2cd"><div class="ttname"><a href="sdac_8h.html#ab02a22c6c4b2031987dd1b0921e1b2cd">xmc_sdac_set_source</a></div><div class="ttdeci">xmc_status_t xmc_sdac_set_source(xmc_sdac_inst_t *inst, xmc_audio_source_port_t *src)</div></div>
+<div class="ttc" id="astructxmc__audio__format__t_html"><div class="ttname"><a href="structxmc__audio__format__t.html">xmc_audio_format_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:31</div></div>
+<div class="ttc" id="astructxmc__audio__source__port__t_html"><div class="ttname"><a href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:52</div></div>
+<div class="ttc" id="astructxmc__sdac__config__t_html"><div class="ttname"><a href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:32</div></div>
+<div class="ttc" id="astructxmc__sdac__inst__t_html"><div class="ttname"><a href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_a5322820b81c5d8dc0fae17261f576ae.html">decl</a></li><li class="navelem"><a class="el" href="dir_383bad9a3bbd796814888812a729817a.html">include</a></li><li class="navelem"><a class="el" href="dir_ca493a86ef663f9ce63ae3ea243ead16.html">xmc</a></li><li class="navelem"><a class="el" href="dir_240b6bae18233bf214d22e6396e3e43f.html">hw</a></li><li class="navelem"><b>sdac.h</b></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html">platform</a></li><li class="navelem"><a class="el" href="dir_a5322820b81c5d8dc0fae17261f576ae.html">decl</a></li><li class="navelem"><a class="el" href="dir_383bad9a3bbd796814888812a729817a.html">include</a></li><li class="navelem"><a class="el" href="dir_ca493a86ef663f9ce63ae3ea243ead16.html">xmc</a></li><li class="navelem"><a class="el" href="dir_240b6bae18233bf214d22e6396e3e43f.html">hw</a></li><li class="navelem"><a class="el" href="sdac_8h.html">sdac.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

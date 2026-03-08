@@ -8,6 +8,6 @@ var dir_34901e8a2955b2f307fb8f90642cf41b =
     [ "gfx.hpp", "gfx_8hpp_source.html", null ],
     [ "input.h", "input_8h.html", "input_8h" ],
     [ "ioex.h", "ioex_8h.html", "ioex_8h" ],
-    [ "speaker.h", "speaker_8h_source.html", null ],
+    [ "speaker.h", "speaker_8h.html", "speaker_8h" ],
     [ "system.h", "system_8h.html", "system_8h" ]
 ];

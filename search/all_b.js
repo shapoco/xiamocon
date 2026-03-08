@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['ram_2eh_0',['ram.h',['../ram_8h.html',1,'']]],
-  ['rect_5ft_1',['rect_t',['../structxmc_1_1rect__t.html',1,'xmc']]],
-  ['right_2',['right',['../structxmc_1_1rect__t.html#a0d0ca826e35f9eb4db6fcb7ad365a594',1,'xmc::rect_t']]]
+  ['pins_2eh_0',['pins.h',['../pins_8h.html',1,'']]],
+  ['power_2eh_1',['power.h',['../power_8h.html',1,'']]],
+  ['ptr_2',['ptr',['../structxmc__dma__config__t.html#ab36f78066962d56c976a4ad6d76dbfc3',1,'xmc_dma_config_t']]],
+  ['pwm_2eh_3',['pwm.h',['../pwm_8h.html',1,'']]]
 ];

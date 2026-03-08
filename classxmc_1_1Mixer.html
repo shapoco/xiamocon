@@ -100,19 +100,133 @@ $(document).ready(function(){initNavTree('classxmc_1_1Mixer.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4520f87f06ec80772a65cb187019ec27"><td class="memItemLeft" align="right" valign="top"><a id="a4520f87f06ec80772a65cb187019ec27" name="a4520f87f06ec80772a65cb187019ec27"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Mixer</b> (int num_sources)</td></tr>
+<tr class="memitem:a4520f87f06ec80772a65cb187019ec27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Mixer.html#a4520f87f06ec80772a65cb187019ec27">Mixer</a> (int num_sources)</td></tr>
 <tr class="separator:a4520f87f06ec80772a65cb187019ec27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a627a08f331020864d1fbf8bfb06f70d8"><td class="memItemLeft" align="right" valign="top"><a id="a627a08f331020864d1fbf8bfb06f70d8" name="a627a08f331020864d1fbf8bfb06f70d8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_source</b> (int index, <a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *source)</td></tr>
+<tr class="memitem:a627a08f331020864d1fbf8bfb06f70d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Mixer.html#a627a08f331020864d1fbf8bfb06f70d8">set_source</a> (int index, <a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *source)</td></tr>
 <tr class="separator:a627a08f331020864d1fbf8bfb06f70d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b23cf4a1e263eb0379e9d4abfd87d28"><td class="memItemLeft" align="right" valign="top"><a id="a8b23cf4a1e263eb0379e9d4abfd87d28" name="a8b23cf4a1e263eb0379e9d4abfd87d28"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (int16_t *buffer, uint32_t num_samples)</td></tr>
+<tr class="memitem:a8b23cf4a1e263eb0379e9d4abfd87d28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Mixer.html#a8b23cf4a1e263eb0379e9d4abfd87d28">render</a> (int16_t *buffer, uint32_t num_samples)</td></tr>
 <tr class="separator:a8b23cf4a1e263eb0379e9d4abfd87d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0f53694ca197b6a98aef00040445f8"><td class="memItemLeft" align="right" valign="top"><a id="a3c0f53694ca197b6a98aef00040445f8" name="a3c0f53694ca197b6a98aef00040445f8"></a>
-<a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>get_output_port</b> ()</td></tr>
+<tr class="memitem:a3c0f53694ca197b6a98aef00040445f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1Mixer.html#a3c0f53694ca197b6a98aef00040445f8">get_output_port</a> ()</td></tr>
 <tr class="separator:a3c0f53694ca197b6a98aef00040445f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a4520f87f06ec80772a65cb187019ec27" name="a4520f87f06ec80772a65cb187019ec27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4520f87f06ec80772a65cb187019ec27">&#9670;&#160;</a></span>Mixer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xmc::Mixer::Mixer </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num_sources</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num_sources</td><td>The number of audio sources that can be mixed together. This </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3c0f53694ca197b6a98aef00040445f8" name="a3c0f53694ca197b6a98aef00040445f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c0f53694ca197b6a98aef00040445f8">&#9670;&#160;</a></span>get_output_port()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> * xmc::Mixer::get_output_port </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the output audio source port of the mixer. The mixer will call the request_data callback of the output port when it needs more audio data. </p>
+
+</div>
+</div>
+<a id="a8b23cf4a1e263eb0379e9d4abfd87d28" name="a8b23cf4a1e263eb0379e9d4abfd87d28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b23cf4a1e263eb0379e9d4abfd87d28">&#9670;&#160;</a></span>render()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Mixer::render </td>
+          <td>(</td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_samples</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Renders the mixed audio data into the given buffer. This is called by the audio system when it needs more audio data. The buffer is an array of 16-bit signed integers, and num_samples is the number of samples to render. The mixer should fill the buffer with the mixed audio data from all sources. The mixer should not write more than num_samples samples to the buffer. </p>
+
+</div>
+</div>
+<a id="a627a08f331020864d1fbf8bfb06f70d8" name="a627a08f331020864d1fbf8bfb06f70d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a627a08f331020864d1fbf8bfb06f70d8">&#9670;&#160;</a></span>set_source()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::Mixer::set_source </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *&#160;</td>
+          <td class="paramname"><em>source</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the audio source for a given index. The mixer will mix together all sources that are set. The index must be between 0 and the number of sources specified in the constructor. The source must remain valid as long as it is set on the mixer. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>cpp/library/include/xmc/audio/<a class="el" href="mixer_8hpp_source.html">mixer.hpp</a></li>
 </ul>

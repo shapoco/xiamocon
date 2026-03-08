@@ -40,6 +40,7 @@ var menudata={children:[
 {text:"Functions",url:"globals_func.html",children:[
 {text:"x",url:"globals_func.html#index_x"}]},
 {text:"Variables",url:"globals_vars.html"},
+{text:"Typedefs",url:"globals_type.html"},
 {text:"Enumerations",url:"globals_enum.html"},
 {text:"Enumerator",url:"globals_eval.html",children:[
 {text:"x",url:"globals_eval.html#index_x"}]},
