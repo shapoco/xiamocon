@@ -107,20 +107,20 @@ $(document).ready(function(){initNavTree('sdac_8h_source.html',''); initResizabl
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structxmc__sdac__inst__t.html">   11</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keywordtype">void</span> *hw;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keywordtype">int</span> pin;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <a class="code hl_struct" href="structxmc__stream__source__t.html">xmc_stream_source_t</a> source;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> source;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} <a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a>;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structxmc__sdac__config__t.html">   17</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_struct" href="structxmc__stream__format__t.html">xmc_stream_format_t</a> format;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_struct" href="structxmc__audio__format__t.html">xmc_audio_format_t</a> format;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  uint32_t latency_samples;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a>;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>xmc_sample_format_t xmc_sdac_get_supported_formats(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>xmc_audio_sample_format_t xmc_sdac_get_supported_formats(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>xmc_status_t xmc_sdac_init(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst, <span class="keywordtype">int</span> pin,</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                           <span class="keyword">const</span> <a class="code hl_struct" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a> *cfg, <span class="keywordtype">float</span> *actual_rate_hz);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>xmc_status_t xmc_sdac_deinit(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>xmc_status_t xmc_sdac_set_source(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst,</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                 <a class="code hl_struct" href="structxmc__stream__source__t.html">xmc_stream_source_t</a> *src);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                                 <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *src);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>xmc_status_t xmc_sdac_service(<a class="code hl_struct" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
@@ -128,10 +128,10 @@ $(document).ready(function(){initNavTree('sdac_8h_source.html',''); initResizabl
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="astructxmc__audio__format__t_html"><div class="ttname"><a href="structxmc__audio__format__t.html">xmc_audio_format_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:15</div></div>
+<div class="ttc" id="astructxmc__audio__source__port__t_html"><div class="ttname"><a href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:23</div></div>
 <div class="ttc" id="astructxmc__sdac__config__t_html"><div class="ttname"><a href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:17</div></div>
 <div class="ttc" id="astructxmc__sdac__inst__t_html"><div class="ttname"><a href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a></div><div class="ttdef"><b>Definition:</b> sdac.h:11</div></div>
-<div class="ttc" id="astructxmc__stream__format__t_html"><div class="ttname"><a href="structxmc__stream__format__t.html">xmc_stream_format_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:15</div></div>
-<div class="ttc" id="astructxmc__stream__source__t_html"><div class="ttname"><a href="structxmc__stream__source__t.html">xmc_stream_source_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

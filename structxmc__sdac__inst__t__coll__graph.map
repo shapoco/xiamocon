@@ -1,4 +1,4 @@
 <map id="xmc_sdac_inst_t" name="xmc_sdac_inst_t">
-<area shape="rect" id="node1" title=" " alt="" coords="23,93,153,119"/>
-<area shape="rect" id="node2" href="$structxmc__stream__source__t.html" title=" " alt="" coords="5,5,171,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="34,93,165,119"/>
+<area shape="rect" id="node2" href="$structxmc__audio__source__port__t.html" title=" " alt="" coords="5,5,193,31"/>
 </map>
