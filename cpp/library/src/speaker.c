@@ -4,9 +4,9 @@
 
 xmc_sdac_inst_t sdac;
 
-xmc_status_t xmc_speaker_init(xmc_sample_format_t fmt, uint32_t rate,
+xmc_status_t xmc_speaker_init(xmc_audio_sample_format_t fmt, uint32_t rate,
                               uint32_t latency, float *actual_rate_hz) {
-  xmc_stream_format_t sdac_fmt;
+  xmc_audio_format_t sdac_fmt;
   xmc_sdac_config_t cfg;
   sdac_fmt.sample_format = fmt;
   sdac_fmt.sample_rate_hz = rate;
@@ -24,7 +24,7 @@ xmc_status_t xmc_speaker_set_muted(bool muted) {
   return xmc_ioex_write(XMC_IOEX_PIN_SPEAKER_MUTE, muted ? 1 : 0);
 }
 
-xmc_status_t xmc_speaker_set_source(xmc_stream_source_t *src) {
+xmc_status_t xmc_speaker_set_source_port(xmc_audio_source_port_t *src) {
   return xmc_sdac_set_source(&sdac, src);
 }
 

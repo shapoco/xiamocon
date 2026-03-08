@@ -5,6 +5,11 @@ namespace xmc {
 static void xmc_tone_request_data(void *buffer, uint32_t size_bytes,
                                   void *context);
 
+Tone::Tone() {
+  output_port.request_data = xmc_tone_request_data;
+  output_port.context = this;
+}
+
 void Tone::init(uint32_t rate_hz) {
   sample_rate_hz = rate_hz;
   tick_phase_step = 0x10000UL * 1000 / sample_rate_hz;
@@ -40,6 +45,9 @@ void Tone::note_on_with_freq(uint32_t freq, uint32_t len_ms) {
 
   tone_phase_step = (uint64_t)freq * 0x10000 / sample_rate_hz;
   length_counter = len_ms;
+  tick_phase_counter = 0;
+  tone_phase_counter = 0;
+
   if (attack_ms > 0) {
     envelope_state = EnvelopeState::ATTACK;
     envelope_counter = 0;
@@ -77,11 +85,8 @@ void Tone::mute() {
   length_counter = 0;
 }
 
-void Tone::render(uint16_t *buffer, uint32_t num_samples) {
+void Tone::render(int16_t *buffer, uint32_t num_samples) {
   if (envelope_state == EnvelopeState::IDLE) {
-    for (uint32_t i = 0; i < num_samples; i++) {
-      buffer[i] = 0x8000;
-    }
     return;
   }
 
@@ -97,6 +102,7 @@ void Tone::render(uint16_t *buffer, uint32_t num_samples) {
     for (int i = 0; i < OVERSAMPLING; i++) {
       uint32_t p = tone_phase_counter + i * tone_phase_step / OVERSAMPLING;
       switch (waveform) {
+        default:
         case Waveform::SQUARE: raw += (p < 0x8000) ? 0x8000 : -0x8000; break;
         case Waveform::SINE:
           raw += (sinf((p / 65536.0) * 2 * M_PI) * 0x8000);
@@ -107,12 +113,6 @@ void Tone::render(uint16_t *buffer, uint32_t num_samples) {
           } else {
             raw += (0x10000 - p) * 2;
           }
-          //if (raw < 0x800) {
-          //  raw = 0x800;
-          //}
-          //else if (raw > 0xF800) {
-          //  raw = 0xF800;
-          //}
           raw -= 0x8000;
           break;
         case Waveform::SAWTOOTH: raw += p - 0x8000; break;
@@ -124,15 +124,8 @@ void Tone::render(uint16_t *buffer, uint32_t num_samples) {
 
     uint32_t amp = envelope_amp_curr;
     amp = (amp * amp) / 0x10000;
-    buffer[i] = 0x8000 + (raw * amp / 0x10000);
+    buffer[i] += (raw * amp / 0x10000);
   }
-}
-
-xmc_stream_source_t Tone::get_output() {
-  xmc_stream_source_t source;
-  source.request_data = xmc_tone_request_data;
-  source.context = this;
-  return source;
 }
 
 void Tone::tick() {
@@ -199,7 +192,7 @@ void Tone::tick() {
 
 static void xmc_tone_request_data(void *buffer, uint32_t num_samples,
                                   void *context) {
-  ((Tone *)context)->render((uint16_t *)buffer, num_samples);
+  ((Tone *)context)->render((int16_t *)buffer, num_samples);
 }
 
 }  // namespace xmc

@@ -44,6 +44,7 @@ target_link_libraries(
     hardware_spi
     hardware_i2c
     hardware_pwm
+    hardware_pio
     hardware_powman
     hardware_vreg
     hardware_watchdog

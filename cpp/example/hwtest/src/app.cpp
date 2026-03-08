@@ -20,13 +20,15 @@ float dx = 1.0f, dy = 1.11f;
 xmc::Sprite444 frame_buffer(XMC_DISPLAY_WIDTH, XMC_DISPLAY_HEIGHT);
 xmc::Tone tone;
 
+xmc::Waveform waveform = xmc::Waveform::SQUARE;
+
 void xmc_app_setup() {
   frame_buffer.clear(0);
-  xmc_speaker_init(XMC_SAMPLE_LINEAR_PCM_U16_MONO, SAMPLE_RATE_HZ, 512, nullptr);
+  xmc_speaker_init(XMC_SAMPLE_LINEAR_PCM_S16_MONO, SAMPLE_RATE_HZ, 512,
+                   nullptr);
   xmc_speaker_set_muted(false);
   tone.init(SAMPLE_RATE_HZ);
-  auto tone_src = tone.get_output();
-  xmc_speaker_set_source(&tone_src);
+  xmc_speaker_set_source_port(tone.get_output_port());
 
   xmc_gpio_set_dir(XMC_PIN_GPIO_0, true);
 }
@@ -48,12 +50,19 @@ void xmc_app_loop() {
     dy += 0.1f;
   }
 
+if (xmc_input_was_pressed(XMC_BUTTON_Y)) {
+  int n = static_cast<int>(xmc::Waveform::NUM_WAVEFORMS);
+  waveform = static_cast<xmc::Waveform>((static_cast<int>(waveform) + 1) % n);
+}
+
   if (xmc_input_was_pressed(XMC_BUTTON_A)) {
-    tone.set_waveform(xmc::Waveform::SAWTOOTH);
-    tone.set_velocity(64);
-    tone.set_envelope(0, 0, 128, 500);
-    tone.set_sweep(1600, 10);
-    tone.note_on(64, 1);
+    //tone.set_waveform(xmc::Waveform::SQUARE);
+    tone.set_waveform(waveform);
+    // tone.set_waveform(xmc::Waveform::TRIANGLE);
+    tone.set_velocity(127);
+    tone.set_envelope(0, 2000, 0, 500);
+    // tone.set_sweep(1600, 10);
+    tone.note_on(64 + 12);
     dx += 1;
   }
   if (xmc_input_was_released(XMC_BUTTON_A)) {

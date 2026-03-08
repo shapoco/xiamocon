@@ -6,22 +6,39 @@
 #include <hardware/clocks.h>
 #include <hardware/dma.h>
 #include <hardware/irq.h>
-#include <hardware/pwm.h>
+#include <hardware/pio.h>
 #include <pico/stdlib.h>
+#include <string.h>
 
 typedef struct {
   xmc_sdac_config_t cfg;
-  xmc_stream_source_t *source;
-  int pwm_slice;
-  int pwm_channel;
+  xmc_audio_source_port_t *source;
+  PIO pio;
+  int pio_sm;
+  int pio_offset;
   int dma_ch;
   int next_write_bank;
   int next_read_bank;
   uint8_t *source_buff;
   uint32_t *dma_buff;
-  int16_t error_accum;
-  uint32_t lfsr;
+  int32_t pdm_last_input;
+  int32_t pdm_last_qt;
+  int32_t pdm_work0;
+  int32_t pdm_work1;
+  int32_t pdm_work2;
+  int32_t pdm_work3;
+  uint32_t pdm_lfsr;
 } xmc_sdac_hw_t;
+
+static const uint16_t pio_instructions[] = {
+    0x6001,
+};
+
+static const struct pio_program pio_program = {
+    .instructions = pio_instructions,
+    .length = 1,
+    .origin = -1,
+};
 
 static void start_next_dma(xmc_sdac_inst_t *inst);
 static void fill_buffer(xmc_sdac_inst_t *inst);
@@ -34,9 +51,9 @@ static inline void update_lfsr(uint32_t *lfsr) {
 }
 
 #define SUPPORTED_FORMATS \
-  (XMC_SAMPLE_LINEAR_PCM_U8_MONO | XMC_SAMPLE_LINEAR_PCM_U16_MONO)
+  (XMC_SAMPLE_LINEAR_PCM_U8_MONO | XMC_SAMPLE_LINEAR_PCM_S16_MONO)
 
-xmc_sample_format_t xmc_sdac_get_supported_formats(void) {
+xmc_audio_sample_format_t xmc_sdac_get_supported_formats(void) {
   return SUPPORTED_FORMATS;
 }
 
@@ -51,8 +68,12 @@ xmc_status_t xmc_sdac_init(xmc_sdac_inst_t *inst, int pin,
   inst->pin = pin;
 
   hw->cfg = *cfg;
-  hw->error_accum = 0;
-  hw->lfsr = 0xFFFFFFFF;
+  hw->pdm_work0 = 0;
+  hw->pdm_work1 = 0;
+  hw->pdm_work2 = 0;
+  hw->pdm_work3 = 0;
+  hw->pdm_last_input = 0;
+  hw->pdm_lfsr = 0xFFFFFFFF;
 
   if ((cfg->format.sample_format & SUPPORTED_FORMATS) == 0) {
     XMC_ERR_RET(XMC_ERR_SPEAKER_UNSUPPORTED_FORMAT);
@@ -77,18 +98,23 @@ xmc_status_t xmc_sdac_init(xmc_sdac_inst_t *inst, int pin,
   gpio_set_function(inst->pin, GPIO_FUNC_PWM);
   gpio_set_dir(inst->pin, GPIO_OUT);
 
-  const int PWM_PERIOD = 256;
-  int sys_clk_freq = clock_get_hz(clk_sys);
-  float pwm_clkdiv =
-      (float)sys_clk_freq / (hw->cfg.format.sample_rate_hz * PWM_PERIOD);
-  hw->pwm_slice = pwm_gpio_to_slice_num(inst->pin);
-  hw->pwm_channel = pwm_gpio_to_channel(inst->pin);
-  pwm_set_gpio_level(inst->pin, 0);
+  hw->pio = pio0;
+  hw->pio_offset = pio_add_program(hw->pio, &pio_program);
+  hw->pio_sm = pio_claim_unused_sm(hw->pio, true);
 
-  pwm_config pwm_cfg = pwm_get_default_config();
-  pwm_config_set_clkdiv(&pwm_cfg, pwm_clkdiv);
-  pwm_config_set_wrap(&pwm_cfg, PWM_PERIOD - 1);
-  pwm_init(hw->pwm_slice, &pwm_cfg, true);
+  uint32_t sys_clk_freq = clock_get_hz(clk_sys);
+  uint32_t pdm_clk_freq = hw->cfg.format.sample_rate_hz * 32;
+  pio_sm_config pio_cfg = pio_get_default_sm_config();
+  sm_config_set_wrap(&pio_cfg, hw->pio_offset + 0, hw->pio_offset + 0);
+  sm_config_set_out_pins(&pio_cfg, pin, 1);
+  sm_config_set_fifo_join(&pio_cfg, PIO_FIFO_JOIN_TX);
+  sm_config_set_out_shift(&pio_cfg, true, true, 32);
+  sm_config_set_clkdiv(&pio_cfg, (float)sys_clk_freq / pdm_clk_freq);
+  pio_sm_init(hw->pio, hw->pio_sm, hw->pio_offset, &pio_cfg);
+
+  pio_gpio_init(hw->pio, pin);
+  pio_sm_set_consecutive_pindirs(hw->pio, hw->pio_sm, pin, 1, true);
+  pio_sm_set_enabled(hw->pio, hw->pio_sm, true);
 
   hw->dma_ch = dma_claim_unused_channel(true);
   if (hw->dma_ch < 0) {
@@ -106,8 +132,8 @@ xmc_status_t xmc_sdac_init(xmc_sdac_inst_t *inst, int pin,
   channel_config_set_transfer_data_size(&dma_cfg, DMA_SIZE_32);
   channel_config_set_read_increment(&dma_cfg, true);
   channel_config_set_write_increment(&dma_cfg, false);
-  channel_config_set_dreq(&dma_cfg, DREQ_PWM_WRAP0 + hw->pwm_slice);
-  dma_channel_configure(hw->dma_ch, &dma_cfg, &pwm_hw->slice[hw->pwm_slice].cc,
+  channel_config_set_dreq(&dma_cfg, pio_get_dreq(hw->pio, hw->pio_sm, true));
+  dma_channel_configure(hw->dma_ch, &dma_cfg, &hw->pio->txf[hw->pio_sm],
                         hw->dma_buff, hw->cfg.latency_samples, false);
 
   fill_buffer(inst);
@@ -136,7 +162,9 @@ xmc_status_t xmc_sdac_deinit(xmc_sdac_inst_t *inst) {
       xmc_free(hw->dma_buff);
       hw->dma_buff = NULL;
     }
-    pwm_set_enabled(hw->pwm_slice, false);
+    pio_sm_set_enabled(hw->pio, hw->pio_sm, false);
+    pio_sm_unclaim(hw->pio, hw->pio_sm);
+    pio_remove_program(hw->pio, &pio_program, hw->pio_offset);
     free(hw);
     inst->hw = NULL;
   }
@@ -152,7 +180,7 @@ xmc_status_t xmc_sdac_deinit(xmc_sdac_inst_t *inst) {
 }
 
 xmc_status_t xmc_sdac_set_source(xmc_sdac_inst_t *inst,
-                                 xmc_stream_source_t *src) {
+                                 xmc_audio_source_port_t *src) {
   inst->source = *src;
   return XMC_OK;
 }
@@ -177,51 +205,72 @@ static void fill_buffer(xmc_sdac_inst_t *inst) {
       hw->dma_buff + (hw->next_write_bank * hw->cfg.latency_samples);
 
   if (inst->source.request_data) {
+    uint32_t buff_size_bytes =
+        hw->cfg.latency_samples *
+        xmc_audio_get_bytes_per_sample(hw->cfg.format.sample_format);
+    if (hw->cfg.format.sample_format == XMC_SAMPLE_LINEAR_PCM_U8_MONO) {
+      memset(hw->source_buff, 0x80, buff_size_bytes);
+    } else {
+      memset(hw->source_buff, 0x00, buff_size_bytes);
+    }
     inst->source.request_data(hw->source_buff, hw->cfg.latency_samples,
                               inst->source.context);
+
     switch (hw->cfg.format.sample_format) {
       default:
       case XMC_SAMPLE_LINEAR_PCM_U8_MONO: {
-        if (hw->pwm_channel == 0) {
-          for (int i = 0; i < hw->cfg.latency_samples; i++) {
-            dst[i] = (uint32_t)hw->source_buff[i];
-          }
-        } else {
-          for (int i = 0; i < hw->cfg.latency_samples; i++) {
-            dst[i] = (uint32_t)hw->source_buff[i] << 16;
-          }
+        for (int i = 0; i < hw->cfg.latency_samples; i++) {
+          dst[i] = (uint32_t)hw->source_buff[i];
         }
       } break;
-      case XMC_SAMPLE_LINEAR_PCM_U16_MONO: {
-        uint16_t *src = (uint16_t *)hw->source_buff;
-        int32_t e = hw->error_accum;
+      case XMC_SAMPLE_LINEAR_PCM_S16_MONO: {
+        int16_t *src = (int16_t *)hw->source_buff;
+        int32_t last_input = hw->pdm_last_input;
+        int32_t last_qt = hw->pdm_last_qt;
         for (int i = 0; i < hw->cfg.latency_samples; i++) {
-          int32_t raw = src[i];
-          int32_t out = raw;
-          const int32_t ANTIALIAS_FACTOR = (1 << 1);
-          const int32_t k = hw->lfsr & (ANTIALIAS_FACTOR - 1);
-          update_lfsr(&hw->lfsr);
-          out += e * (ANTIALIAS_FACTOR - k) / ANTIALIAS_FACTOR;
-          e = e * k / ANTIALIAS_FACTOR;
-          out += 0x80;
-          out >>= 8;
-          if (out < 0) {
-            out = 0;
-          } else if (out > 0xFF) {
-            out = 0xFF;
+          uint32_t pdm_output = 0;
+          int32_t new_input = src[i] * 0x100;
+
+          update_lfsr(&(hw->pdm_lfsr));
+          // update_lfsr(&(hw->pdm_lfsr));
+          // update_lfsr(&(hw->pdm_lfsr));
+          // update_lfsr(&(hw->pdm_lfsr));
+          // uint32_t dither = hw->pdm_lfsr;
+          new_input += (hw->pdm_lfsr & 0x3FFF) - 0x2000;
+          for (int j = 0; j < 32; j++) {
+#if 0
+            // todo: use interpolator
+            int32_t over_sample = (new_input * j + last_input * (32 - j)) / 32;
+#else
+            int32_t over_sample = new_input;
+#endif
+            // over_sample += ((dither & 1) * 2 - 1) * 0x800;
+            // dither >>= 1;
+            // int32_t d = ((dither & 1) * 2 - 1) * 0x400;
+            // dither >>= 1;
+
+            hw->pdm_work0 += over_sample - last_qt;
+            hw->pdm_work1 += hw->pdm_work0 - last_qt;
+
+            // hw->pdm_work2 += hw->pdm_work1 - last_qt;
+            // hw->pdm_work3 += hw->pdm_work2 - last_qt;
+            pdm_output >>= 1;
+            if (hw->pdm_work1 >= 0) {
+              pdm_output |= 0x80000000;
+              last_qt = 0x1000000;
+            } else {
+              last_qt = -0x1000000;
+            }
           }
-          e += raw - (out << 8);
-          if (hw->pwm_channel == 0) {
-            dst[i] = out;
-          } else {
-            dst[i] = out << (hw->pwm_channel * 16);
-          }
+          last_input = new_input;
+          dst[i] = pdm_output;
         }
-        hw->error_accum = e;
+        hw->pdm_last_input = last_input;
+        hw->pdm_last_qt = last_qt;
       } break;
     }
   } else {
-    uint32_t sample = (uint32_t)0x80 << (hw->pwm_channel * 16);
+    uint32_t sample = 0x55555555;
     for (int i = 0; i < hw->cfg.latency_samples; i++) {
       dst[i] = sample;
     }

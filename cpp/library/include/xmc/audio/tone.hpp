@@ -13,6 +13,7 @@ enum class Waveform {
   SINE,
   TRIANGLE,
   SAWTOOTH,
+  NUM_WAVEFORMS,
 };
 
 enum class EnvelopeState {
@@ -48,7 +49,11 @@ class Tone {
   uint32_t sweep_period_ms = 0;
   uint32_t sweep_counter = 0;
 
+  xmc_audio_source_port_t output_port;
+
  public:
+  Tone();
+
   void init(uint32_t sample_rate_hz);
 
   inline void set_waveform(Waveform wf) { waveform = wf; }
@@ -87,9 +92,9 @@ class Tone {
 
   void mute();
 
-  void render(uint16_t *buffer, uint32_t num_samples);
+  void render(int16_t *buffer, uint32_t num_samples);
 
-  xmc_stream_source_t get_output();
+  xmc_audio_source_port_t *get_output_port() { return &output_port; }
 
  private:
   void tick();
