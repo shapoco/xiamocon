@@ -7,7 +7,7 @@ var ioex_8h =
       [ "XMC_IOEX_PIN_USER_3", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa6044a29adf66782211fc2ca3c22c8adb", null ],
       [ "XMC_IOEX_PIN_PERI_EN", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa012f7c5a83ca4294895cca0958fb5788", null ],
       [ "XMC_IOEX_PIN_DISPLAY_RESET", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa1438cbc9a24ad89f5ee7c7b83af40287", null ],
-      [ "XMC_IOEX_PIN_INT_MUTE", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa18869a7632404630f4109977c481b5ea", null ],
+      [ "XMC_IOEX_PIN_SPEAKER_MUTE", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aaebad4964bcea0805439d5105c231cd0e", null ],
       [ "XMC_IOEX_PIN_BTN_FUNC", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa37ccda4267197aa96e02293e8b0ec86e", null ],
       [ "XMC_IOEX_PIN_BTN_A", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aacdb7a6dc53bc7b8eb4827ad60e6271c6", null ],
       [ "XMC_IOEX_PIN_BTN_B", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa38af9a8b512ba9ffa755c675dac82df0", null ],

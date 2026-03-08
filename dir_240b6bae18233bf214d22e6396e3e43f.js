@@ -7,8 +7,9 @@ var dir_240b6bae18233bf214d22e6396e3e43f =
     [ "lock.h", "lock_8h.html", "lock_8h" ],
     [ "pins.h", "pins_8h.html", "pins_8h" ],
     [ "power.h", "power_8h.html", "power_8h" ],
-    [ "pwm.h", "pwm_8h_source.html", null ],
+    [ "pwm.h", "pwm_8h.html", "pwm_8h" ],
     [ "ram.h", "ram_8h.html", "ram_8h" ],
+    [ "sdac.h", "sdac_8h_source.html", null ],
     [ "spi.h", "spi_8h.html", "spi_8h" ],
     [ "timer.h", "timer_8h.html", "timer_8h" ]
 ];
