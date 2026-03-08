@@ -60,6 +60,10 @@ xmc_audio_sample_format_t xmc_sdac_get_supported_formats(void) {
 xmc_status_t xmc_sdac_init(xmc_sdac_inst_t *inst, int pin,
                            const xmc_sdac_config_t *cfg,
                            float *actual_rate_hz) {
+  // todo: calculate actual_rate_hz based on cfg->format.sample_rate_hz and
+  // hardware capabilities
+  *actual_rate_hz = cfg->format.sample_rate_hz;
+
   xmc_sdac_hw_t *hw = malloc(sizeof(xmc_sdac_hw_t));
   if (!hw) {
     return XMC_ERR_RAM_ALLOC_FAILED;
