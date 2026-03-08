@@ -1,8 +1,10 @@
 #include "xmc/app.h"
+#include "xmc/audio.hpp"
 #include "xmc/display.h"
 #include "xmc/gfx.hpp"
 #include "xmc/hw/timer.h"
 #include "xmc/input.h"
+#include "xmc/speaker.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -11,6 +13,8 @@ namespace {
 
 constexpr int SCREEN_W = XMC_DISPLAY_WIDTH;
 constexpr int SCREEN_H = XMC_DISPLAY_HEIGHT;
+constexpr uint32_t SAMPLE_RATE_HZ = 22050;
+constexpr int NUM_TONES = 4;
 
 constexpr int PADDLE_W = 44;
 constexpr int PADDLE_H = 6;
@@ -56,8 +60,11 @@ enum class GameState {
 
 xmc::Sprite444 frame_buffer(SCREEN_W, SCREEN_H);
 Brick bricks[BRICK_ROWS][BRICK_COLS];
+xmc::Mixer mixer(NUM_TONES);
+xmc::Tone tones[NUM_TONES];
 
 GameState game_state = GameState::Serve;
+int next_tone_index = 0;
 
 int paddle_x = (SCREEN_W - PADDLE_W) / 2;
 
@@ -67,6 +74,45 @@ float ball_vx = 0.0f;
 float ball_vy = 0.0f;
 
 int bricks_left = 0;
+
+void play_tone(uint8_t note, uint32_t len_ms, xmc::Waveform waveform,
+							 uint8_t velocity, uint16_t attack_ms, uint16_t decay_ms,
+							 uint16_t sustain, uint16_t release_ms, int32_t sweep_delta,
+							 uint32_t sweep_period_ms) {
+	xmc::Tone &tone = tones[next_tone_index];
+	next_tone_index = (next_tone_index + 1) % NUM_TONES;
+
+	tone.set_waveform(waveform);
+	tone.set_velocity(velocity);
+	tone.set_envelope(attack_ms, decay_ms, sustain, release_ms);
+	tone.set_sweep(sweep_delta, sweep_period_ms);
+	tone.note_on(note, len_ms);
+}
+
+void sfx_launch() {
+	play_tone(76, 90, xmc::Waveform::SQUARE, 96, 0, 60, 140, 40, 2800, 7);
+}
+
+void sfx_wall_bounce() {
+	play_tone(82, 28, xmc::Waveform::SQUARE, 72, 0, 24, 96, 18, 0, 10);
+}
+
+void sfx_paddle_bounce() {
+	play_tone(62, 45, xmc::Waveform::TRIANGLE, 86, 0, 30, 120, 24, 900, 8);
+}
+
+void sfx_brick_break() {
+	play_tone(72, 55, xmc::Waveform::SQUARE, 88, 0, 40, 96, 28, -1700, 10);
+}
+
+void sfx_clear() {
+	play_tone(76, 130, xmc::Waveform::TRIANGLE, 104, 0, 80, 160, 40, 2200, 9);
+	play_tone(83, 150, xmc::Waveform::SINE, 90, 0, 100, 140, 50, 1100, 12);
+}
+
+void sfx_game_over() {
+	play_tone(45, 180, xmc::Waveform::SAWTOOTH, 92, 0, 120, 110, 70, -2400, 12);
+}
 
 bool intersects_rect(int ax, int ay, int aw, int ah, int bx, int by, int bw,
 										 int bh) {
@@ -116,6 +162,7 @@ void launch_ball(xmc_button_t buttons) {
 	ball_vx = dir * 1.4f;
 	ball_vy = -2.2f;
 	game_state = GameState::Playing;
+	sfx_launch();
 }
 
 void move_paddle(xmc_button_t buttons) {
@@ -143,18 +190,22 @@ void update_ball() {
 	if (ball_x < 0.0f) {
 		ball_x = 0.0f;
 		ball_vx = fabsf(ball_vx);
+		sfx_wall_bounce();
 	} else if (ball_x + BALL_SIZE > SCREEN_W) {
 		ball_x = static_cast<float>(SCREEN_W - BALL_SIZE);
 		ball_vx = -fabsf(ball_vx);
+		sfx_wall_bounce();
 	}
 
 	if (ball_y < 0.0f) {
 		ball_y = 0.0f;
 		ball_vy = fabsf(ball_vy);
+		sfx_wall_bounce();
 	}
 
 	if (ball_y > SCREEN_H) {
 		game_state = GameState::GameOver;
+		sfx_game_over();
 		return;
 	}
 
@@ -176,6 +227,7 @@ void update_ball() {
 			ball_vx *= scale;
 			ball_vy *= scale;
 		}
+		sfx_paddle_bounce();
 	}
 
 	for (int row = 0; row < BRICK_ROWS; ++row) {
@@ -191,6 +243,7 @@ void update_ball() {
 
 			brick.alive = false;
 			--bricks_left;
+			sfx_brick_break();
 
 			const float prev_right = prev_x + BALL_SIZE;
 			const float prev_bottom = prev_y + BALL_SIZE;
@@ -209,6 +262,7 @@ void update_ball() {
 
 			if (bricks_left <= 0) {
 				game_state = GameState::Clear;
+				sfx_clear();
 			}
 			return;
 		}
@@ -251,10 +305,22 @@ void draw_scene() {
 
 }  // namespace
 
-void xmc_app_setup() { reset_game(); }
+void xmc_app_setup() {
+	xmc_speaker_init(XMC_SAMPLE_LINEAR_PCM_S16_MONO, SAMPLE_RATE_HZ, 512,
+						 nullptr);
+	for (int i = 0; i < NUM_TONES; ++i) {
+		tones[i].init(SAMPLE_RATE_HZ);
+		mixer.set_source(i, tones[i].get_output_port());
+	}
+	xmc_speaker_set_source_port(mixer.get_output_port());
+	xmc_speaker_set_muted(false);
+
+	reset_game();
+}
 
 void xmc_app_loop() {
 	xmc_input_service();
+	xmc_speaker_service();
 	const xmc_button_t buttons = xmc_input_get_state();
 
 	move_paddle(buttons);
