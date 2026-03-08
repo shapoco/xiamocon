@@ -1,3 +1,8 @@
+/**
+ * @file pwm.h
+ * @brief Hardware PWM interface
+ */
+
 #ifndef XMC_HW_PWM_H
 #define XMC_HW_PWM_H
 
@@ -17,13 +22,6 @@ typedef struct {
 typedef struct {
   void *handle;
 } xmc_pwm_inst_t;
-
-/**
- * Check if the PWM hardware supports DMA operations. If this returns false, the
- * DMA-related functions will not be available and should not be called.
- * @return True if DMA is supported, false otherwise.
- */
-bool xmc_pwm_supports_dma();
 
 /**
  * Initialize a PWM instance with the specified configuration. This will set up
@@ -71,26 +69,6 @@ xmc_status_t xmc_pwm_set_duty_cycle(xmc_pwm_inst_t *inst, uint32_t cycle);
  */
 xmc_status_t xmc_pwm_dma_write_start(xmc_pwm_inst_t *inst,
                                      const xmc_dma_config_t *cfg);
-
-/**
- * Wait for a DMA transfer started by xmc_pwm_dma_write_start to complete. This
- * should be called after starting a DMA transfer to wait for it to finish
- * before modifying the PWM instance or starting another transfer.
- * @param inst Pointer to the PWM instance to check.
- * @return XMC_OK if the DMA transfer was successfully completed, or an
- * appropriate error code if the operation failed.
- */
-xmc_status_t xmc_pwm_dma_complete(xmc_pwm_inst_t *inst);
-
-/**
- * Check if a DMA transfer started by xmc_pwm_dma_write_start is still in
- * progress. This can be used to check the status of a transfer without blocking
- * to wait for it to complete.
- * @param inst Pointer to the PWM instance to check.
- * @return True if a DMA transfer is still in progress, false if it has
- * completed or if no transfer was started.
- */
-bool xmc_pwm_dma_is_busy(xmc_pwm_inst_t *inst);
 
 #if defined(__cplusplus)
 }

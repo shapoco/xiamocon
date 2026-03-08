@@ -21,7 +21,7 @@ xmc_status_t xmc_sys_init() {
 
   // Mute speaker during initialization to avoid noise
   xmc_ioex_write(XMC_IOEX_PIN_PERI_EN, true);
-  xmc_ioex_set_dir(XMC_IOEX_PIN_INT_MUTE, true);
+  xmc_ioex_set_dir(XMC_IOEX_PIN_SPEAKER_MUTE, true);
 
   // Reset LCD
   xmc_ioex_write(XMC_IOEX_PIN_DISPLAY_RESET, false);
@@ -45,7 +45,7 @@ xmc_status_t xmc_sys_request_shutdown() {
   xmc_display_deinit();
   xmc_input_deinit();
   xmc_ioex_set_dir(XMC_IOEX_PIN_DISPLAY_RESET, false);
-  xmc_ioex_set_dir(XMC_IOEX_PIN_INT_MUTE, false);
+  xmc_ioex_set_dir(XMC_IOEX_PIN_SPEAKER_MUTE, false);
   xmc_ioex_write(XMC_IOEX_PIN_PERI_EN, true);
   xmc_ioex_deinit();
   xmc_i2c_deinit();

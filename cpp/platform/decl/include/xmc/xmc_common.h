@@ -6,6 +6,8 @@
 
 typedef enum {
   XMC_OK = 0,
+  XMC_ERR_BAD_PARAMETER = 1,
+  XMC_ERR_FUNCTION_NOT_SUPPORTED = 2,
   XMC_ERR_BASE_RAM = 0x100,
   XMC_ERR_RAM_ALLOC_FAILED = XMC_ERR_BASE_RAM + 1,
   XMC_ERR_BASE_LOCK = 0x200,
@@ -29,16 +31,20 @@ typedef enum {
   XMC_ERR_SPI_READ_FAILED = XMC_ERR_BASE_SPI + 4,
   XMC_ERR_BASE_PWM = 0x800,
   XMC_ERR_BASE_DMA = 0x1000,
-  XMC_ERR_DMA_BAD_ELEMENT_SIZE = XMC_ERR_BASE_DMA + 1,
+  XMC_ERR_DMA_INIT_FAILED = XMC_ERR_BASE_DMA + 1,
+  XMC_ERR_DMA_BAD_ELEMENT_SIZE = XMC_ERR_BASE_DMA + 2,
   XMC_ERR_BASE_DISPLAY = 0x1100,
   XMC_ERR_DISPLAY_UNSUPPORTED_FORMAT = XMC_ERR_BASE_DISPLAY + 1,
+  XMC_ERR_BASE_SPEAKER = 0x1200,
+  XMC_ERR_SPEAKER_UNSUPPORTED_FORMAT = XMC_ERR_BASE_SPEAKER + 1,
 } xmc_status_t;
 
 #define XMC_ERR_LOG(status) \
   do {                      \
   } while (0)
 
-// if the status is not XMC_OK, log the error and return from the current function.
+// if the status is not XMC_OK, log the error and return from the current
+// function.
 #define XMC_ERR_RET(status)   \
   do {                        \
     if ((status) != XMC_OK) { \

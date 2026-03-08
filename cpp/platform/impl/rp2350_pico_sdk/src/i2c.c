@@ -7,7 +7,7 @@
 #include <pico/stdlib.h>
 
 static i2c_inst_t *const i2c_inst = i2c1;
-static xmc_spinlock_t spinlock;
+static xmc_semaphore_t semaphore;
 static bool in_transaction = false;
 
 uint32_t xmc_i2c_get_preferred_frequency(xmc_i2c_device_t device) {
@@ -24,7 +24,7 @@ xmc_status_t xmc_i2c_init() {
   gpio_set_function(XMC_PIN_I2C_SCL, GPIO_FUNC_I2C);
   gpio_pull_up(XMC_PIN_I2C_SDA);
   gpio_pull_up(XMC_PIN_I2C_SCL);
-  XMC_ERR_RET(xmc_spinlock_init(&spinlock));
+  XMC_ERR_RET(xmc_semaphore_init(&semaphore));
   return XMC_OK;
 }
 
@@ -33,12 +33,12 @@ void xmc_i2c_deinit() {
   i2c_deinit(i2c_inst);
   gpio_deinit(XMC_PIN_I2C_SDA);
   gpio_deinit(XMC_PIN_I2C_SCL);
-  xmc_spinlock_deinit(&spinlock);
+  xmc_semaphore_deinit(&semaphore);
 }
 
 xmc_status_t xmc_i2c_start_transaction() {
   if (in_transaction) return XMC_OK;
-  xmc_spinlock_get(&spinlock);
+  xmc_semaphore_take(&semaphore);
   in_transaction = true;
   return XMC_OK;
 }
@@ -46,7 +46,7 @@ xmc_status_t xmc_i2c_start_transaction() {
 xmc_status_t xmc_i2c_end_transaction() {
   if (!in_transaction) return XMC_OK;
   in_transaction = false;
-  xmc_spinlock_release(&spinlock);
+  xmc_semaphore_give(&semaphore);
   return XMC_OK;
 }
 

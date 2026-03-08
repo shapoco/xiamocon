@@ -1,18 +1,35 @@
 #include "xmc/app.h"
+#include "xmc/audio/tone.hpp"
 #include "xmc/display.h"
 #include "xmc/gfx.hpp"
 #include "xmc/hw/timer.h"
 #include "xmc/input.h"
+#include "xmc/speaker.h"
+
+#include "xmc/hw/gpio.h"
+#include "xmc/hw/pins.h"
 
 #include <stdint.h>
+
+static constexpr uint32_t SAMPLE_RATE_HZ = 22050;
 
 int r_counter = 0, g_counter = 32767, b_counter = 65535;
 float x = XMC_DISPLAY_WIDTH / 2, y = XMC_DISPLAY_HEIGHT / 2;
 float dx = 1.0f, dy = 1.11f;
 
 xmc::Sprite444 frame_buffer(XMC_DISPLAY_WIDTH, XMC_DISPLAY_HEIGHT);
+xmc::Tone tone;
 
-void xmc_app_setup() {}
+void xmc_app_setup() {
+  frame_buffer.clear(0);
+  xmc_speaker_init(XMC_SAMPLE_LINEAR_PCM_U16_MONO, SAMPLE_RATE_HZ, 512, nullptr);
+  xmc_speaker_set_muted(false);
+  tone.init(SAMPLE_RATE_HZ);
+  auto tone_src = tone.get_output();
+  xmc_speaker_set_source(&tone_src);
+
+  xmc_gpio_set_dir(XMC_PIN_GPIO_0, true);
+}
 
 void xmc_app_loop() {
   xmc_input_service();
@@ -29,6 +46,18 @@ void xmc_app_loop() {
   }
   if (buttons & XMC_BUTTON_DOWN) {
     dy += 0.1f;
+  }
+
+  if (xmc_input_was_pressed(XMC_BUTTON_A)) {
+    tone.set_waveform(xmc::Waveform::SAWTOOTH);
+    tone.set_velocity(64);
+    tone.set_envelope(0, 0, 128, 500);
+    tone.set_sweep(1600, 10);
+    tone.note_on(64, 1);
+    dx += 1;
+  }
+  if (xmc_input_was_released(XMC_BUTTON_A)) {
+    tone.note_off();
   }
 
   dy += 0.1f;
@@ -61,7 +90,9 @@ void xmc_app_loop() {
   // complete the previous frame's transfer if it's still in progress, then fill
   // the frame buffer with the new frame's content. In this case, we just draw a
   // moving box, but you can draw anything you want here.
+  xmc_gpio_write(XMC_PIN_GPIO_0, 1);
   frame_buffer.complete_transfer();
+  xmc_gpio_write(XMC_PIN_GPIO_0, 0);
 
   // fill box
   frame_buffer.fill_rect((int)x - 32, (int)y - 32, 64, 64, color);
@@ -70,5 +101,6 @@ void xmc_app_loop() {
   // immediately and the transfer will happen in the background.
   frame_buffer.start_transfer_to_display(0, 0);
 
-  xmc_sleep_ms(20);
+  xmc_speaker_service();
+  xmc_sleep_ms(10);
 }

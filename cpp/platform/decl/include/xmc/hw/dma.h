@@ -11,6 +11,7 @@ typedef struct {
   int element_size;
   /** Number of elements to transfer. */
   int length;
+  
 } xmc_dma_config_t;
 
 #endif

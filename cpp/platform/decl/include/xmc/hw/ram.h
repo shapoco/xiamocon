@@ -9,6 +9,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 /** RAM capabilities */
 typedef enum {
   /** No special capabilities */
@@ -16,10 +20,6 @@ typedef enum {
   /** Supports DMA operations */
   XMC_RAM_CAP_DMA = 1 << 0,
 } xmc_ram_cap_t;
-
-#if defined(__cplusplus)
-extern "C" {
-#endif
 
 /**
  * Allocate memory with specific RAM capabilities.

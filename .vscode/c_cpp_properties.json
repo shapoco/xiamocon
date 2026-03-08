@@ -45,6 +45,7 @@
                 "${PICO_SDK_PATH}/src/common/pico_binary_info/include",
                 "${workspaceFolder}/cpp/example/hwtest/build/generated/pico_base",
                 "${workspaceFolder}/cpp/platform/decl/include",
+                "${workspaceFolder}/cpp/platform/impl/rp2350_pico_sdk/include",
                 "${workspaceFolder}/cpp/library/include"
             ],
             "defines": [],

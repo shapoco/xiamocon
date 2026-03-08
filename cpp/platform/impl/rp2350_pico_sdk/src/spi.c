@@ -11,7 +11,7 @@ static uint dma_tx;
 static dma_channel_config dma_cfg;
 
 static spi_inst_t *const spibus_inst = spi0;
-static xmc_spinlock_t spinlock;
+static xmc_semaphore_t semaphore;
 static volatile bool in_transaction = false;
 
 static int cs_pin = -1;
@@ -55,7 +55,7 @@ xmc_status_t xmc_spi_init() {
   channel_config_set_write_increment(&dma_cfg, false);
   channel_config_set_dreq(&dma_cfg, spi_get_dreq(spibus_inst, true));
 
-  XMC_ERR_RET(xmc_spinlock_init(&spinlock));
+  XMC_ERR_RET(xmc_semaphore_init(&semaphore));
 
   return XMC_OK;
 }
@@ -81,12 +81,12 @@ void xmc_spi_deinit() {
     gpio_deinit(pins[i]);
   }
 
-  xmc_spinlock_deinit(&spinlock);
+  xmc_semaphore_deinit(&semaphore);
 }
 
 xmc_status_t xmc_spi_begin_transaction() {
   if (in_transaction) return XMC_OK;
-  xmc_spinlock_get(&spinlock);
+  xmc_semaphore_take(&semaphore);
   in_transaction = true;
   return XMC_OK;
 }
@@ -95,7 +95,7 @@ xmc_status_t xmc_spi_end_transaction() {
   if (!in_transaction) return XMC_OK;
   in_transaction = false;
   xmc_status_t ret = xmc_spi_dma_complete();
-  xmc_spinlock_release(&spinlock);
+  xmc_semaphore_give(&semaphore);
   return ret;
 }
 

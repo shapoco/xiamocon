@@ -62,7 +62,7 @@ typedef enum {
    * High-active signal that controls speaker mute. Normally controlled by the
    * audio API.
    */
-  XMC_IOEX_PIN_INT_MUTE = 6,
+  XMC_IOEX_PIN_SPEAKER_MUTE = 6,
 
   /**
    * Low-active signal that receives the pressed state of the function button.
