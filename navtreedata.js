@@ -53,7 +53,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structxmc__pwm__config__t.html"
+"structxmc__audio__format__t.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

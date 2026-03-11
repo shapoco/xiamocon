@@ -13,6 +13,7 @@ var tone_8hpp =
       [ "SINE", "tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11aeed52f6fa986d4fb81f722d6ea5f38bf", null ],
       [ "TRIANGLE", "tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a9bcd89070cae224dce305f5011659ef4", null ],
       [ "SAWTOOTH", "tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11ac3cc530a8605dcfbe509de8cfb313704", null ],
+      [ "NOISE", "tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a2a8eb3b0974dc3508ba003d3f7a37e52", null ],
       [ "NUM_WAVEFORMS", "tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11ad04793c7df790a0f8fd35e12d34578f3", null ]
     ] ]
 ];

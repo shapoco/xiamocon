@@ -411,7 +411,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Sets the frequency sweep of the tone. The frequency sweep allows for effects such as siren-like sounds. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">delta</td><td>The amount of frequency change for the sweep. This is a fixed-point value where 0x10000 represents no change, values less than 0x10000 represent a decrease in frequency, and values greater than 0x10000 represent an increase in frequency. </td></tr>
+    <tr><td class="paramname">delta</td><td>The amount of frequency change for the sweep. This is a signed fixed-point number with 16-bit fractional part. The valid range is from -32768 (0.5) to 65536 (2.0). When delta is 0, the sweep function is disabled. When delta is non-zero, the tone frequency is multiplied by (1.0 + delta / 65536.0) at each sweep step. For example, setting delta to 3897 (2 ^ (1.0 / 12.0) - 1) will increase the frequency by a semitone at each step, resulting in approximately one octave increase after 12 steps. </td></tr>
     <tr><td class="paramname">period_ms</td><td>The period of the sweep in milliseconds. This determines how fast the frequency changes over time. </td></tr>
   </table>
   </dd>

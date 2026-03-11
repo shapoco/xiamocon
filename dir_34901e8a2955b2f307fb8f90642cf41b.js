@@ -5,9 +5,11 @@ var dir_34901e8a2955b2f307fb8f90642cf41b =
     [ "gfx", "dir_2b4173ff96fb319b01e30349c3fe4ceb.html", "dir_2b4173ff96fb319b01e30349c3fe4ceb" ],
     [ "audio.hpp", "audio_8hpp_source.html", null ],
     [ "display.h", "display_8h.html", "display_8h" ],
+    [ "geo.hpp", "geo_8hpp_source.html", null ],
     [ "gfx.hpp", "gfx_8hpp_source.html", null ],
     [ "input.h", "input_8h.html", "input_8h" ],
     [ "ioex.h", "ioex_8h.html", "ioex_8h" ],
+    [ "random.h", "random_8h_source.html", null ],
     [ "speaker.h", "speaker_8h.html", "speaker_8h" ],
     [ "system.h", "system_8h.html", "system_8h" ]
 ];

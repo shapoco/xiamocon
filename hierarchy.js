@@ -1,8 +1,12 @@
 var hierarchy =
 [
     [ "xmc::Mixer", "classxmc_1_1Mixer.html", null ],
+    [ "xmc::point2d_t", "structxmc_1_1point2d__t.html", null ],
     [ "xmc::rect_t", "structxmc_1_1rect__t.html", null ],
     [ "xmc::Sprite< prm_PIXEL_FORMAT, pixel_t >", "classxmc_1_1Sprite.html", null ],
+    [ "xmc::Sprite< pixel_format_t::ARGB4444, uint16_t >", "classxmc_1_1Sprite.html", [
+      [ "xmc::Sprite4444", "classxmc_1_1Sprite4444.html", null ]
+    ] ],
     [ "xmc::Sprite< pixel_format_t::RGB444, uint16_t >", "classxmc_1_1Sprite.html", [
       [ "xmc::Sprite444", "classxmc_1_1Sprite444.html", null ]
     ] ],

@@ -2,9 +2,11 @@ var annotated_dup =
 [
     [ "xmc", null, [
       [ "Mixer", "classxmc_1_1Mixer.html", "classxmc_1_1Mixer" ],
+      [ "point2d_t", "structxmc_1_1point2d__t.html", null ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
       [ "Sprite", "classxmc_1_1Sprite.html", null ],
       [ "Sprite444", "classxmc_1_1Sprite444.html", null ],
+      [ "Sprite4444", "classxmc_1_1Sprite4444.html", null ],
       [ "Tone", "classxmc_1_1Tone.html", "classxmc_1_1Tone" ]
     ] ],
     [ "xmc_audio_format_t", "structxmc__audio__format__t.html", null ],
