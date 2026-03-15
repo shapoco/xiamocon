@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['noise_0',['NOISE',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a2a8eb3b0974dc3508ba003d3f7a37e52',1,'xmc']]],
-  ['note_5foff_1',['note_off',['../classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8',1,'xmc::Tone']]],
-  ['note_5fon_2',['note_on',['../classxmc_1_1Tone.html#a5a3d64bd54357bcb5b56e98f5c3d1416',1,'xmc::Tone']]],
-  ['note_5fon_5fwith_5ffreq_3',['note_on_with_freq',['../classxmc_1_1Tone.html#ae709d4d759b1cfe69f5a0c1e66002527',1,'xmc::Tone']]],
-  ['num_5fwaveforms_4',['NUM_WAVEFORMS',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11ad04793c7df790a0f8fd35e12d34578f3',1,'xmc']]]
+  ['mixer_0',['Mixer',['../classxmc_1_1Mixer.html#a4520f87f06ec80772a65cb187019ec27',1,'xmc::Mixer::Mixer()'],['../classxmc_1_1Mixer.html',1,'xmc::Mixer']]],
+  ['mixer_2ehpp_1',['mixer.hpp',['../mixer_8hpp.html',1,'']]],
+  ['mute_2',['mute',['../classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87',1,'xmc::Tone']]]
 ];

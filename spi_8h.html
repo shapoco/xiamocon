@@ -135,10 +135,12 @@ Functions</h2></td></tr>
 <tr class="separator:ac960611c5797491fcacf672066527f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a372478a075f16d167e665a91f9e7daf9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#a372478a075f16d167e665a91f9e7daf9">xmc_spi_deinit</a> ()</td></tr>
 <tr class="separator:a372478a075f16d167e665a91f9e7daf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14be09cedaec2b5ac6fa1062d6ee59ff"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#a14be09cedaec2b5ac6fa1062d6ee59ff">xmc_spi_begin_transaction</a> ()</td></tr>
-<tr class="separator:a14be09cedaec2b5ac6fa1062d6ee59ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9aed5740a0b5eb6373ca305fc646d6d"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#ad9aed5740a0b5eb6373ca305fc646d6d">xmc_spi_end_transaction</a> ()</td></tr>
-<tr class="separator:ad9aed5740a0b5eb6373ca305fc646d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa330d4cccb8a88323798cd6af7bc683b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#aa330d4cccb8a88323798cd6af7bc683b">xmc_spi_try_lock</a> ()</td></tr>
+<tr class="separator:aa330d4cccb8a88323798cd6af7bc683b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae93bf268b55080d1bb57e9f4d8628b03"><td class="memItemLeft" align="right" valign="top">static xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#ae93bf268b55080d1bb57e9f4d8628b03">xmc_spi_lock</a> ()</td></tr>
+<tr class="separator:ae93bf268b55080d1bb57e9f4d8628b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998b0a4b1646729c09ecb974d23a03c8"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#a998b0a4b1646729c09ecb974d23a03c8">xmc_spi_unlock</a> ()</td></tr>
+<tr class="separator:a998b0a4b1646729c09ecb974d23a03c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23e37281ce513aebd65203aa4f679839"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#a23e37281ce513aebd65203aa4f679839">xmc_spi_set_baudrate</a> (uint32_t baudrate)</td></tr>
 <tr class="separator:a23e37281ce513aebd65203aa4f679839"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3edbd0dbcdd3df2da6a836a924d299df"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="spi_8h.html#a3edbd0dbcdd3df2da6a836a924d299df">xmc_spi_write_blocking</a> (const uint8_t *data, uint32_t size)</td></tr>
@@ -177,24 +179,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a14be09cedaec2b5ac6fa1062d6ee59ff" name="a14be09cedaec2b5ac6fa1062d6ee59ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14be09cedaec2b5ac6fa1062d6ee59ff">&#9670;&#160;</a></span>xmc_spi_begin_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">xmc_status_t xmc_spi_begin_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Begin an SPI transaction. This will acquire a lock to prevent other tasks from starting SPI transactions until xmc_spi_end_transaction is called. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully started. </dd></dl>
-
-</div>
-</div>
 <a id="a372478a075f16d167e665a91f9e7daf9" name="a372478a075f16d167e665a91f9e7daf9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a372478a075f16d167e665a91f9e7daf9">&#9670;&#160;</a></span>xmc_spi_deinit()</h2>
 
@@ -285,24 +269,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad9aed5740a0b5eb6373ca305fc646d6d" name="ad9aed5740a0b5eb6373ca305fc646d6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9aed5740a0b5eb6373ca305fc646d6d">&#9670;&#160;</a></span>xmc_spi_end_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">xmc_status_t xmc_spi_end_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>End an SPI transaction. This will release the lock acquired by xmc_spi_begin_transaction. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully ended. </dd></dl>
-
-</div>
-</div>
 <a id="a0cdfbf1e13af7752705c361857ab826a" name="a0cdfbf1e13af7752705c361857ab826a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0cdfbf1e13af7752705c361857ab826a">&#9670;&#160;</a></span>xmc_spi_get_preferred_frequency()</h2>
 
@@ -343,6 +309,32 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Initialize the SPI peripheral and configure the GPIO pins for SPI functionality. This must be called before any other SPI functions except xmc_spi_get_preferred_frequency. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the SPI peripheral was successfully initialized. </dd></dl>
+
+</div>
+</div>
+<a id="ae93bf268b55080d1bb57e9f4d8628b03" name="ae93bf268b55080d1bb57e9f4d8628b03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae93bf268b55080d1bb57e9f4d8628b03">&#9670;&#160;</a></span>xmc_spi_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static xmc_status_t xmc_spi_lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Begin an SPI transaction. This will acquire a lock to prevent other tasks from starting SPI transactions until xmc_spi_unlock is called. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully started. </dd></dl>
 
 </div>
 </div>
@@ -409,6 +401,42 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aa330d4cccb8a88323798cd6af7bc683b" name="aa330d4cccb8a88323798cd6af7bc683b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa330d4cccb8a88323798cd6af7bc683b">&#9670;&#160;</a></span>xmc_spi_try_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xmc_spi_try_lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Try to begin an SPI transaction without blocking. This will attempt to acquire the lock for starting an SPI transaction, but will return immediately if the lock is not available. </p><dl class="section return"><dt>Returns</dt><dd>True if the transaction was successfully started, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a998b0a4b1646729c09ecb974d23a03c8" name="a998b0a4b1646729c09ecb974d23a03c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a998b0a4b1646729c09ecb974d23a03c8">&#9670;&#160;</a></span>xmc_spi_unlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xmc_status_t xmc_spi_unlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>End an SPI transaction. This will release the lock acquired by xmc_spi_lock. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully ended. </dd></dl>
 
 </div>
 </div>

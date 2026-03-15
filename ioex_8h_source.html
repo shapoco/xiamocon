@@ -180,11 +180,13 @@ $(document).ready(function(){initNavTree('ioex_8h_source.html',''); initResizabl
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="ioex_8h.html#acc6857c625f395e64e982ba46077e12a">  243</a></span>xmc_status_t <a class="code hl_function" href="ioex_8h.html#acc6857c625f395e64e982ba46077e12a">xmc_ioex_read_all</a>(uint16_t *value);</div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>}</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno"><a class="line" href="ioex_8h.html#a76c89188b4287298a725319edc08ddbb">  258</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="ioex_8h.html#a76c89188b4287298a725319edc08ddbb">xmc_ioex_try_read_all</a>(uint16_t *value);</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>}</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aioex_8h_html_a04ccbe4fbdd18bd241386f0199da9b85"><div class="ttname"><a href="ioex_8h.html#a04ccbe4fbdd18bd241386f0199da9b85">xmc_ioex_init</a></div><div class="ttdeci">xmc_status_t xmc_ioex_init()</div></div>
 <div class="ttc" id="aioex_8h_html_a4394eb1f88296dda8f424f354732a88a"><div class="ttname"><a href="ioex_8h.html#a4394eb1f88296dda8f424f354732a88a">xmc_ioex_pin_t</a></div><div class="ttdeci">xmc_ioex_pin_t</div><div class="ttdef"><b>Definition:</b> ioex.h:21</div></div>
 <div class="ttc" id="aioex_8h_html_a4394eb1f88296dda8f424f354732a88aa012f7c5a83ca4294895cca0958fb5788"><div class="ttname"><a href="ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa012f7c5a83ca4294895cca0958fb5788">XMC_IOEX_PIN_PERI_EN</a></div><div class="ttdeci">@ XMC_IOEX_PIN_PERI_EN</div><div class="ttdef"><b>Definition:</b> ioex.h:53</div></div>
@@ -204,6 +206,7 @@ $(document).ready(function(){initNavTree('ioex_8h_source.html',''); initResizabl
 <div class="ttc" id="aioex_8h_html_a4394eb1f88296dda8f424f354732a88aae09c8245b19b89b4f494f3227c583695"><div class="ttname"><a href="ioex_8h.html#a4394eb1f88296dda8f424f354732a88aae09c8245b19b89b4f494f3227c583695">XMC_IOEX_PIN_BTN_Y</a></div><div class="ttdeci">@ XMC_IOEX_PIN_BTN_Y</div><div class="ttdef"><b>Definition:</b> ioex.h:95</div></div>
 <div class="ttc" id="aioex_8h_html_a4394eb1f88296dda8f424f354732a88aaebad4964bcea0805439d5105c231cd0e"><div class="ttname"><a href="ioex_8h.html#a4394eb1f88296dda8f424f354732a88aaebad4964bcea0805439d5105c231cd0e">XMC_IOEX_PIN_SPEAKER_MUTE</a></div><div class="ttdeci">@ XMC_IOEX_PIN_SPEAKER_MUTE</div><div class="ttdef"><b>Definition:</b> ioex.h:65</div></div>
 <div class="ttc" id="aioex_8h_html_a73c1948eb1a63a6916ef21c05ed727d8"><div class="ttname"><a href="ioex_8h.html#a73c1948eb1a63a6916ef21c05ed727d8">xmc_ioex_write</a></div><div class="ttdeci">static xmc_status_t xmc_ioex_write(xmc_ioex_pin_t pin, bool value)</div><div class="ttdef"><b>Definition:</b> ioex.h:207</div></div>
+<div class="ttc" id="aioex_8h_html_a76c89188b4287298a725319edc08ddbb"><div class="ttname"><a href="ioex_8h.html#a76c89188b4287298a725319edc08ddbb">xmc_ioex_try_read_all</a></div><div class="ttdeci">bool xmc_ioex_try_read_all(uint16_t *value)</div></div>
 <div class="ttc" id="aioex_8h_html_aa1ce564224c8c5cc279c5a59541bd2ac"><div class="ttname"><a href="ioex_8h.html#aa1ce564224c8c5cc279c5a59541bd2ac">xmc_ioex_read_masked</a></div><div class="ttdeci">xmc_status_t xmc_ioex_read_masked(int port, uint8_t mask, uint8_t *value)</div></div>
 <div class="ttc" id="aioex_8h_html_ab629cf5bebe486b8c26eac20de1bb800"><div class="ttname"><a href="ioex_8h.html#ab629cf5bebe486b8c26eac20de1bb800">xmc_ioex_deinit</a></div><div class="ttdeci">xmc_status_t xmc_ioex_deinit()</div></div>
 <div class="ttc" id="aioex_8h_html_ac0b8107142518e4a05798a1154f01472"><div class="ttname"><a href="ioex_8h.html#ac0b8107142518e4a05798a1154f01472">xmc_ioex_set_dir_masked</a></div><div class="ttdeci">xmc_status_t xmc_ioex_set_dir_masked(int port, uint8_t mask, uint8_t value)</div></div>

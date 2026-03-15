@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['element_5fsize_0',['element_size',['../structxmc__dma__config__t.html#abfc1dedb761e8ba63e7817a42bc737bc',1,'xmc_dma_config_t']]]
+  ['bitmap_0',['bitmap',['../structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7',1,'GFXfont']]],
+  ['bitmapoffset_1',['bitmapOffset',['../structGFXglyph.html#a24d52036821c10af52a742a1d7fbd9b8',1,'GFXglyph']]]
 ];

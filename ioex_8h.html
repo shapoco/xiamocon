@@ -172,6 +172,8 @@ Functions</h2></td></tr>
 <tr class="separator:af19705d06c8c98c02958ee188995dc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc6857c625f395e64e982ba46077e12a"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ioex_8h.html#acc6857c625f395e64e982ba46077e12a">xmc_ioex_read_all</a> (uint16_t *value)</td></tr>
 <tr class="separator:acc6857c625f395e64e982ba46077e12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76c89188b4287298a725319edc08ddbb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ioex_8h.html#a76c89188b4287298a725319edc08ddbb">xmc_ioex_try_read_all</a> (uint16_t *value)</td></tr>
+<tr class="separator:a76c89188b4287298a725319edc08ddbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -467,6 +469,31 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>XMC_OK if the pin directions were successfully set. </dd></dl>
+
+</div>
+</div>
+<a id="a76c89188b4287298a725319edc08ddbb" name="a76c89188b4287298a725319edc08ddbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76c89188b4287298a725319edc08ddbb">&#9670;&#160;</a></span>xmc_ioex_try_read_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xmc_ioex_try_read_all </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Try to read the state of all pins on the IO expander without blocking. If the IO expander is currently busy (e.g. due to another ongoing I2C transactionn), this function will return false and the value parameter will not be modified. If the IO expander is ready, this function will read the state of all pins and return true, setting the value parameter to a 16-bit value where each bit represents the state of a pin (1 for high, 0 for low). Bit 0 corresponds to pin 0, bit 1 corresponds to pin 1, and so on up to bit 15 for pin 15. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Pointer to a variable that will receive the state of all pins on the IO expander (1 for high, 0 for low) if the read was successful. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the pin values were successfully read, false if the IO expander is currently busy and the read could not be performed. </dd></dl>
 
 </div>
 </div>

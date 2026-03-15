@@ -92,6 +92,8 @@ $(document).ready(function(){initNavTree('timer_8h.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">timer.h File Reference</div></div>
 </div><!--header-->
@@ -99,19 +101,32 @@ $(document).ready(function(){initNavTree('timer_8h.html',''); initResizable(); }
 
 <p>Timer hardware interface.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;xmc/xmc_common.h&quot;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for timer.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="timer_8h__incl.png" border="0" usemap="#acpp_2platform_2decl_2include_2xmc_2hw_2timer_8h" alt=""/></div>
 <map name="acpp_2platform_2decl_2include_2xmc_2hw_2timer_8h" id="acpp_2platform_2decl_2include_2xmc_2hw_2timer_8h">
-<area shape="rect" title="Timer hardware interface." alt="" coords="5,5,192,45"/>
-<area shape="rect" title=" " alt="" coords="63,93,134,119"/>
+<area shape="rect" title="Timer hardware interface." alt="" coords="50,5,237,45"/>
+<area shape="rect" href="xmc__common_8h_source.html" title=" " alt="" coords="5,93,164,119"/>
+<area shape="rect" title=" " alt="" coords="159,167,229,192"/>
+<area shape="rect" title=" " alt="" coords="43,167,126,192"/>
 </map>
 </div>
 </div>
 <p><a href="timer_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a68bd8ca16675518eb0307d1cf39a5b12"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a68bd8ca16675518eb0307d1cf39a5b12">xmc_timer_tick_t</a>) (void *context)</td></tr>
+<tr class="separator:a68bd8ca16675518eb0307d1cf39a5b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a06cfb29a5daae140a3dcb2f87b3a5e9c"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a06cfb29a5daae140a3dcb2f87b3a5e9c">xmc_get_time_ms</a> ()</td></tr>
@@ -122,10 +137,30 @@ Functions</h2></td></tr>
 <tr class="separator:a4f9357bfa21ddd395320dd96f6d1f528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a133c9044b90915fac6150431631184ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a133c9044b90915fac6150431631184ce">xmc_sleep_us</a> (uint32_t us)</td></tr>
 <tr class="separator:a133c9044b90915fac6150431631184ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34848266e9d5fd227c3ac35d8bc09480"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480">xmc_timer_add_repeating_ms</a> (<a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *timer, uint32_t interval_ms, <a class="el" href="timer_8h.html#a68bd8ca16675518eb0307d1cf39a5b12">xmc_timer_tick_t</a> cb, void *context)</td></tr>
+<tr class="separator:a34848266e9d5fd227c3ac35d8bc09480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7bbecd837ce8c8da34617e2a23f03c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0">xmc_timer_cancel_repeating</a> (<a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *timer)</td></tr>
+<tr class="separator:ac7bbecd837ce8c8da34617e2a23f03c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Timer hardware interface. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a68bd8ca16675518eb0307d1cf39a5b12" name="a68bd8ca16675518eb0307d1cf39a5b12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68bd8ca16675518eb0307d1cf39a5b12">&#9670;&#160;</a></span>xmc_timer_tick_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* xmc_timer_tick_t) (void *context)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timer tick callback function type. This is the type of the callback function that will be called when a timer tick occurs. The callback function will receive a context pointer that can be used to pass user-defined data to the callback function. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a06cfb29a5daae140a3dcb2f87b3a5e9c" name="a06cfb29a5daae140a3dcb2f87b3a5e9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06cfb29a5daae140a3dcb2f87b3a5e9c">&#9670;&#160;</a></span>xmc_get_time_ms()</h2>
 
@@ -207,6 +242,81 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a34848266e9d5fd227c3ac35d8bc09480" name="a34848266e9d5fd227c3ac35d8bc09480"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34848266e9d5fd227c3ac35d8bc09480">&#9670;&#160;</a></span>xmc_timer_add_repeating_ms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xmc_status_t xmc_timer_add_repeating_ms </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *&#160;</td>
+          <td class="paramname"><em>timer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interval_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="timer_8h.html#a68bd8ca16675518eb0307d1cf39a5b12">xmc_timer_tick_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize a repeated timer instance. This function will set up a timer that calls the specified callback function at regular intervals defined by interval_ms. The callback function will be called with the provided context pointer. The actual interval may not be exactly equal to interval_ms due to hardware limitations, but it will be as close as possible. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timer</td><td>The repeated timer instance to initialize. </td></tr>
+    <tr><td class="paramname">interval_ms</td><td>The desired interval in milliseconds between timer ticks. </td></tr>
+    <tr><td class="paramname">cb</td><td>The callback function to call on each timer tick. </td></tr>
+    <tr><td class="paramname">context</td><td>A user-defined context pointer that will be passed to the callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ac7bbecd837ce8c8da34617e2a23f03c0" name="ac7bbecd837ce8c8da34617e2a23f03c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7bbecd837ce8c8da34617e2a23f03c0">&#9670;&#160;</a></span>xmc_timer_cancel_repeating()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc_timer_cancel_repeating </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *&#160;</td>
+          <td class="paramname"><em>timer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deinitialize a repeated timer instance. This function will stop the timer and free any resources allocated during initialization. After this function is called, the timer instance will no longer be valid and should not be used. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timer</td><td>The repeated timer instance to deinitialize. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
 
 </div>
 </div>

@@ -52,8 +52,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"structxmc__audio__format__t.html"
+"ShapoSansMono__s08c07_8h_source.html",
+"structGFXfont.html#a802323f225b30dd2591c57ccb3fbac00"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

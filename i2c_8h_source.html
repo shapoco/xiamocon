@@ -118,30 +118,38 @@ $(document).ready(function(){initNavTree('i2c_8h_source.html',''); initResizable
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">   45</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">xmc_i2c_deinit</a>();</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">   56</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">xmc_i2c_start_transaction</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="i2c_8h.html#a9bc2b1635134f7442edc3d9cc9e67648">   56</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="i2c_8h.html#a9bc2b1635134f7442edc3d9cc9e67648">xmc_i2c_try_lock</a>();</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">   66</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">xmc_i2c_end_transaction</a>();</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">   73</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a>(uint32_t baudrate);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">   82</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a>(uint8_t dev_addr, <span class="keyword">const</span> uint8_t *data,</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                                    uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">   92</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">xmc_i2c_read_blocking</a>(uint8_t dev_addr, uint8_t *data,</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                                   uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>}</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="i2c_8h.html#ad144ab360c114a2594127300d7b9d8e6">   67</a></span><span class="keyword">static</span> <span class="keyword">inline</span> xmc_status_t <a class="code hl_function" href="i2c_8h.html#ad144ab360c114a2594127300d7b9d8e6">xmc_i2c_lock</a>() {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keywordflow">while</span> (!<a class="code hl_function" href="i2c_8h.html#a9bc2b1635134f7442edc3d9cc9e67648">xmc_i2c_try_lock</a>()) {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    xmc_tight_loop_contents();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordflow">return</span> XMC_OK;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa1830d7592719613ee10629cfb3815e9">   82</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa1830d7592719613ee10629cfb3815e9">xmc_i2c_unlock</a>();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">   89</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a>(uint32_t baudrate);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">   98</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a>(uint8_t dev_addr, <span class="keyword">const</span> uint8_t *data,</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                                    uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">  108</a></span>xmc_status_t <a class="code hl_function" href="i2c_8h.html#af16f9fed5ab00a6be15644dc247dd6fd">xmc_i2c_read_blocking</a>(uint8_t dev_addr, uint8_t *data,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                                   uint32_t size, <span class="keywordtype">bool</span> nostop);</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ai2c_8h_html_a10288675bbb903fce4478ef960dd3ebd"><div class="ttname"><a href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">xmc_i2c_deinit</a></div><div class="ttdeci">void xmc_i2c_deinit()</div></div>
 <div class="ttc" id="ai2c_8h_html_a18dc0a53a6f63d102f6cf8a07c80398e"><div class="ttname"><a href="i2c_8h.html#a18dc0a53a6f63d102f6cf8a07c80398e">xmc_i2c_init</a></div><div class="ttdeci">xmc_status_t xmc_i2c_init()</div></div>
 <div class="ttc" id="ai2c_8h_html_a1941ca3a72d646ab11990e48d31d59a8"><div class="ttname"><a href="i2c_8h.html#a1941ca3a72d646ab11990e48d31d59a8">xmc_i2c_get_preferred_frequency</a></div><div class="ttdeci">uint32_t xmc_i2c_get_preferred_frequency(xmc_i2c_device_t device)</div></div>
-<div class="ttc" id="ai2c_8h_html_a31919419a85b87c3b4c71c6ab3635ef9"><div class="ttname"><a href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">xmc_i2c_start_transaction</a></div><div class="ttdeci">xmc_status_t xmc_i2c_start_transaction()</div></div>
+<div class="ttc" id="ai2c_8h_html_a9bc2b1635134f7442edc3d9cc9e67648"><div class="ttname"><a href="i2c_8h.html#a9bc2b1635134f7442edc3d9cc9e67648">xmc_i2c_try_lock</a></div><div class="ttdeci">bool xmc_i2c_try_lock()</div></div>
 <div class="ttc" id="ai2c_8h_html_aa0237d0598c8c75669c7e0de798a72d9"><div class="ttname"><a href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a></div><div class="ttdeci">xmc_status_t xmc_i2c_write_blocking(uint8_t dev_addr, const uint8_t *data, uint32_t size, bool nostop)</div></div>
-<div class="ttc" id="ai2c_8h_html_aa4675111625c33fecbd5df01c9450733"><div class="ttname"><a href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">xmc_i2c_end_transaction</a></div><div class="ttdeci">xmc_status_t xmc_i2c_end_transaction()</div></div>
+<div class="ttc" id="ai2c_8h_html_aa1830d7592719613ee10629cfb3815e9"><div class="ttname"><a href="i2c_8h.html#aa1830d7592719613ee10629cfb3815e9">xmc_i2c_unlock</a></div><div class="ttdeci">xmc_status_t xmc_i2c_unlock()</div></div>
 <div class="ttc" id="ai2c_8h_html_abbbb6e50fd34720e1d96c5c719d6c642"><div class="ttname"><a href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a></div><div class="ttdeci">xmc_status_t xmc_i2c_set_baudrate(uint32_t baudrate)</div></div>
+<div class="ttc" id="ai2c_8h_html_ad144ab360c114a2594127300d7b9d8e6"><div class="ttname"><a href="i2c_8h.html#ad144ab360c114a2594127300d7b9d8e6">xmc_i2c_lock</a></div><div class="ttdeci">static xmc_status_t xmc_i2c_lock()</div><div class="ttdef"><b>Definition:</b> i2c.h:67</div></div>
 <div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bb"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bb">xmc_i2c_device_t</a></div><div class="ttdeci">xmc_i2c_device_t</div><div class="ttdef"><b>Definition:</b> i2c.h:17</div></div>
 <div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba1a94e716df1d4f17928287400ee0ee65">XMC_I2C_DEV_BAT_MON</a></div><div class="ttdeci">@ XMC_I2C_DEV_BAT_MON</div><div class="ttdef"><b>Definition:</b> i2c.h:21</div></div>
 <div class="ttc" id="ai2c_8h_html_adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73"><div class="ttname"><a href="i2c_8h.html#adca4d82c072c8c4418e2b06e4cb193bba3004444c82c3302e6c851e2821e3aa73">XMC_I2C_DEV_IOEX</a></div><div class="ttdeci">@ XMC_I2C_DEV_IOEX</div><div class="ttdef"><b>Definition:</b> i2c.h:19</div></div>

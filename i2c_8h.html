@@ -133,10 +133,12 @@ Functions</h2></td></tr>
 <tr class="separator:a18dc0a53a6f63d102f6cf8a07c80398e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10288675bbb903fce4478ef960dd3ebd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#a10288675bbb903fce4478ef960dd3ebd">xmc_i2c_deinit</a> ()</td></tr>
 <tr class="separator:a10288675bbb903fce4478ef960dd3ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31919419a85b87c3b4c71c6ab3635ef9"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#a31919419a85b87c3b4c71c6ab3635ef9">xmc_i2c_start_transaction</a> ()</td></tr>
-<tr class="separator:a31919419a85b87c3b4c71c6ab3635ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4675111625c33fecbd5df01c9450733"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#aa4675111625c33fecbd5df01c9450733">xmc_i2c_end_transaction</a> ()</td></tr>
-<tr class="separator:aa4675111625c33fecbd5df01c9450733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bc2b1635134f7442edc3d9cc9e67648"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#a9bc2b1635134f7442edc3d9cc9e67648">xmc_i2c_try_lock</a> ()</td></tr>
+<tr class="separator:a9bc2b1635134f7442edc3d9cc9e67648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad144ab360c114a2594127300d7b9d8e6"><td class="memItemLeft" align="right" valign="top">static xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#ad144ab360c114a2594127300d7b9d8e6">xmc_i2c_lock</a> ()</td></tr>
+<tr class="separator:ad144ab360c114a2594127300d7b9d8e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1830d7592719613ee10629cfb3815e9"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#aa1830d7592719613ee10629cfb3815e9">xmc_i2c_unlock</a> ()</td></tr>
+<tr class="separator:aa1830d7592719613ee10629cfb3815e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbbb6e50fd34720e1d96c5c719d6c642"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#abbbb6e50fd34720e1d96c5c719d6c642">xmc_i2c_set_baudrate</a> (uint32_t baudrate)</td></tr>
 <tr class="separator:abbbb6e50fd34720e1d96c5c719d6c642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0237d0598c8c75669c7e0de798a72d9"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="i2c_8h.html#aa0237d0598c8c75669c7e0de798a72d9">xmc_i2c_write_blocking</a> (uint8_t dev_addr, const uint8_t *data, uint32_t size, bool nostop)</td></tr>
@@ -187,26 +189,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa4675111625c33fecbd5df01c9450733" name="aa4675111625c33fecbd5df01c9450733"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4675111625c33fecbd5df01c9450733">&#9670;&#160;</a></span>xmc_i2c_end_transaction()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">xmc_status_t xmc_i2c_end_transaction </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>End an I2C transaction.</p>
-<p>This function must be called after accessing I2C devices or changing I2C peripheral settings.</p>
-<dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully ended. </dd></dl>
-
-</div>
-</div>
 <a id="a1941ca3a72d646ab11990e48d31d59a8" name="a1941ca3a72d646ab11990e48d31d59a8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1941ca3a72d646ab11990e48d31d59a8">&#9670;&#160;</a></span>xmc_i2c_get_preferred_frequency()</h2>
 
@@ -247,6 +229,34 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Initialize the I2C peripheral and configure the GPIO pins for I2C functionality. This must be called before any other I2C functions except xmc_i2c_get_preferred_frequency. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK if the I2C peripheral was successfully initialized. </dd></dl>
+
+</div>
+</div>
+<a id="ad144ab360c114a2594127300d7b9d8e6" name="ad144ab360c114a2594127300d7b9d8e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad144ab360c114a2594127300d7b9d8e6">&#9670;&#160;</a></span>xmc_i2c_lock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static xmc_status_t xmc_i2c_lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Start an I2C transaction.</p>
+<p>This function must be called before accessing I2C devices or changing I2C peripheral settings. I2C transactions from other tasks will be blocked until xmc_i2c_unlock is called.</p>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully started. </dd></dl>
 
 </div>
 </div>
@@ -323,23 +333,41 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a31919419a85b87c3b4c71c6ab3635ef9" name="a31919419a85b87c3b4c71c6ab3635ef9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31919419a85b87c3b4c71c6ab3635ef9">&#9670;&#160;</a></span>xmc_i2c_start_transaction()</h2>
+<a id="a9bc2b1635134f7442edc3d9cc9e67648" name="a9bc2b1635134f7442edc3d9cc9e67648"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bc2b1635134f7442edc3d9cc9e67648">&#9670;&#160;</a></span>xmc_i2c_try_lock()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_i2c_start_transaction </td>
+          <td class="memname">bool xmc_i2c_try_lock </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start an I2C transaction.</p>
-<p>This function must be called before accessing I2C devices or changing I2C peripheral settings. I2C transactions from other tasks will be blocked until xmc_i2c_end_transaction is called.</p>
-<dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully started. </dd></dl>
+<p>Try to start an I2C transaction without blocking. This can be used in situations where blocking is not acceptable, such as in an interrupt handler or a critical section. If the transaction cannot be started immediately because another transaction is in progress, this function will return false. Otherwise, it will return true and the caller can proceed with I2C operations. </p><dl class="section return"><dt>Returns</dt><dd>true if the transaction was successfully started, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aa1830d7592719613ee10629cfb3815e9" name="aa1830d7592719613ee10629cfb3815e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1830d7592719613ee10629cfb3815e9">&#9670;&#160;</a></span>xmc_i2c_unlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xmc_status_t xmc_i2c_unlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>End an I2C transaction.</p>
+<p>This function must be called after accessing I2C devices or changing I2C peripheral settings.</p>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK if the transaction was successfully ended. </dd></dl>
 
 </div>
 </div>

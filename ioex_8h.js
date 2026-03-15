@@ -25,6 +25,7 @@ var ioex_8h =
     [ "xmc_ioex_read_masked", "ioex_8h.html#aa1ce564224c8c5cc279c5a59541bd2ac", null ],
     [ "xmc_ioex_set_dir", "ioex_8h.html#aef64568358345e272cecd5e50412e470", null ],
     [ "xmc_ioex_set_dir_masked", "ioex_8h.html#ac0b8107142518e4a05798a1154f01472", null ],
+    [ "xmc_ioex_try_read_all", "ioex_8h.html#a76c89188b4287298a725319edc08ddbb", null ],
     [ "xmc_ioex_write", "ioex_8h.html#a73c1948eb1a63a6916ef21c05ed727d8", null ],
     [ "xmc_ioex_write_masked", "ioex_8h.html#ae95b9b143cca85ef1184110b981e2524", null ]
 ];
