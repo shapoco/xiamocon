@@ -53,7 +53,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ShapoSansMono__s08c07_8h_source.html",
-"structGFXfont.html#a802323f225b30dd2591c57ccb3fbac00"
+"structGFXfont.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

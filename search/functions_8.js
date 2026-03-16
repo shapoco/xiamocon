@@ -96,6 +96,7 @@ var searchData=
   ['xmc_5fspinlock_5frelease_93',['xmc_spinlock_release',['../lock_8h.html#a88023763063ca71e918d5d80a82a938a',1,'lock.h']]],
   ['xmc_5fsys_5finit_94',['xmc_sys_init',['../system_8h.html#aeaf7386c107f0820fadc6a6c82334ade',1,'system.h']]],
   ['xmc_5fsys_5frequest_5fshutdown_95',['xmc_sys_request_shutdown',['../system_8h.html#aaa7666758df52d8bbe82406bf5c6c301',1,'system.h']]],
-  ['xmc_5ftimer_5fadd_5frepeating_5fms_96',['xmc_timer_add_repeating_ms',['../timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480',1,'timer.h']]],
-  ['xmc_5ftimer_5fcancel_5frepeating_97',['xmc_timer_cancel_repeating',['../timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0',1,'timer.h']]]
+  ['xmc_5fsys_5fservice_96',['xmc_sys_service',['../system_8h.html#aa7a63a741811677149a789868587345b',1,'system.h']]],
+  ['xmc_5ftimer_5fadd_5frepeating_5fms_97',['xmc_timer_add_repeating_ms',['../timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480',1,'timer.h']]],
+  ['xmc_5ftimer_5fcancel_5frepeating_98',['xmc_timer_cancel_repeating',['../timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0',1,'timer.h']]]
 ];

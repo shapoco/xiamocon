@@ -118,6 +118,8 @@ Include dependency graph for system.h:</div>
 Functions</h2></td></tr>
 <tr class="memitem:aeaf7386c107f0820fadc6a6c82334ade"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="system_8h.html#aeaf7386c107f0820fadc6a6c82334ade">xmc_sys_init</a> ()</td></tr>
 <tr class="separator:aeaf7386c107f0820fadc6a6c82334ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7a63a741811677149a789868587345b"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="system_8h.html#aa7a63a741811677149a789868587345b">xmc_sys_service</a> ()</td></tr>
+<tr class="separator:aa7a63a741811677149a789868587345b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa7666758df52d8bbe82406bf5c6c301"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="system_8h.html#aaa7666758df52d8bbe82406bf5c6c301">xmc_sys_request_shutdown</a> ()</td></tr>
 <tr class="separator:aaa7666758df52d8bbe82406bf5c6c301"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -160,6 +162,26 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Request a system shutdown. This will attempt to gracefully shut down the system by disabling peripherals, and then entering deep sleep mode.</p>
 <dl class="section return"><dt>Returns</dt><dd>XMC_OK if the system was successfully shut down, or an appropriate error code if shutdown failed. </dd></dl>
+
+</div>
+</div>
+<a id="aa7a63a741811677149a789868587345b" name="aa7a63a741811677149a789868587345b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7a63a741811677149a789868587345b">&#9670;&#160;</a></span>xmc_sys_service()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">xmc_status_t xmc_sys_service </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Perform periodic system tasks.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function is used internally by the platform API. It should not be called from user applications.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK if the system service was successfully performed, or an appropriate error code if there was a problem. </dd></dl>
 
 </div>
 </div>

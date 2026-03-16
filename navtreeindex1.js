@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"structGFXfont.html":[0,0,1],
 "structGFXfont.html#a802323f225b30dd2591c57ccb3fbac00":[0,0,1,1],
 "structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7":[0,0,1,0],
 "structGFXfont.html#a9bc82580b9bc5cc1c15ae23457edcd49":[0,0,1,3],
@@ -39,10 +40,11 @@ var NAVTREEINDEX1 =
 "structxmc__sdac__inst__t.html":[0,0,11],
 "structxmc__semaphore__t.html":[0,0,12],
 "structxmc__spinlock__t.html":[0,0,13],
-"system_8h.html":[1,0,0,0,0,0,12],
-"system_8h.html#aaa7666758df52d8bbe82406bf5c6c301":[1,0,0,0,0,0,12,1],
-"system_8h.html#aeaf7386c107f0820fadc6a6c82334ade":[1,0,0,0,0,0,12,0],
-"system_8h_source.html":[1,0,0,0,0,0,12],
+"system_8h.html":[1,0,0,0,0,0,13],
+"system_8h.html#aa7a63a741811677149a789868587345b":[1,0,0,0,0,0,13,2],
+"system_8h.html#aaa7666758df52d8bbe82406bf5c6c301":[1,0,0,0,0,0,13,1],
+"system_8h.html#aeaf7386c107f0820fadc6a6c82334ade":[1,0,0,0,0,0,13,0],
+"system_8h_source.html":[1,0,0,0,0,0,13],
 "timer_8h.html":[1,0,0,1,0,0,0,0,11],
 "timer_8h.html#a06cfb29a5daae140a3dcb2f87b3a5e9c":[1,0,0,1,0,0,0,0,11,2],
 "timer_8h.html#a133c9044b90915fac6150431631184ce":[1,0,0,1,0,0,0,0,11,5],
