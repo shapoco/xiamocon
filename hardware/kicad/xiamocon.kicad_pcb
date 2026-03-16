@@ -2750,7 +2750,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C42456334"
+		(property "LCSC" "C919394"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -2763,7 +2763,7 @@
 				)
 			)
 		)
-		(property "URL" "https://www.lcsc.com/product-detail/C42456334.html"
+		(property "URL" "https://www.lcsc.com/product-detail/C919394.html"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
