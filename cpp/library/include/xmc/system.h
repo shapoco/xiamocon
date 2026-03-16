@@ -24,6 +24,17 @@ extern "C" {
 xmc_status_t xmc_sys_init();
 
 /**
+ * Perform periodic system tasks.
+ * 
+ * @warning This function is used internally by the platform API. It should not
+ * be called from user applications.
+ *
+ * @return XMC_OK if the system service was successfully performed, or an
+ * appropriate error code if there was a problem.
+ */
+xmc_status_t xmc_sys_service();
+
+/**
  * Request a system shutdown. This will attempt to gracefully shut down the
  * system by disabling peripherals, and then entering deep sleep mode.
  *

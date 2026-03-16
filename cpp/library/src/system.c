@@ -8,6 +8,7 @@
 #include "xmc/hw/timer.h"
 #include "xmc/input.h"
 #include "xmc/ioex.h"
+#include "xmc/battery.h"
 
 xmc_status_t xmc_sys_init() {
   xmc_gpio_set_dir(XMC_PIN_POWER_BUTTON, false);
@@ -18,6 +19,8 @@ xmc_status_t xmc_sys_init() {
   xmc_ioex_init();
   xmc_ioex_set_dir_masked(0, 0xFF, 0xFF);
   xmc_ioex_set_dir_masked(1, 0xFF, 0xFF);
+
+  xmc_battery_init();
 
   // Mute speaker during initialization to avoid noise
   xmc_ioex_write(XMC_IOEX_PIN_PERI_EN, true);
@@ -41,9 +44,16 @@ xmc_status_t xmc_sys_init() {
   return XMC_OK;
 }
 
+xmc_status_t xmc_sys_service() {
+  xmc_battery_service();
+  xmc_input_service();
+  return XMC_OK;
+}
+
 xmc_status_t xmc_sys_request_shutdown() {
   xmc_display_deinit();
   xmc_input_deinit();
+  xmc_battery_deinit();
   xmc_ioex_set_dir(XMC_IOEX_PIN_DISPLAY_RESET, false);
   xmc_ioex_set_dir(XMC_IOEX_PIN_SPEAKER_MUTE, false);
   xmc_ioex_write(XMC_IOEX_PIN_PERI_EN, true);

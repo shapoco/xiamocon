@@ -25,7 +25,7 @@ int main() {
                    cfg.speaker_latency_samples, NULL);
   xmc_app_setup();
   while (1) {
-    xmc_input_service();
+    xmc_sys_service();
     xmc_app_loop();
   }
   return 0;

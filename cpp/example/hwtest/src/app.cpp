@@ -5,11 +5,12 @@
 #include "xmc/hw/timer.h"
 #include "xmc/input.h"
 #include "xmc/speaker.h"
-
-#include "xmc/hw/gpio.h"
-#include "xmc/hw/pins.h"
+#include "xmc/battery.h"
+#include "xmc/font/ShapoSansP_s08c07.h"
 
 #include <stdint.h>
+#include <stdio.h>
+
 
 static constexpr uint32_t SAMPLE_RATE_HZ = 22050;
 
@@ -29,17 +30,18 @@ xmc_app_config_t xmc_app_get_config() {
 }
 
 void xmc_app_setup() {
-  xmc_gpio_set_dir(XMC_PIN_GPIO_0, true);
-  xmc_gpio_write(XMC_PIN_GPIO_0, 1);
   frame_buffer.clear(0);
   xmc_sleep_ms(1);
   tone.init(SAMPLE_RATE_HZ);
-  xmc_gpio_write(XMC_PIN_GPIO_0, 0);
   xmc_speaker_set_source_port(tone.get_output_port());
   xmc_speaker_set_muted(false);
 }
 
 void xmc_app_loop() {
+  uint16_t battery_mv = xmc_battery_get_voltage_mv();
+  char buf[32];
+  snprintf(buf, sizeof(buf), "Battery: %d mV", battery_mv);
+
 
   xmc_button_t buttons = xmc_input_get_state();
   if (buttons & XMC_BUTTON_LEFT) {
@@ -104,12 +106,16 @@ void xmc_app_loop() {
   // complete the previous frame's transfer if it's still in progress, then fill
   // the frame buffer with the new frame's content. In this case, we just draw a
   // moving box, but you can draw anything you want here.
-  xmc_gpio_write(XMC_PIN_GPIO_0, 1);
   frame_buffer.complete_transfer();
-  xmc_gpio_write(XMC_PIN_GPIO_0, 0);
 
   // fill box
   frame_buffer.fill_rect((int)x - 32, (int)y - 32, 64, 64, color);
+
+  frame_buffer.set_font(&ShapoSansP_s08c07);
+  frame_buffer.fill_rect(0, 0, 128, 8, 0x000);
+  frame_buffer.set_cursor(0, 7);
+  frame_buffer.set_text_color(0xFFF);
+  frame_buffer.draw_string(buf);
 
   // start transferring the current frame to the display. This will return
   // immediately and the transfer will happen in the background.
