@@ -3,7 +3,7 @@
 
 #include "gfxfont.h"
 #include "xmc/display.h"
-#include "xmc/geo/geo_common.hpp"
+#include "xmc/geo.hpp"
 #include "xmc/gfx/gfx_common.hpp"
 #include "xmc/hw/ram.h"
 
@@ -113,6 +113,7 @@ class Sprite {
         x += on_draw_char(x, cursor_y, *p);
       }
     }
+    cursor_x = x;
   }
 
   xmc_status_t start_transfer_to_display(int dx, int dy) {
@@ -123,19 +124,95 @@ class Sprite {
     return xmc_display_write_pixels_complete();
   }
 
+  void clear(color_t color) { on_fill_rect(0, 0, width, height, color); }
+
   void fill_rect(int x, int y, int w, int h, color_t color) {
+    if (w < 0) {
+      x += w;
+      w = -w;
+    }
+    if (h < 0) {
+      y += h;
+      h = -h;
+    }
     clip_rect(&x, &y, &w, &h, width, height);
     if (w <= 0 || h <= 0) return;
     on_fill_rect(x, y, w, h, color);
   }
 
-  void clear(color_t color) { on_fill_rect(0, 0, width, height, color); }
-
   void draw_rect(int x, int y, int w, int h, color_t color) {
+    if (w < 0) {
+      x += w;
+      w = -w;
+    }
+    if (h < 0) {
+      y += h;
+      h = -h;
+    }
     fill_rect(x, y, w, 1, color);
     fill_rect(x, y + h, w, 1, color);
     fill_rect(x, y, 1, h - 1, color);
     fill_rect(x + w, y, 1, h - 1, color);
+  }
+
+  void fill_triangle(const vec3 *verts, const int *indices, int offset,
+                     color_t color) {
+    int i0 = indices[offset + 0];
+    int i1 = indices[offset + 1];
+    int i2 = indices[offset + 2];
+
+    // 反時計回りのときは描画しない
+    float ax = verts[i1].x - verts[i0].x;
+    float ay = verts[i1].y - verts[i0].y;
+    float bx = verts[i2].x - verts[i0].x;
+    float by = verts[i2].y - verts[i0].y;
+    if (ax * by - ay * bx <= 0) return;
+
+    if (verts[i0].y > verts[i1].y) {
+      int t = i0;
+      i0 = i1;
+      i1 = t;
+    }
+    if (verts[i1].y > verts[i2].y) {
+      int t = i1;
+      i1 = i2;
+      i2 = t;
+    }
+    if (verts[i0].y > verts[i1].y) {
+      int t = i0;
+      i0 = i1;
+      i1 = t;
+    }
+
+    float x0 = verts[i0].x, y0 = verts[i0].y;
+    float x1 = verts[i1].x, y1 = verts[i1].y;
+    float x2 = verts[i2].x, y2 = verts[i2].y;
+
+    int iy_min = (int)ceilf(y0);
+    int iy_max = (int)floorf(y2);
+    if (iy_min < 0) iy_min = 0;
+    if (iy_max >= height) iy_max = height - 1;
+
+    for (int iy = iy_min; iy <= iy_max; iy++) {
+      float y = (float)iy;
+      float xa = (y2 - y0) > 0.0f ? x0 + (x2 - x0) * (y - y0) / (y2 - y0) : x0;
+      float xb;
+      if (y < y1) {
+        xb = (y1 - y0) > 0.0f ? x0 + (x1 - x0) * (y - y0) / (y1 - y0) : x0;
+      } else {
+        xb = (y2 - y1) > 0.0f ? x1 + (x2 - x1) * (y - y1) / (y2 - y1) : x1;
+      }
+      if (xa > xb) {
+        float t = xa;
+        xa = xb;
+        xb = t;
+      }
+      int ix_min = (int)ceilf(xa);
+      int ix_max = (int)floorf(xb);
+      if (ix_min < 0) ix_min = 0;
+      if (ix_max >= width) ix_max = width - 1;
+      on_fill_rect(ix_min, iy, ix_max - ix_min + 1, 1, color);
+    }
   }
 
  protected:

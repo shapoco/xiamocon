@@ -38,6 +38,8 @@ typedef enum {
   XMC_ERR_DISPLAY_UNSUPPORTED_FORMAT = XMC_ERR_BASE_DISPLAY + 1,
   XMC_ERR_BASE_SPEAKER = 0x1200,
   XMC_ERR_SPEAKER_UNSUPPORTED_FORMAT = XMC_ERR_BASE_SPEAKER + 1,
+  XMC_ERR_BASE_USER = 0x8000,
+  XMC_USER_GENERIC_ERROR = XMC_ERR_BASE_USER + 1,
 } xmc_status_t;
 
 #define XMC_ERR_LOG(status) \
@@ -61,9 +63,17 @@ typedef enum {
     break;                              \
   }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Contents of a tight loop.
  */
 void xmc_tight_loop_contents();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

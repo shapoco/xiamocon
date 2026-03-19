@@ -11,9 +11,9 @@ static xmc_semaphore_t semaphore;
 
 uint32_t xmc_i2c_get_preferred_frequency(xmc_i2c_device_t device) {
   switch (device) {
-    case XMC_I2C_DEV_IOEX: return 1000000;
-    case XMC_I2C_DEV_BAT_MON: return 1000000;
-    default: return 100000;
+    case XMC_I2C_DEV_IOEX: return 400000;
+    case XMC_I2C_DEV_BAT_MON: return 400000;
+    default: return 400000;
   }
 }
 
