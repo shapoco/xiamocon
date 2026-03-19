@@ -1,10 +1,13 @@
 <map id="cpp/library/include/xmc/geo/geo_common.hpp" name="cpp/library/include/xmc/geo/geo_common.hpp">
-<area shape="rect" id="node1" title="Common geometric utilities." alt="" coords="163,5,365,45"/>
-<area shape="rect" id="node2" href="$point2d_8hpp_source.html" title=" " alt="" coords="5,93,168,133"/>
-<area shape="rect" id="node4" href="$rect_8hpp_source.html" title=" " alt="" coords="193,93,335,133"/>
-<area shape="rect" id="node5" href="$sprite_8hpp_source.html" title=" " alt="" coords="359,93,507,133"/>
-<area shape="rect" id="node3" href="$geo_8hpp_source.html" title=" " alt="" coords="98,181,241,221"/>
-<area shape="rect" id="node6" href="$sprite444_8hpp_source.html" title=" " alt="" coords="306,181,478,221"/>
-<area shape="rect" id="node8" href="$sprite4444_8hpp_source.html" title=" " alt="" coords="502,181,682,221"/>
-<area shape="rect" id="node7" href="$gfx_8hpp_source.html" title=" " alt="" coords="421,269,563,309"/>
+<area shape="rect" id="node1" title="Common geometric utilities." alt="" coords="195,5,398,45"/>
+<area shape="rect" id="node2" href="$mat4_8hpp.html" title="4x4 matrix for 3D transformations" alt="" coords="112,269,260,309"/>
+<area shape="rect" id="node8" href="$quat_8hpp.html" title="Quaternion for 3D rotations." alt="" coords="5,181,148,221"/>
+<area shape="rect" id="node9" href="$rect_8hpp_source.html" title=" " alt="" coords="336,181,479,221"/>
+<area shape="rect" id="node10" href="$vec2_8hpp.html" title="2D vector with float components" alt="" coords="429,269,575,309"/>
+<area shape="rect" id="node11" href="$vec3_8hpp.html" title="3D vector with float components" alt="" coords="224,93,369,133"/>
+<area shape="rect" id="node3" href="$geo_8hpp_source.html" title=" " alt="" coords="227,357,369,397"/>
+<area shape="rect" id="node4" href="$sprite_8hpp_source.html" title=" " alt="" coords="224,445,372,485"/>
+<area shape="rect" id="node5" href="$sprite444_8hpp_source.html" title=" " alt="" coords="112,533,284,573"/>
+<area shape="rect" id="node7" href="$sprite4444_8hpp_source.html" title=" " alt="" coords="308,533,488,573"/>
+<area shape="rect" id="node6" href="$gfx_8hpp_source.html" title=" " alt="" coords="227,621,369,661"/>
 </map>

@@ -1,0 +1,10 @@
+<map id="cpp/library/include/xmc/geo/mat4.hpp" name="cpp/library/include/xmc/geo/mat4.hpp">
+<area shape="rect" id="node1" title="4x4 matrix for 3D transformations" alt="" coords="81,5,229,45"/>
+<area shape="rect" id="node2" href="$geo__common_8hpp.html" title="Common geometric utilities." alt="" coords="5,240,204,265"/>
+<area shape="rect" id="node6" href="$quat_8hpp.html" title="Quaternion for 3D rotations." alt="" coords="139,93,278,119"/>
+<area shape="rect" id="node7" href="$vec3_8hpp.html" title="3D vector with float components" alt="" coords="34,167,175,192"/>
+<area shape="rect" id="node8" title=" " alt="" coords="229,240,297,265"/>
+<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="25,313,184,339"/>
+<area shape="rect" id="node4" title=" " alt="" coords="13,387,95,412"/>
+<area shape="rect" id="node5" title=" " alt="" coords="120,387,191,412"/>
+</map>

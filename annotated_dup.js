@@ -1,13 +1,16 @@
 var annotated_dup =
 [
     [ "xmc", null, [
+      [ "mat4", "structxmc_1_1mat4.html", "structxmc_1_1mat4" ],
       [ "Mixer", "classxmc_1_1Mixer.html", "classxmc_1_1Mixer" ],
-      [ "point2d_t", "structxmc_1_1point2d__t.html", null ],
+      [ "quat", "structxmc_1_1quat.html", "structxmc_1_1quat" ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
       [ "Sprite", "classxmc_1_1Sprite.html", null ],
       [ "Sprite444", "classxmc_1_1Sprite444.html", null ],
       [ "Sprite4444", "classxmc_1_1Sprite4444.html", null ],
-      [ "Tone", "classxmc_1_1Tone.html", "classxmc_1_1Tone" ]
+      [ "Tone", "classxmc_1_1Tone.html", "classxmc_1_1Tone" ],
+      [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
+      [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],
     [ "GFXfont", "structGFXfont.html", "structGFXfont" ],
     [ "GFXglyph", "structGFXglyph.html", "structGFXglyph" ],

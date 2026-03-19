@@ -1,0 +1,9 @@
+<map id="cpp/library/include/xmc/geo/quat.hpp" name="cpp/library/include/xmc/geo/quat.hpp">
+<area shape="rect" id="node1" title="Quaternion for 3D rotations." alt="" coords="112,5,255,45"/>
+<area shape="rect" id="node2" href="$geo__common_8hpp.html" title="Common geometric utilities." alt="" coords="5,167,204,192"/>
+<area shape="rect" id="node6" href="$vec3_8hpp.html" title="3D vector with float components" alt="" coords="113,93,254,119"/>
+<area shape="rect" id="node7" title=" " alt="" coords="243,167,311,192"/>
+<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="25,240,184,265"/>
+<area shape="rect" id="node4" title=" " alt="" coords="13,313,95,339"/>
+<area shape="rect" id="node5" title=" " alt="" coords="120,313,191,339"/>
+</map>
