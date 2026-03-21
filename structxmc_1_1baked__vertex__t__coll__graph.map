@@ -1,5 +1,6 @@
 <map id="xmc::baked_vertex_t" name="xmc::baked_vertex_t">
-<area shape="rect" id="node1" title=" " alt="" coords="28,93,187,119"/>
+<area shape="rect" id="node1" title=" " alt="" coords="87,93,245,119"/>
 <area shape="rect" id="node2" href="$structxmc_1_1vec3.html" title=" " alt="" coords="5,5,95,31"/>
 <area shape="rect" id="node3" href="$structxmc_1_1colorf.html" title=" " alt="" coords="119,5,213,31"/>
+<area shape="rect" id="node4" href="$structxmc_1_1vec2.html" title=" " alt="" coords="237,5,327,31"/>
 </map>

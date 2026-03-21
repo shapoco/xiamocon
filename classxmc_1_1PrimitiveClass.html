@@ -94,7 +94,6 @@ $(document).ready(function(){initNavTree('classxmc_1_1PrimitiveClass.html',''); 
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classxmc_1_1PrimitiveClass-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">xmc::PrimitiveClass Class Reference</div></div>
 </div><!--header-->
@@ -102,9 +101,9 @@ $(document).ready(function(){initNavTree('classxmc_1_1PrimitiveClass.html',''); 
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9106999ba275f4b8980de85eb13693d2"><td class="memItemLeft" align="right" valign="top"><a id="a9106999ba275f4b8980de85eb13693d2" name="a9106999ba275f4b8980de85eb13693d2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>PrimitiveClass</b> (prim_mode_t mode, Vec3Buffer pos, Vec3Buffer norm, ColorBuffer col, Material mat, IndexBuffer idx=nullptr)</td></tr>
-<tr class="separator:a9106999ba275f4b8980de85eb13693d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8105461a67dddd82bd2846e22ec11388"><td class="memItemLeft" align="right" valign="top"><a id="a8105461a67dddd82bd2846e22ec11388" name="a8105461a67dddd82bd2846e22ec11388"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>PrimitiveClass</b> (prim_mode_t mode, Vec3Buffer pos, Vec3Buffer norm, ColorBuffer col, Vec2Buffer uv, Material mat, IndexBuffer idx=nullptr)</td></tr>
+<tr class="separator:a8105461a67dddd82bd2846e22ec11388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ae42b620a7ebe47d7a16d5b6ee7ca3c"><td class="memItemLeft" align="right" valign="top"><a id="a7ae42b620a7ebe47d7a16d5b6ee7ca3c" name="a7ae42b620a7ebe47d7a16d5b6ee7ca3c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>num_verts</b> ()</td></tr>
 <tr class="separator:a7ae42b620a7ebe47d7a16d5b6ee7ca3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,9 +113,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>num_elements</b> ()</t
 <tr class="memitem:ae20649c99f30756d5c2593f1e7f21e78"><td class="memItemLeft" align="right" valign="top"><a id="ae20649c99f30756d5c2593f1e7f21e78" name="ae20649c99f30756d5c2593f1e7f21e78"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>num_verts_per_element</b> ()</td></tr>
 <tr class="separator:ae20649c99f30756d5c2593f1e7f21e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4ee4d0435f998c0285c708aac36266d"><td class="memItemLeft" align="right" valign="top"><a id="ad4ee4d0435f998c0285c708aac36266d" name="ad4ee4d0435f998c0285c708aac36266d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>fetch_indexes</b> (int *out, int *offset)</td></tr>
-<tr class="separator:ad4ee4d0435f998c0285c708aac36266d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -132,18 +128,15 @@ Vec3Buffer&#160;</td><td class="memItemRight" valign="bottom"><b>normal</b></td>
 <tr class="memitem:acd15d616ef1cd9aeff7857557fbaf64c"><td class="memItemLeft" align="right" valign="top"><a id="acd15d616ef1cd9aeff7857557fbaf64c" name="acd15d616ef1cd9aeff7857557fbaf64c"></a>
 ColorBuffer&#160;</td><td class="memItemRight" valign="bottom"><b>color</b></td></tr>
 <tr class="separator:acd15d616ef1cd9aeff7857557fbaf64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab70ad89db2a2d276d378f2fbbabe84bd"><td class="memItemLeft" align="right" valign="top"><a id="ab70ad89db2a2d276d378f2fbbabe84bd" name="ab70ad89db2a2d276d378f2fbbabe84bd"></a>
+Vec2Buffer&#160;</td><td class="memItemRight" valign="bottom"><b>uv</b></td></tr>
+<tr class="separator:ab70ad89db2a2d276d378f2fbbabe84bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05e0b845162dfcf017810033eb968379"><td class="memItemLeft" align="right" valign="top"><a id="a05e0b845162dfcf017810033eb968379" name="a05e0b845162dfcf017810033eb968379"></a>
 Material&#160;</td><td class="memItemRight" valign="bottom"><b>material</b></td></tr>
 <tr class="separator:a05e0b845162dfcf017810033eb968379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6eaa91373889e11b7a7104db5ea4c4fd"><td class="memItemLeft" align="right" valign="top"><a id="a6eaa91373889e11b7a7104db5ea4c4fd" name="a6eaa91373889e11b7a7104db5ea4c4fd"></a>
 IndexBuffer&#160;</td><td class="memItemRight" valign="bottom"><b>indexes</b></td></tr>
 <tr class="separator:a6eaa91373889e11b7a7104db5ea4c4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a0d03a5f06fe6b0065f29a019ac4b32a7"><td class="memItemLeft" align="right" valign="top"><a id="a0d03a5f06fe6b0065f29a019ac4b32a7" name="a0d03a5f06fe6b0065f29a019ac4b32a7"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>fetch_index</b> (int *offset, int n)</td></tr>
-<tr class="separator:a0d03a5f06fe6b0065f29a019ac4b32a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>cpp/library/include/xmc/gfx/<a class="el" href="mesh_8hpp_source.html">mesh.hpp</a></li>

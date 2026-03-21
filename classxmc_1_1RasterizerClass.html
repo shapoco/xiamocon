@@ -157,6 +157,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (float s)</
 <tr class="memitem:a6e28aa40231fdf29fce63c4b4740464e"><td class="memItemLeft" align="right" valign="top"><a id="a6e28aa40231fdf29fce63c4b4740464e" name="a6e28aa40231fdf29fce63c4b4740464e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_depth_range</b> (float near, float far)</td></tr>
 <tr class="separator:a6e28aa40231fdf29fce63c4b4740464e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc998abf86ad6d961ecf382eb27f10d2"><td class="memItemLeft" align="right" valign="top"><a id="afc998abf86ad6d961ecf382eb27f10d2" name="afc998abf86ad6d961ecf382eb27f10d2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_material</b> (const Material &amp;mat)</td></tr>
+<tr class="separator:afc998abf86ad6d961ecf382eb27f10d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47491f9209b59f269e5405002a12a71a"><td class="memItemLeft" align="right" valign="top"><a id="a47491f9209b59f269e5405002a12a71a" name="a47491f9209b59f269e5405002a12a71a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear_depth</b> (depth_t value=0xFF)</td></tr>
 <tr class="separator:a47491f9209b59f269e5405002a12a71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +169,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>render_mesh</b> (cons
 <tr class="memitem:ae30942ddbccbe1e2834a66a60a1bface"><td class="memItemLeft" align="right" valign="top"><a id="ae30942ddbccbe1e2834a66a60a1bface" name="ae30942ddbccbe1e2834a66a60a1bface"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render_primitive</b> (const Primitive &amp;prim)</td></tr>
 <tr class="separator:ae30942ddbccbe1e2834a66a60a1bface"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9af65a98930f3099d9ce35cd986cd40"><td class="memItemLeft" align="right" valign="top"><a id="aa9af65a98930f3099d9ce35cd986cd40" name="aa9af65a98930f3099d9ce35cd986cd40"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>render_triangle</b> (const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v0, const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v1, const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v2)</td></tr>
-<tr class="separator:aa9af65a98930f3099d9ce35cd986cd40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fcff71191ced8e02881fd0d76c9e36b"><td class="memItemLeft" align="right" valign="top"><a id="a6fcff71191ced8e02881fd0d76c9e36b" name="a6fcff71191ced8e02881fd0d76c9e36b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>render_primitive</b> (const Primitive &amp;prim, const Material &amp;mat)</td></tr>
+<tr class="separator:a6fcff71191ced8e02881fd0d76c9e36b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accc163935309591f23a525870390dd10"><td class="memItemLeft" align="right" valign="top"><a id="accc163935309591f23a525870390dd10" name="accc163935309591f23a525870390dd10"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>render_triangle</b> (const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v0, const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v1, const <a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a> &amp;v2, const Material &amp;mat)</td></tr>
+<tr class="separator:accc163935309591f23a525870390dd10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>cpp/library/include/xmc/gfx/<a class="el" href="rasterizer_8hpp_source.html">rasterizer.hpp</a></li>
