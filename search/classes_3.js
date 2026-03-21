@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['rect_5ft_0',['rect_t',['../structxmc_1_1rect__t.html',1,'xmc']]]
+  ['gfxfont_0',['GFXfont',['../structGFXfont.html',1,'']]],
+  ['gfxglyph_1',['GFXglyph',['../structGFXglyph.html',1,'']]]
 ];

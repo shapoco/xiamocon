@@ -102,12 +102,37 @@ $(document).ready(function(){initNavTree('structxmc_1_1mat4.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ae9acdd094635cbc629912b685250b081"><td class="memItemLeft" align="right" valign="top"><a id="ae9acdd094635cbc629912b685250b081" name="ae9acdd094635cbc629912b685250b081"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>load_identity</b> ()</td></tr>
+<tr class="memdesc:ae9acdd094635cbc629912b685250b081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the identity matrix into this matrix After calling this function, this matrix will be an identity matrix. <br /></td></tr>
+<tr class="separator:ae9acdd094635cbc629912b685250b081"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c37521098131b65a343122432da07fc"><td class="memItemLeft" align="right" valign="top"><a id="a4c37521098131b65a343122432da07fc" name="a4c37521098131b65a343122432da07fc"></a>
 <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;other) const</td></tr>
 <tr class="separator:a4c37521098131b65a343122432da07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada01dd5dd4c35814c92d5b53d2116f06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#ada01dd5dd4c35814c92d5b53d2116f06">transform_point</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;v) const</td></tr>
-<tr class="memdesc:ada01dd5dd4c35814c92d5b53d2116f06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform a point by this matrix, applying perspective division.  <br /></td></tr>
-<tr class="separator:ada01dd5dd4c35814c92d5b53d2116f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a1c1b4bd2d8ff72f53c2fa66715ea1c95">transform</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;v) const</td></tr>
+<tr class="memdesc:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform a point by this matrix, applying perspective division.  <br /></td></tr>
+<tr class="separator:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3126f4c6e4010e691d226a8c9f708da5"><td class="memItemLeft" align="right" valign="top"><a id="a3126f4c6e4010e691d226a8c9f708da5" name="a3126f4c6e4010e691d226a8c9f708da5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>translate</b> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;t)</td></tr>
+<tr class="separator:a3126f4c6e4010e691d226a8c9f708da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf3b2139b9774b445df559a2ca691673"><td class="memItemLeft" align="right" valign="top"><a id="aaf3b2139b9774b445df559a2ca691673" name="aaf3b2139b9774b445df559a2ca691673"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>translate</b> (float x, float y, float z)</td></tr>
+<tr class="separator:aaf3b2139b9774b445df559a2ca691673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427d6a5235d7e24eeadc1cd5d1c53802"><td class="memItemLeft" align="right" valign="top"><a id="a427d6a5235d7e24eeadc1cd5d1c53802" name="a427d6a5235d7e24eeadc1cd5d1c53802"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rotate</b> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;q)</td></tr>
+<tr class="separator:a427d6a5235d7e24eeadc1cd5d1c53802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad329c912a5c3bf40efb72dab55a21d42"><td class="memItemLeft" align="right" valign="top"><a id="ad329c912a5c3bf40efb72dab55a21d42" name="ad329c912a5c3bf40efb72dab55a21d42"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rotate</b> (float pitch, float roll, float yaw)</td></tr>
+<tr class="separator:ad329c912a5c3bf40efb72dab55a21d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30eefa9da1af046658d77ec25b775382"><td class="memItemLeft" align="right" valign="top"><a id="a30eefa9da1af046658d77ec25b775382" name="a30eefa9da1af046658d77ec25b775382"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rotate</b> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;axis, float angle)</td></tr>
+<tr class="separator:a30eefa9da1af046658d77ec25b775382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98bc55a67285531be3cad8678a8d94ed"><td class="memItemLeft" align="right" valign="top"><a id="a98bc55a67285531be3cad8678a8d94ed" name="a98bc55a67285531be3cad8678a8d94ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;s)</td></tr>
+<tr class="separator:a98bc55a67285531be3cad8678a8d94ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d6faef8a2a182056b241a918ff92c8c"><td class="memItemLeft" align="right" valign="top"><a id="a0d6faef8a2a182056b241a918ff92c8c" name="a0d6faef8a2a182056b241a918ff92c8c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (float s)</td></tr>
+<tr class="separator:a0d6faef8a2a182056b241a918ff92c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -185,8 +210,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
 
 </div>
 </div>
-<a id="ada01dd5dd4c35814c92d5b53d2116f06" name="ada01dd5dd4c35814c92d5b53d2116f06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada01dd5dd4c35814c92d5b53d2116f06">&#9670;&#160;</a></span>transform_point()</h2>
+<a id="a1c1b4bd2d8ff72f53c2fa66715ea1c95" name="a1c1b4bd2d8ff72f53c2fa66715ea1c95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1b4bd2d8ff72f53c2fa66715ea1c95">&#9670;&#160;</a></span>transform()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +220,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structxmc_1_1vec3.html">vec3</a> xmc::mat4::transform_point </td>
+          <td class="memname"><a class="el" href="structxmc_1_1vec3.html">vec3</a> xmc::mat4::transform </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>

@@ -10,12 +10,15 @@ var searchData=
   ['sine_7',['SINE',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11aeed52f6fa986d4fb81f722d6ea5f38bf',1,'xmc']]],
   ['speaker_2eh_8',['speaker.h',['../speaker_8h.html',1,'']]],
   ['spi_2eh_9',['spi.h',['../spi_8h.html',1,'']]],
-  ['sprite_10',['Sprite',['../classxmc_1_1Sprite.html',1,'xmc']]],
-  ['sprite444_11',['Sprite444',['../classxmc_1_1Sprite444.html',1,'xmc']]],
-  ['sprite4444_12',['Sprite4444',['../classxmc_1_1Sprite4444.html',1,'xmc']]],
-  ['sprite_3c_20pixel_5fformat_5ft_3a_3aargb4444_2c_20uint16_5ft_20_3e_13',['Sprite&lt; pixel_format_t::ARGB4444, uint16_t &gt;',['../classxmc_1_1Sprite.html',1,'xmc']]],
-  ['sprite_3c_20pixel_5fformat_5ft_3a_3argb444_2c_20uint16_5ft_20_3e_14',['Sprite&lt; pixel_format_t::RGB444, uint16_t &gt;',['../classxmc_1_1Sprite.html',1,'xmc']]],
-  ['square_15',['SQUARE',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a12dec4e1f7ec620651b2b95c440ffac0',1,'xmc']]],
-  ['sustain_16',['SUSTAIN',['../tone_8hpp.html#ad8c230448de7a12dcdaf4110228159cba76f908385924681f5c38b86f4c41b759',1,'xmc']]],
-  ['system_2eh_17',['system.h',['../system_8h.html',1,'']]]
+  ['sprite444_2ehpp_10',['sprite444.hpp',['../sprite444_8hpp.html',1,'']]],
+  ['sprite4444_2ehpp_11',['sprite4444.hpp',['../sprite4444_8hpp.html',1,'']]],
+  ['sprite4444class_12',['Sprite4444Class',['../classxmc_1_1Sprite4444Class.html',1,'xmc']]],
+  ['sprite444class_13',['Sprite444Class',['../classxmc_1_1Sprite444Class.html',1,'xmc']]],
+  ['sprite565_2ehpp_14',['sprite565.hpp',['../sprite565_8hpp.html',1,'']]],
+  ['sprite565class_15',['Sprite565Class',['../classxmc_1_1Sprite565Class.html',1,'xmc']]],
+  ['spriteclass_16',['SpriteClass',['../classxmc_1_1SpriteClass.html',1,'xmc']]],
+  ['square_17',['SQUARE',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a12dec4e1f7ec620651b2b95c440ffac0',1,'xmc']]],
+  ['stride444_18',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]],
+  ['sustain_19',['SUSTAIN',['../tone_8hpp.html#ad8c230448de7a12dcdaf4110228159cba76f908385924681f5c38b86f4c41b759',1,'xmc']]],
+  ['system_2eh_20',['system.h',['../system_8h.html',1,'']]]
 ];

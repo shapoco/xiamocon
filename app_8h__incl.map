@@ -1,7 +1,9 @@
-<map id="cpp/platform/decl/include/xmc/app.h" name="cpp/platform/decl/include/xmc/app.h">
-<area shape="rect" id="node1" title="User application interface." alt="" coords="5,5,192,45"/>
-<area shape="rect" id="node2" href="$xmc__common_8h_source.html" title=" " alt="" coords="19,167,178,192"/>
-<area shape="rect" id="node5" href="$audio__common_8h.html" title="Common definitions for audio components in the XMC library." alt="" coords="77,93,243,119"/>
-<area shape="rect" id="node3" title=" " alt="" coords="7,240,89,265"/>
-<area shape="rect" id="node4" title=" " alt="" coords="114,240,185,265"/>
+<map id="cpp/library/include/xmc/app.h" name="cpp/library/include/xmc/app.h">
+<area shape="rect" id="node1" title="User application interface." alt="" coords="139,5,281,45"/>
+<area shape="rect" id="node2" href="$audio__common_8h.html" title="Common definitions for audio components in the XMC library." alt="" coords="5,93,172,119"/>
+<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="107,167,265,192"/>
+<area shape="rect" id="node6" href="$display_8h.html" title="Display interface for XMC library." alt="" coords="248,93,359,119"/>
+<area shape="rect" id="node4" title=" " alt="" coords="94,240,177,265"/>
+<area shape="rect" id="node5" title=" " alt="" coords="201,240,272,265"/>
+<area shape="rect" id="node7" title=" " alt="" coords="290,167,365,192"/>
 </map>

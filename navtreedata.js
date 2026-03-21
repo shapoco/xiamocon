@@ -53,7 +53,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ShapoSansMono__s08c07_8h_source.html",
-"sprite4444_8hpp_source.html"
+"spi_8h.html#a72b462b80853f1ab3c66e821f79cf5c0"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

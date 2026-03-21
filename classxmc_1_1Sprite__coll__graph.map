@@ -1,5 +1,0 @@
-<map id="xmc::Sprite&lt; prm_PIXEL_FORMAT, color_t &gt;" name="xmc::Sprite&lt; prm_PIXEL_FORMAT, color_t &gt;">
-<area shape="rect" id="node1" title=" " alt="" coords="5,181,185,221"/>
-<area shape="rect" id="node2" href="$structGFXfont.html" title="Data stored for FONT AS A WHOLE." alt="" coords="58,93,133,119"/>
-<area shape="rect" id="node3" href="$structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="53,5,138,31"/>
-</map>

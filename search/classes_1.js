@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mat4_0',['mat4',['../structxmc_1_1mat4.html',1,'xmc']]],
-  ['mixer_1',['Mixer',['../classxmc_1_1Mixer.html',1,'xmc']]]
+  ['baked_5fvertex_5ft_0',['baked_vertex_t',['../structxmc_1_1baked__vertex__t.html',1,'xmc']]]
 ];

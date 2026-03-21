@@ -1,8 +1,11 @@
 <map id="cpp/library/include/xmc/geo/vec2.hpp" name="cpp/library/include/xmc/geo/vec2.hpp">
-<area shape="rect" id="node1" title="2D vector with float components" alt="" coords="119,5,264,45"/>
-<area shape="rect" id="node2" href="$geo_8hpp_source.html" title=" " alt="" coords="120,93,263,133"/>
-<area shape="rect" id="node3" href="$sprite_8hpp_source.html" title=" " alt="" coords="117,181,265,221"/>
-<area shape="rect" id="node4" href="$sprite444_8hpp_source.html" title=" " alt="" coords="5,269,177,309"/>
-<area shape="rect" id="node6" href="$sprite4444_8hpp_source.html" title=" " alt="" coords="201,269,381,309"/>
-<area shape="rect" id="node5" href="$gfx_8hpp_source.html" title=" " alt="" coords="120,357,263,397"/>
+<area shape="rect" id="node1" title="2D vector with float components" alt="" coords="117,5,262,45"/>
+<area shape="rect" id="node2" href="$geo_8hpp_source.html" title=" " alt="" coords="118,93,261,133"/>
+<area shape="rect" id="node3" href="$mesh_8hpp_source.html" title=" " alt="" coords="5,181,152,221"/>
+<area shape="rect" id="node5" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="62,269,234,309"/>
+<area shape="rect" id="node6" href="$sprite_8hpp_source.html" title=" " alt="" coords="270,181,418,221"/>
+<area shape="rect" id="node4" href="$gfx_8hpp_source.html" title=" " alt="" coords="273,357,415,397"/>
+<area shape="rect" id="node7" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="258,269,430,309"/>
+<area shape="rect" id="node8" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="454,269,634,309"/>
+<area shape="rect" id="node9" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="658,269,830,309"/>
 </map>

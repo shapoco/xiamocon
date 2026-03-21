@@ -1,13 +1,23 @@
 var annotated_dup =
 [
     [ "xmc", null, [
+      [ "AttributeBufferClass", "classxmc_1_1AttributeBufferClass.html", null ],
+      [ "baked_vertex_t", "structxmc_1_1baked__vertex__t.html", null ],
+      [ "color4444", "unionxmc_1_1color4444.html", null ],
+      [ "colorf", "structxmc_1_1colorf.html", null ],
+      [ "IndexBufferClass", "classxmc_1_1IndexBufferClass.html", null ],
       [ "mat4", "structxmc_1_1mat4.html", "structxmc_1_1mat4" ],
+      [ "MaterialClass", "classxmc_1_1MaterialClass.html", null ],
+      [ "MeshClass", "classxmc_1_1MeshClass.html", null ],
       [ "Mixer", "classxmc_1_1Mixer.html", "classxmc_1_1Mixer" ],
+      [ "PrimitiveClass", "classxmc_1_1PrimitiveClass.html", null ],
       [ "quat", "structxmc_1_1quat.html", "structxmc_1_1quat" ],
+      [ "RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
-      [ "Sprite", "classxmc_1_1Sprite.html", null ],
-      [ "Sprite444", "classxmc_1_1Sprite444.html", null ],
-      [ "Sprite4444", "classxmc_1_1Sprite4444.html", null ],
+      [ "Sprite4444Class", "classxmc_1_1Sprite4444Class.html", null ],
+      [ "Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
+      [ "Sprite565Class", "classxmc_1_1Sprite565Class.html", null ],
+      [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
       [ "Tone", "classxmc_1_1Tone.html", "classxmc_1_1Tone" ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]

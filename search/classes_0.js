@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['gfxfont_0',['GFXfont',['../structGFXfont.html',1,'']]],
-  ['gfxglyph_1',['GFXglyph',['../structGFXglyph.html',1,'']]]
+  ['attributebufferclass_0',['AttributeBufferClass',['../classxmc_1_1AttributeBufferClass.html',1,'xmc']]]
 ];

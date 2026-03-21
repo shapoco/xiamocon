@@ -1,17 +1,24 @@
 var hierarchy =
 [
+    [ "xmc::AttributeBufferClass< T >", "classxmc_1_1AttributeBufferClass.html", null ],
+    [ "xmc::baked_vertex_t", "structxmc_1_1baked__vertex__t.html", null ],
+    [ "xmc::color4444", "unionxmc_1_1color4444.html", null ],
+    [ "xmc::colorf", "structxmc_1_1colorf.html", null ],
     [ "GFXfont", "structGFXfont.html", null ],
     [ "GFXglyph", "structGFXglyph.html", null ],
+    [ "xmc::IndexBufferClass", "classxmc_1_1IndexBufferClass.html", null ],
     [ "xmc::mat4", "structxmc_1_1mat4.html", null ],
+    [ "xmc::MaterialClass", "classxmc_1_1MaterialClass.html", null ],
+    [ "xmc::MeshClass", "classxmc_1_1MeshClass.html", null ],
     [ "xmc::Mixer", "classxmc_1_1Mixer.html", null ],
+    [ "xmc::PrimitiveClass", "classxmc_1_1PrimitiveClass.html", null ],
     [ "xmc::quat", "structxmc_1_1quat.html", null ],
+    [ "xmc::RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
     [ "xmc::rect_t", "structxmc_1_1rect__t.html", null ],
-    [ "xmc::Sprite< prm_PIXEL_FORMAT, color_t >", "classxmc_1_1Sprite.html", null ],
-    [ "xmc::Sprite< pixel_format_t::ARGB4444, uint16_t >", "classxmc_1_1Sprite.html", [
-      [ "xmc::Sprite4444", "classxmc_1_1Sprite4444.html", null ]
-    ] ],
-    [ "xmc::Sprite< pixel_format_t::RGB444, uint16_t >", "classxmc_1_1Sprite.html", [
-      [ "xmc::Sprite444", "classxmc_1_1Sprite444.html", null ]
+    [ "xmc::SpriteClass", "classxmc_1_1SpriteClass.html", [
+      [ "xmc::Sprite4444Class", "classxmc_1_1Sprite4444Class.html", null ],
+      [ "xmc::Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
+      [ "xmc::Sprite565Class", "classxmc_1_1Sprite565Class.html", null ]
     ] ],
     [ "xmc::Tone", "classxmc_1_1Tone.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],

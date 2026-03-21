@@ -1,7 +1,7 @@
 var timer_8h =
 [
     [ "xmc_repeating_timer_t", "structxmc__repeating__timer__t.html", "structxmc__repeating__timer__t" ],
-    [ "xmc_timer_tick_t", "timer_8h.html#a68bd8ca16675518eb0307d1cf39a5b12", null ],
+    [ "xmc_timer_tick_t", "timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc", null ],
     [ "xmc_get_time_ms", "timer_8h.html#a06cfb29a5daae140a3dcb2f87b3a5e9c", null ],
     [ "xmc_get_time_us", "timer_8h.html#acd37f0db6e682a24326de083ee86152f", null ],
     [ "xmc_sleep_ms", "timer_8h.html#a4f9357bfa21ddd395320dd96f6d1f528", null ],

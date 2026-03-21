@@ -1,7 +1,10 @@
 <map id="cpp/platform/decl/include/xmc/hw/ram.h" name="cpp/platform/decl/include/xmc/hw/ram.h">
-<area shape="rect" id="node1" title="RAM management interface." alt="" coords="98,5,285,45"/>
-<area shape="rect" id="node2" href="$sprite_8hpp_source.html" title=" " alt="" coords="117,93,265,133"/>
-<area shape="rect" id="node3" href="$sprite444_8hpp_source.html" title=" " alt="" coords="5,181,177,221"/>
-<area shape="rect" id="node5" href="$sprite4444_8hpp_source.html" title=" " alt="" coords="201,181,381,221"/>
-<area shape="rect" id="node4" href="$gfx_8hpp_source.html" title=" " alt="" coords="120,269,263,309"/>
+<area shape="rect" id="node1" title="RAM management interface." alt="" coords="116,5,302,45"/>
+<area shape="rect" id="node2" href="$mesh_8hpp_source.html" title=" " alt="" coords="38,93,185,133"/>
+<area shape="rect" id="node5" href="$sprite_8hpp_source.html" title=" " alt="" coords="234,93,382,133"/>
+<area shape="rect" id="node3" href="$gfx_8hpp_source.html" title=" " alt="" coords="236,269,379,309"/>
+<area shape="rect" id="node4" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="26,181,198,221"/>
+<area shape="rect" id="node6" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="222,181,394,221"/>
+<area shape="rect" id="node7" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="418,181,598,221"/>
+<area shape="rect" id="node8" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="622,181,794,221"/>
 </map>

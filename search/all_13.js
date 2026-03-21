@@ -169,6 +169,6 @@ var searchData=
   ['xmc_5fsys_5fservice_166',['xmc_sys_service',['../system_8h.html#aa7a63a741811677149a789868587345b',1,'system.h']]],
   ['xmc_5ftimer_5fadd_5frepeating_5fms_167',['xmc_timer_add_repeating_ms',['../timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480',1,'timer.h']]],
   ['xmc_5ftimer_5fcancel_5frepeating_168',['xmc_timer_cancel_repeating',['../timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0',1,'timer.h']]],
-  ['xmc_5ftimer_5ftick_5ft_169',['xmc_timer_tick_t',['../timer_8h.html#a68bd8ca16675518eb0307d1cf39a5b12',1,'timer.h']]],
+  ['xmc_5ftimer_5ftick_5ft_169',['xmc_timer_tick_t',['../timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc',1,'timer.h']]],
   ['xoffset_170',['xOffset',['../structGFXglyph.html#ab030bd9aeb37509ccc94ae3dcec4de98',1,'GFXglyph']]]
 ];

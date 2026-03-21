@@ -5,6 +5,6 @@ var searchData=
   ['to_5feuler_2',['to_euler',['../structxmc_1_1quat.html#ad788970f0fca83a3568ce0e16f597aa8',1,'xmc::quat']]],
   ['tone_3',['Tone',['../classxmc_1_1Tone.html',1,'xmc']]],
   ['tone_2ehpp_4',['tone.hpp',['../tone_8hpp.html',1,'']]],
-  ['transform_5fpoint_5',['transform_point',['../structxmc_1_1mat4.html#ada01dd5dd4c35814c92d5b53d2116f06',1,'xmc::mat4']]],
+  ['transform_5',['transform',['../structxmc_1_1mat4.html#a1c1b4bd2d8ff72f53c2fa66715ea1c95',1,'xmc::mat4']]],
   ['triangle_6',['TRIANGLE',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a9bcd89070cae224dce305f5011659ef4',1,'xmc']]]
 ];
