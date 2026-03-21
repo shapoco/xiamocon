@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['from_5faxis_5fangle_0',['from_axis_angle',['../structxmc_1_1quat.html#a3ea93b8310ef87a53d88efc1942f0b99',1,'xmc::quat']]],
-  ['from_5feuler_1',['from_euler',['../structxmc_1_1quat.html#a5ac1d9df77a00ce5e126dc2f8172a2d7',1,'xmc::quat']]],
-  ['from_5fquat_2',['from_quat',['../structxmc_1_1mat4.html#aeec45f9b326b279189a4875c502da312',1,'xmc::mat4']]]
+  ['fromaxisangle_0',['fromAxisAngle',['../structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e',1,'xmc::quat']]],
+  ['fromeuler_1',['fromEuler',['../structxmc_1_1quat.html#aac1ed4b1d8da80cb584a79c32da3b682',1,'xmc::quat']]],
+  ['fromquat_2',['fromQuat',['../structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929',1,'xmc::mat4']]]
 ];

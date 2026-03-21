@@ -1,6 +1,6 @@
 var system_8h =
 [
-    [ "xmc_sys_init", "system_8h.html#aeaf7386c107f0820fadc6a6c82334ade", null ],
-    [ "xmc_sys_request_shutdown", "system_8h.html#aaa7666758df52d8bbe82406bf5c6c301", null ],
-    [ "xmc_sys_service", "system_8h.html#aa7a63a741811677149a789868587345b", null ]
+    [ "xmc_sysInit", "system_8h.html#adb6b1a660101c5c8c95d13acb9eacc14", null ],
+    [ "xmc_sysRequestShutdown", "system_8h.html#a64c03020b95d74f690e34b5eaa909330", null ],
+    [ "xmc_sysService", "system_8h.html#a305d7b1388d3aacb90e4688ec112a743", null ]
 ];

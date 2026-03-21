@@ -3,8 +3,8 @@ var power_8h =
     [ "xmc_reset_mode_t", "power_8h.html#a070a5bba11779898c24f3c2128559aab", [
       [ "XMC_RESET_MODE_NORMAL", "power_8h.html#a070a5bba11779898c24f3c2128559aaba5f4527b5230640c5060b5e1d4288e675", null ]
     ] ],
-    [ "xmc_power_deep_sleep", "power_8h.html#aba25985c72403936536c92ebb44dab50", null ],
-    [ "xmc_power_init", "power_8h.html#a63c4bff3276eb566e946f8464b906902", null ],
-    [ "xmc_power_reset", "power_8h.html#ae4f8bb560c275fbdef3981d7ee156c66", null ],
-    [ "xmc_power_service", "power_8h.html#acc3f81596d55e08224a460a58b00c004", null ]
+    [ "xmc_powerDeepSleep", "power_8h.html#ace84d76aa81cc521218c6aabd066b58a", null ],
+    [ "xmc_powerInit", "power_8h.html#ab51d250d91face71dff0fb9bc7e313aa", null ],
+    [ "xmc_powerReset", "power_8h.html#af87b542e36bb68c528f6c9ce9ef1f999", null ],
+    [ "xmc_powerService", "power_8h.html#ac732ab796282ed4d64f07f7b594f5e68", null ]
 ];

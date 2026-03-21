@@ -119,40 +119,40 @@ Include dependency graph for timer.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRepeatingTimer.html">RepeatingTimer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:af0f70b5436f6e16c4f4adb34abf85ebc"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc">xmc_timer_tick_t</a>) (void *context)</td></tr>
-<tr class="separator:af0f70b5436f6e16c4f4adb34abf85ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add1b72422d9f8fe7ec677bca4ac93d5f"><td class="memItemLeft" align="right" valign="top">typedef bool(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#add1b72422d9f8fe7ec677bca4ac93d5f">TimerTickCb</a>) (void *context)</td></tr>
+<tr class="separator:add1b72422d9f8fe7ec677bca4ac93d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a06cfb29a5daae140a3dcb2f87b3a5e9c"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a06cfb29a5daae140a3dcb2f87b3a5e9c">xmc_get_time_ms</a> ()</td></tr>
-<tr class="separator:a06cfb29a5daae140a3dcb2f87b3a5e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd37f0db6e682a24326de083ee86152f"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#acd37f0db6e682a24326de083ee86152f">xmc_get_time_us</a> ()</td></tr>
-<tr class="separator:acd37f0db6e682a24326de083ee86152f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f9357bfa21ddd395320dd96f6d1f528"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a4f9357bfa21ddd395320dd96f6d1f528">xmc_sleep_ms</a> (uint32_t ms)</td></tr>
-<tr class="separator:a4f9357bfa21ddd395320dd96f6d1f528"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a133c9044b90915fac6150431631184ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a133c9044b90915fac6150431631184ce">xmc_sleep_us</a> (uint32_t us)</td></tr>
-<tr class="separator:a133c9044b90915fac6150431631184ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34848266e9d5fd227c3ac35d8bc09480"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480">xmc_timer_add_repeating_ms</a> (<a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *timer, uint32_t interval_ms, <a class="el" href="timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc">xmc_timer_tick_t</a> cb, void *context)</td></tr>
-<tr class="separator:a34848266e9d5fd227c3ac35d8bc09480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7bbecd837ce8c8da34617e2a23f03c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0">xmc_timer_cancel_repeating</a> (<a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *timer)</td></tr>
-<tr class="separator:ac7bbecd837ce8c8da34617e2a23f03c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dc31d7105cc1820956cab8393799266"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a5dc31d7105cc1820956cab8393799266">xmc_getTimeMs</a> ()</td></tr>
+<tr class="separator:a5dc31d7105cc1820956cab8393799266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc69b7a4bb1cad213b5cd2cdf86e5f8"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a6fc69b7a4bb1cad213b5cd2cdf86e5f8">xmc_getTimeUs</a> ()</td></tr>
+<tr class="separator:a6fc69b7a4bb1cad213b5cd2cdf86e5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1662dc84059d975b518cc93784e6c786"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a1662dc84059d975b518cc93784e6c786">xmc_sleepMs</a> (uint32_t ms)</td></tr>
+<tr class="separator:a1662dc84059d975b518cc93784e6c786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ca29d746fb88140303c2d7183351f18"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a7ca29d746fb88140303c2d7183351f18">xmc_sleepUs</a> (uint32_t us)</td></tr>
+<tr class="separator:a7ca29d746fb88140303c2d7183351f18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38009102ddeb5d9ff15f1edcd903a0dd"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a38009102ddeb5d9ff15f1edcd903a0dd">xmc_timerAddRepeatingMs</a> (<a class="el" href="structRepeatingTimer.html">RepeatingTimer</a> *timer, uint32_t interval_ms, <a class="el" href="timer_8h.html#add1b72422d9f8fe7ec677bca4ac93d5f">TimerTickCb</a> cb, void *context)</td></tr>
+<tr class="separator:a38009102ddeb5d9ff15f1edcd903a0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d6c28cdc65560130cec152da708c9f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="timer_8h.html#a8d6c28cdc65560130cec152da708c9f7">xmc_timerCancelRepeating</a> (<a class="el" href="structRepeatingTimer.html">RepeatingTimer</a> *timer)</td></tr>
+<tr class="separator:a8d6c28cdc65560130cec152da708c9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Timer hardware interface. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="af0f70b5436f6e16c4f4adb34abf85ebc" name="af0f70b5436f6e16c4f4adb34abf85ebc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0f70b5436f6e16c4f4adb34abf85ebc">&#9670;&#160;</a></span>xmc_timer_tick_t</h2>
+<a id="add1b72422d9f8fe7ec677bca4ac93d5f" name="add1b72422d9f8fe7ec677bca4ac93d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add1b72422d9f8fe7ec677bca4ac93d5f">&#9670;&#160;</a></span>TimerTickCb</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef bool(* xmc_timer_tick_t) (void *context)</td>
+          <td class="memname">typedef bool(* TimerTickCb) (void *context)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -167,14 +167,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a06cfb29a5daae140a3dcb2f87b3a5e9c" name="a06cfb29a5daae140a3dcb2f87b3a5e9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06cfb29a5daae140a3dcb2f87b3a5e9c">&#9670;&#160;</a></span>xmc_get_time_ms()</h2>
+<a id="a5dc31d7105cc1820956cab8393799266" name="a5dc31d7105cc1820956cab8393799266"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dc31d7105cc1820956cab8393799266">&#9670;&#160;</a></span>xmc_getTimeMs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t xmc_get_time_ms </td>
+          <td class="memname">uint64_t xmc_getTimeMs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -185,14 +185,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acd37f0db6e682a24326de083ee86152f" name="acd37f0db6e682a24326de083ee86152f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd37f0db6e682a24326de083ee86152f">&#9670;&#160;</a></span>xmc_get_time_us()</h2>
+<a id="a6fc69b7a4bb1cad213b5cd2cdf86e5f8" name="a6fc69b7a4bb1cad213b5cd2cdf86e5f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc69b7a4bb1cad213b5cd2cdf86e5f8">&#9670;&#160;</a></span>xmc_getTimeUs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t xmc_get_time_us </td>
+          <td class="memname">uint64_t xmc_getTimeUs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -203,14 +203,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4f9357bfa21ddd395320dd96f6d1f528" name="a4f9357bfa21ddd395320dd96f6d1f528"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f9357bfa21ddd395320dd96f6d1f528">&#9670;&#160;</a></span>xmc_sleep_ms()</h2>
+<a id="a1662dc84059d975b518cc93784e6c786" name="a1662dc84059d975b518cc93784e6c786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1662dc84059d975b518cc93784e6c786">&#9670;&#160;</a></span>xmc_sleepMs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_sleep_ms </td>
+          <td class="memname">void xmc_sleepMs </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>ms</em></td><td>)</td>
@@ -227,14 +227,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a133c9044b90915fac6150431631184ce" name="a133c9044b90915fac6150431631184ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a133c9044b90915fac6150431631184ce">&#9670;&#160;</a></span>xmc_sleep_us()</h2>
+<a id="a7ca29d746fb88140303c2d7183351f18" name="a7ca29d746fb88140303c2d7183351f18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ca29d746fb88140303c2d7183351f18">&#9670;&#160;</a></span>xmc_sleepUs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_sleep_us </td>
+          <td class="memname">void xmc_sleepUs </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>us</em></td><td>)</td>
@@ -251,16 +251,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a34848266e9d5fd227c3ac35d8bc09480" name="a34848266e9d5fd227c3ac35d8bc09480"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34848266e9d5fd227c3ac35d8bc09480">&#9670;&#160;</a></span>xmc_timer_add_repeating_ms()</h2>
+<a id="a38009102ddeb5d9ff15f1edcd903a0dd" name="a38009102ddeb5d9ff15f1edcd903a0dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38009102ddeb5d9ff15f1edcd903a0dd">&#9670;&#160;</a></span>xmc_timerAddRepeatingMs()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_timer_add_repeating_ms </td>
+          <td class="memname">XmcStatus xmc_timerAddRepeatingMs </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structRepeatingTimer.html">RepeatingTimer</a> *&#160;</td>
           <td class="paramname"><em>timer</em>, </td>
         </tr>
         <tr>
@@ -272,7 +272,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc">xmc_timer_tick_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="timer_8h.html#add1b72422d9f8fe7ec677bca4ac93d5f">TimerTickCb</a>&#160;</td>
           <td class="paramname"><em>cb</em>, </td>
         </tr>
         <tr>
@@ -301,16 +301,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac7bbecd837ce8c8da34617e2a23f03c0" name="ac7bbecd837ce8c8da34617e2a23f03c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7bbecd837ce8c8da34617e2a23f03c0">&#9670;&#160;</a></span>xmc_timer_cancel_repeating()</h2>
+<a id="a8d6c28cdc65560130cec152da708c9f7" name="a8d6c28cdc65560130cec152da708c9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d6c28cdc65560130cec152da708c9f7">&#9670;&#160;</a></span>xmc_timerCancelRepeating()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_timer_cancel_repeating </td>
+          <td class="memname">void xmc_timerCancelRepeating </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structRepeatingTimer.html">RepeatingTimer</a> *&#160;</td>
           <td class="paramname"><em>timer</em></td><td>)</td>
           <td></td>
         </tr>

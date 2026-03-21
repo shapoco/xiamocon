@@ -1,10 +1,10 @@
 var sdac_8h =
 [
-    [ "xmc_sdac_inst_t", "structxmc__sdac__inst__t.html", null ],
-    [ "xmc_sdac_config_t", "structxmc__sdac__config__t.html", null ],
-    [ "xmc_sdac_deinit", "sdac_8h.html#a79a7ad880492613044401dbaa795744c", null ],
-    [ "xmc_sdac_get_supported_formats", "sdac_8h.html#a30acc5ce06986e9a7b3508904dbeb2a0", null ],
-    [ "xmc_sdac_init", "sdac_8h.html#a8520caa4389b6256f605fc7406884481", null ],
-    [ "xmc_sdac_service", "sdac_8h.html#a3e98a2f609584cc1de1a91945e02af49", null ],
-    [ "xmc_sdac_set_source", "sdac_8h.html#ab02a22c6c4b2031987dd1b0921e1b2cd", null ]
+    [ "SdacInst", "structSdacInst.html", null ],
+    [ "SdacConfig", "structSdacConfig.html", null ],
+    [ "xmc_sdac_init", "sdac_8h.html#aaff2828d03913c06f2e0919f1d3286b9", null ],
+    [ "xmc_sdac_service", "sdac_8h.html#a2d7214bc177d8a5146ebcd08dc57b2fa", null ],
+    [ "xmc_sdac_set_source", "sdac_8h.html#ad848c7f657e26ff0472e27c3fc55397e", null ],
+    [ "xmc_sdacDeinit", "sdac_8h.html#afff7e1f1b673ccd7ee361e3c78aa82ac", null ],
+    [ "xmc_sdacGetSupportedFormats", "sdac_8h.html#a3f630700d0b814940b4ffbc7025e9695", null ]
 ];

@@ -12,11 +12,11 @@ var input_8h =
       [ "XMC_BUTTON_FUNC", "input_8h.html#acaf728bd6c007a4ae97e5a181479837aab87b246c1612bfead362d2faa2cf18c0", null ],
       [ "XMC_BUTTON_ALL", "input_8h.html#acaf728bd6c007a4ae97e5a181479837aa84959537cac379dc3637d68826e86db5", null ]
     ] ],
-    [ "xmc_input_deinit", "input_8h.html#a45064c2e21bedc9b6a3f24731e9bbeb1", null ],
-    [ "xmc_input_get_state", "input_8h.html#a4d65eca65fde4034e0b49b77ca6b71ea", null ],
-    [ "xmc_input_init", "input_8h.html#acb146a423d327ec8c6994d0504b70479", null ],
-    [ "xmc_input_is_pressed", "input_8h.html#a8ece94ccb096dcc9ad003b7a9d37a40e", null ],
-    [ "xmc_input_service", "input_8h.html#a9511e99c30bfe8af656d708821d91c75", null ],
-    [ "xmc_input_was_pressed", "input_8h.html#ac5be1eef6b21b69b0346b74c1d0a9f0a", null ],
-    [ "xmc_input_was_released", "input_8h.html#ac9eb97fcdc8752820d69af7ceba40196", null ]
+    [ "xmc_inputDeinit", "input_8h.html#a3b85b6356d00c26ddebede1a97d18e35", null ],
+    [ "xmc_inputGetState", "input_8h.html#a22c11a01d5eb4abcb85ebec3e925ea6f", null ],
+    [ "xmc_inputInit", "input_8h.html#aba3f54f4f4c46d068dd294b6c9a334ef", null ],
+    [ "xmc_inputIsPressed", "input_8h.html#a94017a88ce71ac7cbf1df06f9207feb9", null ],
+    [ "xmc_inputService", "input_8h.html#ab9d742ca117e27b21689e7d53fdf837f", null ],
+    [ "xmc_inputWasPressed", "input_8h.html#a21fe585ac3615017b00c225e913c0cf5", null ],
+    [ "xmc_inputWasReleased", "input_8h.html#aa8edaada2c4667ce1f7f061b54b9e903", null ]
 ];

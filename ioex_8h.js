@@ -18,14 +18,14 @@ var ioex_8h =
       [ "XMC_IOEX_PIN_BTN_LEFT", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa9bcb7437a145fe96254ee20e47611b20", null ],
       [ "XMC_IOEX_PIN_BTN_RIGHT", "ioex_8h.html#a4394eb1f88296dda8f424f354732a88aa4ded810cffc00b999eaaca0af0e762c5", null ]
     ] ],
-    [ "xmc_ioex_deinit", "ioex_8h.html#ab629cf5bebe486b8c26eac20de1bb800", null ],
-    [ "xmc_ioex_init", "ioex_8h.html#a04ccbe4fbdd18bd241386f0199da9b85", null ],
-    [ "xmc_ioex_read", "ioex_8h.html#af19705d06c8c98c02958ee188995dc04", null ],
-    [ "xmc_ioex_read_all", "ioex_8h.html#acc6857c625f395e64e982ba46077e12a", null ],
-    [ "xmc_ioex_read_masked", "ioex_8h.html#aa1ce564224c8c5cc279c5a59541bd2ac", null ],
-    [ "xmc_ioex_set_dir", "ioex_8h.html#aef64568358345e272cecd5e50412e470", null ],
-    [ "xmc_ioex_set_dir_masked", "ioex_8h.html#ac0b8107142518e4a05798a1154f01472", null ],
-    [ "xmc_ioex_try_read_all", "ioex_8h.html#a76c89188b4287298a725319edc08ddbb", null ],
-    [ "xmc_ioex_write", "ioex_8h.html#a73c1948eb1a63a6916ef21c05ed727d8", null ],
-    [ "xmc_ioex_write_masked", "ioex_8h.html#ae95b9b143cca85ef1184110b981e2524", null ]
+    [ "xmc_ioexDeinit", "ioex_8h.html#afd0cbedbda13784217758d79856bf3f9", null ],
+    [ "xmc_ioexInit", "ioex_8h.html#a39dc72c195c21d761ce09801c54a72bd", null ],
+    [ "xmc_ioexRead", "ioex_8h.html#a587b1f717d12938fd6469ee2ec6b4202", null ],
+    [ "xmc_ioexReadAll", "ioex_8h.html#a364ccd62bce7760637f3ce47a25143de", null ],
+    [ "xmc_ioexReadMasked", "ioex_8h.html#aa2fffa436e3b580e021aed69545dbf28", null ],
+    [ "xmc_ioexSetDir", "ioex_8h.html#ae971521501c75d4385e3ec1174440138", null ],
+    [ "xmc_ioexSetDirMasked", "ioex_8h.html#a1a87d5689b5653fd491d81549c3bfddd", null ],
+    [ "xmc_ioexTryReadAll", "ioex_8h.html#a3de56eb46db88172ed9e00388519ec65", null ],
+    [ "xmc_ioexWrite", "ioex_8h.html#a8eb9a7b2544e9b17d9991bc769699a96", null ],
+    [ "xmc_ioexWriteMasked", "ioex_8h.html#a965d30d1618bb4b158d6cb5c1e91ec35", null ]
 ];

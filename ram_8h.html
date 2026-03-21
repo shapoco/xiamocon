@@ -139,10 +139,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a270d3eb9b47ad88799fad25f4ca8e07e"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8h.html#a270d3eb9b47ad88799fad25f4ca8e07e">xmc_malloc</a> (size_t size, <a class="el" href="ram_8h.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a> caps)</td></tr>
-<tr class="separator:a270d3eb9b47ad88799fad25f4ca8e07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b00b4bf432362e12bd13558419fd1aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8h.html#a4b00b4bf432362e12bd13558419fd1aa">xmc_free</a> (void *ptr)</td></tr>
-<tr class="separator:a4b00b4bf432362e12bd13558419fd1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa11069b6589b5629ddede2600e751a73"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8h.html#aa11069b6589b5629ddede2600e751a73">xmcMalloc</a> (size_t size, <a class="el" href="ram_8h.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a> caps)</td></tr>
+<tr class="separator:aa11069b6589b5629ddede2600e751a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa87c679f780eb338b30dc3364968c673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8h.html#aa87c679f780eb338b30dc3364968c673">xmcFree</a> (void *ptr)</td></tr>
+<tr class="separator:aa87c679f780eb338b30dc3364968c673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>RAM management interface. </p>
@@ -169,14 +169,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a4b00b4bf432362e12bd13558419fd1aa" name="a4b00b4bf432362e12bd13558419fd1aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b00b4bf432362e12bd13558419fd1aa">&#9670;&#160;</a></span>xmc_free()</h2>
+<a id="aa87c679f780eb338b30dc3364968c673" name="aa87c679f780eb338b30dc3364968c673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa87c679f780eb338b30dc3364968c673">&#9670;&#160;</a></span>xmcFree()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_free </td>
+          <td class="memname">void xmcFree </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
@@ -184,7 +184,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Free memory allocated with xmc_malloc. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Free memory allocated with xmcMalloc. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>A pointer to the memory block to free. </td></tr>
   </table>
@@ -193,14 +193,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a270d3eb9b47ad88799fad25f4ca8e07e" name="a270d3eb9b47ad88799fad25f4ca8e07e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a270d3eb9b47ad88799fad25f4ca8e07e">&#9670;&#160;</a></span>xmc_malloc()</h2>
+<a id="aa11069b6589b5629ddede2600e751a73" name="aa11069b6589b5629ddede2600e751a73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa11069b6589b5629ddede2600e751a73">&#9670;&#160;</a></span>xmcMalloc()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void * xmc_malloc </td>
+          <td class="memname">void * xmcMalloc </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>size</em>, </td>

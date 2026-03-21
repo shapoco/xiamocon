@@ -2,7 +2,7 @@ var annotated_dup =
 [
     [ "xmc", null, [
       [ "AttributeBufferClass", "classxmc_1_1AttributeBufferClass.html", null ],
-      [ "baked_vertex_t", "structxmc_1_1baked__vertex__t.html", null ],
+      [ "BakedVertex", "structxmc_1_1BakedVertex.html", null ],
       [ "color4444", "unionxmc_1_1color4444.html", null ],
       [ "colorf", "structxmc_1_1colorf.html", null ],
       [ "IndexBufferClass", "classxmc_1_1IndexBufferClass.html", null ],
@@ -22,17 +22,17 @@ var annotated_dup =
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],
+    [ "AppConfig", "structAppConfig.html", null ],
     [ "GFXfont", "structGFXfont.html", "structGFXfont" ],
     [ "GFXglyph", "structGFXglyph.html", "structGFXglyph" ],
-    [ "xmc_app_config_t", "structxmc__app__config__t.html", null ],
+    [ "RepeatingTimer", "structRepeatingTimer.html", "structRepeatingTimer" ],
+    [ "SdacConfig", "structSdacConfig.html", null ],
+    [ "SdacInst", "structSdacInst.html", null ],
+    [ "Semaphore", "structSemaphore.html", null ],
+    [ "SpinLock", "structSpinLock.html", null ],
     [ "xmc_audio_format_t", "structxmc__audio__format__t.html", null ],
     [ "xmc_audio_source_port_t", "structxmc__audio__source__port__t.html", null ],
     [ "xmc_dma_config_t", "structxmc__dma__config__t.html", "structxmc__dma__config__t" ],
     [ "xmc_pwm_config_t", "structxmc__pwm__config__t.html", null ],
-    [ "xmc_pwm_inst_t", "structxmc__pwm__inst__t.html", null ],
-    [ "xmc_repeating_timer_t", "structxmc__repeating__timer__t.html", "structxmc__repeating__timer__t" ],
-    [ "xmc_sdac_config_t", "structxmc__sdac__config__t.html", null ],
-    [ "xmc_sdac_inst_t", "structxmc__sdac__inst__t.html", null ],
-    [ "xmc_semaphore_t", "structxmc__semaphore__t.html", null ],
-    [ "xmc_spinlock_t", "structxmc__spinlock__t.html", null ]
+    [ "xmc_pwm_inst_t", "structxmc__pwm__inst__t.html", null ]
 ];

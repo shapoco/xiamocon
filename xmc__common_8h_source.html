@@ -136,7 +136,7 @@ $(document).ready(function(){initNavTree('xmc__common_8h_source.html',''); initR
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  XMC_ERR_SPEAKER_UNSUPPORTED_FORMAT = XMC_ERR_BASE_SPEAKER + 1,</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  XMC_ERR_BASE_USER = 0x8000,</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  XMC_USER_GENERIC_ERROR = XMC_ERR_BASE_USER + 1,</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>} xmc_status_t;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>} XmcStatus;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#define XMC_ERR_LOG(status) \</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">  do {                      \</span></div>
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('xmc__common_8h_source.html',''); initR
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">void</span> xmc_tight_loop_contents();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">void</span> xmc_tightLoopContents();</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#ifdef __cplusplus</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}</div>

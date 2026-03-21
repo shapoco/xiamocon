@@ -120,45 +120,45 @@ Include dependency graph for lock.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpinLock.html">SpinLock</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSemaphore.html">Semaphore</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a12a27b78e1784a7db6cb4ba780da6345"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a12a27b78e1784a7db6cb4ba780da6345">xmc_spinlock_init</a> (<a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *lock)</td></tr>
-<tr class="separator:a12a27b78e1784a7db6cb4ba780da6345"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c3bacb3ce6af41d7ff4fed85f20ab96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a3c3bacb3ce6af41d7ff4fed85f20ab96">xmc_spinlock_deinit</a> (<a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *lock)</td></tr>
-<tr class="separator:a3c3bacb3ce6af41d7ff4fed85f20ab96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac828ed6199429a9d61370f72d719cc01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#ac828ed6199429a9d61370f72d719cc01">xmc_spinlock_get</a> (<a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *lock)</td></tr>
-<tr class="separator:ac828ed6199429a9d61370f72d719cc01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88023763063ca71e918d5d80a82a938a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a88023763063ca71e918d5d80a82a938a">xmc_spinlock_release</a> (<a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *lock)</td></tr>
-<tr class="separator:a88023763063ca71e918d5d80a82a938a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a639038ffd92ac36d1ec9f5c8f3b89cf8"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a639038ffd92ac36d1ec9f5c8f3b89cf8">xmc_semaphore_init</a> (<a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *sem)</td></tr>
-<tr class="separator:a639038ffd92ac36d1ec9f5c8f3b89cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae64525cf6e325f82125f95ade440a03c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#ae64525cf6e325f82125f95ade440a03c">xmc_semaphore_deinit</a> (<a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *sem)</td></tr>
-<tr class="separator:ae64525cf6e325f82125f95ade440a03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac65826ec3fb8eca4078d516874509dbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#ac65826ec3fb8eca4078d516874509dbf">xmc_semaphore_take</a> (<a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *sem)</td></tr>
-<tr class="separator:ac65826ec3fb8eca4078d516874509dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1467cb77766bc270149ed19ecaf7e983"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a1467cb77766bc270149ed19ecaf7e983">xmc_semaphore_try_take</a> (<a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *sem)</td></tr>
-<tr class="separator:a1467cb77766bc270149ed19ecaf7e983"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69cfa681aeaed787a3884fdd4fa89057"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a69cfa681aeaed787a3884fdd4fa89057">xmc_semaphore_give</a> (<a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *sem)</td></tr>
-<tr class="separator:a69cfa681aeaed787a3884fdd4fa89057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad92e54b3cfe6733226be78602c4c1cdb"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#ad92e54b3cfe6733226be78602c4c1cdb">xmc_spinlockInit</a> (<a class="el" href="structSpinLock.html">SpinLock</a> *lock)</td></tr>
+<tr class="separator:ad92e54b3cfe6733226be78602c4c1cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66ec0002101d8c4962fa2ab228fbb571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a66ec0002101d8c4962fa2ab228fbb571">xmc_spinlockDeinit</a> (<a class="el" href="structSpinLock.html">SpinLock</a> *lock)</td></tr>
+<tr class="separator:a66ec0002101d8c4962fa2ab228fbb571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f79f10eb42d35caab3e9b05da8b769"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a93f79f10eb42d35caab3e9b05da8b769">xmc_spinlockGet</a> (<a class="el" href="structSpinLock.html">SpinLock</a> *lock)</td></tr>
+<tr class="separator:a93f79f10eb42d35caab3e9b05da8b769"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f20257b3f61eaee66ca472c1c941aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#aa3f20257b3f61eaee66ca472c1c941aa">xmc_spinlockRelease</a> (<a class="el" href="structSpinLock.html">SpinLock</a> *lock)</td></tr>
+<tr class="separator:aa3f20257b3f61eaee66ca472c1c941aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e5ac1c109f728decb79cbaeb9da52db"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a8e5ac1c109f728decb79cbaeb9da52db">xmc_semaphoreInit</a> (<a class="el" href="structSemaphore.html">Semaphore</a> *sem)</td></tr>
+<tr class="separator:a8e5ac1c109f728decb79cbaeb9da52db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aa4bfa5e87d87368eb93a2364c8f192"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a9aa4bfa5e87d87368eb93a2364c8f192">xmc_semaphoreDeinit</a> (<a class="el" href="structSemaphore.html">Semaphore</a> *sem)</td></tr>
+<tr class="separator:a9aa4bfa5e87d87368eb93a2364c8f192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20d8480da636882ec492d5ea93fc6c47"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a20d8480da636882ec492d5ea93fc6c47">xmc_semaphoreTake</a> (<a class="el" href="structSemaphore.html">Semaphore</a> *sem)</td></tr>
+<tr class="separator:a20d8480da636882ec492d5ea93fc6c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66eccda2ed00a2544fe2b7331f026cbc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a66eccda2ed00a2544fe2b7331f026cbc">xmc_semaphoreTryTake</a> (<a class="el" href="structSemaphore.html">Semaphore</a> *sem)</td></tr>
+<tr class="separator:a66eccda2ed00a2544fe2b7331f026cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a141a651a29135bd368c4ea47137a28f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lock_8h.html#a141a651a29135bd368c4ea47137a28f7">xmc_semaphoreGive</a> (<a class="el" href="structSemaphore.html">Semaphore</a> *sem)</td></tr>
+<tr class="separator:a141a651a29135bd368c4ea47137a28f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Locking primitives for synchronization. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ae64525cf6e325f82125f95ade440a03c" name="ae64525cf6e325f82125f95ade440a03c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae64525cf6e325f82125f95ade440a03c">&#9670;&#160;</a></span>xmc_semaphore_deinit()</h2>
+<a id="a9aa4bfa5e87d87368eb93a2364c8f192" name="a9aa4bfa5e87d87368eb93a2364c8f192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aa4bfa5e87d87368eb93a2364c8f192">&#9670;&#160;</a></span>xmc_semaphoreDeinit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_semaphore_deinit </td>
+          <td class="memname">void xmc_semaphoreDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>sem</em></td><td>)</td>
           <td></td>
         </tr>
@@ -173,16 +173,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a69cfa681aeaed787a3884fdd4fa89057" name="a69cfa681aeaed787a3884fdd4fa89057"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69cfa681aeaed787a3884fdd4fa89057">&#9670;&#160;</a></span>xmc_semaphore_give()</h2>
+<a id="a141a651a29135bd368c4ea47137a28f7" name="a141a651a29135bd368c4ea47137a28f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a141a651a29135bd368c4ea47137a28f7">&#9670;&#160;</a></span>xmc_semaphoreGive()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_semaphore_give </td>
+          <td class="memname">void xmc_semaphoreGive </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>sem</em></td><td>)</td>
           <td></td>
         </tr>
@@ -197,16 +197,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a639038ffd92ac36d1ec9f5c8f3b89cf8" name="a639038ffd92ac36d1ec9f5c8f3b89cf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a639038ffd92ac36d1ec9f5c8f3b89cf8">&#9670;&#160;</a></span>xmc_semaphore_init()</h2>
+<a id="a8e5ac1c109f728decb79cbaeb9da52db" name="a8e5ac1c109f728decb79cbaeb9da52db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e5ac1c109f728decb79cbaeb9da52db">&#9670;&#160;</a></span>xmc_semaphoreInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_semaphore_init </td>
+          <td class="memname">XmcStatus xmc_semaphoreInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>sem</em></td><td>)</td>
           <td></td>
         </tr>
@@ -222,16 +222,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac65826ec3fb8eca4078d516874509dbf" name="ac65826ec3fb8eca4078d516874509dbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac65826ec3fb8eca4078d516874509dbf">&#9670;&#160;</a></span>xmc_semaphore_take()</h2>
+<a id="a20d8480da636882ec492d5ea93fc6c47" name="a20d8480da636882ec492d5ea93fc6c47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20d8480da636882ec492d5ea93fc6c47">&#9670;&#160;</a></span>xmc_semaphoreTake()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_semaphore_take </td>
+          <td class="memname">void xmc_semaphoreTake </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>sem</em></td><td>)</td>
           <td></td>
         </tr>
@@ -246,16 +246,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1467cb77766bc270149ed19ecaf7e983" name="a1467cb77766bc270149ed19ecaf7e983"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1467cb77766bc270149ed19ecaf7e983">&#9670;&#160;</a></span>xmc_semaphore_try_take()</h2>
+<a id="a66eccda2ed00a2544fe2b7331f026cbc" name="a66eccda2ed00a2544fe2b7331f026cbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66eccda2ed00a2544fe2b7331f026cbc">&#9670;&#160;</a></span>xmc_semaphoreTryTake()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool xmc_semaphore_try_take </td>
+          <td class="memname">bool xmc_semaphoreTryTake </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__semaphore__t.html">xmc_semaphore_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSemaphore.html">Semaphore</a> *&#160;</td>
           <td class="paramname"><em>sem</em></td><td>)</td>
           <td></td>
         </tr>
@@ -271,16 +271,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3c3bacb3ce6af41d7ff4fed85f20ab96" name="a3c3bacb3ce6af41d7ff4fed85f20ab96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c3bacb3ce6af41d7ff4fed85f20ab96">&#9670;&#160;</a></span>xmc_spinlock_deinit()</h2>
+<a id="a66ec0002101d8c4962fa2ab228fbb571" name="a66ec0002101d8c4962fa2ab228fbb571"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66ec0002101d8c4962fa2ab228fbb571">&#9670;&#160;</a></span>xmc_spinlockDeinit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_spinlock_deinit </td>
+          <td class="memname">void xmc_spinlockDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSpinLock.html">SpinLock</a> *&#160;</td>
           <td class="paramname"><em>lock</em></td><td>)</td>
           <td></td>
         </tr>
@@ -295,16 +295,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac828ed6199429a9d61370f72d719cc01" name="ac828ed6199429a9d61370f72d719cc01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac828ed6199429a9d61370f72d719cc01">&#9670;&#160;</a></span>xmc_spinlock_get()</h2>
+<a id="a93f79f10eb42d35caab3e9b05da8b769" name="a93f79f10eb42d35caab3e9b05da8b769"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93f79f10eb42d35caab3e9b05da8b769">&#9670;&#160;</a></span>xmc_spinlockGet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_spinlock_get </td>
+          <td class="memname">void xmc_spinlockGet </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSpinLock.html">SpinLock</a> *&#160;</td>
           <td class="paramname"><em>lock</em></td><td>)</td>
           <td></td>
         </tr>
@@ -319,16 +319,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a12a27b78e1784a7db6cb4ba780da6345" name="a12a27b78e1784a7db6cb4ba780da6345"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12a27b78e1784a7db6cb4ba780da6345">&#9670;&#160;</a></span>xmc_spinlock_init()</h2>
+<a id="ad92e54b3cfe6733226be78602c4c1cdb" name="ad92e54b3cfe6733226be78602c4c1cdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad92e54b3cfe6733226be78602c4c1cdb">&#9670;&#160;</a></span>xmc_spinlockInit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_spinlock_init </td>
+          <td class="memname">XmcStatus xmc_spinlockInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSpinLock.html">SpinLock</a> *&#160;</td>
           <td class="paramname"><em>lock</em></td><td>)</td>
           <td></td>
         </tr>
@@ -344,16 +344,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a88023763063ca71e918d5d80a82a938a" name="a88023763063ca71e918d5d80a82a938a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88023763063ca71e918d5d80a82a938a">&#9670;&#160;</a></span>xmc_spinlock_release()</h2>
+<a id="aa3f20257b3f61eaee66ca472c1c941aa" name="aa3f20257b3f61eaee66ca472c1c941aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f20257b3f61eaee66ca472c1c941aa">&#9670;&#160;</a></span>xmc_spinlockRelease()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc_spinlock_release </td>
+          <td class="memname">void xmc_spinlockRelease </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__spinlock__t.html">xmc_spinlock_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSpinLock.html">SpinLock</a> *&#160;</td>
           <td class="paramname"><em>lock</em></td><td>)</td>
           <td></td>
         </tr>

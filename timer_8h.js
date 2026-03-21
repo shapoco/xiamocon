@@ -1,11 +1,11 @@
 var timer_8h =
 [
-    [ "xmc_repeating_timer_t", "structxmc__repeating__timer__t.html", "structxmc__repeating__timer__t" ],
-    [ "xmc_timer_tick_t", "timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc", null ],
-    [ "xmc_get_time_ms", "timer_8h.html#a06cfb29a5daae140a3dcb2f87b3a5e9c", null ],
-    [ "xmc_get_time_us", "timer_8h.html#acd37f0db6e682a24326de083ee86152f", null ],
-    [ "xmc_sleep_ms", "timer_8h.html#a4f9357bfa21ddd395320dd96f6d1f528", null ],
-    [ "xmc_sleep_us", "timer_8h.html#a133c9044b90915fac6150431631184ce", null ],
-    [ "xmc_timer_add_repeating_ms", "timer_8h.html#a34848266e9d5fd227c3ac35d8bc09480", null ],
-    [ "xmc_timer_cancel_repeating", "timer_8h.html#ac7bbecd837ce8c8da34617e2a23f03c0", null ]
+    [ "RepeatingTimer", "structRepeatingTimer.html", "structRepeatingTimer" ],
+    [ "TimerTickCb", "timer_8h.html#add1b72422d9f8fe7ec677bca4ac93d5f", null ],
+    [ "xmc_getTimeMs", "timer_8h.html#a5dc31d7105cc1820956cab8393799266", null ],
+    [ "xmc_getTimeUs", "timer_8h.html#a6fc69b7a4bb1cad213b5cd2cdf86e5f8", null ],
+    [ "xmc_sleepMs", "timer_8h.html#a1662dc84059d975b518cc93784e6c786", null ],
+    [ "xmc_sleepUs", "timer_8h.html#a7ca29d746fb88140303c2d7183351f18", null ],
+    [ "xmc_timerAddRepeatingMs", "timer_8h.html#a38009102ddeb5d9ff15f1edcd903a0dd", null ],
+    [ "xmc_timerCancelRepeating", "timer_8h.html#a8d6c28cdc65560130cec152da708c9f7", null ]
 ];

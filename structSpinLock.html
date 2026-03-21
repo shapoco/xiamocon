@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Xiamocon: xmc::baked_vertex_t Struct Reference</title>
+<title>Xiamocon: SpinLock Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structxmc_1_1baked__vertex__t.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structSpinLock.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -93,43 +93,30 @@ $(document).ready(function(){initNavTree('structxmc_1_1baked__vertex__t.html',''
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structxmc_1_1baked__vertex__t-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">xmc::baked_vertex_t Struct Reference</div></div>
+<a href="structSpinLock-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">SpinLock Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Collaboration diagram for xmc::baked_vertex_t:</div>
-<div class="dyncontent">
-<div class="center"><img src="structxmc_1_1baked__vertex__t__coll__graph.png" border="0" usemap="#axmc_1_1baked__vertex__t_coll__map" alt="Collaboration graph"/></div>
-<map name="axmc_1_1baked__vertex__t_coll__map" id="axmc_1_1baked__vertex__t_coll__map">
-<area shape="rect" title=" " alt="" coords="87,93,245,119"/>
-<area shape="rect" href="structxmc_1_1vec3.html" title=" " alt="" coords="5,5,95,31"/>
-<area shape="rect" href="structxmc_1_1colorf.html" title=" " alt="" coords="119,5,213,31"/>
-<area shape="rect" href="structxmc_1_1vec2.html" title=" " alt="" coords="237,5,327,31"/>
-</map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+
+<p><code>#include &lt;<a class="el" href="lock_8h_source.html">lock.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a754da12681565a3adf375eea962e1b06"><td class="memItemLeft" align="right" valign="top"><a id="a754da12681565a3adf375eea962e1b06" name="a754da12681565a3adf375eea962e1b06"></a>
-<a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pos</b></td></tr>
-<tr class="separator:a754da12681565a3adf375eea962e1b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8c707e2b9f3358c4836bf2122a028fe"><td class="memItemLeft" align="right" valign="top"><a id="ac8c707e2b9f3358c4836bf2122a028fe" name="ac8c707e2b9f3358c4836bf2122a028fe"></a>
-<a class="el" href="structxmc_1_1colorf.html">colorf</a>&#160;</td><td class="memItemRight" valign="bottom"><b>color</b></td></tr>
-<tr class="separator:ac8c707e2b9f3358c4836bf2122a028fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02583f41ab24f47522edc62e82a1165d"><td class="memItemLeft" align="right" valign="top"><a id="a02583f41ab24f47522edc62e82a1165d" name="a02583f41ab24f47522edc62e82a1165d"></a>
-<a class="el" href="structxmc_1_1vec2.html">vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>uv</b></td></tr>
-<tr class="separator:a02583f41ab24f47522edc62e82a1165d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a528c62c5ec8b96f4b9c592f4d325ee7d"><td class="memItemLeft" align="right" valign="top"><a id="a528c62c5ec8b96f4b9c592f4d325ee7d" name="a528c62c5ec8b96f4b9c592f4d325ee7d"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>handle</b></td></tr>
+<tr class="separator:a528c62c5ec8b96f4b9c592f4d325ee7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>cpp/library/include/xmc/gfx/<a class="el" href="rasterizer_8hpp_source.html">rasterizer.hpp</a></li>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Opaque handle for a spinlock. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>cpp/platform/decl/include/xmc/hw/<a class="el" href="lock_8h_source.html">lock.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>xmc</b></li><li class="navelem"><a class="el" href="structxmc_1_1baked__vertex__t.html">baked_vertex_t</a></li>
+    <li class="navelem"><a class="el" href="structSpinLock.html">SpinLock</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

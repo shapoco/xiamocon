@@ -138,7 +138,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a2b4febed58fd92980b91218db78e6132"><td class="memItemLeft" align="right" valign="top"><a id="a2b4febed58fd92980b91218db78e6132" name="a2b4febed58fd92980b91218db78e6132"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>prim_mode_t</b> { <br />
+<tr class="memitem:a1cbdd172b05ba9e3087aedb3abc77862"><td class="memItemLeft" align="right" valign="top"><a id="a1cbdd172b05ba9e3087aedb3abc77862" name="a1cbdd172b05ba9e3087aedb3abc77862"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>PrimitiveMode</b> { <br />
 &#160;&#160;<b>POINTS</b>
 , <b>LINES</b>
 , <b>LINE_LOOP</b>
@@ -149,24 +149,24 @@ Enumerations</h2></td></tr>
 , <b>TRIANGLE_FAN</b>
 <br />
  }</td></tr>
-<tr class="separator:a2b4febed58fd92980b91218db78e6132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a1cbdd172b05ba9e3087aedb3abc77862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aef6134e7c220585cb151949b39b36198"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="geo__common_8hpp.html#aef6134e7c220585cb151949b39b36198">xmc::clip_rect</a> (int *x, int *y, int *w, int *h, int max_w, int max_h)</td></tr>
-<tr class="separator:aef6134e7c220585cb151949b39b36198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5973c70dd24db934e9cac3599478506"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="geo__common_8hpp.html#ad5973c70dd24db934e9cac3599478506">xmc::clipRect</a> (int *x, int *y, int *w, int *h, int maxW, int maxH)</td></tr>
+<tr class="separator:ad5973c70dd24db934e9cac3599478506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common geometric utilities. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aef6134e7c220585cb151949b39b36198" name="aef6134e7c220585cb151949b39b36198"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef6134e7c220585cb151949b39b36198">&#9670;&#160;</a></span>clip_rect()</h2>
+<a id="ad5973c70dd24db934e9cac3599478506" name="ad5973c70dd24db934e9cac3599478506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5973c70dd24db934e9cac3599478506">&#9670;&#160;</a></span>clipRect()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc::clip_rect </td>
+          <td class="memname">void xmc::clipRect </td>
           <td>(</td>
           <td class="paramtype">int *&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -193,13 +193,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_w</em>, </td>
+          <td class="paramname"><em>maxW</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_h</em>&#160;</td>
+          <td class="paramname"><em>maxH</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -208,7 +208,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clip a rectangle to fit within a maximum width and height. The rectangle is defined by its top-left corner (x, y) and its width and height (w, h). The maximum width and height are defined by max_w and max_h. The function modifies the rectangle in place to ensure that it fits within the specified bounds. If the rectangle is completely outside the bounds, it will be clipped to a zero-size rectangle. </p>
+<p>Clip a rectangle to fit within a maximum width and height. The rectangle is defined by its top-left corner (x, y) and its width and height (w, h). The maximum width and height are defined by maxW and maxH. The function modifies the rectangle in place to ensure that it fits within the specified bounds. If the rectangle is completely outside the bounds, it will be clipped to a zero-size rectangle. </p>
 
 </div>
 </div>

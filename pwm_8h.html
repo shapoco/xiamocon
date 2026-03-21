@@ -127,50 +127,26 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8ffa6904a5e7f568f5bf8d95afe79ff1"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a8ffa6904a5e7f568f5bf8d95afe79ff1">xmc_pwm_init</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, const <a class="el" href="structxmc__pwm__config__t.html">xmc_pwm_config_t</a> *cfg, float *actual_freq_hz)</td></tr>
-<tr class="separator:a8ffa6904a5e7f568f5bf8d95afe79ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73a56798bcd73e2d0905b7c1782fd420"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a73a56798bcd73e2d0905b7c1782fd420">xmc_pwm_deinit</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst)</td></tr>
-<tr class="separator:a73a56798bcd73e2d0905b7c1782fd420"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1540145cae45a4b3b2008b4656d21255"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a1540145cae45a4b3b2008b4656d21255">xmc_pwm_set_duty_cycle</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, uint32_t cycle)</td></tr>
-<tr class="separator:a1540145cae45a4b3b2008b4656d21255"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa59c4acb22c6fcdd63914e847b3a1436"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#aa59c4acb22c6fcdd63914e847b3a1436">xmc_pwm_dma_write_start</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, const <a class="el" href="structxmc__dma__config__t.html">xmc_dma_config_t</a> *cfg)</td></tr>
-<tr class="separator:aa59c4acb22c6fcdd63914e847b3a1436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c9b7d275dd8345b92c70759754a8229"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a3c9b7d275dd8345b92c70759754a8229">xmc_pwmInit</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, const <a class="el" href="structxmc__pwm__config__t.html">xmc_pwm_config_t</a> *cfg, float *actualFreqHz)</td></tr>
+<tr class="separator:a3c9b7d275dd8345b92c70759754a8229"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7eaf887f96a4aa03d48b36c65b96df6"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#aa7eaf887f96a4aa03d48b36c65b96df6">xmc_pwmDeinit</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst)</td></tr>
+<tr class="separator:aa7eaf887f96a4aa03d48b36c65b96df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0df3c25a643f67cfe5200aa282391f"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a6e0df3c25a643f67cfe5200aa282391f">xmc_pwmSetDutyCycle</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, uint32_t cycle)</td></tr>
+<tr class="separator:a6e0df3c25a643f67cfe5200aa282391f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a398404c8ffee822f79a9538d7d7b6b23"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pwm_8h.html#a398404c8ffee822f79a9538d7d7b6b23">xmc_pwm_dma_write_start</a> (<a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *inst, const <a class="el" href="structxmc__dma__config__t.html">xmc_dma_config_t</a> *cfg)</td></tr>
+<tr class="separator:a398404c8ffee822f79a9538d7d7b6b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hardware PWM interface. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a73a56798bcd73e2d0905b7c1782fd420" name="a73a56798bcd73e2d0905b7c1782fd420"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a73a56798bcd73e2d0905b7c1782fd420">&#9670;&#160;</a></span>xmc_pwm_deinit()</h2>
+<a id="a398404c8ffee822f79a9538d7d7b6b23" name="a398404c8ffee822f79a9538d7d7b6b23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a398404c8ffee822f79a9538d7d7b6b23">&#9670;&#160;</a></span>xmc_pwm_dma_write_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_pwm_deinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *&#160;</td>
-          <td class="paramname"><em>inst</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Deinitialize a PWM instance. This will disable the PWM output and release any resources associated with the instance. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">inst</td><td>Pointer to the PWM instance to deinitialize. The handle field will be set to NULL by this function. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa59c4acb22c6fcdd63914e847b3a1436" name="aa59c4acb22c6fcdd63914e847b3a1436"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa59c4acb22c6fcdd63914e847b3a1436">&#9670;&#160;</a></span>xmc_pwm_dma_write_start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">xmc_status_t xmc_pwm_dma_write_start </td>
+          <td class="memname">XmcStatus xmc_pwm_dma_write_start </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *&#160;</td>
           <td class="paramname"><em>inst</em>, </td>
@@ -199,14 +175,38 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ffa6904a5e7f568f5bf8d95afe79ff1" name="a8ffa6904a5e7f568f5bf8d95afe79ff1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ffa6904a5e7f568f5bf8d95afe79ff1">&#9670;&#160;</a></span>xmc_pwm_init()</h2>
+<a id="aa7eaf887f96a4aa03d48b36c65b96df6" name="aa7eaf887f96a4aa03d48b36c65b96df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7eaf887f96a4aa03d48b36c65b96df6">&#9670;&#160;</a></span>xmc_pwmDeinit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_pwm_init </td>
+          <td class="memname">XmcStatus xmc_pwmDeinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *&#160;</td>
+          <td class="paramname"><em>inst</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deinitialize a PWM instance. This will disable the PWM output and release any resources associated with the instance. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inst</td><td>Pointer to the PWM instance to deinitialize. The handle field will be set to NULL by this function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3c9b7d275dd8345b92c70759754a8229" name="a3c9b7d275dd8345b92c70759754a8229"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c9b7d275dd8345b92c70759754a8229">&#9670;&#160;</a></span>xmc_pwmInit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XmcStatus xmc_pwmInit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *&#160;</td>
           <td class="paramname"><em>inst</em>, </td>
@@ -221,7 +221,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>actual_freq_hz</em>&#160;</td>
+          <td class="paramname"><em>actualFreqHz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -234,7 +234,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">inst</td><td>Pointer to a PWM instance to initialize. The handle field will be set by this function and should not be modified by the caller. </td></tr>
     <tr><td class="paramname">cfg</td><td>Pointer to a configuration structure specifying the PWM parameters. </td></tr>
-    <tr><td class="paramname">actual_freq_hz</td><td>Pointer to a float where the actual frequency will be stored. This may differ slightly from the requested frequency due to hardware limitations. Can be NULL if the actual frequency is not needed. </td></tr>
+    <tr><td class="paramname">actualFreqHz</td><td>Pointer to a float where the actual frequency will be stored. This may differ slightly from the requested frequency due to hardware limitations. Can be NULL if the actual frequency is not needed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -242,14 +242,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1540145cae45a4b3b2008b4656d21255" name="a1540145cae45a4b3b2008b4656d21255"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1540145cae45a4b3b2008b4656d21255">&#9670;&#160;</a></span>xmc_pwm_set_duty_cycle()</h2>
+<a id="a6e0df3c25a643f67cfe5200aa282391f" name="a6e0df3c25a643f67cfe5200aa282391f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e0df3c25a643f67cfe5200aa282391f">&#9670;&#160;</a></span>xmc_pwmSetDutyCycle()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_pwm_set_duty_cycle </td>
+          <td class="memname">XmcStatus xmc_pwmSetDutyCycle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structxmc__pwm__inst__t.html">xmc_pwm_inst_t</a> *&#160;</td>
           <td class="paramname"><em>inst</em>, </td>

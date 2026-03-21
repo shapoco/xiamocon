@@ -106,36 +106,36 @@ $(document).ready(function(){initNavTree('app_8h_source.html',''); initResizable
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structxmc__app__config__t.html">   17</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_enumeration" href="display_8h.html#a9049ec25de80b374437a3185c8bb539c">xmc_display_intf_format_t</a> display_pixel_format;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_enumeration" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a> speaker_sample_format;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  uint32_t speaker_sample_rate_hz;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  uint32_t speaker_latency_samples;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structAppConfig.html">   17</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_enumeration" href="display_8h.html#a9049ec25de80b374437a3185c8bb539c">xmc_display_intf_format_t</a> displayPixelFormat;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_enumeration" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a> speakerSampleFormat;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  uint32_t speakerSampleRateHz;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  uint32_t speakerLatencySamples;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <a class="code hl_struct" href="structxmc__app__config__t.html">xmc_app_config_t</a>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <a class="code hl_struct" href="structAppConfig.html">AppConfig</a>;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="app_8h.html#a902f63c57d1faadd3ccc41a6da824334">   29</a></span><a class="code hl_struct" href="structxmc__app__config__t.html">xmc_app_config_t</a> <a class="code hl_function" href="app_8h.html#a902f63c57d1faadd3ccc41a6da824334">xmc_get_default_app_config</a>();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="app_8h.html#a24254aa79fce735e13324d1295f81da4">   29</a></span><a class="code hl_struct" href="structAppConfig.html">AppConfig</a> <a class="code hl_function" href="app_8h.html#a24254aa79fce735e13324d1295f81da4">xmcGetDefaultAppConfig</a>();</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="app_8h.html#aff4a144d66857d0ff94880a1505709b0">   37</a></span><a class="code hl_struct" href="structxmc__app__config__t.html">xmc_app_config_t</a> <a class="code hl_function" href="app_8h.html#aff4a144d66857d0ff94880a1505709b0">xmc_app_get_config</a>();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="app_8h.html#a18afe33775e8a4a1e1e30ec012ba943c">   37</a></span><a class="code hl_struct" href="structAppConfig.html">AppConfig</a> <a class="code hl_function" href="app_8h.html#a18afe33775e8a4a1e1e30ec012ba943c">xmc_appGetConfig</a>();</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="app_8h.html#afeece7d391f8f064138c8288e26be778">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="app_8h.html#afeece7d391f8f064138c8288e26be778">xmc_app_setup</a>();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="app_8h.html#a71321fabb47c799e454fd928d8742a39">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="app_8h.html#a71321fabb47c799e454fd928d8742a39">xmc_appSetup</a>();</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="app_8h.html#aa0cbf300f9bd050bfe3d338c732f7334">   51</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="app_8h.html#aa0cbf300f9bd050bfe3d338c732f7334">xmc_app_loop</a>();</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="app_8h.html#a04df54d69abb1078f27830c7228e77d5">   51</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="app_8h.html#a04df54d69abb1078f27830c7228e77d5">xmc_appLoop</a>();</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#if defined(__cplusplus)</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aapp_8h_html_a902f63c57d1faadd3ccc41a6da824334"><div class="ttname"><a href="app_8h.html#a902f63c57d1faadd3ccc41a6da824334">xmc_get_default_app_config</a></div><div class="ttdeci">xmc_app_config_t xmc_get_default_app_config()</div></div>
-<div class="ttc" id="aapp_8h_html_aa0cbf300f9bd050bfe3d338c732f7334"><div class="ttname"><a href="app_8h.html#aa0cbf300f9bd050bfe3d338c732f7334">xmc_app_loop</a></div><div class="ttdeci">void xmc_app_loop()</div></div>
-<div class="ttc" id="aapp_8h_html_afeece7d391f8f064138c8288e26be778"><div class="ttname"><a href="app_8h.html#afeece7d391f8f064138c8288e26be778">xmc_app_setup</a></div><div class="ttdeci">void xmc_app_setup()</div></div>
-<div class="ttc" id="aapp_8h_html_aff4a144d66857d0ff94880a1505709b0"><div class="ttname"><a href="app_8h.html#aff4a144d66857d0ff94880a1505709b0">xmc_app_get_config</a></div><div class="ttdeci">xmc_app_config_t xmc_app_get_config()</div></div>
+<div class="ttc" id="aapp_8h_html_a04df54d69abb1078f27830c7228e77d5"><div class="ttname"><a href="app_8h.html#a04df54d69abb1078f27830c7228e77d5">xmc_appLoop</a></div><div class="ttdeci">void xmc_appLoop()</div></div>
+<div class="ttc" id="aapp_8h_html_a18afe33775e8a4a1e1e30ec012ba943c"><div class="ttname"><a href="app_8h.html#a18afe33775e8a4a1e1e30ec012ba943c">xmc_appGetConfig</a></div><div class="ttdeci">AppConfig xmc_appGetConfig()</div></div>
+<div class="ttc" id="aapp_8h_html_a24254aa79fce735e13324d1295f81da4"><div class="ttname"><a href="app_8h.html#a24254aa79fce735e13324d1295f81da4">xmcGetDefaultAppConfig</a></div><div class="ttdeci">AppConfig xmcGetDefaultAppConfig()</div></div>
+<div class="ttc" id="aapp_8h_html_a71321fabb47c799e454fd928d8742a39"><div class="ttname"><a href="app_8h.html#a71321fabb47c799e454fd928d8742a39">xmc_appSetup</a></div><div class="ttdeci">void xmc_appSetup()</div></div>
 <div class="ttc" id="aaudio__common_8h_html"><div class="ttname"><a href="audio__common_8h.html">audio_common.h</a></div><div class="ttdoc">Common definitions for audio components in the XMC library.</div></div>
 <div class="ttc" id="aaudio__common_8h_html_a57da9a2e331fb1975e825d00b854f936"><div class="ttname"><a href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a></div><div class="ttdeci">xmc_audio_sample_format_t</div><div class="ttdef"><b>Definition:</b> audio_common.h:20</div></div>
 <div class="ttc" id="adisplay_8h_html"><div class="ttname"><a href="display_8h.html">display.h</a></div><div class="ttdoc">Display interface for XMC library.</div></div>
 <div class="ttc" id="adisplay_8h_html_a9049ec25de80b374437a3185c8bb539c"><div class="ttname"><a href="display_8h.html#a9049ec25de80b374437a3185c8bb539c">xmc_display_intf_format_t</a></div><div class="ttdeci">xmc_display_intf_format_t</div><div class="ttdef"><b>Definition:</b> display.h:23</div></div>
-<div class="ttc" id="astructxmc__app__config__t_html"><div class="ttname"><a href="structxmc__app__config__t.html">xmc_app_config_t</a></div><div class="ttdef"><b>Definition:</b> app.h:17</div></div>
+<div class="ttc" id="astructAppConfig_html"><div class="ttname"><a href="structAppConfig.html">AppConfig</a></div><div class="ttdef"><b>Definition:</b> app.h:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

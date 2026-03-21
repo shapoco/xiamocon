@@ -128,81 +128,37 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSdacInst.html">SdacInst</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSdacConfig.html">SdacConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a30acc5ce06986e9a7b3508904dbeb2a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a30acc5ce06986e9a7b3508904dbeb2a0">xmc_sdac_get_supported_formats</a> (void)</td></tr>
-<tr class="separator:a30acc5ce06986e9a7b3508904dbeb2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8520caa4389b6256f605fc7406884481"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a8520caa4389b6256f605fc7406884481">xmc_sdac_init</a> (<a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst, int pin, const <a class="el" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a> *cfg, float *actual_rate_hz)</td></tr>
-<tr class="separator:a8520caa4389b6256f605fc7406884481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79a7ad880492613044401dbaa795744c"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a79a7ad880492613044401dbaa795744c">xmc_sdac_deinit</a> (<a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst)</td></tr>
-<tr class="separator:a79a7ad880492613044401dbaa795744c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab02a22c6c4b2031987dd1b0921e1b2cd"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#ab02a22c6c4b2031987dd1b0921e1b2cd">xmc_sdac_set_source</a> (<a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst, <a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *src)</td></tr>
-<tr class="separator:ab02a22c6c4b2031987dd1b0921e1b2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e98a2f609584cc1de1a91945e02af49"><td class="memItemLeft" align="right" valign="top">xmc_status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a3e98a2f609584cc1de1a91945e02af49">xmc_sdac_service</a> (<a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *inst)</td></tr>
-<tr class="separator:a3e98a2f609584cc1de1a91945e02af49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f630700d0b814940b4ffbc7025e9695"><td class="memItemLeft" align="right" valign="top"><a class="el" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a3f630700d0b814940b4ffbc7025e9695">xmc_sdacGetSupportedFormats</a> (void)</td></tr>
+<tr class="separator:a3f630700d0b814940b4ffbc7025e9695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaff2828d03913c06f2e0919f1d3286b9"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#aaff2828d03913c06f2e0919f1d3286b9">xmc_sdac_init</a> (<a class="el" href="structSdacInst.html">SdacInst</a> *inst, int pin, const <a class="el" href="structSdacConfig.html">SdacConfig</a> *cfg, float *actualRateHz)</td></tr>
+<tr class="separator:aaff2828d03913c06f2e0919f1d3286b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afff7e1f1b673ccd7ee361e3c78aa82ac"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#afff7e1f1b673ccd7ee361e3c78aa82ac">xmc_sdacDeinit</a> (<a class="el" href="structSdacInst.html">SdacInst</a> *inst)</td></tr>
+<tr class="separator:afff7e1f1b673ccd7ee361e3c78aa82ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad848c7f657e26ff0472e27c3fc55397e"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#ad848c7f657e26ff0472e27c3fc55397e">xmc_sdac_set_source</a> (<a class="el" href="structSdacInst.html">SdacInst</a> *inst, <a class="el" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *src)</td></tr>
+<tr class="separator:ad848c7f657e26ff0472e27c3fc55397e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d7214bc177d8a5146ebcd08dc57b2fa"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sdac_8h.html#a2d7214bc177d8a5146ebcd08dc57b2fa">xmc_sdac_service</a> (<a class="el" href="structSdacInst.html">SdacInst</a> *inst)</td></tr>
+<tr class="separator:a2d7214bc177d8a5146ebcd08dc57b2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Streaming DAC. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a79a7ad880492613044401dbaa795744c" name="a79a7ad880492613044401dbaa795744c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79a7ad880492613044401dbaa795744c">&#9670;&#160;</a></span>xmc_sdac_deinit()</h2>
+<a id="aaff2828d03913c06f2e0919f1d3286b9" name="aaff2828d03913c06f2e0919f1d3286b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaff2828d03913c06f2e0919f1d3286b9">&#9670;&#160;</a></span>xmc_sdac_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_sdac_deinit </td>
+          <td class="memname">XmcStatus xmc_sdac_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *&#160;</td>
-          <td class="paramname"><em>inst</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Deinitializes the SDAC instance. This function will free any resources allocated during initialization and reset the SDAC hardware to a safe state. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">inst</td><td>The SDAC instance to deinitialize. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
-
-</div>
-</div>
-<a id="a30acc5ce06986e9a7b3508904dbeb2a0" name="a30acc5ce06986e9a7b3508904dbeb2a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30acc5ce06986e9a7b3508904dbeb2a0">&#9670;&#160;</a></span>xmc_sdac_get_supported_formats()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a> xmc_sdac_get_supported_formats </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Returns the supported audio sample formats for the SDAC. </p><dl class="section return"><dt>Returns</dt><dd>A bitmask of supported audio sample formats. </dd></dl>
-
-</div>
-</div>
-<a id="a8520caa4389b6256f605fc7406884481" name="a8520caa4389b6256f605fc7406884481"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8520caa4389b6256f605fc7406884481">&#9670;&#160;</a></span>xmc_sdac_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">xmc_status_t xmc_sdac_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSdacInst.html">SdacInst</a> *&#160;</td>
           <td class="paramname"><em>inst</em>, </td>
         </tr>
         <tr>
@@ -214,14 +170,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structxmc__sdac__config__t.html">xmc_sdac_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structSdacConfig.html">SdacConfig</a> *&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>actual_rate_hz</em>&#160;</td>
+          <td class="paramname"><em>actualRateHz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -235,7 +191,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">inst</td><td>The SDAC instance to initialize. </td></tr>
     <tr><td class="paramname">pin</td><td>The GPIO pin to use for the SDAC output. </td></tr>
     <tr><td class="paramname">cfg</td><td>The configuration parameters for the SDAC instance. </td></tr>
-    <tr><td class="paramname">actual_rate_hz</td><td>A pointer to a variable that will receive the actual sample rate in Hz that the SDAC will use. This may be different from the requested sample rate in the configuration due to hardware limitations. </td></tr>
+    <tr><td class="paramname">actualRateHz</td><td>A pointer to a variable that will receive the actual sample rate in Hz that the SDAC will use. This may be different from the requested sample rate in the configuration due to hardware limitations. </td></tr>
   </table>
   </dd>
 </dl>
@@ -243,16 +199,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3e98a2f609584cc1de1a91945e02af49" name="a3e98a2f609584cc1de1a91945e02af49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e98a2f609584cc1de1a91945e02af49">&#9670;&#160;</a></span>xmc_sdac_service()</h2>
+<a id="a2d7214bc177d8a5146ebcd08dc57b2fa" name="a2d7214bc177d8a5146ebcd08dc57b2fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d7214bc177d8a5146ebcd08dc57b2fa">&#9670;&#160;</a></span>xmc_sdac_service()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_sdac_service </td>
+          <td class="memname">XmcStatus xmc_sdac_service </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSdacInst.html">SdacInst</a> *&#160;</td>
           <td class="paramname"><em>inst</em></td><td>)</td>
           <td></td>
         </tr>
@@ -268,16 +224,16 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab02a22c6c4b2031987dd1b0921e1b2cd" name="ab02a22c6c4b2031987dd1b0921e1b2cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab02a22c6c4b2031987dd1b0921e1b2cd">&#9670;&#160;</a></span>xmc_sdac_set_source()</h2>
+<a id="ad848c7f657e26ff0472e27c3fc55397e" name="ad848c7f657e26ff0472e27c3fc55397e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad848c7f657e26ff0472e27c3fc55397e">&#9670;&#160;</a></span>xmc_sdac_set_source()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">xmc_status_t xmc_sdac_set_source </td>
+          <td class="memname">XmcStatus xmc_sdac_set_source </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structxmc__sdac__inst__t.html">xmc_sdac_inst_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="structSdacInst.html">SdacInst</a> *&#160;</td>
           <td class="paramname"><em>inst</em>, </td>
         </tr>
         <tr>
@@ -301,6 +257,50 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="afff7e1f1b673ccd7ee361e3c78aa82ac" name="afff7e1f1b673ccd7ee361e3c78aa82ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afff7e1f1b673ccd7ee361e3c78aa82ac">&#9670;&#160;</a></span>xmc_sdacDeinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XmcStatus xmc_sdacDeinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSdacInst.html">SdacInst</a> *&#160;</td>
+          <td class="paramname"><em>inst</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deinitializes the SDAC instance. This function will free any resources allocated during initialization and reset the SDAC hardware to a safe state. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inst</td><td>The SDAC instance to deinitialize. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a3f630700d0b814940b4ffbc7025e9695" name="a3f630700d0b814940b4ffbc7025e9695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f630700d0b814940b4ffbc7025e9695">&#9670;&#160;</a></span>xmc_sdacGetSupportedFormats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="audio__common_8h.html#a57da9a2e331fb1975e825d00b854f936">xmc_audio_sample_format_t</a> xmc_sdacGetSupportedFormats </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the supported audio sample formats for the SDAC. </p><dl class="section return"><dt>Returns</dt><dd>A bitmask of supported audio sample formats. </dd></dl>
 
 </div>
 </div>

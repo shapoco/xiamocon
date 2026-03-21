@@ -102,10 +102,10 @@ $(document).ready(function(){initNavTree('structxmc_1_1mat4.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae9acdd094635cbc629912b685250b081"><td class="memItemLeft" align="right" valign="top"><a id="ae9acdd094635cbc629912b685250b081" name="ae9acdd094635cbc629912b685250b081"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>load_identity</b> ()</td></tr>
-<tr class="memdesc:ae9acdd094635cbc629912b685250b081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the identity matrix into this matrix After calling this function, this matrix will be an identity matrix. <br /></td></tr>
-<tr class="separator:ae9acdd094635cbc629912b685250b081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="memItemLeft" align="right" valign="top"><a id="a71c4b2361d6d65bfc6ce7b67045f3cd4" name="a71c4b2361d6d65bfc6ce7b67045f3cd4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadIdentity</b> ()</td></tr>
+<tr class="memdesc:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the identity matrix into this matrix After calling this function, this matrix will be an identity matrix. <br /></td></tr>
+<tr class="separator:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c37521098131b65a343122432da07fc"><td class="memItemLeft" align="right" valign="top"><a id="a4c37521098131b65a343122432da07fc" name="a4c37521098131b65a343122432da07fc"></a>
 <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;other) const</td></tr>
 <tr class="separator:a4c37521098131b65a343122432da07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,9 +138,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (float s)</
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2092a3e47f32da186df47f212890ff51"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a2092a3e47f32da186df47f212890ff51">identity</a> ()</td></tr>
 <tr class="separator:a2092a3e47f32da186df47f212890ff51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeec45f9b326b279189a4875c502da312"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#aeec45f9b326b279189a4875c502da312">from_quat</a> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;q)</td></tr>
-<tr class="memdesc:aeec45f9b326b279189a4875c502da312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a rotation matrix from a quaternion.  <br /></td></tr>
-<tr class="separator:aeec45f9b326b279189a4875c502da312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae992d70f9207b82c746145316612d929"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929">fromQuat</a> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;q)</td></tr>
+<tr class="memdesc:ae992d70f9207b82c746145316612d929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a rotation matrix from a quaternion.  <br /></td></tr>
+<tr class="separator:ae992d70f9207b82c746145316612d929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -149,8 +149,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
 <tr class="separator:a7ab09eaffc494b817622f46a79a7b983"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aeec45f9b326b279189a4875c502da312" name="aeec45f9b326b279189a4875c502da312"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeec45f9b326b279189a4875c502da312">&#9670;&#160;</a></span>from_quat()</h2>
+<a id="ae992d70f9207b82c746145316612d929" name="ae992d70f9207b82c746145316612d929"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae992d70f9207b82c746145316612d929">&#9670;&#160;</a></span>fromQuat()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,7 +159,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::from_quat </td>
+          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::fromQuat </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;&#160;</td>
           <td class="paramname"><em>q</em></td><td>)</td>

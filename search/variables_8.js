@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tick_0',['tick',['../structxmc__repeating__timer__t.html#a54c727c7843da17f3ddcb755dcdb1e9d',1,'xmc_repeating_timer_t']]]
+  ['tick_0',['tick',['../structRepeatingTimer.html#a629ce0913ad0c2aad98fd0a71835c1f4',1,'RepeatingTimer']]]
 ];

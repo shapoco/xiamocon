@@ -126,75 +126,75 @@ $(document).ready(function(){initNavTree('tone_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html">   59</a></span><span class="keyword">class </span><a class="code hl_class" href="classxmc_1_1Tone.html">Tone</a> {</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  uint32_t sample_rate_hz = 44100;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  uint32_t tick_phase_step = 0;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  uint32_t sampleRateHz = 44100;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  uint32_t tickPhaseStep = 0;</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <a class="code hl_enumeration" href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">Waveform</a> waveform = Waveform::SQUARE;</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  uint8_t velocity = 0;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  uint32_t tone_phase_step = 0;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  uint32_t attack_ms = 0;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  uint32_t decay_ms = 0;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  uint16_t sustain_level = 0;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  uint32_t release_ms = 0;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  uint32_t tonePhaseStep = 0;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  uint32_t attackMs = 0;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  uint32_t decayMs = 0;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  uint16_t sustainLevel = 0;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  uint32_t releaseMs = 0;</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  uint16_t tone_phase_counter = 0;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  uint16_t noise_lfsr = 0xFFFF;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  uint32_t length_counter = 0;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <a class="code hl_enumeration" href="tone_8hpp.html#ad8c230448de7a12dcdaf4110228159cb">EnvelopeState</a> envelope_state = EnvelopeState::IDLE;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  uint32_t envelope_counter = 0;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  uint16_t envelope_amp_init = 0;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  uint16_t envelope_amp_curr = 0;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  uint32_t tick_phase_counter = 0;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  uint32_t sweep_coeff = 0x10000;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  uint32_t sweep_period_ms = 0;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  uint32_t sweep_counter = 0;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  uint16_t tonePhaseCounter = 0;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  uint16_t noiseLfsr = 0xFFFF;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  uint32_t lengthCounter = 0;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <a class="code hl_enumeration" href="tone_8hpp.html#ad8c230448de7a12dcdaf4110228159cb">EnvelopeState</a> envelopeState = EnvelopeState::IDLE;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  uint32_t envelopeCounter = 0;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  uint16_t envelopeAmpInit = 0;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  uint16_t envelopeAmpCurr = 0;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  uint32_t tickPhaseCounter = 0;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  uint32_t sweepCoeff = 0x10000;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  uint32_t sweepPeriodMs = 0;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  uint32_t sweepCounter = 0;</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> output_port;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> outputPort;</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_class" href="classxmc_1_1Tone.html">Tone</a>();</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a2264033257f27fb84bdb997890517c1c">   93</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a2264033257f27fb84bdb997890517c1c">init</a>(uint32_t sample_rate_hz);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#ae86916cd9efadf0665c3176df2cf5372">   93</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#ae86916cd9efadf0665c3176df2cf5372">init</a>(uint32_t sampleRateHz);</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a09983ad8abdc71f8aab2b812ae118fe9">  100</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a09983ad8abdc71f8aab2b812ae118fe9">set_waveform</a>(<a class="code hl_enumeration" href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">Waveform</a> wf) { waveform = wf; }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a53756655ea2be8b8b28bc7bb5dbbcb06">  100</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a53756655ea2be8b8b28bc7bb5dbbcb06">setWaveform</a>(<a class="code hl_enumeration" href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">Waveform</a> wf) { waveform = wf; }</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#acd82941359ae3fc9206a026ed99c4f4f">  106</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#acd82941359ae3fc9206a026ed99c4f4f">set_velocity</a>(uint8_t velo) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a0e2bba837c8d62e28ac2bd6716b76981">  106</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a0e2bba837c8d62e28ac2bd6716b76981">setVelocity</a>(uint8_t velo) {</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">if</span> (velo &gt; 127) {</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      velo = 127;</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    }</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    velocity = velo;</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  }</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a849198f1ea55a359cd6c11b2e78f988d">  122</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a849198f1ea55a359cd6c11b2e78f988d">set_envelope</a>(uint16_t attack_ms, uint16_t decay_ms,</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                           uint16_t sustain_level, uint16_t release_ms) {</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    this-&gt;attack_ms = attack_ms;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    this-&gt;decay_ms = decay_ms;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    this-&gt;sustain_level = sustain_level;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    this-&gt;release_ms = release_ms;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a6f0942f34f254499c4c9ab1d8b0e5afb">  122</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a6f0942f34f254499c4c9ab1d8b0e5afb">setEnvelope</a>(uint16_t attackMs, uint16_t decayMs,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                           uint16_t sustainLevel, uint16_t releaseMs) {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    this-&gt;attackMs = attackMs;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    this-&gt;decayMs = decayMs;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    this-&gt;sustainLevel = sustainLevel;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    this-&gt;releaseMs = releaseMs;</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  }</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#aa6f4e3a1589ef3e8e6cde6fda2c924ce">  143</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#aa6f4e3a1589ef3e8e6cde6fda2c924ce">set_sweep</a>(int32_t delta, uint32_t period_ms) {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a15a87dc43e143ee200bc2aff385d2bbe">  143</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a15a87dc43e143ee200bc2aff385d2bbe">setSweep</a>(int32_t delta, uint32_t period_ms) {</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordflow">if</span> (delta &lt; -32768) {</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>      delta = -32768;</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (delta &gt; 65536) {</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>      delta = 65536;</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    }</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    sweep_coeff = 0x10000 + delta;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    sweep_period_ms = period_ms;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    sweep_counter = 0;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    sweepCoeff = 0x10000 + delta;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    sweepPeriodMs = period_ms;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    sweepCounter = 0;</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>  }</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a5a3d64bd54357bcb5b56e98f5c3d1416">  167</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a5a3d64bd54357bcb5b56e98f5c3d1416">note_on</a>(uint8_t midi_note, uint32_t len_ms = TONE_LENGTH_INFINITE);</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a9bc4b1bb97597edd1c9920b24f6095e0">  167</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a9bc4b1bb97597edd1c9920b24f6095e0">noteOn</a>(uint8_t note, uint32_t lenMs = TONE_LENGTH_INFINITE);</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#ae709d4d759b1cfe69f5a0c1e66002527">  180</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#ae709d4d759b1cfe69f5a0c1e66002527">note_on_with_freq</a>(uint32_t freq, uint32_t len_ms = TONE_LENGTH_INFINITE);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a45ad641dbc6be16e5cbd1173dc333ccb">  180</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a45ad641dbc6be16e5cbd1173dc333ccb">noteOnWithFreq</a>(uint32_t freq, uint32_t lenMs = TONE_LENGTH_INFINITE);</div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">  189</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">note_off</a>();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a08a3b0236c67ec8b869554018315cba4">  189</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a08a3b0236c67ec8b869554018315cba4">noteOff</a>();</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">  195</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">mute</a>();</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#ac43e44f6608db6366be5bd286e5df19f">  205</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#ac43e44f6608db6366be5bd286e5df19f">render</a>(int16_t *buffer, uint32_t num_samples);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a4b11de7099e5eafb0b315e4f87079a36">  205</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1Tone.html#a4b11de7099e5eafb0b315e4f87079a36">render</a>(int16_t *buffer, uint32_t numSamples);</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#a3f0dfd24be143b6b9d68462100443c5b">  212</a></span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *<a class="code hl_function" href="classxmc_1_1Tone.html#a3f0dfd24be143b6b9d68462100443c5b">get_output_port</a>() { <span class="keywordflow">return</span> &amp;output_port; }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classxmc_1_1Tone.html#acd6384313617285d2929c08991fd6c9a">  212</a></span>  <a class="code hl_struct" href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a> *<a class="code hl_function" href="classxmc_1_1Tone.html#acd6384313617285d2929c08991fd6c9a">getOutputPort</a>() { <span class="keywordflow">return</span> &amp;outputPort; }</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>  <span class="keywordtype">void</span> tick();</div>
@@ -205,17 +205,17 @@ $(document).ready(function(){initNavTree('tone_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aaudio__common_8h_html"><div class="ttname"><a href="audio__common_8h.html">audio_common.h</a></div><div class="ttdoc">Common definitions for audio components in the XMC library.</div></div>
 <div class="ttc" id="aclassxmc_1_1Tone_html"><div class="ttname"><a href="classxmc_1_1Tone.html">xmc::Tone</a></div><div class="ttdef"><b>Definition:</b> tone.hpp:59</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a09983ad8abdc71f8aab2b812ae118fe9"><div class="ttname"><a href="classxmc_1_1Tone.html#a09983ad8abdc71f8aab2b812ae118fe9">xmc::Tone::set_waveform</a></div><div class="ttdeci">void set_waveform(Waveform wf)</div><div class="ttdef"><b>Definition:</b> tone.hpp:100</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a2264033257f27fb84bdb997890517c1c"><div class="ttname"><a href="classxmc_1_1Tone.html#a2264033257f27fb84bdb997890517c1c">xmc::Tone::init</a></div><div class="ttdeci">void init(uint32_t sample_rate_hz)</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a3f0dfd24be143b6b9d68462100443c5b"><div class="ttname"><a href="classxmc_1_1Tone.html#a3f0dfd24be143b6b9d68462100443c5b">xmc::Tone::get_output_port</a></div><div class="ttdeci">xmc_audio_source_port_t * get_output_port()</div><div class="ttdef"><b>Definition:</b> tone.hpp:212</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a5a3d64bd54357bcb5b56e98f5c3d1416"><div class="ttname"><a href="classxmc_1_1Tone.html#a5a3d64bd54357bcb5b56e98f5c3d1416">xmc::Tone::note_on</a></div><div class="ttdeci">void note_on(uint8_t midi_note, uint32_t len_ms=TONE_LENGTH_INFINITE)</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a08a3b0236c67ec8b869554018315cba4"><div class="ttname"><a href="classxmc_1_1Tone.html#a08a3b0236c67ec8b869554018315cba4">xmc::Tone::noteOff</a></div><div class="ttdeci">void noteOff()</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a0e2bba837c8d62e28ac2bd6716b76981"><div class="ttname"><a href="classxmc_1_1Tone.html#a0e2bba837c8d62e28ac2bd6716b76981">xmc::Tone::setVelocity</a></div><div class="ttdeci">void setVelocity(uint8_t velo)</div><div class="ttdef"><b>Definition:</b> tone.hpp:106</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a15a87dc43e143ee200bc2aff385d2bbe"><div class="ttname"><a href="classxmc_1_1Tone.html#a15a87dc43e143ee200bc2aff385d2bbe">xmc::Tone::setSweep</a></div><div class="ttdeci">void setSweep(int32_t delta, uint32_t period_ms)</div><div class="ttdef"><b>Definition:</b> tone.hpp:143</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a45ad641dbc6be16e5cbd1173dc333ccb"><div class="ttname"><a href="classxmc_1_1Tone.html#a45ad641dbc6be16e5cbd1173dc333ccb">xmc::Tone::noteOnWithFreq</a></div><div class="ttdeci">void noteOnWithFreq(uint32_t freq, uint32_t lenMs=TONE_LENGTH_INFINITE)</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a4b11de7099e5eafb0b315e4f87079a36"><div class="ttname"><a href="classxmc_1_1Tone.html#a4b11de7099e5eafb0b315e4f87079a36">xmc::Tone::render</a></div><div class="ttdeci">void render(int16_t *buffer, uint32_t numSamples)</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a53756655ea2be8b8b28bc7bb5dbbcb06"><div class="ttname"><a href="classxmc_1_1Tone.html#a53756655ea2be8b8b28bc7bb5dbbcb06">xmc::Tone::setWaveform</a></div><div class="ttdeci">void setWaveform(Waveform wf)</div><div class="ttdef"><b>Definition:</b> tone.hpp:100</div></div>
 <div class="ttc" id="aclassxmc_1_1Tone_html_a5cf52cfb761317a115966ce7da16aa87"><div class="ttname"><a href="classxmc_1_1Tone.html#a5cf52cfb761317a115966ce7da16aa87">xmc::Tone::mute</a></div><div class="ttdeci">void mute()</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a65032f90e4c5eeeb0b61728f42ab97b8"><div class="ttname"><a href="classxmc_1_1Tone.html#a65032f90e4c5eeeb0b61728f42ab97b8">xmc::Tone::note_off</a></div><div class="ttdeci">void note_off()</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_a849198f1ea55a359cd6c11b2e78f988d"><div class="ttname"><a href="classxmc_1_1Tone.html#a849198f1ea55a359cd6c11b2e78f988d">xmc::Tone::set_envelope</a></div><div class="ttdeci">void set_envelope(uint16_t attack_ms, uint16_t decay_ms, uint16_t sustain_level, uint16_t release_ms)</div><div class="ttdef"><b>Definition:</b> tone.hpp:122</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_aa6f4e3a1589ef3e8e6cde6fda2c924ce"><div class="ttname"><a href="classxmc_1_1Tone.html#aa6f4e3a1589ef3e8e6cde6fda2c924ce">xmc::Tone::set_sweep</a></div><div class="ttdeci">void set_sweep(int32_t delta, uint32_t period_ms)</div><div class="ttdef"><b>Definition:</b> tone.hpp:143</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_ac43e44f6608db6366be5bd286e5df19f"><div class="ttname"><a href="classxmc_1_1Tone.html#ac43e44f6608db6366be5bd286e5df19f">xmc::Tone::render</a></div><div class="ttdeci">void render(int16_t *buffer, uint32_t num_samples)</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_acd82941359ae3fc9206a026ed99c4f4f"><div class="ttname"><a href="classxmc_1_1Tone.html#acd82941359ae3fc9206a026ed99c4f4f">xmc::Tone::set_velocity</a></div><div class="ttdeci">void set_velocity(uint8_t velo)</div><div class="ttdef"><b>Definition:</b> tone.hpp:106</div></div>
-<div class="ttc" id="aclassxmc_1_1Tone_html_ae709d4d759b1cfe69f5a0c1e66002527"><div class="ttname"><a href="classxmc_1_1Tone.html#ae709d4d759b1cfe69f5a0c1e66002527">xmc::Tone::note_on_with_freq</a></div><div class="ttdeci">void note_on_with_freq(uint32_t freq, uint32_t len_ms=TONE_LENGTH_INFINITE)</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a6f0942f34f254499c4c9ab1d8b0e5afb"><div class="ttname"><a href="classxmc_1_1Tone.html#a6f0942f34f254499c4c9ab1d8b0e5afb">xmc::Tone::setEnvelope</a></div><div class="ttdeci">void setEnvelope(uint16_t attackMs, uint16_t decayMs, uint16_t sustainLevel, uint16_t releaseMs)</div><div class="ttdef"><b>Definition:</b> tone.hpp:122</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_a9bc4b1bb97597edd1c9920b24f6095e0"><div class="ttname"><a href="classxmc_1_1Tone.html#a9bc4b1bb97597edd1c9920b24f6095e0">xmc::Tone::noteOn</a></div><div class="ttdeci">void noteOn(uint8_t note, uint32_t lenMs=TONE_LENGTH_INFINITE)</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_acd6384313617285d2929c08991fd6c9a"><div class="ttname"><a href="classxmc_1_1Tone.html#acd6384313617285d2929c08991fd6c9a">xmc::Tone::getOutputPort</a></div><div class="ttdeci">xmc_audio_source_port_t * getOutputPort()</div><div class="ttdef"><b>Definition:</b> tone.hpp:212</div></div>
+<div class="ttc" id="aclassxmc_1_1Tone_html_ae86916cd9efadf0665c3176df2cf5372"><div class="ttname"><a href="classxmc_1_1Tone.html#ae86916cd9efadf0665c3176df2cf5372">xmc::Tone::init</a></div><div class="ttdeci">void init(uint32_t sampleRateHz)</div></div>
 <div class="ttc" id="astructxmc__audio__source__port__t_html"><div class="ttname"><a href="structxmc__audio__source__port__t.html">xmc_audio_source_port_t</a></div><div class="ttdef"><b>Definition:</b> audio_common.h:52</div></div>
 <div class="ttc" id="atone_8hpp_html_a381cd559fe379e6b1dcba75d25057c11"><div class="ttname"><a href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11">xmc::Waveform</a></div><div class="ttdeci">Waveform</div><div class="ttdef"><b>Definition:</b> tone.hpp:19</div></div>
 <div class="ttc" id="atone_8hpp_html_a381cd559fe379e6b1dcba75d25057c11a12dec4e1f7ec620651b2b95c440ffac0"><div class="ttname"><a href="tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11a12dec4e1f7ec620651b2b95c440ffac0">xmc::Waveform::SQUARE</a></div><div class="ttdeci">@ SQUARE</div></div>

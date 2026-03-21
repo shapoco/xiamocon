@@ -108,9 +108,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab231a29a4ffb4e4ff39fe920ccbe06d1"><td class="memItemLeft" align="right" valign="top"><a id="ab231a29a4ffb4e4ff39fe920ccbe06d1" name="ab231a29a4ffb4e4ff39fe920ccbe06d1"></a>
 <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;other) const</td></tr>
 <tr class="separator:ab231a29a4ffb4e4ff39fe920ccbe06d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad788970f0fca83a3568ce0e16f597aa8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#ad788970f0fca83a3568ce0e16f597aa8">to_euler</a> (float *pitch, float *roll, float *yaw) const</td></tr>
-<tr class="memdesc:ad788970f0fca83a3568ce0e16f597aa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the quaternion to Euler angles (pitch, roll, yaw)  <br /></td></tr>
-<tr class="separator:ad788970f0fca83a3568ce0e16f597aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#ac7a8e6ccaa5f685bfd80ccc48ae4f485">toEuler</a> (float *pitch, float *roll, float *yaw) const</td></tr>
+<tr class="memdesc:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the quaternion to Euler angles (pitch, roll, yaw)  <br /></td></tr>
+<tr class="separator:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89">rotate</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;v) const</td></tr>
 <tr class="memdesc:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate a vector by this quaternion.  <br /></td></tr>
 <tr class="separator:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,12 +121,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a5ac1d9df77a00ce5e126dc2f8172a2d7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#a5ac1d9df77a00ce5e126dc2f8172a2d7">from_euler</a> (float pitch, float roll, float yaw)</td></tr>
-<tr class="memdesc:a5ac1d9df77a00ce5e126dc2f8172a2d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from Euler angles (pitch, roll, yaw)  <br /></td></tr>
-<tr class="separator:a5ac1d9df77a00ce5e126dc2f8172a2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea93b8310ef87a53d88efc1942f0b99"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#a3ea93b8310ef87a53d88efc1942f0b99">from_axis_angle</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;axis, float angle)</td></tr>
-<tr class="memdesc:a3ea93b8310ef87a53d88efc1942f0b99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from an axis-angle representation.  <br /></td></tr>
-<tr class="separator:a3ea93b8310ef87a53d88efc1942f0b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1ed4b1d8da80cb584a79c32da3b682"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#aac1ed4b1d8da80cb584a79c32da3b682">fromEuler</a> (float pitch, float roll, float yaw)</td></tr>
+<tr class="memdesc:aac1ed4b1d8da80cb584a79c32da3b682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from Euler angles (pitch, roll, yaw)  <br /></td></tr>
+<tr class="separator:aac1ed4b1d8da80cb584a79c32da3b682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab80f364f165c663c656be0550d7096e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">fromAxisAngle</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;axis, float angle)</td></tr>
+<tr class="memdesc:aab80f364f165c663c656be0550d7096e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from an axis-angle representation.  <br /></td></tr>
+<tr class="separator:aab80f364f165c663c656be0550d7096e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -170,8 +170,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
-<a id="a3ea93b8310ef87a53d88efc1942f0b99" name="a3ea93b8310ef87a53d88efc1942f0b99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ea93b8310ef87a53d88efc1942f0b99">&#9670;&#160;</a></span>from_axis_angle()</h2>
+<a id="aab80f364f165c663c656be0550d7096e" name="aab80f364f165c663c656be0550d7096e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab80f364f165c663c656be0550d7096e">&#9670;&#160;</a></span>fromAxisAngle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +180,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structxmc_1_1quat.html">quat</a> xmc::quat::from_axis_angle </td>
+          <td class="memname">static <a class="el" href="structxmc_1_1quat.html">quat</a> xmc::quat::fromAxisAngle </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;&#160;</td>
           <td class="paramname"><em>axis</em>, </td>
@@ -216,8 +216,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
-<a id="a5ac1d9df77a00ce5e126dc2f8172a2d7" name="a5ac1d9df77a00ce5e126dc2f8172a2d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ac1d9df77a00ce5e126dc2f8172a2d7">&#9670;&#160;</a></span>from_euler()</h2>
+<a id="aac1ed4b1d8da80cb584a79c32da3b682" name="aac1ed4b1d8da80cb584a79c32da3b682"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac1ed4b1d8da80cb584a79c32da3b682">&#9670;&#160;</a></span>fromEuler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +226,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structxmc_1_1quat.html">quat</a> xmc::quat::from_euler </td>
+          <td class="memname">static <a class="el" href="structxmc_1_1quat.html">quat</a> xmc::quat::fromEuler </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>pitch</em>, </td>
@@ -330,8 +330,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
-<a id="ad788970f0fca83a3568ce0e16f597aa8" name="ad788970f0fca83a3568ce0e16f597aa8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad788970f0fca83a3568ce0e16f597aa8">&#9670;&#160;</a></span>to_euler()</h2>
+<a id="ac7a8e6ccaa5f685bfd80ccc48ae4f485" name="ac7a8e6ccaa5f685bfd80ccc48ae4f485"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7a8e6ccaa5f685bfd80ccc48ae4f485">&#9670;&#160;</a></span>toEuler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +340,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void xmc::quat::to_euler </td>
+          <td class="memname">void xmc::quat::toEuler </td>
           <td>(</td>
           <td class="paramtype">float *&#160;</td>
           <td class="paramname"><em>pitch</em>, </td>

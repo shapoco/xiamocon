@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Xiamocon: xmc_repeating_timer_t Struct Reference</title>
+<title>Xiamocon: cpp/library/include/xmc/random.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structxmc__repeating__timer__t.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('random_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -92,80 +92,58 @@ $(document).ready(function(){initNavTree('structxmc__repeating__timer__t.html','
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structxmc__repeating__timer__t-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">xmc_repeating_timer_t Struct Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">random.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="timer_8h_source.html">timer.h</a>&gt;</code></p>
+<p>Random number generation for XMC library.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for random.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="random_8h__incl.png" border="0" usemap="#acpp_2library_2include_2xmc_2random_8h" alt=""/></div>
+<map name="acpp_2library_2include_2xmc_2random_8h" id="acpp_2library_2include_2xmc_2random_8h">
+<area shape="rect" title="Random number generation for XMC library." alt="" coords="5,5,148,45"/>
+<area shape="rect" title=" " alt="" coords="41,93,112,119"/>
+</map>
+</div>
+</div>
+<p><a href="random_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a6d3b1e2836141dff191bf943d19b9d49"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__repeating__timer__t.html#a6d3b1e2836141dff191bf943d19b9d49">handle</a></td></tr>
-<tr class="separator:a6d3b1e2836141dff191bf943d19b9d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54c727c7843da17f3ddcb755dcdb1e9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc">xmc_timer_tick_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__repeating__timer__t.html#a54c727c7843da17f3ddcb755dcdb1e9d">tick</a></td></tr>
-<tr class="separator:a54c727c7843da17f3ddcb755dcdb1e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19e58d9855a8ecd93c1e71880c875b23"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc__repeating__timer__t.html#a19e58d9855a8ecd93c1e71880c875b23">context</a></td></tr>
-<tr class="separator:a19e58d9855a8ecd93c1e71880c875b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ad215632697d79a14afb61866c49996af"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="random_8h.html#ad215632697d79a14afb61866c49996af">xmc_randomNextU32</a> ()</td></tr>
+<tr class="separator:ad215632697d79a14afb61866c49996af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Repeated timer instance structure. This structure represents an instance of a repeated timer. It contains the hardware-specific data, the timer tick callback function, and a context pointer that can be used to pass user-defined data to the callback function. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a19e58d9855a8ecd93c1e71880c875b23" name="a19e58d9855a8ecd93c1e71880c875b23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19e58d9855a8ecd93c1e71880c875b23">&#9670;&#160;</a></span>context</h2>
+<div class="textblock"><p>Random number generation for XMC library. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ad215632697d79a14afb61866c49996af" name="ad215632697d79a14afb61866c49996af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad215632697d79a14afb61866c49996af">&#9670;&#160;</a></span>xmc_randomNextU32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* xmc_repeating_timer_t::context</td>
+          <td class="memname">uint32_t xmc_randomNextU32 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>User-defined context pointer </p>
+<p>Get the next random 32-bit unsigned integer. </p><dl class="section return"><dt>Returns</dt><dd>A random 32-bit unsigned integer. </dd></dl>
 
 </div>
 </div>
-<a id="a6d3b1e2836141dff191bf943d19b9d49" name="a6d3b1e2836141dff191bf943d19b9d49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d3b1e2836141dff191bf943d19b9d49">&#9670;&#160;</a></span>handle</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* xmc_repeating_timer_t::handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Hardware-specific handle for the timer instance </p>
-
-</div>
-</div>
-<a id="a54c727c7843da17f3ddcb755dcdb1e9d" name="a54c727c7843da17f3ddcb755dcdb1e9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54c727c7843da17f3ddcb755dcdb1e9d">&#9670;&#160;</a></span>tick</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="timer_8h.html#af0f70b5436f6e16c4f4adb34abf85ebc">xmc_timer_tick_t</a> xmc_repeating_timer_t::tick</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Timer tick callback function </p>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>cpp/platform/decl/include/xmc/hw/<a class="el" href="timer_8h_source.html">timer.h</a></li>
-</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structxmc__repeating__timer__t.html">xmc_repeating_timer_t</a></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_e048eec7d1e763bfddf1d1355dfb8d1e.html">library</a></li><li class="navelem"><a class="el" href="dir_7f01bd199e72e3abf68e2c83e47127c4.html">include</a></li><li class="navelem"><a class="el" href="dir_34901e8a2955b2f307fb8f90642cf41b.html">xmc</a></li><li class="navelem"><a class="el" href="random_8h.html">random.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
