@@ -1,11 +1,12 @@
 <map id="cpp/platform/decl/include/xmc/hw/ram.hpp" name="cpp/platform/decl/include/xmc/hw/ram.hpp">
 <area shape="rect" id="node1" title="RAM management interface." alt="" coords="116,5,303,45"/>
 <area shape="rect" id="node2" href="$mesh_8hpp_source.html" title=" " alt="" coords="56,181,203,221"/>
-<area shape="rect" id="node6" href="$sprite_8hpp_source.html" title=" " alt="" coords="203,93,351,133"/>
+<area shape="rect" id="node7" href="$sprite_8hpp_source.html" title=" " alt="" coords="203,93,351,133"/>
 <area shape="rect" id="node3" href="$gfx_8hpp_source.html" title=" " alt="" coords="237,357,379,397"/>
-<area shape="rect" id="node5" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="26,269,198,309"/>
-<area shape="rect" id="node4" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="237,445,379,485"/>
-<area shape="rect" id="node7" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="222,269,394,309"/>
-<area shape="rect" id="node8" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="418,269,598,309"/>
-<area shape="rect" id="node9" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="509,181,681,221"/>
+<area shape="rect" id="node6" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="26,269,198,309"/>
+<area shape="rect" id="node4" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="237,533,379,573"/>
+<area shape="rect" id="node5" href="$app_8hpp_source.html" title=" " alt="" coords="291,445,434,485"/>
+<area shape="rect" id="node8" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="222,269,394,309"/>
+<area shape="rect" id="node9" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="418,269,598,309"/>
+<area shape="rect" id="node10" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="509,181,681,221"/>
 </map>

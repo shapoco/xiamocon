@@ -30,6 +30,7 @@ var annotated_dup =
       [ "RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
       [ "RepeatingTimer", "classxmc_1_1RepeatingTimer.html", "classxmc_1_1RepeatingTimer" ],
+      [ "Scanner444", "structxmc_1_1Scanner444.html", null ],
       [ "Semaphore", "classxmc_1_1Semaphore.html", null ],
       [ "SpinLock", "classxmc_1_1SpinLock.html", null ],
       [ "Sprite4444Class", "classxmc_1_1Sprite4444Class.html", null ],

@@ -20,6 +20,7 @@ var hierarchy =
     [ "xmc::RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
     [ "xmc::rect_t", "structxmc_1_1rect__t.html", null ],
     [ "xmc::RepeatingTimer", "classxmc_1_1RepeatingTimer.html", null ],
+    [ "xmc::Scanner444", "structxmc_1_1Scanner444.html", null ],
     [ "xmc::audio::SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
     [ "xmc::Semaphore", "classxmc_1_1Semaphore.html", null ],
     [ "xmc::audio::SourcePort", "structxmc_1_1audio_1_1SourcePort.html", null ],

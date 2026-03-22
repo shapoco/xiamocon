@@ -95,7 +95,6 @@ $(document).ready(function(){initNavTree('classxmc_1_1SpriteClass.html',''); ini
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classxmc_1_1SpriteClass-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">xmc::SpriteClass Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
@@ -166,15 +165,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>fillRect</b> (int x, 
 <tr class="memitem:a4e33f20cb49d261148b7017597c27952"><td class="memItemLeft" align="right" valign="top"><a id="a4e33f20cb49d261148b7017597c27952" name="a4e33f20cb49d261148b7017597c27952"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>drawRect</b> (int x, int y, int w, int h, raw_color color)</td></tr>
 <tr class="separator:a4e33f20cb49d261148b7017597c27952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ca2b35d41dc809ac12e69957eed30f2"><td class="memItemLeft" align="right" valign="top"><a id="a0ca2b35d41dc809ac12e69957eed30f2" name="a0ca2b35d41dc809ac12e69957eed30f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>fillSmokeRect</b> (int x, int y, int w, int h, bool light=false)</td></tr>
+<tr class="separator:a0ca2b35d41dc809ac12e69957eed30f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26d79146ed7eff7aec8ba92c2ce25fcf"><td class="memItemLeft" align="right" valign="top"><a id="a26d79146ed7eff7aec8ba92c2ce25fcf" name="a26d79146ed7eff7aec8ba92c2ce25fcf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>fill_triangle</b> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> *verts, const int *indices, int offset, raw_color color)</td></tr>
 <tr class="separator:a26d79146ed7eff7aec8ba92c2ce25fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b414541ad9aa54a944a002d6860d560"><td class="memItemLeft" align="right" valign="top"><a id="a1b414541ad9aa54a944a002d6860d560" name="a1b414541ad9aa54a944a002d6860d560"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>drawImage</b> (const Sprite &amp;image, int dx, int dy, int w, int h, int sx, int sy)</td></tr>
 <tr class="separator:a1b414541ad9aa54a944a002d6860d560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad913d0d7ea477c36f76235bb20427cf6"><td class="memItemLeft" align="right" valign="top"><a id="ad913d0d7ea477c36f76235bb20427cf6" name="ad913d0d7ea477c36f76235bb20427cf6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>drawLastError</b> ()</td></tr>
-<tr class="separator:ad913d0d7ea477c36f76235bb20427cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -196,6 +195,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
 <tr class="memitem:a4ca4ad13d9ecc6b7dfe76eda46f2aa02"><td class="memItemLeft" align="right" valign="top"><a id="a4ca4ad13d9ecc6b7dfe76eda46f2aa02" name="a4ca4ad13d9ecc6b7dfe76eda46f2aa02"></a>
 const bool&#160;</td><td class="memItemRight" valign="bottom"><b>autoFree</b></td></tr>
 <tr class="separator:a4ca4ad13d9ecc6b7dfe76eda46f2aa02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5799680425f50fc8f6c4e055832a3eb9"><td class="memItemLeft" align="right" valign="top"><a id="a5799680425f50fc8f6c4e055832a3eb9" name="a5799680425f50fc8f6c4e055832a3eb9"></a>
+<a class="el" href="structxmc_1_1TextState.html">TextState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>textState</b></td></tr>
+<tr class="separator:a5799680425f50fc8f6c4e055832a3eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -208,6 +210,9 @@ virtual raw_color&#160;</td><td class="memItemRight" valign="bottom"><b>onGetPix
 <tr class="memitem:ab3bb50ce86c35cda699237afe8db5622"><td class="memItemLeft" align="right" valign="top"><a id="ab3bb50ce86c35cda699237afe8db5622" name="ab3bb50ce86c35cda699237afe8db5622"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onFillRect</b> (int x, int y, int w, int h, raw_color color)=0</td></tr>
 <tr class="separator:ab3bb50ce86c35cda699237afe8db5622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9d6c7af4fc4a7ff210924911aa957ee"><td class="memItemLeft" align="right" valign="top"><a id="ac9d6c7af4fc4a7ff210924911aa957ee" name="ac9d6c7af4fc4a7ff210924911aa957ee"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onFillSmokeRect</b> (int x, int y, int w, int h, bool light)=0</td></tr>
+<tr class="separator:ac9d6c7af4fc4a7ff210924911aa957ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51430830007b727c10d0b2d7ded84f64"><td class="memItemLeft" align="right" valign="top"><a id="a51430830007b727c10d0b2d7ded84f64" name="a51430830007b727c10d0b2d7ded84f64"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onDrawImage</b> (const Sprite &amp;image, int dx, int dy, int w, int h, int sx, int sy)=0</td></tr>
 <tr class="separator:a51430830007b727c10d0b2d7ded84f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,12 +222,6 @@ virtual XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>onStartT
 <tr class="memitem:ad0e719d431cd8051c0b3fd63b31c8769"><td class="memItemLeft" align="right" valign="top"><a id="ad0e719d431cd8051c0b3fd63b31c8769" name="ad0e719d431cd8051c0b3fd63b31c8769"></a>
 virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>onDrawChar</b> (int x, int y, char c)</td></tr>
 <tr class="separator:ad0e719d431cd8051c0b3fd63b31c8769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a5799680425f50fc8f6c4e055832a3eb9"><td class="memItemLeft" align="right" valign="top"><a id="a5799680425f50fc8f6c4e055832a3eb9" name="a5799680425f50fc8f6c4e055832a3eb9"></a>
-<a class="el" href="structxmc_1_1TextState.html">TextState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>textState</b></td></tr>
-<tr class="separator:a5799680425f50fc8f6c4e055832a3eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for sprites. This is a template class that takes a pixel format and a pixel type as template parameters. The pixel format is used to determine how the pixel data is stored. The pixel type is used to represent the color of a pixel in the sprite. The Sprite class provides basic functionality for managing a sprite, such as setting and getting pixel values, filling rectangles, and starting a transfer to the display. The actual implementation of these functions is left to derived classes that specialize the template for specific pixel formats and types. </p>
