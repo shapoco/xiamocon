@@ -1,6 +1,7 @@
 <map id="cpp/library/include/xmc/geo/geo_common.hpp" name="cpp/library/include/xmc/geo/geo_common.hpp">
-<area shape="rect" id="node1" title="Common geometric utilities." alt="" coords="5,5,208,45"/>
-<area shape="rect" id="node2" href="$xmc__common_8h_source.html" title=" " alt="" coords="27,93,186,119"/>
-<area shape="rect" id="node3" title=" " alt="" coords="15,167,97,192"/>
-<area shape="rect" id="node4" title=" " alt="" coords="122,167,193,192"/>
+<area shape="rect" id="node1" title="Common geometric utilities." alt="" coords="111,5,313,45"/>
+<area shape="rect" id="node2" href="$xmc__common_8hpp_source.html" title=" " alt="" coords="125,93,299,119"/>
+<area shape="rect" id="node3" href="$xmc__status_8h_source.html" title=" " alt="" coords="5,167,147,192"/>
+<area shape="rect" id="node4" title=" " alt="" coords="171,167,253,192"/>
+<area shape="rect" id="node5" title=" " alt="" coords="278,167,349,192"/>
 </map>

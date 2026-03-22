@@ -1,12 +1,13 @@
 <map id="cpp/library/include/xmc/geo/quat.hpp" name="cpp/library/include/xmc/geo/quat.hpp">
 <area shape="rect" id="node1" title="Quaternion for 3D rotations." alt="" coords="124,5,267,45"/>
 <area shape="rect" id="node2" href="$geo_8hpp_source.html" title=" " alt="" coords="124,181,267,221"/>
-<area shape="rect" id="node10" href="$mat4_8hpp.html" title="4x4 matrix for 3D transformations" alt="" coords="177,93,325,133"/>
+<area shape="rect" id="node11" href="$mat4_8hpp.html" title="4x4 matrix for 3D transformations" alt="" coords="177,93,325,133"/>
 <area shape="rect" id="node3" href="$mesh_8hpp_source.html" title=" " alt="" coords="11,357,158,397"/>
-<area shape="rect" id="node5" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="25,445,197,485"/>
-<area shape="rect" id="node6" href="$sprite_8hpp_source.html" title=" " alt="" coords="233,269,381,309"/>
+<area shape="rect" id="node6" href="$rasterizer_8hpp_source.html" title=" " alt="" coords="25,445,197,485"/>
+<area shape="rect" id="node7" href="$sprite_8hpp_source.html" title=" " alt="" coords="233,269,381,309"/>
 <area shape="rect" id="node4" href="$gfx_8hpp_source.html" title=" " alt="" coords="236,533,379,573"/>
-<area shape="rect" id="node7" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="221,445,393,485"/>
-<area shape="rect" id="node8" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="417,445,597,485"/>
-<area shape="rect" id="node9" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="509,357,681,397"/>
+<area shape="rect" id="node5" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="236,621,379,661"/>
+<area shape="rect" id="node8" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="221,445,393,485"/>
+<area shape="rect" id="node9" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="417,445,597,485"/>
+<area shape="rect" id="node10" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="509,357,681,397"/>
 </map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['waveform_0',['Waveform',['../tone_8hpp.html#a381cd559fe379e6b1dcba75d25057c11',1,'xmc']]]
+  ['envelopestate_0',['EnvelopeState',['../tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70',1,'xmc::audio']]]
 ];

@@ -1,9 +1,0 @@
-<map id="cpp/platform/decl/include/xmc/audio_common.h" name="cpp/platform/decl/include/xmc/audio_common.h">
-<area shape="rect" id="node1" title="Common definitions for audio components in the XMC library." alt="" coords="251,5,438,45"/>
-<area shape="rect" id="node2" href="$app_8h.html" title="User application interface." alt="" coords="5,93,148,133"/>
-<area shape="rect" id="node3" href="$mixer_8hpp.html" title="A simple audio mixer that can mix multiple audio sources together." alt="" coords="173,93,335,133"/>
-<area shape="rect" id="node5" href="$tone_8hpp.html" title=" " alt="" coords="359,93,514,133"/>
-<area shape="rect" id="node6" href="$sdac_8h.html" title="Streaming DAC." alt="" coords="538,93,725,133"/>
-<area shape="rect" id="node4" href="$audio_8hpp_source.html" title=" " alt="" coords="275,181,417,221"/>
-<area shape="rect" id="node7" href="$speaker_8h.html" title="Speaker driver." alt="" coords="560,181,703,221"/>
-</map>

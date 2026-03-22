@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['last_0',['last',['../structGFXfont.html#a9bc82580b9bc5cc1c15ae23457edcd49',1,'GFXfont']]],
-  ['length_1',['length',['../structxmc__dma__config__t.html#aa1369de6148f8b3238251886543903ca',1,'xmc_dma_config_t']]]
+  ['ptr_0',['ptr',['../structxmc_1_1dma_1_1Config.html#ab58cd651e25a90b9f17dfb5dec49808e',1,'xmc::dma::Config']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quat_0',['quat',['../structxmc_1_1quat.html',1,'xmc']]]
+  ['primitiveclass_0',['PrimitiveClass',['../classxmc_1_1PrimitiveClass.html',1,'xmc']]]
 ];

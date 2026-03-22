@@ -1,8 +1,9 @@
 <map id="cpp/library/include/xmc/audio/tone.hpp" name="cpp/library/include/xmc/audio/tone.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="133,5,287,45"/>
-<area shape="rect" id="node2" href="$audio__common_8h.html" title="Common definitions for audio components in the XMC library." alt="" coords="5,93,172,119"/>
-<area shape="rect" id="node5" title=" " alt="" coords="165,240,236,265"/>
-<area shape="rect" id="node6" title=" " alt="" coords="248,93,316,119"/>
-<area shape="rect" id="node3" href="$xmc__common_8h_source.html" title=" " alt="" coords="12,167,171,192"/>
-<area shape="rect" id="node4" title=" " alt="" coords="50,240,133,265"/>
+<area shape="rect" id="node1" title=" " alt="" coords="256,5,411,45"/>
+<area shape="rect" id="node2" href="$audio__common_8hpp_source.html" title=" " alt="" coords="113,93,295,119"/>
+<area shape="rect" id="node6" title=" " alt="" coords="291,240,362,265"/>
+<area shape="rect" id="node7" title=" " alt="" coords="371,93,439,119"/>
+<area shape="rect" id="node3" href="$xmc__common_8hpp_source.html" title=" " alt="" coords="118,167,293,192"/>
+<area shape="rect" id="node4" href="$xmc__status_8h_source.html" title=" " alt="" coords="5,240,147,265"/>
+<area shape="rect" id="node5" title=" " alt="" coords="171,240,253,265"/>
 </map>

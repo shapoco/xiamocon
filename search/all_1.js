@@ -1,7 +1,19 @@
 var searchData=
 [
-  ['bakedvertex_0',['BakedVertex',['../structxmc_1_1BakedVertex.html',1,'xmc']]],
-  ['bitmap_1',['bitmap',['../structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7',1,'GFXfont']]],
-  ['bitmapoffset_2',['bitmapOffset',['../structGFXglyph.html#a24d52036821c10af52a742a1d7fbd9b8',1,'GFXglyph']]],
-  ['bottom_3',['bottom',['../structxmc_1_1rect__t.html#af82f4fd8c39143e9dc6b2b3eb5c2b85b',1,'xmc::rect_t']]]
+  ['b_0',['B',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a9d5ed678fe57bcca610140957afab571',1,'xmc::input']]],
+  ['bakedvertex_1',['BakedVertex',['../structxmc_1_1BakedVertex.html',1,'xmc']]],
+  ['battery_2ehpp_2',['battery.hpp',['../battery_8hpp.html',1,'']]],
+  ['bitmap_3',['bitmap',['../structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7',1,'GFXfont']]],
+  ['bitmapoffset_4',['bitmapOffset',['../structGFXglyph.html#a24d52036821c10af52a742a1d7fbd9b8',1,'GFXglyph']]],
+  ['bottom_5',['bottom',['../structxmc_1_1rect__t.html#af82f4fd8c39143e9dc6b2b3eb5c2b85b',1,'xmc::rect_t']]],
+  ['btn_5fa_6',['BTN_A',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6ac3544ae7e377e3f38079ad275c0372d9',1,'xmc::ioex']]],
+  ['btn_5fb_7',['BTN_B',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a09b31cfd48eb623d80a45d15ca759056',1,'xmc::ioex']]],
+  ['btn_5fdown_8',['BTN_DOWN',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a89edd405c4eda9ddd6aff7b3af1786c0',1,'xmc::ioex']]],
+  ['btn_5ffunc_9',['BTN_FUNC',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6acb7f3eb00edf3ad168776c121b47ca81',1,'xmc::ioex']]],
+  ['btn_5fleft_10',['BTN_LEFT',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6aa524b345bd3a0c0a1c46c82174e6356d',1,'xmc::ioex']]],
+  ['btn_5fright_11',['BTN_RIGHT',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a5d26ae01f20c4c990920b6ff71f7fc5e',1,'xmc::ioex']]],
+  ['btn_5fup_12',['BTN_UP',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a4e47da65c0481575d0d8218383c324c3',1,'xmc::ioex']]],
+  ['btn_5fx_13',['BTN_X',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6ac73d3482500d0fabbd59d47ba391e1ff',1,'xmc::ioex']]],
+  ['btn_5fy_14',['BTN_Y',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a16a82e1e0a3ed6d22a56861b6559a259',1,'xmc::ioex']]],
+  ['button_15',['Button',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934',1,'xmc::input']]]
 ];

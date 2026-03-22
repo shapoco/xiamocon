@@ -1,6 +1,22 @@
 var annotated_dup =
 [
     [ "xmc", null, [
+      [ "audio", null, [
+        [ "Mixer", "classxmc_1_1audio_1_1Mixer.html", "classxmc_1_1audio_1_1Mixer" ],
+        [ "SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
+        [ "SourcePort", "structxmc_1_1audio_1_1SourcePort.html", null ],
+        [ "StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
+        [ "StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", "classxmc_1_1audio_1_1StreamingDac" ],
+        [ "Tone", "classxmc_1_1audio_1_1Tone.html", "classxmc_1_1audio_1_1Tone" ]
+      ] ],
+      [ "dma", null, [
+        [ "Config", "structxmc_1_1dma_1_1Config.html", "structxmc_1_1dma_1_1Config" ]
+      ] ],
+      [ "pwm", null, [
+        [ "Config", "structxmc_1_1pwm_1_1Config.html", null ],
+        [ "Driver", "classxmc_1_1pwm_1_1Driver.html", "classxmc_1_1pwm_1_1Driver" ]
+      ] ],
+      [ "AppConfig", "structxmc_1_1AppConfig.html", null ],
       [ "AttributeBufferClass", "classxmc_1_1AttributeBufferClass.html", null ],
       [ "BakedVertex", "structxmc_1_1BakedVertex.html", null ],
       [ "color4444", "unionxmc_1_1color4444.html", null ],
@@ -9,30 +25,21 @@ var annotated_dup =
       [ "mat4", "structxmc_1_1mat4.html", "structxmc_1_1mat4" ],
       [ "MaterialClass", "classxmc_1_1MaterialClass.html", null ],
       [ "MeshClass", "classxmc_1_1MeshClass.html", null ],
-      [ "Mixer", "classxmc_1_1Mixer.html", "classxmc_1_1Mixer" ],
       [ "PrimitiveClass", "classxmc_1_1PrimitiveClass.html", null ],
       [ "quat", "structxmc_1_1quat.html", "structxmc_1_1quat" ],
       [ "RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
+      [ "RepeatingTimer", "classxmc_1_1RepeatingTimer.html", "classxmc_1_1RepeatingTimer" ],
+      [ "Semaphore", "classxmc_1_1Semaphore.html", null ],
+      [ "SpinLock", "classxmc_1_1SpinLock.html", null ],
       [ "Sprite4444Class", "classxmc_1_1Sprite4444Class.html", null ],
       [ "Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
       [ "Sprite565Class", "classxmc_1_1Sprite565Class.html", null ],
       [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
-      [ "Tone", "classxmc_1_1Tone.html", "classxmc_1_1Tone" ],
+      [ "TextState", "structxmc_1_1TextState.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],
-    [ "AppConfig", "structAppConfig.html", null ],
     [ "GFXfont", "structGFXfont.html", "structGFXfont" ],
-    [ "GFXglyph", "structGFXglyph.html", "structGFXglyph" ],
-    [ "RepeatingTimer", "structRepeatingTimer.html", "structRepeatingTimer" ],
-    [ "SdacConfig", "structSdacConfig.html", null ],
-    [ "SdacInst", "structSdacInst.html", null ],
-    [ "Semaphore", "structSemaphore.html", null ],
-    [ "SpinLock", "structSpinLock.html", null ],
-    [ "xmc_audio_format_t", "structxmc__audio__format__t.html", null ],
-    [ "xmc_audio_source_port_t", "structxmc__audio__source__port__t.html", null ],
-    [ "xmc_dma_config_t", "structxmc__dma__config__t.html", "structxmc__dma__config__t" ],
-    [ "xmc_pwm_config_t", "structxmc__pwm__config__t.html", null ],
-    [ "xmc_pwm_inst_t", "structxmc__pwm__inst__t.html", null ]
+    [ "GFXglyph", "structGFXglyph.html", "structGFXglyph" ]
 ];

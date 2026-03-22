@@ -1,8 +1,0 @@
-<map id="cpp/platform/decl/include/xmc/hw/pwm.h" name="cpp/platform/decl/include/xmc/hw/pwm.h">
-<area shape="rect" id="node1" title="Hardware PWM interface." alt="" coords="55,5,242,45"/>
-<area shape="rect" id="node2" href="$dma_8h_source.html" title=" " alt="" coords="5,93,124,119"/>
-<area shape="rect" id="node3" href="$hw__common_8h_source.html" title=" " alt="" coords="148,93,320,119"/>
-<area shape="rect" id="node4" href="$xmc__common_8h_source.html" title=" " alt="" coords="155,167,313,192"/>
-<area shape="rect" id="node5" title=" " alt="" coords="142,240,225,265"/>
-<area shape="rect" id="node6" title=" " alt="" coords="249,240,320,265"/>
-</map>

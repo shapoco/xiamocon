@@ -118,7 +118,8 @@ Collaboration diagram for xmc::SpriteClass:</div>
 <div class="dyncontent">
 <div class="center"><img src="classxmc_1_1SpriteClass__coll__graph.png" border="0" usemap="#axmc_1_1SpriteClass_coll__map" alt="Collaboration graph"/></div>
 <map name="axmc_1_1SpriteClass_coll__map" id="axmc_1_1SpriteClass_coll__map">
-<area shape="rect" title=" " alt="" coords="5,181,136,207"/>
+<area shape="rect" title=" " alt="" coords="5,269,136,295"/>
+<area shape="rect" href="structxmc_1_1TextState.html" title=" " alt="" coords="11,181,130,207"/>
 <area shape="rect" href="structGFXfont.html" title="Data stored for FONT AS A WHOLE." alt="" coords="33,93,108,119"/>
 <area shape="rect" href="structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="28,5,113,31"/>
 </map>
@@ -132,45 +133,48 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a50c1fcd9e083adc509013e38cf252980"><td class="memItemLeft" align="right" valign="top"><a id="a50c1fcd9e083adc509013e38cf252980" name="a50c1fcd9e083adc509013e38cf252980"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>linePtr</b> (int y) const</td></tr>
 <tr class="separator:a50c1fcd9e083adc509013e38cf252980"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8d7362634c8494882d88558576563b"><td class="memItemLeft" align="right" valign="top"><a id="a2d8d7362634c8494882d88558576563b" name="a2d8d7362634c8494882d88558576563b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_pixel</b> (int x, int y, raw_color color)</td></tr>
-<tr class="separator:a2d8d7362634c8494882d88558576563b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a398701bbd50bbc7f1ffe430668c80ad2"><td class="memItemLeft" align="right" valign="top"><a id="a398701bbd50bbc7f1ffe430668c80ad2" name="a398701bbd50bbc7f1ffe430668c80ad2"></a>
-raw_color&#160;</td><td class="memItemRight" valign="bottom"><b>get_pixel</b> (int x, int y) const</td></tr>
-<tr class="separator:a398701bbd50bbc7f1ffe430668c80ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e9366b7263117f27aa9c2fd503466a"><td class="memItemLeft" align="right" valign="top"><a id="a67e9366b7263117f27aa9c2fd503466a" name="a67e9366b7263117f27aa9c2fd503466a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_font</b> (const <a class="el" href="structGFXfont.html">GFXfont</a> *font, int size=1)</td></tr>
-<tr class="separator:a67e9366b7263117f27aa9c2fd503466a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcc69358ce7aab6a71046290ecfb2c45"><td class="memItemLeft" align="right" valign="top"><a id="adcc69358ce7aab6a71046290ecfb2c45" name="adcc69358ce7aab6a71046290ecfb2c45"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_cursor</b> (int x, int y)</td></tr>
-<tr class="separator:adcc69358ce7aab6a71046290ecfb2c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a9282cadf229b99f92030ce2144bb7"><td class="memItemLeft" align="right" valign="top"><a id="a08a9282cadf229b99f92030ce2144bb7" name="a08a9282cadf229b99f92030ce2144bb7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_text_color</b> (raw_color color)</td></tr>
-<tr class="separator:a08a9282cadf229b99f92030ce2144bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad20009c0b124cf06e817cb678b874b17"><td class="memItemLeft" align="right" valign="top"><a id="ad20009c0b124cf06e817cb678b874b17" name="ad20009c0b124cf06e817cb678b874b17"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>draw_string</b> (const char *str)</td></tr>
-<tr class="separator:ad20009c0b124cf06e817cb678b874b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e4089be2a2a8dc5b0b41f2268eaced4"><td class="memItemLeft" align="right" valign="top"><a id="a7e4089be2a2a8dc5b0b41f2268eaced4" name="a7e4089be2a2a8dc5b0b41f2268eaced4"></a>
-XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>start_transfer_to_display</b> (int dx, int dy)</td></tr>
-<tr class="separator:a7e4089be2a2a8dc5b0b41f2268eaced4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73e3b9ce283942db8b6cb05a3cbfbe84"><td class="memItemLeft" align="right" valign="top"><a id="a73e3b9ce283942db8b6cb05a3cbfbe84" name="a73e3b9ce283942db8b6cb05a3cbfbe84"></a>
-XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>complete_transfer</b> ()</td></tr>
-<tr class="separator:a73e3b9ce283942db8b6cb05a3cbfbe84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefb5dc66559f1f23048a8b41da1cda64"><td class="memItemLeft" align="right" valign="top"><a id="aefb5dc66559f1f23048a8b41da1cda64" name="aefb5dc66559f1f23048a8b41da1cda64"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPixel</b> (int x, int y, raw_color color)</td></tr>
+<tr class="separator:aefb5dc66559f1f23048a8b41da1cda64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae19b39d810a0ad61eaa5d603c3146f17"><td class="memItemLeft" align="right" valign="top"><a id="ae19b39d810a0ad61eaa5d603c3146f17" name="ae19b39d810a0ad61eaa5d603c3146f17"></a>
+raw_color&#160;</td><td class="memItemRight" valign="bottom"><b>getPixel</b> (int x, int y) const</td></tr>
+<tr class="separator:ae19b39d810a0ad61eaa5d603c3146f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb10b5b0dd9ec1cd17db27555b63819"><td class="memItemLeft" align="right" valign="top"><a id="aedb10b5b0dd9ec1cd17db27555b63819" name="aedb10b5b0dd9ec1cd17db27555b63819"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFont</b> (const <a class="el" href="structGFXfont.html">GFXfont</a> *font, int size=1)</td></tr>
+<tr class="separator:aedb10b5b0dd9ec1cd17db27555b63819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81093f809abac70cfd75b8150c82c35b"><td class="memItemLeft" align="right" valign="top"><a id="a81093f809abac70cfd75b8150c82c35b" name="a81093f809abac70cfd75b8150c82c35b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCursor</b> (int x, int y)</td></tr>
+<tr class="separator:a81093f809abac70cfd75b8150c82c35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0497a0915941d44e0acf7525b36be75"><td class="memItemLeft" align="right" valign="top"><a id="ad0497a0915941d44e0acf7525b36be75" name="ad0497a0915941d44e0acf7525b36be75"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setTextColor</b> (raw_color color)</td></tr>
+<tr class="separator:ad0497a0915941d44e0acf7525b36be75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a1c81eedc1bc2457008e6b565b4c264"><td class="memItemLeft" align="right" valign="top"><a id="a5a1c81eedc1bc2457008e6b565b4c264" name="a5a1c81eedc1bc2457008e6b565b4c264"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawString</b> (const char *str)</td></tr>
+<tr class="separator:a5a1c81eedc1bc2457008e6b565b4c264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc7fcc645cde1eb87752092d72660283"><td class="memItemLeft" align="right" valign="top"><a id="adc7fcc645cde1eb87752092d72660283" name="adc7fcc645cde1eb87752092d72660283"></a>
+XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>startTransferToDisplay</b> (int dx, int dy)</td></tr>
+<tr class="separator:adc7fcc645cde1eb87752092d72660283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ec4088511bf122d25940407fe473e33"><td class="memItemLeft" align="right" valign="top"><a id="a8ec4088511bf122d25940407fe473e33" name="a8ec4088511bf122d25940407fe473e33"></a>
+XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>completeTransfer</b> ()</td></tr>
+<tr class="separator:a8ec4088511bf122d25940407fe473e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3ef6a7723448cad7989bb3f8db45164"><td class="memItemLeft" align="right" valign="top"><a id="af3ef6a7723448cad7989bb3f8db45164" name="af3ef6a7723448cad7989bb3f8db45164"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> (raw_color color)</td></tr>
 <tr class="separator:af3ef6a7723448cad7989bb3f8db45164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a530b4d517fac0b68c594b04c2a0fdb90"><td class="memItemLeft" align="right" valign="top"><a id="a530b4d517fac0b68c594b04c2a0fdb90" name="a530b4d517fac0b68c594b04c2a0fdb90"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>fill_rect</b> (int x, int y, int w, int h, raw_color color)</td></tr>
-<tr class="separator:a530b4d517fac0b68c594b04c2a0fdb90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab08adb53478199ee4822463afcd76ff1"><td class="memItemLeft" align="right" valign="top"><a id="ab08adb53478199ee4822463afcd76ff1" name="ab08adb53478199ee4822463afcd76ff1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>draw_rect</b> (int x, int y, int w, int h, raw_color color)</td></tr>
-<tr class="separator:ab08adb53478199ee4822463afcd76ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89746f40d865fc6f9b9e86ef459f2d9e"><td class="memItemLeft" align="right" valign="top"><a id="a89746f40d865fc6f9b9e86ef459f2d9e" name="a89746f40d865fc6f9b9e86ef459f2d9e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>fillRect</b> (int x, int y, int w, int h, raw_color color)</td></tr>
+<tr class="separator:a89746f40d865fc6f9b9e86ef459f2d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e33f20cb49d261148b7017597c27952"><td class="memItemLeft" align="right" valign="top"><a id="a4e33f20cb49d261148b7017597c27952" name="a4e33f20cb49d261148b7017597c27952"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawRect</b> (int x, int y, int w, int h, raw_color color)</td></tr>
+<tr class="separator:a4e33f20cb49d261148b7017597c27952"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26d79146ed7eff7aec8ba92c2ce25fcf"><td class="memItemLeft" align="right" valign="top"><a id="a26d79146ed7eff7aec8ba92c2ce25fcf" name="a26d79146ed7eff7aec8ba92c2ce25fcf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>fill_triangle</b> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> *verts, const int *indices, int offset, raw_color color)</td></tr>
 <tr class="separator:a26d79146ed7eff7aec8ba92c2ce25fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dff5ed1b25fe1f3dbcc1f1253845a83"><td class="memItemLeft" align="right" valign="top"><a id="a6dff5ed1b25fe1f3dbcc1f1253845a83" name="a6dff5ed1b25fe1f3dbcc1f1253845a83"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>draw_image</b> (const Sprite &amp;image, int dx, int dy, int w, int h, int sx, int sy)</td></tr>
-<tr class="separator:a6dff5ed1b25fe1f3dbcc1f1253845a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b414541ad9aa54a944a002d6860d560"><td class="memItemLeft" align="right" valign="top"><a id="a1b414541ad9aa54a944a002d6860d560" name="a1b414541ad9aa54a944a002d6860d560"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawImage</b> (const Sprite &amp;image, int dx, int dy, int w, int h, int sx, int sy)</td></tr>
+<tr class="separator:a1b414541ad9aa54a944a002d6860d560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad913d0d7ea477c36f76235bb20427cf6"><td class="memItemLeft" align="right" valign="top"><a id="ad913d0d7ea477c36f76235bb20427cf6" name="ad913d0d7ea477c36f76235bb20427cf6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawLastError</b> ()</td></tr>
+<tr class="separator:ad913d0d7ea477c36f76235bb20427cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -207,30 +211,18 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onFillRect</b
 <tr class="memitem:a51430830007b727c10d0b2d7ded84f64"><td class="memItemLeft" align="right" valign="top"><a id="a51430830007b727c10d0b2d7ded84f64" name="a51430830007b727c10d0b2d7ded84f64"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onDrawImage</b> (const Sprite &amp;image, int dx, int dy, int w, int h, int sx, int sy)=0</td></tr>
 <tr class="separator:a51430830007b727c10d0b2d7ded84f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4dd274125de89eb294840c26bc03685"><td class="memItemLeft" align="right" valign="top"><a id="ae4dd274125de89eb294840c26bc03685" name="ae4dd274125de89eb294840c26bc03685"></a>
-virtual XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>on_start_transfer_to_display</b> (int dx, int dy, int sy, int h)=0</td></tr>
-<tr class="separator:ae4dd274125de89eb294840c26bc03685"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4758f36887ce9cf70673bbf7ddb06f14"><td class="memItemLeft" align="right" valign="top"><a id="a4758f36887ce9cf70673bbf7ddb06f14" name="a4758f36887ce9cf70673bbf7ddb06f14"></a>
-virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>on_draw_char</b> (int x, int y, char c)</td></tr>
-<tr class="separator:a4758f36887ce9cf70673bbf7ddb06f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40a33ed86cf2b43e7f72bc6f1d268ff0"><td class="memItemLeft" align="right" valign="top"><a id="a40a33ed86cf2b43e7f72bc6f1d268ff0" name="a40a33ed86cf2b43e7f72bc6f1d268ff0"></a>
+virtual XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><b>onStartTransferToDisplay</b> (int dx, int dy, int sy, int h)=0</td></tr>
+<tr class="separator:a40a33ed86cf2b43e7f72bc6f1d268ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0e719d431cd8051c0b3fd63b31c8769"><td class="memItemLeft" align="right" valign="top"><a id="ad0e719d431cd8051c0b3fd63b31c8769" name="ad0e719d431cd8051c0b3fd63b31c8769"></a>
+virtual int&#160;</td><td class="memItemRight" valign="bottom"><b>onDrawChar</b> (int x, int y, char c)</td></tr>
+<tr class="separator:ad0e719d431cd8051c0b3fd63b31c8769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a66c9b4fd5eb79f040f83953ac2013ad1"><td class="memItemLeft" align="right" valign="top"><a id="a66c9b4fd5eb79f040f83953ac2013ad1" name="a66c9b4fd5eb79f040f83953ac2013ad1"></a>
-const <a class="el" href="structGFXfont.html">GFXfont</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>font</b> = nullptr</td></tr>
-<tr class="separator:a66c9b4fd5eb79f040f83953ac2013ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb399a8eff171375b0efd44e65d51ddb"><td class="memItemLeft" align="right" valign="top"><a id="adb399a8eff171375b0efd44e65d51ddb" name="adb399a8eff171375b0efd44e65d51ddb"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>fontSize</b> = 1</td></tr>
-<tr class="separator:adb399a8eff171375b0efd44e65d51ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a921b66e5588e8fab29dbb7f03ccdea5b"><td class="memItemLeft" align="right" valign="top"><a id="a921b66e5588e8fab29dbb7f03ccdea5b" name="a921b66e5588e8fab29dbb7f03ccdea5b"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>textColor</b> = 0</td></tr>
-<tr class="separator:a921b66e5588e8fab29dbb7f03ccdea5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf118a3a49bb3034c3dea314ae8af3a4"><td class="memItemLeft" align="right" valign="top"><a id="abf118a3a49bb3034c3dea314ae8af3a4" name="abf118a3a49bb3034c3dea314ae8af3a4"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>cursorX</b> = 0</td></tr>
-<tr class="separator:abf118a3a49bb3034c3dea314ae8af3a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d5f5c0aac6d781a8ac2c6fbf1f53b0a"><td class="memItemLeft" align="right" valign="top"><a id="a8d5f5c0aac6d781a8ac2c6fbf1f53b0a" name="a8d5f5c0aac6d781a8ac2c6fbf1f53b0a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>cursorY</b> = 0</td></tr>
-<tr class="separator:a8d5f5c0aac6d781a8ac2c6fbf1f53b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5799680425f50fc8f6c4e055832a3eb9"><td class="memItemLeft" align="right" valign="top"><a id="a5799680425f50fc8f6c4e055832a3eb9" name="a5799680425f50fc8f6c4e055832a3eb9"></a>
+<a class="el" href="structxmc_1_1TextState.html">TextState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>textState</b></td></tr>
+<tr class="separator:a5799680425f50fc8f6c4e055832a3eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for sprites. This is a template class that takes a pixel format and a pixel type as template parameters. The pixel format is used to determine how the pixel data is stored. The pixel type is used to represent the color of a pixel in the sprite. The Sprite class provides basic functionality for managing a sprite, such as setting and getting pixel values, filling rectangles, and starting a transfer to the display. The actual implementation of these functions is left to derived classes that specialize the template for specific pixel formats and types. </p>

@@ -1,15 +1,16 @@
 var dir_240b6bae18233bf214d22e6396e3e43f =
 [
-    [ "dma.h", "dma_8h_source.html", null ],
-    [ "gpio.h", "gpio_8h.html", "gpio_8h" ],
-    [ "hw_common.h", "hw__common_8h_source.html", null ],
-    [ "i2c.h", "i2c_8h.html", "i2c_8h" ],
-    [ "lock.h", "lock_8h.html", "lock_8h" ],
-    [ "pins.h", "pins_8h.html", "pins_8h" ],
-    [ "power.h", "power_8h.html", "power_8h" ],
-    [ "pwm.h", "pwm_8h.html", "pwm_8h" ],
-    [ "ram.h", "ram_8h.html", "ram_8h" ],
-    [ "sdac.h", "sdac_8h.html", "sdac_8h" ],
-    [ "spi.h", "spi_8h.html", "spi_8h" ],
-    [ "timer.h", "timer_8h.html", "timer_8h" ]
+    [ "dma.hpp", "dma_8hpp.html", "dma_8hpp" ],
+    [ "gpio.hpp", "gpio_8hpp.html", "gpio_8hpp" ],
+    [ "hw_common.hpp", "hw__common_8hpp_source.html", null ],
+    [ "i2c.hpp", "i2c_8hpp_source.html", null ],
+    [ "pins.hpp", "pins_8hpp_source.html", null ],
+    [ "power.hpp", "power_8hpp.html", "power_8hpp" ],
+    [ "pwm.hpp", "pwm_8hpp.html", "pwm_8hpp" ],
+    [ "ram.hpp", "ram_8hpp.html", "ram_8hpp" ],
+    [ "semaphore.hpp", "semaphore_8hpp_source.html", null ],
+    [ "spi.hpp", "spi_8hpp_source.html", null ],
+    [ "spinlock.hpp", "spinlock_8hpp_source.html", null ],
+    [ "streaming_dac.hpp", "streaming__dac_8hpp_source.html", null ],
+    [ "timer.hpp", "timer_8hpp.html", "timer_8hpp" ]
 ];
