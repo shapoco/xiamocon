@@ -30,7 +30,7 @@ XmcStatus init();
  * @return XMC_OK if the system service was successfully performed, or an
  * appropriate error code if there was a problem.
  */
-XmcStatus Service();
+XmcStatus service();
 
 /**
  * Request a system shutdown. This will attempt to gracefully shut down the

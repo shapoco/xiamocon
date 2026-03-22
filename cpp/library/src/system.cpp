@@ -12,6 +12,9 @@
 
 namespace xmc::system {
 
+uint64_t powerButtonNextReadUs = 0;
+uint32_t powerButtonPressedCount = 0;
+
 XmcStatus init() {
   gpio::setDir(XMC_PIN_POWER_BUTTON, false);
 
@@ -42,9 +45,26 @@ XmcStatus init() {
   return XMC_OK;
 }
 
-XmcStatus Service() {
+XmcStatus service() {
+  uint64_t now_us = getTimeUs();
+
   battery::service();
   input::service();
+
+  if (now_us >= powerButtonNextReadUs) {
+    powerButtonNextReadUs = now_us + 10000;
+    if (gpio::read(XMC_PIN_POWER_BUTTON)) {
+      if (powerButtonPressedCount < 3) {
+        powerButtonPressedCount++;
+      }
+    } else {
+      if (powerButtonPressedCount >= 3) {
+        requestShutdown();
+      }
+      powerButtonPressedCount = 0;
+    }
+  }
+
   return XMC_OK;
 }
 

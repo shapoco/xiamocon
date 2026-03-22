@@ -316,6 +316,10 @@ void appLoop() {
     // rasterizer->popMatrix();
   }
 
+  // render status bar
+  appDrawStatusBar(screen);
+  appDrawDebugInfo(screen);
+
   // start transferring the current frame to the display. This will return
   // immediately and the transfer will happen in the background.
   screen->startTransferToDisplay(0, 0);

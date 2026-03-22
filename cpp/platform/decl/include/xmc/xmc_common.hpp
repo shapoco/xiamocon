@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#define XMC_INLINE inline __attribute__((always_inline))
+
 #define XMC_ENUM_FLAGS(TEnum, TBase)                             \
   inline TEnum operator|(TEnum a, TEnum b) {                     \
     return (TEnum)((TBase)a | (TBase)b);                         \

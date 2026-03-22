@@ -28,6 +28,7 @@ class Sprite4444Class : public SpriteClass {
   void onSetPixel(int x, int y, uint16_t color) override;
   uint16_t onGetPixel(int x, int y) const override;
   void onFillRect(int x, int y, int w, int h, uint16_t color) override;
+  void onFillSmokeRect(int x, int y, int w, int h, bool light) override;
   void onDrawImage(const Sprite &image, int dx, int dy, int w, int h,
                      int sx, int sy) override;
   XmcStatus onStartTransferToDisplay(int dx, int dy, int sy,

@@ -8,6 +8,7 @@
 
 #include "xmc/audio_common.hpp"
 #include "xmc/display.hpp"
+#include "xmc/gfx.hpp"
 #include "xmc/xmc_common.hpp"
 
 namespace xmc {
@@ -47,7 +48,16 @@ void appSetup();
  */
 void appLoop();
 
-}
+/**
+ * Draw the status bar to the given screen.
+ */
+void appDrawStatusBar(Sprite &screen);
+
+/**
+ * Draw the last error information to the given screen.
+ */
+void appDrawDebugInfo(Sprite &screen);
+
+}  // namespace xmc
 
 #endif
-

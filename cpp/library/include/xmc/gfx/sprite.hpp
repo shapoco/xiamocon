@@ -2,6 +2,7 @@
 #define XMC_SPRITE_HPP
 
 #include "gfxfont.h"
+#include "xmc/battery.hpp"
 #include "xmc/display.hpp"
 #include "xmc/geo.hpp"
 #include "xmc/gfx/gfx_common.hpp"
@@ -43,11 +44,8 @@ class SpriteClass {
   const uint32_t stride;
   void *data;
   const bool autoFree;
-
- protected:
   TextState textState;
 
- public:
   SpriteClass(pixel_format_t format, int width, int height, uint32_t stride,
               void *data, bool auto_free)
       : format(format),
@@ -133,10 +131,24 @@ class SpriteClass {
       y += h;
       h = -h;
     }
-    fillRect(x, y, w, 1, color);
-    fillRect(x, y + h, w, 1, color);
-    fillRect(x, y, 1, h - 1, color);
-    fillRect(x + w, y, 1, h - 1, color);
+    fillRect(x, y, w + 1, 1, color);
+    fillRect(x, y + h, w + 1, 1, color);
+    fillRect(x, y + 1, 1, h - 1, color);
+    fillRect(x + w, y + 1, 1, h - 1, color);
+  }
+
+  void fillSmokeRect(int x, int y, int w, int h, bool light = false) {
+    if (w < 0) {
+      x += w;
+      w = -w;
+    }
+    if (h < 0) {
+      y += h;
+      h = -h;
+    }
+    clipRect(&x, &y, &w, &h, width, height);
+    if (w <= 0 || h <= 0) return;
+    onFillSmokeRect(x, y, w, h, light);
   }
 
   // todo: delete
@@ -223,28 +235,11 @@ class SpriteClass {
     onDrawImage(image, dx, dy, w, h, sx, sy);
   }
 
-  inline void drawLastError() {
-    XmcStatus err;
-    const char *file;
-    int line;
-    xmcGetLastError(&err, &file, &line);
-    char buf[64];
-    if (err != XMC_OK) {
-      TextState prevTextState = textState;
-      onFillRect(0, height - 10, width, 10, 0);
-      setFont(&ShapoSansP_s08c07, 1);
-      snprintf(buf, sizeof(buf), "ERR 0x%X: L%d in %s", err, line, file);
-      setCursor(0, height - 2);
-      setTextColor(0xFFFF);
-      drawString(buf);
-      textState = prevTextState;
-    }
-  }
-
  protected:
   virtual void onSetPixel(int x, int y, raw_color color) = 0;
   virtual raw_color onGetPixel(int x, int y) const = 0;
   virtual void onFillRect(int x, int y, int w, int h, raw_color color) = 0;
+  virtual void onFillSmokeRect(int x, int y, int w, int h, bool light) = 0;
   virtual void onDrawImage(const Sprite &image, int dx, int dy, int w, int h,
                            int sx, int sy) = 0;
   virtual XmcStatus onStartTransferToDisplay(int dx, int dy, int sy, int h) = 0;

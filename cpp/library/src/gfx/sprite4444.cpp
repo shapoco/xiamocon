@@ -26,6 +26,21 @@ void Sprite4444Class::onFillRect(int x, int y, int width, int height,
   }
 }
 
+void Sprite4444Class::onFillSmokeRect(int x, int y, int width, int height,
+                                     bool light) {
+  uint16_t mask = 0x0777;
+  uint16_t smoke = light ? 0x0888 : 0x0000;
+  for (int j = 0; j < height; j++) {
+    uint16_t *line = (uint16_t *)linePtr(y + j);
+    for (int i = 0; i < width; i++) {
+      uint16_t c = line[x + i];
+      uint16_t a = c & 0xF000;
+      c = (c & mask) | smoke;
+      line[x + i] = c | a;
+    }
+  }
+}
+
 void Sprite4444Class::onDrawImage(const Sprite &image, int dx, int dy, int w,
                                   int h, int sx, int sy) {
   switch (image->format) {
