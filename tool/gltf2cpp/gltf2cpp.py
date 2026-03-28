@@ -208,9 +208,9 @@ def generate(gltf, gltf_dir, prefix):
                 dn = f"{pn}_posData"
                 vn = f"{pn}_pos"
                 w("")
-                w(f"const xmc::vec3 {dn}[] = {{")
+                w(f"const float {dn}[] = {{")
                 for v in data:
-                    w(f"    {{{fmt_float(v[0])}, {fmt_float(v[1])}, {fmt_float(v[2])}}},")
+                    w(f"    {fmt_float(v[0])}, {fmt_float(v[1])}, {fmt_float(v[2])},")
                 w("};")
                 w("")
                 w(f"const xmc::Vec3Buffer {vn} = xmc::createVec3Buffer(")
@@ -225,9 +225,9 @@ def generate(gltf, gltf_dir, prefix):
                 dn = f"{pn}_normData"
                 vn = f"{pn}_norm"
                 w("")
-                w(f"const xmc::vec3 {dn}[] = {{")
+                w(f"const float {dn}[] = {{")
                 for v in data:
-                    w(f"    {{{fmt_float(v[0])}, {fmt_float(v[1])}, {fmt_float(v[2])}}},")
+                    w(f"    {fmt_float(v[0])}, {fmt_float(v[1])}, {fmt_float(v[2])},")
                 w("};")
                 w("")
                 w(f"const xmc::Vec3Buffer {vn} = xmc::createVec3Buffer(")
@@ -244,7 +244,7 @@ def generate(gltf, gltf_dir, prefix):
                 dn = f"{pn}_colData"
                 vn = f"{pn}_col"
                 w("")
-                w(f"const xmc::colorf {dn}[] = {{")
+                w(f"const float {dn}[] = {{")
                 for v in data:
                     if ct == 5126:  # FLOAT
                         r, g, b = v[0], v[1], v[2]
@@ -257,7 +257,7 @@ def generate(gltf, gltf_dir, prefix):
                         a = v[3] / 65535.0 if nc >= 4 else 1.0
                     else:
                         r, g, b, a = 1.0, 1.0, 1.0, 1.0
-                    w(f"    {{{fmt_float(r)}, {fmt_float(g)}, {fmt_float(b)}, {fmt_float(a)}}},")
+                    w(f"    {fmt_float(r)}, {fmt_float(g)}, {fmt_float(b)}, {fmt_float(a)},")
                 w("};")
                 w("")
                 w(f"const xmc::ColorBuffer {vn} = xmc::createColorBuffer(")
@@ -272,9 +272,9 @@ def generate(gltf, gltf_dir, prefix):
                 dn = f"{pn}_uvData"
                 vn = f"{pn}_uv"
                 w("")
-                w(f"const xmc::vec2 {dn}[] = {{")
+                w(f"const float {dn}[] = {{")
                 for v in data:
-                    w(f"    {{{fmt_float(v[0])}, {fmt_float(v[1])}}},")
+                    w(f"    {fmt_float(v[0])}, {fmt_float(v[1])},")
                 w("};")
                 w("")
                 w(f"const xmc::Vec2Buffer {vn} = xmc::createVec2Buffer(")

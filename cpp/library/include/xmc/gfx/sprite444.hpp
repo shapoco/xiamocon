@@ -50,10 +50,11 @@ struct Scanner444 {
   uint8_t *ptr;
   int x;
 
-  Scanner444(SpriteClass &sprite, int x, int y)
+  XMC_INLINE Scanner444(SpriteClass &sprite, int x, int y)
       : ptr((uint8_t *)sprite.linePtr(y) + x * 3 / 2), x(x) {}
 
-  Scanner444(Sprite &sprite, int x, int y) : Scanner444(*sprite, x, y) {}
+  XMC_INLINE Scanner444(Sprite &sprite, int x, int y)
+      : Scanner444(*sprite, x, y) {}
 
   XMC_INLINE void push444(uint16_t color) {
     if ((x++ & 1) == 0) {
@@ -66,17 +67,21 @@ struct Scanner444 {
   }
 
   XMC_INLINE void push4444(uint16_t color) {
-    uint16_t a = color & 0xF000;
-    if (a == 0xF000) {
+    uint16_t a1 = color & 0xF000;
+    if (a1 == 0xF000) {
       push444(color);
-    } else if (a == 0) {
+    } else if (a1 == 0) {
       skip();
     } else {
-      a >>= 12;
+      a1 >>= 12;
+      uint16_t a2 = 16 - a1;
       uint16_t c = peek();
-      uint32_t tmp = ((c & 0xF00) << 8) | ((c & 0x0F0) << 4) | (c & 0x00F);
-      tmp *= a;
-      c = ((tmp >> 12) & 0xF00) | ((tmp >> 8) & 0x0F0) | ((tmp >> 4) & 0x00F);
+      uint32_t tmp1 =
+          ((color & 0xF00) << 12) | ((color & 0x0F0) << 6) | (color & 0x00F);
+      uint32_t tmp2 = ((c & 0xF00) << 12) | ((c & 0x0F0) << 6) | (c & 0x00F);
+      tmp1 = tmp1 * a1 + tmp2 * a2;
+      c = ((tmp1 >> 16) & 0xF00) | ((tmp1 >> 10) & 0x0F0) |
+          ((tmp1 >> 4) & 0x00F);
       push444(c);
     }
   }
@@ -89,13 +94,7 @@ struct Scanner444 {
     }
   }
 
-  XMC_INLINE void skip() {
-    if ((x++ & 1) == 0) {
-      ptr++;
-    } else {
-      ptr += 2;
-    }
-  }
+  XMC_INLINE void skip() { ptr += 1 + (x++ & 1); }
 };
 
 }  // namespace xmc

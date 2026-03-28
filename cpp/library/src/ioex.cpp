@@ -14,7 +14,7 @@ typedef enum {
   REG_IODIRB = 0x07,
 } reg_t;
 
-static const uint8_t DEV_ADDR = 0x20;
+static const uint8_t DEV_ADDR = 0x22;
 
 static uint8_t dir[2] = {0xFF, 0x00};
 static uint8_t out[2] = {0xFF, 0xFF};
