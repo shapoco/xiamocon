@@ -151,7 +151,7 @@ XmcStatus init(InterfaceFormat format, int rotation) {
   //     writeCommand(Command::MEMORY_ACCESS_CONTROL, 0x28);
   // #endif
 
-  if (1) {
+  if (0) {
     uint8_t params0[] = {0xD0, 0x04, 0x0D, 0x11, 0x13, 0x2B, 0x3F,
                          0x54, 0x4C, 0x18, 0x0D, 0x0B, 0x1F, 0x23};
     uint8_t params1[] = {0xD0, 0x00, 0x02, 0x07, 0x0A, 0x28, 0x32,
@@ -164,7 +164,7 @@ XmcStatus init(InterfaceFormat format, int rotation) {
                              sizeof(params)));
   }
 
-  if (1) {
+  if (0) {
     uint8_t params0[] = {0xD0, 0x04, 0x0C, 0x11, 0x13, 0x2C, 0x3F,
                          0x44, 0x51, 0x2F, 0x1F, 0x1F, 0x20, 0x23};
     uint8_t params1[] = {0xD0, 0x00, 0x02, 0x07, 0x0A, 0x28, 0x31,
@@ -264,7 +264,7 @@ XmcStatus writePixelsStart(const void *data, uint32_t num_bytes,
   gpio::write(XMC_PIN_DISPLAY_DC, 1);
   dma::Config cfg = {
       .ptr = (void *)data,
-      .element_size = 1,
+      .elementSize = 1,
       .length = num_bytes,
   };
   XmcStatus sts = spi::dmaWriteStart(&cfg, XMC_PIN_DISPLAY_CS);

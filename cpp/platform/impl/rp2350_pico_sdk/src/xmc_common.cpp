@@ -1,5 +1,4 @@
 #include "xmc/xmc_common.hpp"
-#include "xmc/audio_common.hpp"
 
 #include <pico/stdlib.h>
 

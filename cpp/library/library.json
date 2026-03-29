@@ -1,0 +1,36 @@
+{
+    "name": "xmc_library",
+    "version": "0.0.2",
+    "build": {
+        "includeDir": "include",
+        "srcDir": "src",
+        "srcFilter": [
+            "+<*>",
+            "+<audio/*>",
+            "+<geo/*>",
+            "+<gfx/*>"
+        ],
+        "unflags": [
+            "-Os",
+            "-fno-jump-tables",
+            "-fno-tree-switch-conversion"
+        ],
+        "flags": [
+            "-std=gnu++17",
+            "-O2",
+            "-fjump-tables",
+            "-ftree-switch-conversion",
+            "-Iinclude",
+            "-Isrc/fatfs"
+        ]
+    },
+    "export": {
+        "include": [
+            "include"
+        ]
+    },
+    "platforms": "*",
+    "dependencies": [
+        "xmc_platform"
+    ]
+}

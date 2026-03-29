@@ -35,7 +35,7 @@ typedef struct {
   // int32_t pdmWork2;
   // int32_t pdmWork3;
   uint32_t pdmLfsr;
-} SdacHw;
+} RpSdacHw;
 
 static const uint16_t pioInsts[] = {
     0x6001,
@@ -58,13 +58,15 @@ static inline void updateLfsr(uint32_t *lfsr) {
   *lfsr = (*lfsr >> 1) | (bit << 31);
 }
 
-#define SUPPORTED_FORMATS \
-  (SampleFormat::LINEAR_PCM_U8_MONO | SampleFormat::LINEAR_PCM_S16_MONO)
+static constexpr SampleFormat SUPPORTED_FORMATS =
+    (SampleFormat::LINEAR_PCM_U8_MONO | SampleFormat::LINEAR_PCM_S16_MONO);
 
 SampleFormat sdacGetSupportedFormats(void) { return SUPPORTED_FORMATS; }
 
+uint32_t getPreferredSamplingRate(void) { return 25000; }
+
 StreamingDac::StreamingDac(int pin) : pin(pin) {
-  handle = malloc(sizeof(SdacHw));
+  handle = malloc(sizeof(RpSdacHw));
 }
 
 StreamingDac::~StreamingDac() {
@@ -81,7 +83,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   // hardware capabilities
   *actualRateHz = cfg.format.rateHz;
 
-  SdacHw *hw = (SdacHw *)handle;
+  RpSdacHw *hw = (RpSdacHw *)handle;
   hw->cfg = cfg;
   hw->pdmWork0 = 0;
   hw->pdmWork1 = 0;
@@ -178,7 +180,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
 
 XmcStatus StreamingDac::stop() {
   if (handle) {
-    SdacHw *hw = (SdacHw *)handle;
+    RpSdacHw *hw = (RpSdacHw *)handle;
     if (hw->dmaCh >= 0) {
       dma_channel_wait_for_finish_blocking(hw->dmaCh);
       dma_channel_unclaim(hw->dmaCh);
@@ -220,7 +222,7 @@ XmcStatus StreamingDac::setSource(SourcePort *src) {
 }
 
 XmcStatus StreamingDac::service() {
-  SdacHw *hw = (SdacHw *)handle;
+  RpSdacHw *hw = (RpSdacHw *)handle;
   if (hw->nextReadBank == hw->nextWriteBank) {
     fillBuffer(*this);
   }
@@ -236,23 +238,23 @@ static void dmaHandlerSlow(void *context) {
 }
 
 static void fillBuffer(StreamingDac &inst) {
-  SdacHw *hw = (SdacHw *)inst.handle;
+  RpSdacHw *hw = (RpSdacHw *)inst.handle;
 
   uint32_t dstSamples = hw->cfg.latencySamples * hw->extraOversample;
   uint32_t *dst = hw->dmaBuff + (hw->nextWriteBank * dstSamples);
 
   if (inst.source.requestData) {
-    uint32_t buff_size_bytes =
+    uint32_t buffSizeBytes =
         hw->cfg.latencySamples * getBytesPerSample(hw->cfg.format.sampleFormat);
     switch (hw->cfg.format.sampleFormat) {
       default:
       case SampleFormat::LINEAR_PCM_S16_MONO:
-        memset(hw->s16Buff, 0x00, buff_size_bytes);
+        memset(hw->s16Buff, 0x00, buffSizeBytes);
         inst.source.requestData(hw->s16Buff, hw->cfg.latencySamples,
                                 inst.source.context);
         break;
       case SampleFormat::LINEAR_PCM_U8_MONO:
-        memset(hw->srcFmtBuff, 0x80, buff_size_bytes);
+        memset(hw->srcFmtBuff, 0x80, buffSizeBytes);
         inst.source.requestData(hw->srcFmtBuff, hw->cfg.latencySamples,
                                 inst.source.context);
         for (int i = 0; i < hw->cfg.latencySamples; i++) {
@@ -337,7 +339,7 @@ static void fillBuffer(StreamingDac &inst) {
 }
 
 static void startNextDma(StreamingDac &inst) {
-  SdacHw *hw = (SdacHw *)inst.handle;
+  RpSdacHw *hw = (RpSdacHw *)inst.handle;
 
   uint32_t dstSamples = hw->cfg.latencySamples * hw->extraOversample;
   dma_channel_set_read_addr(

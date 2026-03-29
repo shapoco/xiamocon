@@ -1,11 +1,12 @@
 #include "xmc/hw/timer.hpp"
+#include "xmc/hw/ram.hpp"
 
 #include <pico/stdlib.h>
 #include <stdlib.h>
 
 namespace xmc {
 
-struct RepeatingTimerHw {
+struct RepeatingTimerHwRp {
   repeating_timer_t *timer;
   TimerCallback cb;
   void *context;
@@ -19,20 +20,23 @@ void sleepMs(uint32_t ms) { sleep_ms(ms); }
 void sleepUs(uint32_t us) { sleep_us(us); }
 
 RepeatingTimer::RepeatingTimer() {
-  RepeatingTimerHw *hw = (RepeatingTimerHw *)malloc(sizeof(RepeatingTimerHw));
+  RepeatingTimerHwRp *hw =
+      (RepeatingTimerHwRp *)xmcMalloc(sizeof(RepeatingTimerHwRp), XMC_RAM_CAP_DMA);
+
   if (!hw) return;
   handle = hw;
-  hw->timer = (repeating_timer_t *)malloc(sizeof(repeating_timer_t));
+  hw->timer = (repeating_timer_t *)xmcMalloc(sizeof(repeating_timer_t),
+                                             XMC_RAM_CAP_DMA);
 }
 
 RepeatingTimer::~RepeatingTimer() {
   if (handle) {
-    RepeatingTimerHw *hw = (RepeatingTimerHw *)handle;
+    RepeatingTimerHwRp *hw = (RepeatingTimerHwRp *)handle;
     if (hw->timer) {
       cancel_repeating_timer(hw->timer);
-      free(hw->timer);
+      xmcFree(hw->timer);
     }
-    free(handle);
+    xmcFree(handle);
     handle = nullptr;
   }
 }
@@ -40,12 +44,12 @@ RepeatingTimer::~RepeatingTimer() {
 XmcStatus RepeatingTimer ::startMs(uint32_t intervalMs, TimerCallback cb,
                                    void *context) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
-  RepeatingTimerHw *hw = (RepeatingTimerHw *)handle;
+  RepeatingTimerHwRp *hw = (RepeatingTimerHwRp *)handle;
   hw->cb = cb;
   hw->context = context;
   if (!add_repeating_timer_ms(intervalMs, repeatingTimerCallback, hw,
                               hw->timer)) {
-    free(handle);
+    xmcFree(handle);
     return XMC_ERR_TIMER_REPEATING_TIMER_INIT_FAILED;
   }
   return XMC_OK;
@@ -53,13 +57,13 @@ XmcStatus RepeatingTimer ::startMs(uint32_t intervalMs, TimerCallback cb,
 
 void RepeatingTimer::cancel() {
   if (!handle) return;
-  RepeatingTimerHw *hw = (RepeatingTimerHw *)handle;
+  RepeatingTimerHwRp *hw = (RepeatingTimerHwRp *)handle;
   if (!hw->timer) return;
   cancel_repeating_timer(hw->timer);
 }
 
 static bool repeatingTimerCallback(repeating_timer_t *rt) {
-  RepeatingTimerHw *hw = (RepeatingTimerHw *)rt->user_data;
+  RepeatingTimerHwRp *hw = (RepeatingTimerHwRp *)rt->user_data;
   return hw->cb(hw->context);
 }
 

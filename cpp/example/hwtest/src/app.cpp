@@ -1,11 +1,4 @@
-#include "xmc/app.hpp"
-#include "xmc/audio/tone.hpp"
-#include "xmc/battery.hpp"
-#include "xmc/display.hpp"
-#include "xmc/gfx.hpp"
-#include "xmc/hw/timer.hpp"
-#include "xmc/input.hpp"
-#include "xmc/speaker.hpp"
+#include "xiamocon.hpp"
 
 #include "xmc/font/ShapoSansP_s08c07.h"
 
@@ -15,7 +8,7 @@
 using namespace xmc;
 using namespace audio;
 
-static constexpr uint32_t SAMPLE_RATE_HZ = 22050;
+static constexpr uint32_t SAMPLE_RATE_HZ = 24000;
 
 int r_counter = 0, g_counter = 32767, b_counter = 65535;
 float x = display::WIDTH / 2, y = display::HEIGHT / 2;
@@ -115,11 +108,8 @@ void xmc::appLoop() {
   // fill box
   frame_buffer->fillRect((int)x - 32, (int)y - 32, 64, 64, color);
 
-  frame_buffer->setFont(&ShapoSansP_s08c07);
-  frame_buffer->fillRect(0, 0, 128, 8, 0x000);
-  frame_buffer->setCursor(0, 7);
-  frame_buffer->setTextColor(0xFFF);
-  frame_buffer->drawString(buf);
+  xmc::appDrawDebugInfo(frame_buffer);
+  xmc::appDrawStatusBar(frame_buffer);
 
   // start transferring the current frame to the display. This will return
   // immediately and the transfer will happen in the background.

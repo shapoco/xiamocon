@@ -1,0 +1,33 @@
+{
+    "name": "xmc_platform_impl",
+    "version": "0.0.2",
+    "build": {
+        "includeDir": "include",
+        "srcDir": "src",
+        "srcFilter": [
+            "+<*>"
+        ],
+        "unflags": [
+            "-Os",
+            "-fno-jump-tables",
+            "-fno-tree-switch-conversion"
+        ],
+        "flags": [
+            "-std=gnu++17",
+            "-O2",
+            "-fjump-tables",
+            "-ftree-switch-conversion",
+            "-I../decl/include",
+            "-Iinclude"
+        ]
+    },
+    "export": {
+        "include": [
+            "include"
+        ]
+    },
+    "platforms": "*",
+    "dependencies": [
+        "xmc_platform_decl"
+    ]
+}

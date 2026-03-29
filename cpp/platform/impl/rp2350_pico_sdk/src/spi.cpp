@@ -135,7 +135,7 @@ XmcStatus dmaWriteStart(const dma::Config *cfg, int cs) {
   dmaComplete();
 
   dma_channel_transfer_size_t tx_size;
-  switch (cfg->element_size) {
+  switch (cfg->elementSize) {
     case 1: tx_size = DMA_SIZE_8; break;
     case 2: tx_size = DMA_SIZE_16; break;
     case 4: tx_size = DMA_SIZE_32; break;

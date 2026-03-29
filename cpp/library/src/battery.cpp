@@ -27,7 +27,6 @@ XmcStatus init() {
   uint8_t config = 0;
   config |= (0 << 5);
   XMC_ERR_RET(writeRegU8(Adc101c021::CONFIG, config));
-  service();
   return XMC_OK;
 }
 

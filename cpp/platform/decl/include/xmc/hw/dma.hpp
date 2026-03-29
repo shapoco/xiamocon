@@ -15,7 +15,7 @@ struct Config {
   /** Pointer to the data buffer. */
   void *ptr;
   /** Size of each element in bytes. */
-  int element_size;
+  int elementSize;
   /** Number of elements to transfer. */
   int length;
 };

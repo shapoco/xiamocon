@@ -1,5 +1,5 @@
-#include "xmc/app.hpp"
 #include "xmc/app_entry.hpp"
+#include "xmc/app.hpp"
 #include "xmc/hw/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/speaker.hpp"
@@ -12,29 +12,37 @@ namespace xmc {
 uint64_t fpsLastUpdateUs = 0;
 uint32_t fpsFrameCount = 0;
 char fpsString[16] = {0};
+AppConfig appConfig;
 
 AppConfig getDefaultAppConfig() {
   AppConfig config = {
       .displayPixelFormat = display::InterfaceFormat::RGB565,
+      .speakerEnabled = true,
       .speakerSampleFormat = audio::SampleFormat::LINEAR_PCM_S16_MONO,
-      .speakerSampleRateHz = 22050,
+      .speakerSampleRateHz = audio::getPreferredSamplingRate(),
       .speakerLatencySamples = 1024,
   };
   return config;
 }
 
-void appMain() {
-  AppConfig cfg = appGetConfig();
+void libSetup() {
+  appConfig = appGetConfig();
   system::init();
-  display::init(cfg.displayPixelFormat, 0);
+  display::init(appConfig.displayPixelFormat, 0);
   input::init();
-  speaker::init(cfg.speakerSampleFormat, cfg.speakerSampleRateHz,
-                cfg.speakerLatencySamples, NULL);
-  appSetup();
-  while (1) {
-    system::service();
-    appLoop();
+  if (appConfig.speakerEnabled) {
+    speaker::init(appConfig.speakerSampleFormat, appConfig.speakerSampleRateHz,
+                  appConfig.speakerLatencySamples, NULL);
   }
+  appSetup();
+}
+
+void libLoop() {
+  system::service();
+  if (appConfig.speakerEnabled) {
+    speaker::service();
+  }
+  appLoop();
 }
 
 void appDrawStatusBar(Sprite &screen) {

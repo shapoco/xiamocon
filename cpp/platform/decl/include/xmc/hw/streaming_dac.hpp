@@ -21,7 +21,20 @@ struct SdacConfig {
   uint32_t latencySamples;
 };
 
+/**
+ * Get the supported audio sample formats for the SDAC. This function returns a
+ * bitmask of the supported sample formats. The caller can check if a specific
+ * sample format is supported by performing a bitwise AND operation with the
+ * returned value and the desired sample format.
+ */
 SampleFormat sdacGetSupportedFormats(void);
+
+/**
+ * Get the preferred sampling rate for the SDAC. This is the sample rate
+ * that the SDAC hardware is optimized for.
+ * @return The preferred sampling rate in Hz.
+ */
+uint32_t getPreferredSamplingRate(void);
 
 /**
  * Streaming DAC class. This class provides an interface for a streaming DAC,

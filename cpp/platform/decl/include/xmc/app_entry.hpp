@@ -3,7 +3,9 @@
 
 namespace xmc {
 
-void appMain();
+void libSetup();
+
+void libLoop();
 
 }
 
