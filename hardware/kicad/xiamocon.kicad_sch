@@ -15347,7 +15347,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "3e018b9e-c762-4d50-8bab-5e6b6de84d7f")
 		(property "Reference" "R12"
 			(at 310.388 121.158 0)
@@ -22944,7 +22944,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7k"
+		(property "Value" "2.2k"
 			(at 74.93 31.75 0)
 			(effects
 				(font
@@ -22980,7 +22980,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C25900"
+		(property "LCSC" "C25879"
 			(at 74.93 29.21 0)
 			(effects
 				(font
@@ -22989,7 +22989,7 @@
 				(hide yes)
 			)
 		)
-		(property "URL" "https://www.lcsc.com/product-detail/C25900.html"
+		(property "URL" "https://www.lcsc.com/product-detail/C25879.html"
 			(at 74.93 29.21 0)
 			(effects
 				(font
@@ -25670,7 +25670,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "4.7k"
+		(property "Value" "2.2k"
 			(at 82.55 31.75 0)
 			(effects
 				(font
@@ -25706,7 +25706,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C25900"
+		(property "LCSC" "C25879"
 			(at 82.55 29.21 0)
 			(effects
 				(font
@@ -25715,7 +25715,7 @@
 				(hide yes)
 			)
 		)
-		(property "URL" "https://www.lcsc.com/product-detail/C25900.html"
+		(property "URL" "https://www.lcsc.com/product-detail/C25879.html"
 			(at 82.55 29.21 0)
 			(effects
 				(font
