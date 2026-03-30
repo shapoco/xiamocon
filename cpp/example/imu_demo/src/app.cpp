@@ -1,11 +1,4 @@
-#include "xmc/app.hpp"
-#include "xmc/audio.hpp"
-#include "xmc/display.hpp"
-#include "xmc/geo.hpp"
-#include "xmc/gfx.hpp"
-#include "xmc/hw/timer.hpp"
-#include "xmc/input.hpp"
-#include "xmc/speaker.hpp"
+#include "xiamocon.hpp"
 
 #include <stdio.h>
 
@@ -19,12 +12,12 @@ namespace xmc {
 static lsm6dsv16x::SensorI2C imu;
 static quat imu_pos;
 
-static Sprite screen = create_sprite565(display::WIDTH, display::HEIGHT);
-static Mesh cube = createColoredCube();
-static Mesh sphere = createSphere(1.0f, 18, 9);
+static Sprite screen = createSprite565(display::WIDTH, display::HEIGHT);
+static Mesh3D cube = createColoredCube();
+static Mesh3D sphere = createSphere(1.0f, 18, 9);
 static Sprite earth_texture =
     createSprite4444(256, 128, 0, (void *)bmp_earth_data);
-static Mesh r_gray1 = R_GRAY1_mesh0_create();
+static Mesh3D r_gray1 = R_GRAY1_mesh0_create();
 static Rasterizer rasterizer =
     createRasterizer(display::WIDTH, display::HEIGHT);
 static uint32_t frame_count = 0;
@@ -48,7 +41,7 @@ void appSetup() {
   screen->clear(0);
   imu.init();
   imu_pos = {1, 0, 0, 0};
-  Material earthMat = createMaterial();
+  Material3D earthMat = createMaterial3D();
   earthMat->colorTexture = earth_texture;
   sphere->setMaterial(earthMat);
 }

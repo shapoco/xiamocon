@@ -1,4 +1,4 @@
-#include "xmc/gfx/rasterizer.hpp"
+#include "xmc/gfx/3d/rasterizer.hpp"
 
 #include <string.h>
 
@@ -47,14 +47,34 @@ void RasterizerClass::clearDepth(depth_t value) {
   }
 }
 
-void RasterizerClass::renderMesh(const Mesh &mesh) {
-  for (const Primitive &prim : mesh->primitives) {
+void RasterizerClass::setTarget(Sprite &target, rect_t viewport) {
+  this->target = target;
+  this->viewport = viewport;
+  viewPortMatrix = mat4::identity();
+  viewPortMatrix.m[0] = viewport.width / 2.0f;
+  viewPortMatrix.m[5] = -viewport.height / 2.0f;
+  viewPortMatrix.m[12] = viewport.x + viewport.width / 2.0f;
+  viewPortMatrix.m[13] = viewport.y + viewport.height / 2.0f;
+  viewPortMatrix.m[15] = 1.0f;
+}
+
+void RasterizerClass::setProjectionOrtho(float left, float right, float bottom,
+                                         float top, float near, float far) {
+  projectionMatrix = viewPortMatrix * mat4::ortho(left, right, bottom, top, near, far);
+}
+void RasterizerClass::setProjectionPerspective(float fovY, float aspect,
+                                               float near, float far) {
+  projectionMatrix = viewPortMatrix * mat4::perspective(fovY, aspect, near, far);
+}
+
+void RasterizerClass::renderMesh(const Mesh3D &mesh) {
+  for (const Primitive3D &prim : mesh->primitives) {
     renderPrimitive(prim, prim->material);
   }
 }
 
-void RasterizerClass::renderPrimitive(const Primitive &prim,
-                                      const Material &mat) {
+void RasterizerClass::renderPrimitive(const Primitive3D &prim,
+                                      const Material3D &mat) {
   const Vec3Buffer &primPos = prim->position;
   const Vec3Buffer &primNorm = prim->normal;
   const ColorBuffer &primCol = prim->color;
@@ -206,7 +226,7 @@ void RasterizerClass::renderPrimitive(const Primitive &prim,
 void RasterizerClass::renderTriangle(const BakedVertex &v0,
                                      const BakedVertex &v1,
                                      const BakedVertex &v2,
-                                     const Material &mat) {
+                                     const Material3D &mat) {
   const BakedVertex *tri[] = {&v0, &v1, &v2};
 
   int i0 = 0;

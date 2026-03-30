@@ -1,10 +1,7 @@
 #ifndef XMC_GFX_RASTERIZER_HPP
 #define XMC_GFX_RASTERIZER_HPP
 
-#include "xmc/geo.hpp"
-#include "xmc/gfx/colorf.hpp"
-#include "xmc/gfx/mesh.hpp"
-#include "xmc/gfx/sprite.hpp"
+#include "xmc/gfx/3d/scene3d.hpp"
 
 namespace xmc {
 
@@ -36,6 +33,7 @@ class RasterizerClass {
   rect_t viewport;
 
   mat4 projectionMatrix;
+  mat4 viewPortMatrix;
 
   mat4 *matrixStack;
   int matrixStackTop = 0;
@@ -45,9 +43,9 @@ class RasterizerClass {
   colorf envLight = {0.1f, 0.1f, 0.1f, 1.0f};
 
   vec3 parallelLightDir = vec3(0.5f, 0.5f, 1.0f).normalized();
-  colorf parallelLightColor = {0.8f, 0.8f, 0.8f, 1.0f};
+  colorf parallelLightColor = {1, 1, 1, 1};
 
-  Material material;
+  Material3D material;
 
  public:
   RasterizerClass(int w, int h, uint32_t stackSize)
@@ -55,6 +53,9 @@ class RasterizerClass {
     depthBuff =
         (depth_t *)xmcMalloc(sizeof(depth_t) * width * height, XMC_RAM_CAP_DMA);
     matrixStack = (mat4 *)xmcMalloc(sizeof(mat4) * stackSize, XMC_RAM_CAP_DMA);
+    loadIdentity();
+    projectionMatrix = mat4::identity();
+    viewPortMatrix = mat4::identity();
   };
 
   ~RasterizerClass() {
@@ -68,10 +69,7 @@ class RasterizerClass {
     }
   }
 
-  inline void setTarget(Sprite &target, rect_t viewport) {
-    this->target = target;
-    this->viewport = viewport;
-  }
+  void setTarget(Sprite &target, rect_t viewport);
 
   inline void setTarget(Sprite &target) {
     setTarget(target, rect_t{0, 0, target->width, target->height});
@@ -84,6 +82,11 @@ class RasterizerClass {
 
   inline void setProjection(const mat4 &proj) { projectionMatrix = proj; }
   inline const mat4 &getProjection() const { return projectionMatrix; }
+
+  void setProjectionOrtho(float left, float right, float bottom, float top,
+                          float near = -1.0f, float far = 1.0f);
+  void setProjectionPerspective(float fovY, float aspect, float near = 0.01f,
+                                float far = 100.0f);
 
   inline void loadMatrix(const mat4 &proj) {
     matrixStack[matrixStackTop] = proj;
@@ -124,20 +127,20 @@ class RasterizerClass {
     zFar = far;
   }
 
-  inline void setMaterial(const Material &mat) { material = mat; }
+  inline void setMaterial(const Material3D &mat) { material = mat; }
 
   void clearDepth(depth_t value = 0xFF);
 
-  void renderMesh(const Mesh &mesh);
+  void renderMesh(const Mesh3D &mesh);
 
-  inline void renderPrimitive(const Primitive &prim) {
+  inline void renderPrimitive(const Primitive3D &prim) {
     renderPrimitive(prim, material);
   }
 
-  void renderPrimitive(const Primitive &prim, const Material &mat);
+  void renderPrimitive(const Primitive3D &prim, const Material3D &mat);
 
   void renderTriangle(const BakedVertex &v0, const BakedVertex &v1,
-                      const BakedVertex &v2, const Material &mat);
+                      const BakedVertex &v2, const Material3D &mat);
 };
 
 }  // namespace xmc

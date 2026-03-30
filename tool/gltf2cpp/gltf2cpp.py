@@ -133,8 +133,7 @@ def generate(gltf, gltf_dir, prefix):
 
     w("#pragma once")
     w("")
-    w('#include "xmc/geo.hpp"')
-    w('#include "xmc/gfx.hpp"')
+    w('#include "xmc/gfx/3d/scene3d.hpp"')
 
     # ── Materials ──
     mat_vars = {}
@@ -177,15 +176,15 @@ def generate(gltf, gltf_dir, prefix):
             bc.append(1.0)
 
         fn = f"{mn}_create"
-        w(f"xmc::Material {fn}() {{")
-        w("  xmc::MaterialClass mat;")
+        w(f"xmc::Material3D {fn}() {{")
+        w("  xmc::Material3DClass mat;")
         w(f"  mat.baseColor = {{{fmt_float(bc[0])}, {fmt_float(bc[1])}, {fmt_float(bc[2])}, {fmt_float(bc[3])}}};")
         if tex_var:
             w(f"  mat.colorTexture = {tex_var};")
-        w("  return std::make_shared<xmc::MaterialClass>(mat);")
+        w("  return std::make_shared<xmc::Material3DClass>(mat);")
         w("}")
         w("")
-        w(f"const xmc::Material {mn} = {fn}();")
+        w(f"const xmc::Material3D {mn} = {fn}();")
 
         mat_vars[mi] = mn
 
@@ -311,13 +310,13 @@ def generate(gltf, gltf_dir, prefix):
             # ── Material reference ──
             mat_var = "nullptr"
             if prim.material is not None and prim.material in mat_vars:
-                mat_var = f"(xmc::Material){mat_vars[prim.material]}"
+                mat_var = f"(xmc::Material3D){mat_vars[prim.material]}"
 
             # ── Primitive ──
             fn = f"{pn}_create"
             w("")
-            w(f"xmc::Primitive {fn}() {{")
-            w("  return xmc::createPrimitive(")
+            w(f"xmc::Primitive3D {fn}() {{")
+            w("  return xmc::createPrimitive3D(")
             w(f"      {mode_str},")
             w(f"      {pos_var},")
             w(f"      {norm_var},")
@@ -328,20 +327,20 @@ def generate(gltf, gltf_dir, prefix):
             w("  );")
             w("}")
             w("")
-            w(f"const xmc::Primitive {pn} = {fn}();")
+            w(f"const xmc::Primitive3D {pn} = {fn}();")
 
             prim_vars.append(pn)
 
         # ── Mesh ──
         fn = f"{mesh_name}_create"
         w("")
-        w(f"xmc::Mesh {fn}() {{")
+        w(f"xmc::Mesh3D {fn}() {{")
         prims = ", ".join(prim_vars)
-        w(f"  std::vector<xmc::Primitive> prims = {{{prims}}};")
-        w("  return xmc::createMesh(std::move(prims));")
+        w(f"  std::vector<xmc::Primitive3D> prims = {{{prims}}};")
+        w("  return xmc::createMesh3D(std::move(prims));")
         w("}")
         w("")
-        w(f"const xmc::Mesh {mesh_name} = {fn}();")
+        w(f"const xmc::Mesh3D {mesh_name} = {fn}();")
 
     w("")
     return "\n".join(out)

@@ -1,8 +1,8 @@
-#include "xmc/gfx/mesh.hpp"
+#include "xmc/gfx/3d/mesh3d.hpp"
 
 namespace xmc {
 
-Mesh createColoredCube(float s) {
+Mesh3D createColoredCube(float s) {
   vec3 v0 = {-s, -s, -s};
   vec3 v1 = {s, -s, -s};
   vec3 v2 = {-s, s, -s};
@@ -42,13 +42,13 @@ Mesh createColoredCube(float s) {
       14, 13, 12, 13, 14, 15, 18, 17, 16, 17, 18, 19, 22, 21, 20, 21, 22, 23,
   };
 
-  return createMesh({createPrimitive(
+  return createMesh3D({createPrimitive3D(
       PrimitiveMode::TRIANGLES, createVec3Buffer(poses, 24, true),
       createVec3Buffer(norms, 24, true), createColorBuffer(cols, 24, true),
       nullptr, createIndexBuffer(idxs, 36, true), nullptr)});
 }
 
-Mesh createSphere(float radius, int segments, int rings, colorf col) {
+Mesh3D createSphere(float radius, int segments, int rings, colorf col) {
   Vec3Buffer poses = createVec3Buffer((segments + 1) * (rings + 1));
   Vec3Buffer norms = createVec3Buffer((segments + 1) * (rings + 1));
   ColorBuffer cols = createColorBuffer((segments + 1) * (rings + 1));
@@ -86,7 +86,7 @@ Mesh createSphere(float radius, int segments, int rings, colorf col) {
     }
   }
 
-  return createMesh({createPrimitive(
+  return createMesh3D({createPrimitive3D(
       PrimitiveMode::TRIANGLES, std::move(poses), std::move(norms),
       std::move(cols), std::move(uvs), std::move(idxs), nullptr)});
 }

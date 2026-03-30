@@ -35,12 +35,12 @@ class Sprite565Class : public SpriteClass {
                                             int h) override;
 };
 
-static inline Sprite create_sprite565(int width, int height,
+static inline Sprite createSprite565(int width, int height,
                                      xmc_ram_cap_t caps = XMC_RAM_CAP_DMA) {
   return std::make_shared<Sprite565Class>(width, height, caps);
 }
 
-static inline Sprite create_sprite565(int width, int height, uint32_t stride,
+static inline Sprite createSprite565(int width, int height, uint32_t stride,
                                      void *data, bool autoFree = false) {
   return std::make_shared<Sprite565Class>(width, height, stride, data,
                                           autoFree);

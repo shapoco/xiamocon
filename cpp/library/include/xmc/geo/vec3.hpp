@@ -35,6 +35,8 @@ struct vec3 {
     return vec3(x * inv, y * inv, z * inv);
   }
 
+  inline vec3 operator-() const { return vec3(-x, -y, -z); }
+
   inline vec3 &operator+=(const vec3 &other) {
     x += other.x;
     y += other.y;

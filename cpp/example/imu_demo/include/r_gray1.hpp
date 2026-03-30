@@ -8203,14 +8203,14 @@ const xmc::Sprite R_GRAY1_mat0_colorTexture = xmc::createSprite4444(
     (uint16_t *)R_GRAY1_mat0_colorTextureData, false
 );
 
-xmc::Material R_GRAY1_mat0_create() {
-  xmc::MaterialClass mat;
+xmc::Material3D R_GRAY1_mat0_create() {
+  xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
   mat.colorTexture = R_GRAY1_mat0_colorTexture;
-  return std::make_shared<xmc::MaterialClass>(mat);
+  return std::make_shared<xmc::Material3DClass>(mat);
 }
 
-const xmc::Material R_GRAY1_mat0 = R_GRAY1_mat0_create();
+const xmc::Material3D R_GRAY1_mat0 = R_GRAY1_mat0_create();
 
 const float R_GRAY1_mesh0_prim0_posData[] = {
     -0.91592f, 1.819315f, 0.908667f,
@@ -13058,23 +13058,23 @@ const xmc::IndexBuffer R_GRAY1_mesh0_prim0_idx = xmc::createIndexBuffer(
     (uint16_t *)R_GRAY1_mesh0_prim0_idxData, 1200, false
 );
 
-xmc::Primitive R_GRAY1_mesh0_prim0_create() {
-  return xmc::createPrimitive(
+xmc::Primitive3D R_GRAY1_mesh0_prim0_create() {
+  return xmc::createPrimitive3D(
       xmc::PrimitiveMode::TRIANGLES,
       (xmc::Vec3Buffer)R_GRAY1_mesh0_prim0_pos,
       (xmc::Vec3Buffer)R_GRAY1_mesh0_prim0_norm,
       (xmc::ColorBuffer)R_GRAY1_mesh0_prim0_col,
       (xmc::Vec2Buffer)R_GRAY1_mesh0_prim0_uv,
       (xmc::IndexBuffer)R_GRAY1_mesh0_prim0_idx,
-      (xmc::Material)R_GRAY1_mat0
+      (xmc::Material3D)R_GRAY1_mat0
   );
 }
 
-const xmc::Primitive R_GRAY1_mesh0_prim0 = R_GRAY1_mesh0_prim0_create();
+const xmc::Primitive3D R_GRAY1_mesh0_prim0 = R_GRAY1_mesh0_prim0_create();
 
-xmc::Mesh R_GRAY1_mesh0_create() {
-  std::vector<xmc::Primitive> prims = {R_GRAY1_mesh0_prim0};
-  return xmc::createMesh(std::move(prims));
+xmc::Mesh3D R_GRAY1_mesh0_create() {
+  std::vector<xmc::Primitive3D> prims = {R_GRAY1_mesh0_prim0};
+  return xmc::createMesh3D(std::move(prims));
 }
 
-const xmc::Mesh R_GRAY1_mesh0 = R_GRAY1_mesh0_create();
+const xmc::Mesh3D R_GRAY1_mesh0 = R_GRAY1_mesh0_create();

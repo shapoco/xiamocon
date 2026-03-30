@@ -36,6 +36,8 @@ struct vec2 {
     return vec2(x * inv, y * inv);
   }
 
+  inline vec2 operator-() const { return vec2(-x, -y); }
+
   inline vec2 &operator+=(const vec2 &other) {
     x += other.x;
     y += other.y;
