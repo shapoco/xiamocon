@@ -1,5 +1,15 @@
 var NAVTREEINDEX1 =
 {
+"structxmc_1_1vec2.html":[0,0,0,26],
+"structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c":[0,0,0,26,2],
+"structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e":[0,0,0,26,0],
+"structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee":[0,0,0,26,3],
+"structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af":[0,0,0,26,1],
+"structxmc_1_1vec3.html":[0,0,0,27],
+"structxmc_1_1vec3.html#a01990eaf4a70fba721996c1cfb765056":[0,0,0,27,1],
+"structxmc_1_1vec3.html#a08ecfd2da87526012c93a433649eb072":[0,0,0,27,2],
+"structxmc_1_1vec3.html#a5f53e4a10ad93507f94fd79b55d6bf57":[0,0,0,27,3],
+"structxmc_1_1vec3.html#ad8f508d0cce888aa961f6df7a6dbdc8e":[0,0,0,27,0],
 "system_8hpp_source.html":[1,0,0,0,0,0,14],
 "timer_8hpp.html":[1,0,0,1,0,0,0,0,12],
 "timer_8hpp.html#a0b9d342b2c8dfdce5ded686858fb6463":[1,0,0,1,0,0,0,0,12,2],

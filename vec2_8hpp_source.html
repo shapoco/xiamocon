@@ -128,58 +128,60 @@ $(document).ready(function(){initNavTree('vec2_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(x * inv, y * inv);</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  }</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator+=(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other) {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    x += other.x;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    y += other.y;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  }</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator-=(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other) {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    x -= other.x;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    y -= other.y;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator*=(<span class="keywordtype">float</span> scalar) {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    x *= scalar;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    y *= scalar;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator/=(<span class="keywordtype">float</span> scalar) {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordtype">float</span> inv = 1.0f / scalar;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    x *= inv;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    y *= inv;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">   69</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">dot</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">return</span> x * other.x + y * other.y;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">   78</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">cross</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">return</span> x * other.y - y * other.x;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  }</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">   86</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">length</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> sqrtf(x * x + y * y); }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">   92</a></span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> <a class="code hl_function" href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">normalized</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">float</span> len = <a class="code hl_function" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">length</a>();</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keywordflow">if</span> (len &lt; 1e-8f) <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(0, 0);</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">float</span> inv = 1.0f / len;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(x * inv, y * inv);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>};</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}  <span class="comment">// namespace xmc</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> operator-()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(-x, -y); }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator+=(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other) {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    x += other.x;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    y += other.y;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator-=(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    x -= other.x;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    y -= other.y;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator*=(<span class="keywordtype">float</span> scalar) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    x *= scalar;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    y *= scalar;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;operator/=(<span class="keywordtype">float</span> scalar) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">float</span> inv = 1.0f / scalar;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    x *= inv;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    y *= inv;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">   71</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">dot</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> x * other.x + y * other.y;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">   80</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">cross</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> &amp;other)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">return</span> x * other.y - y * other.x;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">   88</a></span>  <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code hl_function" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">length</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> sqrtf(x * x + y * y); }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">   94</a></span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a> <a class="code hl_function" href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">normalized</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">float</span> len = <a class="code hl_function" href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">length</a>();</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">if</span> (len &lt; 1e-8f) <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(0, 0);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">float</span> inv = 1.0f / len;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec2.html">vec2</a>(x * inv, y * inv);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>};</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}  <span class="comment">// namespace xmc</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ageo__common_8hpp_html"><div class="ttname"><a href="geo__common_8hpp.html">geo_common.hpp</a></div><div class="ttdoc">Common geometric utilities.</div></div>
 <div class="ttc" id="astructxmc_1_1vec2_html"><div class="ttname"><a href="structxmc_1_1vec2.html">xmc::vec2</a></div><div class="ttdef"><b>Definition:</b> vec2.hpp:15</div></div>
-<div class="ttc" id="astructxmc_1_1vec2_html_a1dd8d34c5d5e732d3d459b6b0ba66b9c"><div class="ttname"><a href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">xmc::vec2::length</a></div><div class="ttdeci">float length() const</div><div class="ttdoc">Calculate the length (magnitude) of the vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:86</div></div>
-<div class="ttc" id="astructxmc_1_1vec2_html_a5e1261a51467c69e3001250876032c5e"><div class="ttname"><a href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">xmc::vec2::cross</a></div><div class="ttdeci">float cross(const vec2 &amp;other) const</div><div class="ttdoc">Calculate the cross product of this vector with another vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:78</div></div>
-<div class="ttc" id="astructxmc_1_1vec2_html_a6ea1a48390599fa94d0a91f29aa8a2ee"><div class="ttname"><a href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">xmc::vec2::normalized</a></div><div class="ttdeci">vec2 normalized() const</div><div class="ttdoc">Normalize the vector (make it unit length)</div><div class="ttdef"><b>Definition:</b> vec2.hpp:92</div></div>
-<div class="ttc" id="astructxmc_1_1vec2_html_aaac3d240a52024ddf2f94eadd2a212af"><div class="ttname"><a href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">xmc::vec2::dot</a></div><div class="ttdeci">float dot(const vec2 &amp;other) const</div><div class="ttdoc">Calculate the dot product of this vector with another vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:69</div></div>
+<div class="ttc" id="astructxmc_1_1vec2_html_a1dd8d34c5d5e732d3d459b6b0ba66b9c"><div class="ttname"><a href="structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c">xmc::vec2::length</a></div><div class="ttdeci">float length() const</div><div class="ttdoc">Calculate the length (magnitude) of the vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:88</div></div>
+<div class="ttc" id="astructxmc_1_1vec2_html_a5e1261a51467c69e3001250876032c5e"><div class="ttname"><a href="structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e">xmc::vec2::cross</a></div><div class="ttdeci">float cross(const vec2 &amp;other) const</div><div class="ttdoc">Calculate the cross product of this vector with another vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:80</div></div>
+<div class="ttc" id="astructxmc_1_1vec2_html_a6ea1a48390599fa94d0a91f29aa8a2ee"><div class="ttname"><a href="structxmc_1_1vec2.html#a6ea1a48390599fa94d0a91f29aa8a2ee">xmc::vec2::normalized</a></div><div class="ttdeci">vec2 normalized() const</div><div class="ttdoc">Normalize the vector (make it unit length)</div><div class="ttdef"><b>Definition:</b> vec2.hpp:94</div></div>
+<div class="ttc" id="astructxmc_1_1vec2_html_aaac3d240a52024ddf2f94eadd2a212af"><div class="ttname"><a href="structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af">xmc::vec2::dot</a></div><div class="ttdeci">float dot(const vec2 &amp;other) const</div><div class="ttdoc">Calculate the dot product of this vector with another vector.</div><div class="ttdef"><b>Definition:</b> vec2.hpp:71</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

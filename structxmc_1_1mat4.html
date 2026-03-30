@@ -102,13 +102,16 @@ $(document).ready(function(){initNavTree('structxmc_1_1mat4.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aeda73707bca4c5822a053cc621f35953"><td class="memItemLeft" align="right" valign="top"><a id="aeda73707bca4c5822a053cc621f35953" name="aeda73707bca4c5822a053cc621f35953"></a>
+XMC_INLINE <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;other) const</td></tr>
+<tr class="separator:aeda73707bca4c5822a053cc621f35953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7b01c31aa4700aaefc68691047e9d9c"><td class="memItemLeft" align="right" valign="top"><a id="ab7b01c31aa4700aaefc68691047e9d9c" name="ab7b01c31aa4700aaefc68691047e9d9c"></a>
+XMC_INLINE <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*=</b> (const <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;other)</td></tr>
+<tr class="separator:ab7b01c31aa4700aaefc68691047e9d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="memItemLeft" align="right" valign="top"><a id="a71c4b2361d6d65bfc6ce7b67045f3cd4" name="a71c4b2361d6d65bfc6ce7b67045f3cd4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>loadIdentity</b> ()</td></tr>
 <tr class="memdesc:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the identity matrix into this matrix After calling this function, this matrix will be an identity matrix. <br /></td></tr>
 <tr class="separator:a71c4b2361d6d65bfc6ce7b67045f3cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c37521098131b65a343122432da07fc"><td class="memItemLeft" align="right" valign="top"><a id="a4c37521098131b65a343122432da07fc" name="a4c37521098131b65a343122432da07fc"></a>
-<a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1mat4.html">mat4</a> &amp;other) const</td></tr>
-<tr class="separator:a4c37521098131b65a343122432da07fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a1c1b4bd2d8ff72f53c2fa66715ea1c95">transform</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;v) const</td></tr>
 <tr class="memdesc:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform a point by this matrix, applying perspective division.  <br /></td></tr>
 <tr class="separator:a1c1b4bd2d8ff72f53c2fa66715ea1c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,8 +139,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (float s)</
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2092a3e47f32da186df47f212890ff51"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a2092a3e47f32da186df47f212890ff51">identity</a> ()</td></tr>
-<tr class="separator:a2092a3e47f32da186df47f212890ff51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33289a39a5e9005e7be0ab5786652406"><td class="memItemLeft" align="right" valign="top">static XMC_INLINE <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a33289a39a5e9005e7be0ab5786652406">identity</a> ()</td></tr>
+<tr class="separator:a33289a39a5e9005e7be0ab5786652406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9a4d43994abb898ad9ab132024adefc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#ae9a4d43994abb898ad9ab132024adefc">ortho</a> (float left, float right, float bottom, float top, float near=-1.0f, float far=1.0f)</td></tr>
+<tr class="memdesc:ae9a4d43994abb898ad9ab132024adefc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an orthographic projection matrix.  <br /></td></tr>
+<tr class="separator:ae9a4d43994abb898ad9ab132024adefc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60fca9ace684a695700c9d071999f88f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#a60fca9ace684a695700c9d071999f88f">perspective</a> (float fovY, float aspect, float near, float far)</td></tr>
+<tr class="memdesc:a60fca9ace684a695700c9d071999f88f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a perspective projection matrix.  <br /></td></tr>
+<tr class="separator:a60fca9ace684a695700c9d071999f88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae82d445c207ad02fbc61fdeb3b51b561"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#ae82d445c207ad02fbc61fdeb3b51b561">lookAt</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;eye, const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;center, const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;up)</td></tr>
+<tr class="memdesc:ae82d445c207ad02fbc61fdeb3b51b561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a look-at view matrix.  <br /></td></tr>
+<tr class="separator:ae82d445c207ad02fbc61fdeb3b51b561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae992d70f9207b82c746145316612d929"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1mat4.html">mat4</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929">fromQuat</a> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;q)</td></tr>
 <tr class="memdesc:ae992d70f9207b82c746145316612d929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a rotation matrix from a quaternion.  <br /></td></tr>
 <tr class="separator:ae992d70f9207b82c746145316612d929"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,8 +196,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
 
 </div>
 </div>
-<a id="a2092a3e47f32da186df47f212890ff51" name="a2092a3e47f32da186df47f212890ff51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2092a3e47f32da186df47f212890ff51">&#9670;&#160;</a></span>identity()</h2>
+<a id="a33289a39a5e9005e7be0ab5786652406" name="a33289a39a5e9005e7be0ab5786652406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33289a39a5e9005e7be0ab5786652406">&#9670;&#160;</a></span>identity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,7 +206,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::identity </td>
+          <td class="memname">static XMC_INLINE <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::identity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -207,6 +219,193 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> [16]</td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>an identity matrix </dd></dl>
+
+</div>
+</div>
+<a id="ae82d445c207ad02fbc61fdeb3b51b561" name="ae82d445c207ad02fbc61fdeb3b51b561"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae82d445c207ad02fbc61fdeb3b51b561">&#9670;&#160;</a></span>lookAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::lookAt </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;&#160;</td>
+          <td class="paramname"><em>eye</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;&#160;</td>
+          <td class="paramname"><em>center</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;&#160;</td>
+          <td class="paramname"><em>up</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a look-at view matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">eye</td><td>The position of the camera </td></tr>
+    <tr><td class="paramname">center</td><td>The point the camera is looking at </td></tr>
+    <tr><td class="paramname">up</td><td>The up direction for the camera (should not be parallel to the line from eye to center) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A 4x4 view matrix that transforms world coordinates to camera coordinates </dd></dl>
+
+</div>
+</div>
+<a id="ae9a4d43994abb898ad9ab132024adefc" name="ae9a4d43994abb898ad9ab132024adefc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9a4d43994abb898ad9ab132024adefc">&#9670;&#160;</a></span>ortho()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::ortho </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>left</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>right</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bottom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>top</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>near</em> = <code>-1.0f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>far</em> = <code>1.0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create an orthographic projection matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">left</td><td>The left clipping plane </td></tr>
+    <tr><td class="paramname">right</td><td>The right clipping plane </td></tr>
+    <tr><td class="paramname">bottom</td><td>The bottom clipping plane </td></tr>
+    <tr><td class="paramname">top</td><td>The top clipping plane </td></tr>
+    <tr><td class="paramname">near</td><td>The near clipping plane </td></tr>
+    <tr><td class="paramname">far</td><td>The far clipping plane </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A 4x4 orthographic projection matrix </dd></dl>
+
+</div>
+</div>
+<a id="a60fca9ace684a695700c9d071999f88f" name="a60fca9ace684a695700c9d071999f88f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60fca9ace684a695700c9d071999f88f">&#9670;&#160;</a></span>perspective()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structxmc_1_1mat4.html">mat4</a> xmc::mat4::perspective </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>fovY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>aspect</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>near</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>far</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a perspective projection matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fovY</td><td>The vertical field of view in radians </td></tr>
+    <tr><td class="paramname">aspect</td><td>The aspect ratio (width / height) of the viewport </td></tr>
+    <tr><td class="paramname">near</td><td>The distance to the near clipping plane (must be positive) </td></tr>
+    <tr><td class="paramname">far</td><td>The distance to the far clipping plane (must be positive) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A 4x4 perspective projection matrix </dd></dl>
 
 </div>
 </div>

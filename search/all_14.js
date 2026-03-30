@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['x_0',['x',['../structxmc_1_1rect__t.html#aaecab155e77dcb4c2e3045f3e32e73e6',1,'xmc::rect_t']]],
-  ['x_1',['X',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a02129bb861061d1a052c592e2dc6b383',1,'xmc::input']]],
-  ['xadvance_2',['xAdvance',['../structGFXglyph.html#a9b191040252aa9b5362087d65366bbf2',1,'GFXglyph']]],
-  ['xmc_5fram_5fcap_5fdma_3',['XMC_RAM_CAP_DMA',['../ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27a06ac0eb79a21660d84ac5e2bf7e1c382',1,'ram.hpp']]],
-  ['xmc_5fram_5fcap_5fnone_4',['XMC_RAM_CAP_NONE',['../ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27a9f9b78ee279f44029c4b3b1ddd625832',1,'ram.hpp']]],
-  ['xmc_5fram_5fcap_5ft_5',['xmc_ram_cap_t',['../ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27',1,'ram.hpp']]],
-  ['xmc_5fspeakergetsupportedformats_6',['xmc_speakerGetSupportedFormats',['../speaker_8hpp.html#a75ef48e1f00a5b831cc519b8728c8f06',1,'xmc::speaker']]],
-  ['xmcfree_7',['xmcFree',['../ram_8hpp.html#aa87c679f780eb338b30dc3364968c673',1,'ram.hpp']]],
-  ['xmcmalloc_8',['xmcMalloc',['../ram_8hpp.html#aa11069b6589b5629ddede2600e751a73',1,'ram.hpp']]],
-  ['xoffset_9',['xOffset',['../structGFXglyph.html#ab030bd9aeb37509ccc94ae3dcec4de98',1,'GFXglyph']]]
+  ['waspressed_0',['wasPressed',['../input_8hpp.html#a8e14b2d52b9d2d3fb7748ab190c0ef2d',1,'xmc::input']]],
+  ['wasreleased_1',['wasReleased',['../input_8hpp.html#aecba0b9ff14745d24f4539bf6408ad9e',1,'xmc::input']]],
+  ['waveform_2',['Waveform',['../tone_8hpp.html#a2088bdad36b783e047fc138922fc946f',1,'xmc::audio']]],
+  ['width_3',['width',['../structGFXglyph.html#a02bd34fd474af250b230f52cee75a6c1',1,'GFXglyph::width()'],['../structxmc_1_1rect__t.html#a8b1e1d1bb7993f5685e924543ac0c1b9',1,'xmc::rect_t::width()']]],
+  ['write_4',['write',['../gpio_8hpp.html#a417c9ca51ad277e33fade1686a023fdc',1,'xmc::gpio::write()'],['../ioex_8hpp.html#a334ae4147772d83f268e7a5a0aad3359',1,'xmc::ioex::write(Pin pin, bool value)']]],
+  ['writemasked_5',['writeMasked',['../ioex_8hpp.html#a471dccb186c728f270b70db4597eb58b',1,'xmc::ioex']]]
 ];

@@ -1,6 +1,7 @@
 <map id="cpp/library/include/xmc/gfx" name="cpp/library/include/xmc/gfx">
-<area shape="rect" id="node1" href="dir_2b4173ff96fb319b01e30349c3fe4ceb.html" title="gfx" alt="" coords="27,52,69,77"/>
-<area shape="rect" id="node2" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html" title="platform" alt="" coords="9,125,87,151"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000005_000010.html" title="2" alt="" coords="52,100,61,114"/>
-<area shape="rect" id="clust1" href="dir_34901e8a2955b2f307fb8f90642cf41b.html" title="xmc" alt="" coords="16,16,80,88"/>
+<area shape="rect" id="node3" href="dir_b0f7cb8b7e97bf1f158a1657f7798016.html" title="platform" alt="" coords="83,136,162,161"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000006_000011.html" title="2" alt="" coords="126,110,136,125"/>
+<area shape="rect" id="node2" href="dir_a178c45f112f5e2df3a98aa0169aca13.html" title="3d" alt="" coords="38,63,77,88"/>
+<area shape="rect" id="clust2" href="dir_2b4173ff96fb319b01e30349c3fe4ceb.html" alt="" coords="27,52,155,99"/>
+<area shape="rect" id="clust1" href="dir_34901e8a2955b2f307fb8f90642cf41b.html" title="xmc" alt="" coords="16,16,165,109"/>
 </map>

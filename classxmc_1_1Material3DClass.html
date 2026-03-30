@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Xiamocon: xmc::MeshClass Class Reference</title>
+<title>Xiamocon: xmc::Material3DClass Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,7 +65,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classxmc_1_1MeshClass.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('classxmc_1_1Material3DClass.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -92,37 +92,42 @@ $(document).ready(function(){initNavTree('classxmc_1_1MeshClass.html',''); initR
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="classxmc_1_1MeshClass-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">xmc::MeshClass Class Reference</div></div>
+<a href="classxmc_1_1Material3DClass-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">xmc::Material3DClass Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Collaboration diagram for xmc::Material3DClass:</div>
+<div class="dyncontent">
+<div class="center"><img src="classxmc_1_1Material3DClass__coll__graph.png" border="0" usemap="#axmc_1_1Material3DClass_coll__map" alt="Collaboration graph"/></div>
+<map name="axmc_1_1Material3DClass_coll__map" id="axmc_1_1Material3DClass_coll__map">
+<area shape="rect" title=" " alt="" coords="5,93,171,119"/>
+<area shape="rect" href="structxmc_1_1colorf.html" title=" " alt="" coords="41,5,135,31"/>
+</map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a3ce0bf4aa009bbad146aab2f8e1bab63"><td class="memItemLeft" align="right" valign="top"><a id="a3ce0bf4aa009bbad146aab2f8e1bab63" name="a3ce0bf4aa009bbad146aab2f8e1bab63"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MeshClass</b> (std::vector&lt; Primitive &gt; &amp;&amp;prims)</td></tr>
-<tr class="separator:a3ce0bf4aa009bbad146aab2f8e1bab63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2ab43cb0e949c973b4a3e31bb473442"><td class="memItemLeft" align="right" valign="top"><a id="ae2ab43cb0e949c973b4a3e31bb473442" name="ae2ab43cb0e949c973b4a3e31bb473442"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMaterial</b> (Material mat)</td></tr>
-<tr class="separator:ae2ab43cb0e949c973b4a3e31bb473442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7db95f87c974f9de85c8b020747f1e64"><td class="memItemLeft" align="right" valign="top"><a id="a7db95f87c974f9de85c8b020747f1e64" name="a7db95f87c974f9de85c8b020747f1e64"></a>
-std::vector&lt; Primitive &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>primitives</b></td></tr>
-<tr class="separator:a7db95f87c974f9de85c8b020747f1e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10a79ccd712939b990a9742e059e02e2"><td class="memItemLeft" align="right" valign="top"><a id="a10a79ccd712939b990a9742e059e02e2" name="a10a79ccd712939b990a9742e059e02e2"></a>
+<a class="el" href="structxmc_1_1colorf.html">colorf</a>&#160;</td><td class="memItemRight" valign="bottom"><b>baseColor</b> = {1.0f, 1.0f, 1.0f, 1.0f}</td></tr>
+<tr class="separator:a10a79ccd712939b990a9742e059e02e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a492144b7a7cbc25fbbe8d2d2e55d9de4"><td class="memItemLeft" align="right" valign="top"><a id="a492144b7a7cbc25fbbe8d2d2e55d9de4" name="a492144b7a7cbc25fbbe8d2d2e55d9de4"></a>
+Sprite&#160;</td><td class="memItemRight" valign="bottom"><b>colorTexture</b> = nullptr</td></tr>
+<tr class="separator:a492144b7a7cbc25fbbe8d2d2e55d9de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ef304e89160961614b39fe46fe66160"><td class="memItemLeft" align="right" valign="top"><a id="a8ef304e89160961614b39fe46fe66160" name="a8ef304e89160961614b39fe46fe66160"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>doubleSided</b> = false</td></tr>
+<tr class="separator:a8ef304e89160961614b39fe46fe66160"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>cpp/library/include/xmc/gfx/<a class="el" href="mesh_8hpp_source.html">mesh.hpp</a></li>
+<li>cpp/library/include/xmc/gfx/3d/<a class="el" href="material3d_8hpp_source.html">material3d.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>xmc</b></li><li class="navelem"><a class="el" href="classxmc_1_1MeshClass.html">MeshClass</a></li>
+    <li class="navelem"><b>xmc</b></li><li class="navelem"><a class="el" href="classxmc_1_1Material3DClass.html">Material3DClass</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
