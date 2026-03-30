@@ -9,6 +9,7 @@
 #include "xmc/hw/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/ioex.hpp"
+#include "xmc/speaker.hpp"
 
 namespace xmc::system {
 
@@ -72,12 +73,39 @@ XmcStatus requestShutdown() {
   display::deinit();
   input::deinit();
   battery::deinit();
+  speaker::deinit();
+
+  spi::deinit();
+
+  // shutdown peripherals
+  ioex::write(ioex::Pin::PERI_EN, true);
+  sleepMs(1000);
+
   ioex::setDir(ioex::Pin::DISPLAY_RESET, false);
   ioex::setDir(ioex::Pin::SPEAKER_MUTE, false);
-  ioex::write(ioex::Pin::PERI_EN, true);
+
+  // drain charge from GPIO pins
+  gpio::setDir(XMC_PIN_TFCARD_CS, true);
+  gpio::setDir(XMC_PIN_DISPLAY_CS, true);
+  gpio::setDir(XMC_PIN_DISPLAY_DC, true);
+  gpio::setDir(XMC_PIN_AUDIO_OUT, true);
+  gpio::setPullup(XMC_PIN_TFCARD_CS, false);
+  gpio::setPullup(XMC_PIN_DISPLAY_CS, false);
+  gpio::setPullup(XMC_PIN_DISPLAY_DC, false);
+  gpio::setPullup(XMC_PIN_AUDIO_OUT, false);
+  gpio::write(XMC_PIN_TFCARD_CS, false);
+  gpio::write(XMC_PIN_DISPLAY_CS, false);
+  gpio::write(XMC_PIN_DISPLAY_DC, false);
+  gpio::write(XMC_PIN_AUDIO_OUT, false);
+  sleepMs(100);
+  gpio::setDir(XMC_PIN_TFCARD_CS, false);
+  gpio::setDir(XMC_PIN_DISPLAY_CS, false);
+  gpio::setDir(XMC_PIN_DISPLAY_DC, false);
+  gpio::setDir(XMC_PIN_AUDIO_OUT, false);
+
   ioex::deinit();
   i2c::deinit();
-  spi::deinit();
+
   XMC_ERR_RET(power::deepSleep());
   XMC_ERR_RET(power::reset(power::ResetMode::NORMAL));
   return XMC_OK;

@@ -187,10 +187,6 @@ XmcStatus init(InterfaceFormat format, int rotation) {
 }
 
 XmcStatus deinit() {
-  gpio::setPullup(XMC_PIN_DISPLAY_CS, true);
-  gpio::setPullup(XMC_PIN_DISPLAY_DC, true);
-  gpio::setDir(XMC_PIN_DISPLAY_CS, false);
-  gpio::setDir(XMC_PIN_DISPLAY_DC, false);
   XMC_ERR_RET(ioex::write(ioex::Pin::DISPLAY_RESET, 0));
   return XMC_OK;
 }
