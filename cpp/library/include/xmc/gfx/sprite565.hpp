@@ -18,7 +18,7 @@ class Sprite565Class : public SpriteClass {
       : SpriteClass(pixel_format_t::RGB565, width, height, stride, data,
                     autoFree) {}
 
-  Sprite565Class(int width, int height, xmc_ram_cap_t caps = XMC_RAM_CAP_DMA)
+  Sprite565Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
       : SpriteClass(pixel_format_t::RGB565, width, height,
                     sizeof(uint16_t) * width,
                     xmcMalloc(sizeof(uint16_t) * width * height, caps), true) {
@@ -36,7 +36,7 @@ class Sprite565Class : public SpriteClass {
 };
 
 static inline Sprite createSprite565(int width, int height,
-                                     xmc_ram_cap_t caps = XMC_RAM_CAP_DMA) {
+                                     XmcRamCap caps = XMC_RAM_CAP_DMA) {
   return std::make_shared<Sprite565Class>(width, height, caps);
 }
 

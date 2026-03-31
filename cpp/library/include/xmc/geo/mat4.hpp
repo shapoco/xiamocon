@@ -11,17 +11,12 @@
 #include "xmc/geo/vec3.hpp"
 
 #include <math.h>
+#include <string.h>
 
 namespace xmc {
 
 struct mat4 {
-  float m[16];
-
-  mat4() {
-    for (int i = 0; i < 16; i++) {
-      m[i] = 0;
-    }
-  }
+  float m[16] = {0};
 
   /**
    * @return an identity matrix
@@ -91,24 +86,13 @@ struct mat4 {
     result.m[10] = (far + near) / (near - far);
     result.m[11] = -1.0f;
     result.m[14] = (2.0f * far * near) / (near - far);
-    result.m[15] = 0.0f;
     return result;
   }
 
-  /**
-   * @brief Create a look-at view matrix
-   * @param eye The position of the camera
-   * @param center The point the camera is looking at
-   * @param up The up direction for the camera (should not be parallel to the
-   * line from eye to center)
-   * @return A 4x4 view matrix that transforms world coordinates to camera
-   * coordinates
-   */
-  static mat4 lookAt(const vec3 &eye, const vec3 &center, const vec3 &up) {
-    vec3 f = (center - eye).normalized();
+  static mat4 lookAt(const vec3 &eye, const vec3 &focus, const vec3 &up) {
+    vec3 f = (focus - eye).normalized();
     vec3 s = f.cross(up).normalized();
     vec3 u = s.cross(f);
-
     mat4 result = identity();
     result.m[0] = s.x;
     result.m[1] = u.x;
@@ -119,7 +103,9 @@ struct mat4 {
     result.m[8] = s.z;
     result.m[9] = u.z;
     result.m[10] = -f.z;
-    result.translate(-eye);
+    result.m[12] = -s.dot(eye);
+    result.m[13] = -u.dot(eye);
+    result.m[14] = f.dot(eye);
     return result;
   }
 
@@ -127,7 +113,7 @@ struct mat4 {
    * @brief Load the identity matrix into this matrix
    * After calling this function, this matrix will be an identity matrix
    */
-  inline void loadIdentity() { *this = identity(); }
+  XMC_INLINE void loadIdentity() { *this = identity(); }
 
   /**
    * @brief Create a rotation matrix from a quaternion
@@ -176,50 +162,63 @@ struct mat4 {
    * @note If the w component after transformation is close to zero, returns
    * (0, 0, 0) to avoid division by zero
    */
-  inline vec3 transform(const vec3 &v) const {
-    float rx = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
-    float ry = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
-    float rz = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
-    float rw = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];
-    if (fabsf(rw) < 1e-8f) {
+  XMC_INLINE vec3 transform(const vec3 &v, float *ww = nullptr) const {
+    float x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
+    float y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
+    float z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
+    float w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];
+    float abs_w = fabsf(w);
+    if (ww) *ww = w;
+    if (abs_w < 1e-6f) {
       return vec3(0, 0, 0);
     }
-    float inv_w = 1.0f / rw;
-    return vec3(rx * inv_w, ry * inv_w, rz * inv_w);
+    float inv_w = 1.0f / abs_w;
+    return vec3(x * inv_w, y * inv_w, z * inv_w);
   }
 
-  inline void translate(const vec3 &t) {
+  XMC_INLINE void translate(const vec3 &t) {
     m[12] += t.x;
     m[13] += t.y;
     m[14] += t.z;
   }
 
-  inline void translate(float x, float y, float z) {
+  XMC_INLINE void translate(float x, float y, float z) {
     m[12] += x;
     m[13] += y;
     m[14] += z;
   }
 
-  inline void rotate(const quat &q) { *this = fromQuat(q) * (*this); }
+  void rotate(const quat &q) { *this = fromQuat(q) * (*this); }
 
-  inline void rotate(float pitch, float roll, float yaw) {
+  void rotate(float pitch, float roll, float yaw) {
     rotate(quat::fromEuler(pitch, roll, yaw));
   }
 
-  inline void rotate(const vec3 &axis, float angle) {
+  void rotate(const vec3 &axis, float angle) {
     rotate(quat::fromAxisAngle(axis, angle));
   }
 
-  inline void scale(const vec3 &s) {
+  XMC_INLINE void scale(const vec3 &s) {
     m[0] *= s.x;
     m[5] *= s.y;
     m[10] *= s.z;
   }
 
-  inline void scale(float s) {
+  XMC_INLINE void scale(float s) {
     m[0] *= s;
     m[5] *= s;
     m[10] *= s;
+  }
+
+  void transpose() {
+    float tmp;
+    for (int i = 0; i < 4; i++) {
+      for (int j = i + 1; j < 4; j++) {
+        tmp = m[i * 4 + j];
+        m[i * 4 + j] = m[j * 4 + i];
+        m[j * 4 + i] = tmp;
+      }
+    }
   }
 };
 

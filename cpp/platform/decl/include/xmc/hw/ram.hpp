@@ -19,7 +19,9 @@ typedef enum {
   XMC_RAM_CAP_NONE = 0,
   /** Supports DMA operations */
   XMC_RAM_CAP_DMA = 1 << 0,
-} xmc_ram_cap_t;
+  /** Supports SPIRAM */
+  XMC_RAM_CAP_SPIRAM = 1 << 1,
+} XmcRamCap;
 
 /**
  * Allocate memory with specific RAM capabilities.
@@ -27,7 +29,7 @@ typedef enum {
  * @param caps The RAM capabilities required for the allocation.
  * @return A pointer to the allocated memory, or NULL if the allocation fails.
  */
-void *xmcMalloc(size_t size, xmc_ram_cap_t caps);
+void *xmcMalloc(size_t size, XmcRamCap caps);
 
 /**
  * Free memory allocated with xmcMalloc.

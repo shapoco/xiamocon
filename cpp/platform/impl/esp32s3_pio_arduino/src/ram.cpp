@@ -3,11 +3,17 @@
 #include <Arduino.h>
 #include <esp_heap_caps.h>
 
-void *xmcMalloc(size_t size, xmc_ram_cap_t caps) {
+void *xmcMalloc(size_t size, XmcRamCap caps) {
   int heapCaps = 0;
+  void *ptr = nullptr;
   if (caps & XMC_RAM_CAP_DMA) {
-    heapCaps |= MALLOC_CAP_DMA;
+    ptr = heap_caps_malloc(size, MALLOC_CAP_DMA);
+    if (ptr) return ptr;
   }
-  return heap_caps_malloc(size, heapCaps);
+  if (caps & XMC_RAM_CAP_SPIRAM) {
+    ptr = heap_caps_malloc(size, MALLOC_CAP_SPIRAM);
+    if (ptr) return ptr;
+  }
+  return nullptr;
 }
 void xmcFree(void *ptr) { heap_caps_free(ptr); }

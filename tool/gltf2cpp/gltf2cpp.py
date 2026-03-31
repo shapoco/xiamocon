@@ -134,6 +134,8 @@ def generate(gltf, gltf_dir, prefix):
     w("#pragma once")
     w("")
     w('#include "xmc/gfx/3d/scene3d.hpp"')
+    w("")
+    w("namespace {")
 
     # ── Materials ──
     mat_vars = {}
@@ -181,6 +183,8 @@ def generate(gltf, gltf_dir, prefix):
         w(f"  mat.baseColor = {{{fmt_float(bc[0])}, {fmt_float(bc[1])}, {fmt_float(bc[2])}, {fmt_float(bc[3])}}};")
         if tex_var:
             w(f"  mat.colorTexture = {tex_var};")
+        if mat.doubleSided:
+            w("  mat.doubleSided = true;")
         w("  return std::make_shared<xmc::Material3DClass>(mat);")
         w("}")
         w("")
@@ -342,6 +346,100 @@ def generate(gltf, gltf_dir, prefix):
         w("")
         w(f"const xmc::Mesh3D {mesh_name} = {fn}();")
 
+    # ── Nodes ──
+    mesh_vars = {mi: f"{prefix}_mesh{mi}" for mi in range(len(meshes))}
+    node_vars = {}
+    nodes = gltf.nodes or []
+    for ni, node in enumerate(nodes):
+        nn = f"{prefix}_node{ni}"
+        node_vars[ni] = nn
+
+    # Generate nodes in reverse dependency order is not needed since
+    # we use create functions. Generate all nodes, then wire children.
+    for ni, node in enumerate(nodes):
+        nn = node_vars[ni]
+        fn = f"{nn}_create"
+
+        # ── Transform ──
+        has_matrix = node.matrix is not None and list(node.matrix) != [
+            1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+        ]
+        has_trs = (
+            (node.translation is not None and list(node.translation) != [0, 0, 0])
+            or (node.rotation is not None and list(node.rotation) != [0, 0, 0, 1])
+            or (node.scale is not None and list(node.scale) != [1, 1, 1])
+        )
+
+        # Mesh reference
+        mesh_ref = "nullptr"
+        if node.mesh is not None and node.mesh in mesh_vars:
+            mesh_ref = mesh_vars[node.mesh]
+
+        w("")
+        w(f"xmc::Node3D {fn}() {{")
+
+        if has_matrix:
+            mtx = list(node.matrix)
+            w("  xmc::mat4 t;")
+            for i in range(16):
+                if mtx[i] != 0.0:
+                    w(f"  t.m[{i}] = {fmt_float(mtx[i])};")
+        elif has_trs:
+            w("  xmc::mat4 t = xmc::mat4::identity();")
+            if node.scale is not None and list(node.scale) != [1, 1, 1]:
+                s = list(node.scale)
+                w(f"  t.scale(xmc::vec3({fmt_float(s[0])}, {fmt_float(s[1])}, {fmt_float(s[2])}));")
+            if node.rotation is not None and list(node.rotation) != [0, 0, 0, 1]:
+                r = list(node.rotation)
+                w(f"  t.rotate(xmc::quat({fmt_float(r[3])}, {fmt_float(r[0])}, {fmt_float(r[1])}, {fmt_float(r[2])}));")
+            if node.translation is not None and list(node.translation) != [0, 0, 0]:
+                tr = list(node.translation)
+                w(f"  t.translate({fmt_float(tr[0])}, {fmt_float(tr[1])}, {fmt_float(tr[2])});")
+
+        if has_matrix or has_trs:
+            w(f"  xmc::Node3D node = xmc::createNode3D({mesh_ref}, t);")
+        else:
+            w(f"  xmc::Node3D node = xmc::createNode3D({mesh_ref});")
+
+        # Children
+        children = node.children or []
+        for ci in children:
+            if ci in node_vars:
+                w(f"  node->children.push_back({node_vars[ci]});")
+
+        w("  return node;")
+        w("}")
+        w("")
+        w(f"const xmc::Node3D {nn} = {fn}();")
+
+    # ── Scenes ──
+    scenes = gltf.scenes or []
+    scene_vars = {}
+    for si, scene in enumerate(scenes):
+        sn = f"{prefix}_scene{si}"
+        scene_vars[si] = sn
+        fn = f"{sn}_create"
+
+        w("")
+        w(f"xmc::Scene3D {fn}() {{")
+        w("  xmc::Scene3D scene = xmc::createScene3D();")
+        root_nodes = scene.nodes or []
+        for ni in root_nodes:
+            if ni in node_vars:
+                w(f"  scene->addNode({node_vars[ni]});")
+        w("  return scene;")
+        w("}")
+        w("")
+        w(f"const xmc::Scene3D {sn} = {fn}();")
+
+    # ── Default scene alias ──
+    default_scene_idx = gltf.scene if gltf.scene is not None else (0 if scenes else None)
+    if default_scene_idx is not None and default_scene_idx in scene_vars:
+        w("")
+        w(f"const xmc::Scene3D {prefix} = {scene_vars[default_scene_idx]};")
+
+    w("")
+    w("}  // namespace")
     w("")
     return "\n".join(out)
 

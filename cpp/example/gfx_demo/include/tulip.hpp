@@ -2,6 +2,8 @@
 
 #include "xmc/gfx/3d/scene3d.hpp"
 
+namespace {
+
 const uint16_t tulip_mat0_colorTextureData[] = {
     0xF000, 0xF000, 0xF000, 0xF000, 0xF000, 0xF210, 0xF220, 0xF320,
     0xF320, 0xF320, 0xF420, 0xF430, 0xF430, 0xF530, 0xF530, 0xF530,
@@ -2062,6 +2064,7 @@ xmc::Material3D tulip_mat0_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
   mat.colorTexture = tulip_mat0_colorTexture;
+  mat.doubleSided = true;
   return std::make_shared<xmc::Material3DClass>(mat);
 }
 
@@ -2877,25 +2880,25 @@ const xmc::Vec3Buffer tulip_mesh3_prim0_pos = xmc::createVec3Buffer(
 );
 
 const float tulip_mesh3_prim0_normData[] = {
-    0.785931f, -0.475019f, 0.395816f,
-    0.655178f, -0.755475f, 0.0f,
-    0.785931f, -0.475019f, -0.395816f,
-    0.864402f, -0.502801f, 0.0f,
-    0.693814f, -0.598712f, 0.400208f,
-    0.693814f, -0.598712f, -0.400208f,
-    0.664373f, -0.657773f, 0.354885f,
-    0.664373f, -0.657773f, -0.354885f,
-    0.762298f, -0.530899f, -0.370199f,
-    0.762298f, -0.530899f, 0.370199f,
-    0.638889f, -0.707288f, 0.302595f,
-    0.638889f, -0.707288f, -0.302595f,
-    0.818689f, -0.465894f, -0.335695f,
-    0.818689f, -0.465894f, 0.335695f,
-    0.756589f, -0.653891f, 0.0f,
-    0.716395f, -0.697695f, 0.0f,
-    0.810096f, -0.586297f, 0.0f,
-    0.669611f, -0.742712f, 0.0f,
-    0.863997f, -0.503498f, 0.0f,
+    -0.785931f, 0.475019f, -0.395816f,
+    -0.655178f, 0.755475f, 0.0f,
+    -0.785931f, 0.475019f, 0.395816f,
+    -0.864402f, 0.502801f, 0.0f,
+    -0.693814f, 0.598712f, -0.400208f,
+    -0.693814f, 0.598712f, 0.400208f,
+    -0.664373f, 0.657773f, -0.354885f,
+    -0.664373f, 0.657773f, 0.354885f,
+    -0.762298f, 0.530899f, 0.370199f,
+    -0.762298f, 0.530899f, -0.370199f,
+    -0.638889f, 0.707288f, -0.302595f,
+    -0.638889f, 0.707288f, 0.302595f,
+    -0.818689f, 0.465894f, 0.335695f,
+    -0.818689f, 0.465894f, -0.335695f,
+    -0.756589f, 0.653891f, 0.0f,
+    -0.716395f, 0.697695f, 0.0f,
+    -0.810096f, 0.586297f, 0.0f,
+    -0.669611f, 0.742712f, 0.0f,
+    -0.863997f, 0.503498f, 0.0f,
 };
 
 const xmc::Vec3Buffer tulip_mesh3_prim0_norm = xmc::createVec3Buffer(
@@ -2929,11 +2932,11 @@ const xmc::Vec2Buffer tulip_mesh3_prim0_uv = xmc::createVec2Buffer(
 );
 
 const uint16_t tulip_mesh3_prim0_idxData[] = {
-    1, 10, 17, 16, 8, 5, 14, 5, 7, 18, 12, 8, 15, 7, 11, 3,
-    2, 12, 13, 0, 3, 10, 6, 15, 9, 13, 18, 6, 4, 14, 4, 9,
-    16, 1, 17, 11, 16, 5, 14, 14, 7, 15, 18, 8, 16, 15, 11, 17,
-    3, 12, 18, 13, 3, 18, 10, 15, 17, 9, 18, 16, 6, 14, 15, 4,
-    16, 14,
+    1, 17, 10, 16, 5, 8, 14, 7, 5, 18, 8, 12, 15, 11, 7, 3,
+    12, 2, 13, 3, 0, 10, 15, 6, 9, 18, 13, 6, 14, 4, 4, 16,
+    9, 1, 11, 17, 16, 14, 5, 14, 15, 7, 18, 16, 8, 15, 17, 11,
+    3, 18, 12, 13, 18, 3, 10, 17, 15, 9, 16, 18, 6, 15, 14, 4,
+    14, 16,
 };
 
 const xmc::IndexBuffer tulip_mesh3_prim0_idx = xmc::createIndexBuffer(
@@ -2988,25 +2991,25 @@ const xmc::Vec3Buffer tulip_mesh4_prim0_pos = xmc::createVec3Buffer(
 );
 
 const float tulip_mesh4_prim0_normData[] = {
-    0.785931f, -0.475019f, 0.395816f,
-    0.655178f, -0.755475f, 0.0f,
-    0.785931f, -0.475019f, -0.395816f,
-    0.864402f, -0.502801f, 0.0f,
-    0.693814f, -0.598712f, 0.400208f,
-    0.693814f, -0.598712f, -0.400208f,
-    0.664373f, -0.657773f, 0.354885f,
-    0.664373f, -0.657773f, -0.354885f,
-    0.762298f, -0.530899f, -0.370199f,
-    0.762298f, -0.530899f, 0.370199f,
-    0.638889f, -0.707288f, 0.302595f,
-    0.638889f, -0.707288f, -0.302595f,
-    0.818689f, -0.465894f, -0.335695f,
-    0.818689f, -0.465894f, 0.335695f,
-    0.756589f, -0.653891f, 0.0f,
-    0.716395f, -0.697695f, 0.0f,
-    0.810096f, -0.586297f, 0.0f,
-    0.669611f, -0.742712f, 0.0f,
-    0.863997f, -0.503498f, 0.0f,
+    -0.785931f, 0.475019f, -0.395816f,
+    -0.655178f, 0.755475f, 0.0f,
+    -0.785931f, 0.475019f, 0.395816f,
+    -0.864402f, 0.502801f, 0.0f,
+    -0.693814f, 0.598712f, -0.400208f,
+    -0.693814f, 0.598712f, 0.400208f,
+    -0.664373f, 0.657773f, -0.354885f,
+    -0.664373f, 0.657773f, 0.354885f,
+    -0.762298f, 0.530899f, 0.370199f,
+    -0.762298f, 0.530899f, -0.370199f,
+    -0.638889f, 0.707288f, -0.302595f,
+    -0.638889f, 0.707288f, 0.302595f,
+    -0.818689f, 0.465894f, 0.335695f,
+    -0.818689f, 0.465894f, -0.335695f,
+    -0.756589f, 0.653891f, 0.0f,
+    -0.716395f, 0.697695f, 0.0f,
+    -0.810096f, 0.586297f, 0.0f,
+    -0.669611f, 0.742712f, 0.0f,
+    -0.863997f, 0.503498f, 0.0f,
 };
 
 const xmc::Vec3Buffer tulip_mesh4_prim0_norm = xmc::createVec3Buffer(
@@ -3040,11 +3043,11 @@ const xmc::Vec2Buffer tulip_mesh4_prim0_uv = xmc::createVec2Buffer(
 );
 
 const uint16_t tulip_mesh4_prim0_idxData[] = {
-    1, 10, 17, 16, 8, 5, 14, 5, 7, 18, 12, 8, 15, 7, 11, 3,
-    2, 12, 13, 0, 3, 10, 6, 15, 9, 13, 18, 6, 4, 14, 4, 9,
-    16, 1, 17, 11, 16, 5, 14, 14, 7, 15, 18, 8, 16, 15, 11, 17,
-    3, 12, 18, 13, 3, 18, 10, 15, 17, 9, 18, 16, 6, 14, 15, 4,
-    16, 14,
+    1, 17, 10, 16, 5, 8, 14, 7, 5, 18, 8, 12, 15, 11, 7, 3,
+    12, 2, 13, 3, 0, 10, 15, 6, 9, 18, 13, 6, 14, 4, 4, 16,
+    9, 1, 11, 17, 16, 14, 5, 14, 15, 7, 18, 16, 8, 15, 17, 11,
+    3, 18, 12, 13, 18, 3, 10, 17, 15, 9, 16, 18, 6, 15, 14, 4,
+    14, 16,
 };
 
 const xmc::IndexBuffer tulip_mesh4_prim0_idx = xmc::createIndexBuffer(
@@ -3071,3 +3074,66 @@ xmc::Mesh3D tulip_mesh4_create() {
 }
 
 const xmc::Mesh3D tulip_mesh4 = tulip_mesh4_create();
+
+xmc::Node3D tulip_node0_create() {
+  xmc::Node3D node = xmc::createNode3D(tulip_mesh0);
+  return node;
+}
+
+const xmc::Node3D tulip_node0 = tulip_node0_create();
+
+xmc::Node3D tulip_node1_create() {
+  xmc::mat4 t = xmc::mat4::identity();
+  t.rotate(xmc::quat(0.856181f, 0.0f, -0.516675f, 0.0f));
+  t.translate(0.0f, -0.420312f, 0.0f);
+  xmc::Node3D node = xmc::createNode3D(tulip_mesh1, t);
+  return node;
+}
+
+const xmc::Node3D tulip_node1 = tulip_node1_create();
+
+xmc::Node3D tulip_node2_create() {
+  xmc::mat4 t = xmc::mat4::identity();
+  t.translate(0.0f, -0.420312f, 0.0f);
+  xmc::Node3D node = xmc::createNode3D(tulip_mesh2, t);
+  return node;
+}
+
+const xmc::Node3D tulip_node2 = tulip_node2_create();
+
+xmc::Node3D tulip_node3_create() {
+  xmc::mat4 t = xmc::mat4::identity();
+  t.rotate(xmc::quat(0.995821f, 0.0f, 0.0f, 0.091331f));
+  t.translate(0.890556f, 1.377082f, 0.0f);
+  xmc::Node3D node = xmc::createNode3D(tulip_mesh3, t);
+  return node;
+}
+
+const xmc::Node3D tulip_node3 = tulip_node3_create();
+
+xmc::Node3D tulip_node4_create() {
+  xmc::mat4 t = xmc::mat4::identity();
+  t.scale(xmc::vec3(0.68164f, 0.68164f, 0.68164f));
+  t.rotate(xmc::quat(0.0f, -0.091331f, -0.995821f, 0.0f));
+  t.translate(-0.641431f, 0.954365f, 0.0f);
+  xmc::Node3D node = xmc::createNode3D(tulip_mesh4, t);
+  return node;
+}
+
+const xmc::Node3D tulip_node4 = tulip_node4_create();
+
+xmc::Scene3D tulip_scene0_create() {
+  xmc::Scene3D scene = xmc::createScene3D();
+  scene->addNode(tulip_node0);
+  scene->addNode(tulip_node1);
+  scene->addNode(tulip_node2);
+  scene->addNode(tulip_node3);
+  scene->addNode(tulip_node4);
+  return scene;
+}
+
+const xmc::Scene3D tulip_scene0 = tulip_scene0_create();
+
+const xmc::Scene3D tulip = tulip_scene0;
+
+}  // namespace

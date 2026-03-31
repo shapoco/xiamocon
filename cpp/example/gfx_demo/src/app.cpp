@@ -4,26 +4,47 @@
 
 #include "tulip.hpp"
 
+#define DOUBLE_BUFFER (1)
+
 namespace xmc {
 
 Sprite frameBuffers[] = {
     createSprite565(display::WIDTH, display::HEIGHT),
+#if DOUBLE_BUFFER
     createSprite565(display::WIDTH, display::HEIGHT),
+#endif
 };
+#if DOUBLE_BUFFER
 int backIndex = 0;
+#else
+const int backIndex = 0;
+#endif
+
 uint64_t nextVsyncTimeUs = 0;
 
-Mesh3D cube = createColoredCube();
-Mesh3D tulip_mesh0 = tulip_mesh0_create();
-Mesh3D tulip_mesh1 = tulip_mesh1_create();
-Mesh3D tulip_mesh2 = tulip_mesh2_create();
-Mesh3D tulip_mesh3 = tulip_mesh3_create();
-Mesh3D tulip_mesh4 = tulip_mesh4_create();
+Scene3D tulip = tulip_scene0_create();
+
+Vec3Buffer weedPoses = createVec3Buffer(3);
+ColorBuffer weedColors = createColorBuffer(3);
+Material3D weedMat = createMaterial3D();
+Primitive3D weedPrim =
+    createPrimitive3D(PrimitiveMode::TRIANGLES, weedPoses, nullptr, weedColors,
+                      nullptr, nullptr, weedMat);
+Mesh3D weed = createMesh3D({weedPrim});
+
+static constexpr int NUM_WEEDS = 1000;
+struct WeedInstance {
+  vec3 pos;
+  vec3 rot;
+  vec3 dir;
+};
+WeedInstance weedArray[NUM_WEEDS];
 
 Rasterizer rasterizer = createRasterizer(display::WIDTH, display::HEIGHT);
 
-float yaw = 0, pitch = 0;
-float vyaw = 0, vpitch = 0;
+float eyeYaw = 0;
+float eyePitch = 0;
+float eyeDistance = 5.0f;
 
 void waitVsync();
 void updateScene();
@@ -35,23 +56,57 @@ AppConfig appGetConfig() {
   return cfg;
 }
 
-void appSetup() {}
+void appSetup() {
+  weedPoses->data[0] = vec3(-0.2f, 0, 0);
+  weedPoses->data[1] = vec3(0.2f, 0, 0);
+  weedPoses->data[2] = vec3(0, 1.5f, 0);
+  weedColors->data[0] = {0, 0, 0, 1};
+  weedColors->data[1] = {0, 0, 0, 1};
+  weedColors->data[2] = {0, 1, 0, 1};
+  weedMat->doubleSided = true;
+  for (int i = 0; i < NUM_WEEDS; i++) {
+    const float r = 10.0f;
+    do {
+      weedArray[i].pos = vec3(r * (float)(rand() % 1000) / 500.0f - r, 0,
+                              r * (float)(rand() % 1000) / 500.0f - r);
+    } while (weedArray[i].pos.length() > r);
+    float a = (float)(rand() & 0xFFFF) / 32768.0f * M_PI;
+    weedArray[i].rot = vec3(sinf(a) * 0.2f, 0, cosf(a) * 0.2f);
+    weedArray[i].dir = {
+        (float)((rand() & 0xFF) - 0x80) / 128.0f,
+        1.0f + (float)(rand() & 0xFF) / 512.0f,
+        (float)((rand() & 0xFF) - 0x80) / 128.0f,
+    };
+  }
+}
 
 void appLoop() {
+#if DOUBLE_BUFFER
   int frontIndex = (backIndex + 1) % 2;
+#endif
 
   updateScene();
+
+#if !DOUBLE_BUFFER
+  frameBuffers[0]->completeTransfer();
+#endif
+
   renderScene();
 
   // render status bar
+
   appDrawStatusBar(frameBuffers[backIndex]);
   appDrawDebugInfo(frameBuffers[backIndex]);
 
+#if DOUBLE_BUFFER
   frameBuffers[frontIndex]->completeTransfer();
+#endif
   waitVsync();
   frameBuffers[backIndex]->startTransferToDisplay(0, 0);
 
+#if DOUBLE_BUFFER
   backIndex = frontIndex;
+#endif
 }
 
 void updateScene() {
@@ -59,40 +114,53 @@ void updateScene() {
   // vpitch += 0.005f;
   // yaw += vyaw;
   // pitch += vpitch;
-  yaw += 0.01f;
-  pitch += 0.01f;
+  eyeYaw += 0.01f;
+  // eyePitch = sinf((float)getTimeMs() * 0.0005f) * 1.0f;
+  // eyePitch = -10.0f * M_PI / 180;
+  eyePitch = 10.0f * M_PI / 180;
+  // eyeDistance = 5.0f + sinf((float)getTimeMs() * 0.0002f) * 3.0f;
+  // eyeDistance = 10.0f;
+  eyeDistance = 5.0f;
 }
 
 void renderScene() {
   Sprite &screen = frameBuffers[backIndex];
-  screen->clear(0xFFFF);
+  screen->clear(0x0000);
+  // screen->clear(rgb565(0, 32, 31));
 
-  mat4 worldTransform =
-      mat4::lookAt(vec3(0, 0, -3), vec3(0, 0, 0), vec3(0, 1, 0));
   rasterizer->setTarget(screen);
   rasterizer->clearDepth();
   // rasterizer->setDepthRange(-1.0f, 1.0f);
 
-  rasterizer->setProjectionPerspective(
+  rasterizer->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
+  rasterizer->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
+  rasterizer->setPerspectiveProjection(
       M_PI / 4, (float)screen->width / screen->height, 0.01f, 100.0f);
-  // rasterizer->setProjectionOrtho(-1, 1, -1, 1);
-  //   rasterizer->setParallelLight(vec3(0.5f, 0.5f, 1.0f),
-  //                                {0.8f, 0.8f, 0.8f, 1.0f});
+  // rasterizer->setOrthoProjection(-1, 1, -1, 1);
+  //    rasterizer->setParallelLight(vec3(0.5f, 0.5f, 1.0f),
+  //                                 {0.8f, 0.8f, 0.8f, 1.0f});
+
+  vec3 focus = vec3(0, 3.3f, 0);
+  vec3 eye = focus + vec3(eyeDistance * sinf(eyeYaw) * cosf(eyePitch),
+                          eyeDistance * sinf(eyePitch),
+                          eyeDistance * cosf(eyeYaw) * cosf(eyePitch));
+  rasterizer->lookAt(eye, focus, vec3(0, 1, 0));
 
   rasterizer->loadIdentity();
-  rasterizer->pushMatrix();
-  // rasterizer->loadMatrix(worldTransform);
-  // rasterizer->scale(10);
-  // rasterizer->rotate(0, M_PI / 2, 0);
-  rasterizer->rotate(pitch, 0, yaw);
-  rasterizer->translate(0, 0, -(float)(getTimeMs() % 3000) * 0.01f);
+  // rasterizer->pushMatrix();
+  //  rasterizer->scale(10);
+  //  rasterizer->rotate(0, M_PI / 2, 0);
+
   // rasterizer->renderMesh(cube);
-  rasterizer->renderMesh(tulip_mesh0);
-  rasterizer->renderMesh(tulip_mesh1);
-  rasterizer->renderMesh(tulip_mesh2);
-  rasterizer->renderMesh(tulip_mesh3);
-  rasterizer->renderMesh(tulip_mesh4);
-  rasterizer->popMatrix();
+  rasterizer->renderScene(tulip);
+
+  for (int i = 0; i < NUM_WEEDS; i++) {
+    weedPoses->data[0] = weedArray[i].pos - weedArray[i].rot;
+    weedPoses->data[1] = weedArray[i].pos + weedArray[i].rot;
+    weedPoses->data[2] = weedArray[i].pos + weedArray[i].dir;
+    rasterizer->renderMesh(weed);
+  }
+  // rasterizer->popMatrix();
 }
 
 void waitVsync() {

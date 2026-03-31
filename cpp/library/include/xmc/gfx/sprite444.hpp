@@ -21,7 +21,7 @@ class Sprite444Class : public SpriteClass {
       : SpriteClass(pixel_format_t::RGB444, width, height, stride444(width),
                     data, autoFree) {}
 
-  Sprite444Class(int width, int height, xmc_ram_cap_t caps = XMC_RAM_CAP_DMA)
+  Sprite444Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
       : SpriteClass(pixel_format_t::RGB444, width, height, stride444(width),
                     xmcMalloc(stride444(width) * height, caps), true) {}
 
@@ -36,7 +36,7 @@ class Sprite444Class : public SpriteClass {
 };
 
 static inline Sprite createSprite444(int width, int height,
-                                     xmc_ram_cap_t caps = XMC_RAM_CAP_DMA) {
+                                     XmcRamCap caps = XMC_RAM_CAP_DMA) {
   return std::make_shared<Sprite444Class>(width, height, caps);
 }
 
