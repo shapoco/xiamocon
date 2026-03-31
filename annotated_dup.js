@@ -33,6 +33,7 @@ var annotated_dup =
       [ "RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
       [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
       [ "RepeatingTimer", "classxmc_1_1RepeatingTimer.html", "classxmc_1_1RepeatingTimer" ],
+      [ "ScanLineCounter", "structxmc_1_1ScanLineCounter.html", null ],
       [ "Scanner444", "structxmc_1_1Scanner444.html", null ],
       [ "Scene3DClass", "classxmc_1_1Scene3DClass.html", null ],
       [ "Semaphore", "classxmc_1_1Semaphore.html", null ],
@@ -42,7 +43,6 @@ var annotated_dup =
       [ "Sprite565Class", "classxmc_1_1Sprite565Class.html", null ],
       [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
       [ "TextState", "structxmc_1_1TextState.html", null ],
-      [ "TriangleInterp", "structxmc_1_1TriangleInterp.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],

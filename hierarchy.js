@@ -2,6 +2,9 @@ var hierarchy =
 [
     [ "xmc::apFixed< TRaw, PREC >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::apFixed< int16_t, 12 >", "structxmc_1_1apFixed.html", null ],
+    [ "xmc::apFixed< int32_t, 12 >", "structxmc_1_1apFixed.html", null ],
+    [ "xmc::apFixed< int32_t, 16 >", "structxmc_1_1apFixed.html", null ],
+    [ "xmc::apFixed< int32_t, 20 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::AppConfig", "structxmc_1_1AppConfig.html", null ],
     [ "xmc::AttributeBufferClass< T >", "classxmc_1_1AttributeBufferClass.html", null ],
     [ "xmc::BakedVertex", "structxmc_1_1BakedVertex.html", null ],
@@ -24,6 +27,7 @@ var hierarchy =
     [ "xmc::RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
     [ "xmc::rect_t", "structxmc_1_1rect__t.html", null ],
     [ "xmc::RepeatingTimer", "classxmc_1_1RepeatingTimer.html", null ],
+    [ "xmc::ScanLineCounter", "structxmc_1_1ScanLineCounter.html", null ],
     [ "xmc::Scanner444", "structxmc_1_1Scanner444.html", null ],
     [ "xmc::Scene3DClass", "classxmc_1_1Scene3DClass.html", null ],
     [ "xmc::audio::SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
@@ -39,7 +43,6 @@ var hierarchy =
     [ "xmc::audio::StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", null ],
     [ "xmc::TextState", "structxmc_1_1TextState.html", null ],
     [ "xmc::audio::Tone", "classxmc_1_1audio_1_1Tone.html", null ],
-    [ "xmc::TriangleInterp< PREC >", "structxmc_1_1TriangleInterp.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],
     [ "xmc::vec3", "structxmc_1_1vec3.html", null ]
 ];

@@ -116,6 +116,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9fafc2eed1e677aef68cea9795e73eee"><td class="memItemLeft" align="right" valign="top"><a id="a9fafc2eed1e677aef68cea9795e73eee" name="a9fafc2eed1e677aef68cea9795e73eee"></a>
 XMC_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><b>toFloat</b> () const</td></tr>
 <tr class="separator:a9fafc2eed1e677aef68cea9795e73eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0202dab31805ae68b490fdedf556ad53"><td class="memItemLeft" align="right" valign="top"><a id="a0202dab31805ae68b490fdedf556ad53" name="a0202dab31805ae68b490fdedf556ad53"></a>
+XMC_INLINE TRaw&#160;</td><td class="memItemRight" valign="bottom"><b>floorToInt</b> () const</td></tr>
+<tr class="separator:a0202dab31805ae68b490fdedf556ad53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c8d03dc1252034d8907ba358f6d8b22"><td class="memItemLeft" align="right" valign="top"><a id="a2c8d03dc1252034d8907ba358f6d8b22" name="a2c8d03dc1252034d8907ba358f6d8b22"></a>
+XMC_INLINE TRaw&#160;</td><td class="memItemRight" valign="bottom"><b>roundToInt</b> () const</td></tr>
+<tr class="separator:a2c8d03dc1252034d8907ba358f6d8b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0855e9f3524d67959420ab7a2fdb3e5e"><td class="memItemLeft" align="right" valign="top"><a id="a0855e9f3524d67959420ab7a2fdb3e5e" name="a0855e9f3524d67959420ab7a2fdb3e5e"></a>
+XMC_INLINE TRaw&#160;</td><td class="memItemRight" valign="bottom"><b>ceilToInt</b> () const</td></tr>
+<tr class="separator:a0855e9f3524d67959420ab7a2fdb3e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7ce10015a0a42422ccd7ec4df4b6cb6"><td class="memItemLeft" align="right" valign="top"><a id="ae7ce10015a0a42422ccd7ec4df4b6cb6" name="ae7ce10015a0a42422ccd7ec4df4b6cb6"></a>
 XMC_INLINE <a class="el" href="structxmc_1_1apFixed.html">apFixed</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
 <tr class="separator:ae7ce10015a0a42422ccd7ec4df4b6cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,6 +161,24 @@ XMC_INLINE <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;&#160
 <tr class="memitem:a023e9acc213fa223fed20097d5d51f47"><td class="memItemLeft" align="right" valign="top"><a id="a023e9acc213fa223fed20097d5d51f47" name="a023e9acc213fa223fed20097d5d51f47"></a>
 XMC_INLINE <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator/=</b> (int32_t scalar)</td></tr>
 <tr class="separator:a023e9acc213fa223fed20097d5d51f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a486e94e3c629932d61eb2ea6f12d4a7c"><td class="memItemLeft" align="right" valign="top"><a id="a486e94e3c629932d61eb2ea6f12d4a7c" name="a486e94e3c629932d61eb2ea6f12d4a7c"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:a486e94e3c629932d61eb2ea6f12d4a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f7efc564ce57a6a1377e272693c603"><td class="memItemLeft" align="right" valign="top"><a id="a17f7efc564ce57a6a1377e272693c603" name="a17f7efc564ce57a6a1377e272693c603"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;=</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:a17f7efc564ce57a6a1377e272693c603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a015799954a701b0202f4af4860214738"><td class="memItemLeft" align="right" valign="top"><a id="a015799954a701b0202f4af4860214738" name="a015799954a701b0202f4af4860214738"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:a015799954a701b0202f4af4860214738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a832a3dd669bce43d1da94d3a96e8f1"><td class="memItemLeft" align="right" valign="top"><a id="a5a832a3dd669bce43d1da94d3a96e8f1" name="a5a832a3dd669bce43d1da94d3a96e8f1"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&gt;=</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:a5a832a3dd669bce43d1da94d3a96e8f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92ca69393d29afae194d6febe7d1fd0"><td class="memItemLeft" align="right" valign="top"><a id="ae92ca69393d29afae194d6febe7d1fd0" name="ae92ca69393d29afae194d6febe7d1fd0"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:ae92ca69393d29afae194d6febe7d1fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ed4e57c50d1c548a7b5829eed2d1a30"><td class="memItemLeft" align="right" valign="top"><a id="a3ed4e57c50d1c548a7b5829eed2d1a30" name="a3ed4e57c50d1c548a7b5829eed2d1a30"></a>
+XMC_INLINE bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="structxmc_1_1apFixed.html">apFixed</a> &amp;other) const</td></tr>
+<tr class="separator:a3ed4e57c50d1c548a7b5829eed2d1a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
