@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "xmc::apFixed< TRaw, PREC >", "structxmc_1_1apFixed.html", null ],
+    [ "xmc::apFixed< int16_t, 12 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::AppConfig", "structxmc_1_1AppConfig.html", null ],
     [ "xmc::AttributeBufferClass< T >", "classxmc_1_1AttributeBufferClass.html", null ],
     [ "xmc::BakedVertex", "structxmc_1_1BakedVertex.html", null ],
@@ -9,7 +11,6 @@ var hierarchy =
     [ "xmc::dma::Config", "structxmc_1_1dma_1_1Config.html", null ],
     [ "xmc::pwm::Config", "structxmc_1_1pwm_1_1Config.html", null ],
     [ "xmc::pwm::Driver", "classxmc_1_1pwm_1_1Driver.html", null ],
-    [ "xmc::fixed4p12", "structxmc_1_1fixed4p12.html", null ],
     [ "GFXfont", "structGFXfont.html", null ],
     [ "GFXglyph", "structGFXglyph.html", null ],
     [ "xmc::mat4", "structxmc_1_1mat4.html", null ],

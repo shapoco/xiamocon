@@ -39,7 +39,7 @@ var NAVTREEINDEX1 =
 "tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70ac6ddd0f72ff2fd344693b9ca8d483871":[1,0,0,0,0,0,0,1,1,1],
 "tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70af34d9b416802d4cda3a4ee548619f206":[1,0,0,0,0,0,0,1,1,2],
 "tone_8hpp_source.html":[1,0,0,0,0,0,0,1],
-"unionxmc_1_1color4444.html":[0,0,0,6],
+"unionxmc_1_1color4444.html":[0,0,0,7],
 "vec2_8hpp.html":[1,0,0,0,0,0,2,4],
 "vec2_8hpp_source.html":[1,0,0,0,0,0,2,4],
 "vec3_8hpp.html":[1,0,0,0,0,0,2,5],
