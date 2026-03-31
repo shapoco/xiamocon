@@ -17,6 +17,33 @@ struct BakedVertex {
   vec2 uv;
 };
 
+struct ScanLineCounter {
+  fixed16p16 x;
+  fixed20p12 z;
+  color4p12 c;
+  fixed12p20 u;
+  fixed12p20 v;
+
+  static XMC_INLINE ScanLineCounter calcStep(const ScanLineCounter &start,
+                                             const ScanLineCounter &end,
+                                             int32_t span) {
+    if (span <= 0) span = 1;
+    return ScanLineCounter{
+        (end.x - start.x) / span, (end.z - start.z) / span,
+        (end.c - start.c) / span, (end.u - start.u) / span,
+        (end.v - start.v) / span,
+    };
+  }
+
+  XMC_INLINE void step(const ScanLineCounter &step) {
+    x += step.x;
+    z += step.z;
+    c += step.c;
+    u += step.u;
+    v += step.v;
+  }
+};
+
 class RasterizerClass;
 using Rasterizer = std::shared_ptr<RasterizerClass>;
 
@@ -29,52 +56,6 @@ struct MatrixStackEntry {
   mat4 local = mat4::identity();
   mat4 world = mat4::identity();
   bool dirty = true;
-};
-
-template <int PREC = 16>
-struct TriangleInterp {
-  int32_t y0, y1;
-  int32_t x0, x1;
-  int32_t vStepA, vStepB0, vStepB1;
-  int32_t xp;
-  int32_t hStep;
-  bool hReverse = false;
-  TriangleInterp(int32_t y0, int32_t y1, int32_t y2, float x0, float x1,
-                 float x2, bool hReverse = false)
-      : y0(y0),
-        y1(y1),
-        x0(x0 * (1 << PREC)),
-        x1(x1 * (1 << PREC)),
-        vStepA(idiv((x2 - x0) * (1 << PREC), (y2 - y0))),
-        vStepB0(idiv((x1 - x0) * (1 << PREC), (y1 - y0))),
-        vStepB1(idiv((x2 - x1) * (1 << PREC), (y2 - y1))),
-        hReverse(hReverse) {}
-  XMC_INLINE void yStep(int32_t y, int32_t xOffset, int32_t xSpan) {
-    int32_t xa = x0 + vStepA * (y - y0);
-    int32_t xb;
-    if (y < y1) {
-      xb = x0 + vStepB0 * (y - y0);
-    } else {
-      xb = x1 + vStepB1 * (y - y1);
-    }
-    if (hReverse) {
-      xp = xb;
-      hStep = idiv((xa - xb), xSpan);
-    } else {
-      xp = xa;
-      hStep = idiv((xb - xa), xSpan);
-    }
-    xp += hStep * xOffset;
-  }
-  XMC_INLINE int32_t xPeek() const { return xp >> PREC; }
-  XMC_INLINE int32_t xStep() {
-    int32_t x = xp;
-    xp += hStep;
-    return x >> PREC;
-  }
-  static XMC_INLINE int32_t idiv(int32_t a, int32_t b) {
-    return (b == 0) ? a : (a / b);
-  }
 };
 
 class RasterizerClass {
@@ -113,7 +94,7 @@ class RasterizerClass {
   RasterizerClass(int w, int h, uint32_t stackSize)
       : width(w), height(h), stackSize(stackSize) {
     depthBuff =
-        (depth_t *)xmcMalloc(sizeof(depth_t) * width * height, XMC_RAM_CAP_DMA);
+        (depth_t *)xmcMalloc(sizeof(depth_t) * width * height, XMC_RAM_CAP_SPIRAM);
     modelMatrixStack = (MatrixStackEntry *)xmcMalloc(
         sizeof(MatrixStackEntry) * stackSize, XMC_RAM_CAP_DMA);
     screenMatrix = mat4::identity();
@@ -280,29 +261,33 @@ class RasterizerClass {
       i0 = i1;
       i1 = t;
     }
+
     float x0 = tri[i0]->pos.x, y0 = tri[i0]->pos.y;
     float x1 = tri[i1]->pos.x, y1 = tri[i1]->pos.y;
     float x2 = tri[i2]->pos.x, y2 = tri[i2]->pos.y;
-    float y0to1inv = (y1 - y0) > 1e-8f ? 1.0f / (y1 - y0) : 0.0f;
-    float y1to2inv = (y2 - y1) > 1e-8f ? 1.0f / (y2 - y1) : 0.0f;
-    float y0to2inv = (y2 - y0) > 1e-8f ? 1.0f / (y2 - y0) : 0.0f;
 
     float z0 = (float)MAX_DEPTH * (tri[i0]->pos.z - zNear) / (zFar - zNear);
     float z1 = (float)MAX_DEPTH * (tri[i1]->pos.z - zNear) / (zFar - zNear);
     float z2 = (float)MAX_DEPTH * (tri[i2]->pos.z - zNear) / (zFar - zNear);
-
     if (z0 < 0 || z0 > MAX_DEPTH || z1 < 0 || z1 > MAX_DEPTH || z2 < 0 ||
         z2 > MAX_DEPTH) {
       return;
     }
 
-    vec2 uv0 = tri[i0]->uv;
-    vec2 uv1 = tri[i1]->uv;
-    vec2 uv2 = tri[i2]->uv;
+    const colorf &c0 = tri[i0]->color;
+    const colorf &c1 = tri[i1]->color;
+    const colorf &c2 = tri[i2]->color;
 
-    int iy0 = (int)ceilf(y0);
+    const vec2 &uv0 = tri[i0]->uv;
+    const vec2 &uv1 = tri[i1]->uv;
+    const vec2 &uv2 = tri[i2]->uv;
+
+    int iy0 = (int)floorf(y0);
     int iy1 = (int)roundf(y1);
-    int iy2 = (int)floorf(y2);
+    int iy2 = (int)ceilf(y2);
+    int vSpan = (int)fmaxf(iy2 - iy0, 1);
+    int vSpanT = (int)fmaxf(iy1 - iy0, 1);
+    int vSpanB = (int)fmaxf(iy2 - iy1, 1);
     int iyMin = iy0;
     int iyMax = iy2;
     if (iyMin < viewport.y) iyMin = viewport.y;
@@ -312,7 +297,8 @@ class RasterizerClass {
     const uint16_t *__restrict__ texData = nullptr;
     uint32_t texStride = 0;
     uint32_t texW = 0, texH = 0;
-    uint32_t uMask = 0, vMask = 0;
+    uint32_t uMask = 0;
+    uint32_t vMask = 0;
     if (mat && mat->colorTexture) {
       const auto &tex = mat->colorTexture;
       texData = (const uint16_t *)tex->linePtr(0);
@@ -323,111 +309,105 @@ class RasterizerClass {
       vMask = texH - 1;
     }
 
-    int xMid = (int)(x0 + (x2 - x0) * (y1 - y0) * y0to2inv);
-    bool hReverse = xMid > x1;
+    float yT = (float)vSpanT / vSpan;
+    ScanLineCounter cornerT, cornerL, cornerR, cornerB;
 
-    fixed20p12 z0a = fixed20p12::fromFloat(z0);
-    fixed20p12 z1a = fixed20p12::fromFloat(z1);
-    fixed20p12 z2a = fixed20p12::fromFloat(z2);
-    fixed20p12 zStepA = (z2a - z0a) / (int32_t)fmaxf(iy2 - iy0, 1);
-    fixed20p12 zStepB0 = (z1a - z0a) / (int32_t)fmaxf(iy1 - iy0, 1);
-    fixed20p12 zStepB1 = (z2a - z1a) / (int32_t)fmaxf(iy2 - iy1, 1);
+    cornerT.x = fixed16p16::fromFloat(x0);
+    cornerL.x = fixed16p16::fromFloat(x1);
+    cornerR.x = fixed16p16::fromFloat(x0 + (x2 - x0) * yT);
+    cornerB.x = fixed16p16::fromFloat(x2);
 
-    TriangleInterp<20> uInterp(iy0, iy1, iy2, uv0.x * texW, uv1.x * texW,
-                               uv2.x * texW, hReverse);
-    TriangleInterp<20> vInterp(iy0, iy1, iy2, uv0.y * texH, uv1.y * texH,
-                               uv2.y * texH, hReverse);
+    cornerT.z = fixed20p12::fromFloat(z0);
+    cornerL.z = fixed20p12::fromFloat(z1);
+    cornerR.z = fixed20p12::fromFloat(z0 + (z2 - z0) * yT);
+    cornerB.z = fixed20p12::fromFloat(z2);
 
-    color4p12 c0a(tri[i0]->color);
-    color4p12 c1a(tri[i1]->color);
-    color4p12 c2a(tri[i2]->color);
-    color4p12 cStepA = (c2a - c0a) / (int32_t)fmaxf(iy2 - iy0, 1);
-    color4p12 cStepB0 = (c1a - c0a) / (int32_t)fmaxf(iy1 - iy0, 1);
-    color4p12 cStepB1 = (c2a - c1a) / (int32_t)fmaxf(iy2 - iy1, 1);
+    cornerT.u = fixed12p20::fromFloat(uv0.x * texW);
+    cornerL.u = fixed12p20::fromFloat(uv1.x * texW);
+    cornerR.u = fixed12p20::fromFloat((uv0.x + (uv2.x - uv0.x) * yT) * texW);
+    cornerB.u = fixed12p20::fromFloat(uv2.x * texW);
+
+    cornerT.v = fixed12p20::fromFloat(uv0.y * texH);
+    cornerL.v = fixed12p20::fromFloat(uv1.y * texH);
+    cornerR.v = fixed12p20::fromFloat((uv0.y + (uv2.y - uv0.y) * yT) * texH);
+    cornerB.v = fixed12p20::fromFloat(uv2.y * texH);
+
+    cornerT.c = color4p12(c0);
+    cornerL.c = color4p12(c1);
+    cornerR.c = color4p12(c0 + (c2 - c0) * yT);
+    cornerB.c = color4p12(c2);
+
+    if (cornerL.x > cornerR.x) {
+      std::swap(cornerL, cornerR);
+    }
 
     // rasterize the triangle using a scanline algorithm
     // todo: optimize
-    for (int iy = iyMin; iy <= iyMax; iy++) {
-      bool firstHalf = iy < iy1;
+    for (int ic = 0; ic < 2; ic++) {
+      ScanLineCounter accumVL, accumVR;
+      ScanLineCounter stepVL, stepVR;
+      int yStart, yEnd;
 
-      float y = (float)iy;
-
-      float xa = x0 + (x2 - x0) * (y - y0) * y0to2inv;
-
-      float xb;
-      if (y < y1) {
-        xb = x0 + (x1 - x0) * (y - y0) * y0to1inv;
+      if (ic == 0) {
+        accumVL = cornerT;
+        accumVR = cornerT;
+        stepVL = ScanLineCounter::calcStep(cornerT, cornerL, vSpanT);
+        stepVR = ScanLineCounter::calcStep(cornerT, cornerR, vSpanT);
+        yStart = iyMin;
+        yEnd = (int)fminf(iy1, iyMax);
       } else {
-        xb = x1 + (x2 - x1) * (y - y1) * y1to2inv;
+        accumVL = cornerL;
+        accumVR = cornerR;
+        stepVL = ScanLineCounter::calcStep(cornerL, cornerB, vSpanB);
+        stepVR = ScanLineCounter::calcStep(cornerR, cornerB, vSpanB);
+        yStart = (int)fmaxf(iy1, iyMin);
+        yEnd = iyMax;
       }
 
-      if (hReverse) {
-        std::swap(xa, xb);
-      }
+      for (int iy = yStart; iy <= yEnd; iy++) {
+        int32_t ixMin = accumVL.x.roundToInt();
+        int32_t ixMax = accumVR.x.roundToInt();
+        int32_t hSpan = ixMax - ixMin + 1;
 
-      int32_t ixMin = (int)ceilf(xa);
-      int32_t ixMax = (int)floorf(xb);
-      if (ixMin < viewport.x) ixMin = viewport.x;
-      if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
-      if (ixMin > ixMax) continue;
+        if (ixMin < viewport.x) ixMin = viewport.x;
+        if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
 
-      int32_t xSpan = (int)(xb - xa);
-      if (xSpan < 1) xSpan = 1;
-      int xOffset = ixMin - (int)floorf(xa);
-      uInterp.yStep(iy, xOffset, xSpan);
-      vInterp.yStep(iy, xOffset, xSpan);
+        if (ixMin <= ixMax) {
+          ScanLineCounter accumH = accumVL;
+          ScanLineCounter stepH =
+              ScanLineCounter::calcStep(accumVL, accumVR, hSpan);
 
-      color4p12 ca = c0a + cStepA * (iy - iy0);
-      fixed20p12 za = z0a + zStepA * (iy - iy0);
-      color4p12 cb;
-      fixed20p12 zb;
-      if (firstHalf) {
-        cb = c0a + cStepB0 * (iy - iy0);
-        zb = z0a + zStepB0 * (iy - iy0);
-      } else {
-        cb = c1a + cStepB1 * (iy - iy1);
-        zb = z1a + zStepB1 * (iy - iy1);
-      }
+          int32_t xOffset = ixMin - accumVL.x.roundToInt();
+          accumH.x += stepH.x * xOffset;
+          accumH.z += stepH.z * xOffset;
+          accumH.c += stepH.c * xOffset;
+          accumH.u += stepH.u * xOffset;
+          accumH.v += stepH.v * xOffset;
 
-      color4p12 cp, cStep;
-      fixed20p12 zp, zStep;
-      if (hReverse) {
-        cp = cb;
-        zp = zb;
-        cStep = (ca - cb) / xSpan;
-        zStep = (za - zb) / xSpan;
-      } else {
-        cp = ca;
-        zp = za;
-        cStep = (cb - ca) / xSpan;
-        zStep = (zb - za) / xSpan;
-      }
-
-      cp += cStep * xOffset;
-      zp += zStep * xOffset;
-
-      if (target->format == pixel_format_t::RGB565) {
-        uint16_t *__restrict__ cptr = (uint16_t *)target->linePtr(iy);
-        depth_t *__restrict__ zptr = depthBuff + iy * width;
-        for (int x = ixMin; x <= ixMax; x++) {
-          int32_t z = zp.raw >> fixed20p12::PRECISION;
-          if (z < zptr[x]) {
-            color4p12 c = cp;
-            if (useTexture) {
-              int32_t u = uInterp.xPeek();
-              int32_t v = vInterp.xPeek();
-              c *= color4444(texData[(v & vMask) * texStride + (u & uMask)]);
-            }
-            if (c.a.raw != 0) {
-              cptr[x] = c.to565();
-              zptr[x] = z;
+          if (target->format == pixel_format_t::RGB565) {
+            uint16_t *__restrict__ cptr = (uint16_t *)target->linePtr(iy);
+            depth_t *__restrict__ zptr = depthBuff + iy * width;
+            for (int x = ixMin; x <= ixMax; x++) {
+              int32_t z = accumH.z.floorToInt();
+              if (z < zptr[x]) {
+                color4p12 c = accumH.c;
+                if (useTexture) {
+                  int32_t u = accumH.u.floorToInt() & uMask;
+                  int32_t v = accumH.v.floorToInt() & vMask;
+                  c *= color4444(texData[v * texW + u]);
+                }
+                if (c.a.raw != 0) {
+                  cptr[x] = c.to565();
+                  zptr[x] = z;
+                }
+              }
+              accumH.step(stepH);
             }
           }
-          cp += cStep;
-          zp += zStep;
-          uInterp.xStep();
-          vInterp.xStep();
         }
+
+        accumVL.step(stepVL);
+        accumVR.step(stepVR);
       }
     }
   }

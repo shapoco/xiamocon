@@ -19,6 +19,11 @@ struct apFixed {
   }
 
   XMC_INLINE float toFloat() const { return (float)raw / (1 << PREC); }
+  XMC_INLINE TRaw floorToInt() const { return raw >> PREC; }
+  XMC_INLINE TRaw roundToInt() const {
+    return (raw + (1 << (PREC - 1))) >> PREC;
+  }
+  XMC_INLINE TRaw ceilToInt() const { return (raw + (1 << PREC) - 1) >> PREC; }
 
   XMC_INLINE apFixed operator+(const apFixed &other) const {
     return apFixed(raw + other.raw);
@@ -73,11 +78,31 @@ struct apFixed {
     raw /= scalar;
     return *this;
   }
+
+  XMC_INLINE bool operator<(const apFixed &other) const {
+    return raw < other.raw;
+  }
+  XMC_INLINE bool operator<=(const apFixed &other) const {
+    return raw <= other.raw;
+  }
+  XMC_INLINE bool operator>(const apFixed &other) const {
+    return raw > other.raw;
+  }
+  XMC_INLINE bool operator>=(const apFixed &other) const {
+    return raw >= other.raw;
+  }
+  XMC_INLINE bool operator==(const apFixed &other) const {
+    return raw == other.raw;
+  }
+  XMC_INLINE bool operator!=(const apFixed &other) const {
+    return raw != other.raw;
+  }
 };
 
 using fixed4p12 = apFixed<int16_t, 12>;
 using fixed20p12 = apFixed<int32_t, 12>;
 using fixed16p16 = apFixed<int32_t, 16>;
+using fixed12p20 = apFixed<int32_t, 20>;
 
 }  // namespace xmc
 
