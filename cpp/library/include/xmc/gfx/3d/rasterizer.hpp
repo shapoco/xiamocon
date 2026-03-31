@@ -244,6 +244,11 @@ class RasterizerClass {
   template <bool useTexture>
   void renderTriangleParam(const BakedVertex &v0, const BakedVertex &v1,
                            const BakedVertex &v2, const Material3D &mat) {
+    int vpl = viewport.x;
+    int vpr = viewport.right() - 1;
+    if (v0.pos.x < vpl && v1.pos.x < vpl && v2.pos.x < vpl) return;
+    if (v0.pos.x > vpr && v1.pos.x > vpr && v2.pos.x > vpr) return;
+
     if (!mat || !mat->doubleSided) {
       // back-face culling
       float ax = v1.pos.x - v0.pos.x;
@@ -298,10 +303,13 @@ class RasterizerClass {
     int iy0 = (int)ceilf(y0);
     int iy1 = (int)roundf(y1);
     int iy2 = (int)floorf(y2);
-    if (iy0 < viewport.y) iy0 = viewport.y;
-    if (iy2 >= viewport.bottom()) iy2 = viewport.bottom() - 1;
+    int iyMin = iy0;
+    int iyMax = iy2;
+    if (iyMin < viewport.y) iyMin = viewport.y;
+    if (iyMax >= viewport.bottom()) iyMax = viewport.bottom() - 1;
+    if (iyMin > iyMax) return;
 
-    const uint16_t *texData = nullptr;
+    const uint16_t *__restrict__ texData = nullptr;
     uint32_t texStride = 0;
     uint32_t texW = 0, texH = 0;
     uint32_t uMask = 0, vMask = 0;
@@ -318,7 +326,13 @@ class RasterizerClass {
     int xMid = (int)(x0 + (x2 - x0) * (y1 - y0) * y0to2inv);
     bool hReverse = xMid > x1;
 
-    TriangleInterp<12> zInterp(iy0, iy1, iy2, z0, z1, z2, hReverse);
+    fixed20p12 z0a = fixed20p12::fromFloat(z0);
+    fixed20p12 z1a = fixed20p12::fromFloat(z1);
+    fixed20p12 z2a = fixed20p12::fromFloat(z2);
+    fixed20p12 zStepA = (z2a - z0a) / (int32_t)fmaxf(iy2 - iy0, 1);
+    fixed20p12 zStepB0 = (z1a - z0a) / (int32_t)fmaxf(iy1 - iy0, 1);
+    fixed20p12 zStepB1 = (z2a - z1a) / (int32_t)fmaxf(iy2 - iy1, 1);
+
     TriangleInterp<20> uInterp(iy0, iy1, iy2, uv0.x * texW, uv1.x * texW,
                                uv2.x * texW, hReverse);
     TriangleInterp<20> vInterp(iy0, iy1, iy2, uv0.y * texH, uv1.y * texH,
@@ -333,7 +347,7 @@ class RasterizerClass {
 
     // rasterize the triangle using a scanline algorithm
     // todo: optimize
-    for (int iy = iy0; iy <= iy2; iy++) {
+    for (int iy = iyMin; iy <= iyMax; iy++) {
       bool firstHalf = iy < iy1;
 
       float y = (float)iy;
@@ -353,44 +367,51 @@ class RasterizerClass {
 
       int32_t ixMin = (int)ceilf(xa);
       int32_t ixMax = (int)floorf(xb);
-      if (ixMin < viewport.x) {
-        ixMin = viewport.x;
-      }
-      if (ixMax >= viewport.right()) {
-        ixMax = viewport.right() - 1;
-      }
+      if (ixMin < viewport.x) ixMin = viewport.x;
+      if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
+      if (ixMin > ixMax) continue;
 
       int32_t xSpan = (int)(xb - xa);
       if (xSpan < 1) xSpan = 1;
       int xOffset = ixMin - (int)floorf(xa);
-      zInterp.yStep(iy, xOffset, xSpan);
       uInterp.yStep(iy, xOffset, xSpan);
       vInterp.yStep(iy, xOffset, xSpan);
 
       color4p12 ca = c0a + cStepA * (iy - iy0);
+      fixed20p12 za = z0a + zStepA * (iy - iy0);
       color4p12 cb;
+      fixed20p12 zb;
       if (firstHalf) {
         cb = c0a + cStepB0 * (iy - iy0);
+        zb = z0a + zStepB0 * (iy - iy0);
       } else {
         cb = c1a + cStepB1 * (iy - iy1);
+        zb = z1a + zStepB1 * (iy - iy1);
       }
 
-      color4p12 cp;
-      color4p12 cStep;
+      color4p12 cp, cStep;
+      fixed20p12 zp, zStep;
       if (hReverse) {
         cp = cb;
+        zp = zb;
         cStep = (ca - cb) / xSpan;
+        zStep = (za - zb) / xSpan;
       } else {
         cp = ca;
+        zp = za;
         cStep = (cb - ca) / xSpan;
+        zStep = (zb - za) / xSpan;
       }
 
+      cp += cStep * xOffset;
+      zp += zStep * xOffset;
+
       if (target->format == pixel_format_t::RGB565) {
-        uint16_t *cptr = (uint16_t *)target->linePtr(iy) + ixMin;
-        depth_t *zptr = depthBuff + iy * width + ixMin;
+        uint16_t *__restrict__ cptr = (uint16_t *)target->linePtr(iy);
+        depth_t *__restrict__ zptr = depthBuff + iy * width;
         for (int x = ixMin; x <= ixMax; x++) {
-          int32_t z = zInterp.xStep();
-          if (z < *zptr) {
+          int32_t z = zp.raw >> fixed20p12::PRECISION;
+          if (z < zptr[x]) {
             color4p12 c = cp;
             if (useTexture) {
               int32_t u = uInterp.xPeek();
@@ -398,12 +419,12 @@ class RasterizerClass {
               c *= color4444(texData[(v & vMask) * texStride + (u & uMask)]);
             }
             if (c.a.raw != 0) {
-              *cptr = c.to565();
-              *zptr = z;
+              cptr[x] = c.to565();
+              zptr[x] = z;
             }
           }
-          zptr++;
-          cptr++;
+          cp += cStep;
+          zp += zStep;
           uInterp.xStep();
           vInterp.xStep();
         }

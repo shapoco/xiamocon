@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_COLOR4P12_HPP
 #define XMC_GFX_COLOR4P12_HPP
 
-#include "xmc/fixed4p12.hpp"
+#include "xmc/ap_fixed.hpp"
 #include "xmc/gfx/colorf.hpp"
 #include "xmc/gfx/gfx_common.hpp"
 
@@ -24,7 +24,7 @@ struct color4p12 {
         a(fixed4p12::fromFloat(c.a)) {}
 
   XMC_INLINE uint16_t to565() const {
-    uint16_t result = 0;
+    uint_fast16_t result = 0;
     if (r.raw >= (1 << PRECISION)) {
       result = 0xF800;
     } else if (r.raw >= 0) {
