@@ -5,5 +5,5 @@ var structxmc_1_1mat4 =
     [ "loadIdentity", "structxmc_1_1mat4.html#abdd46b120b89674f6343ce6502b3e4a9", null ],
     [ "ortho", "structxmc_1_1mat4.html#ae9a4d43994abb898ad9ab132024adefc", null ],
     [ "perspective", "structxmc_1_1mat4.html#a60fca9ace684a695700c9d071999f88f", null ],
-    [ "transform", "structxmc_1_1mat4.html#afd411ed7cda511760512fae5e0caf82d", null ]
+    [ "transform", "structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10", null ]
 ];
