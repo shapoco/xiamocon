@@ -3,6 +3,7 @@
 
 #include "xmc/gfx/3d/scene3d.hpp"
 #include "xmc/gfx/color4p12.hpp"
+#include "xmc/gfx/sprite444.hpp"
 
 namespace xmc {
 
@@ -402,6 +403,29 @@ class RasterizerClass {
                 }
               }
               accumH.step(stepH);
+            }
+          }
+          else if (target->format == pixel_format_t::RGB444) {
+            Scanner444 scanner(*target, ixMin, iy);
+            depth_t *__restrict__ zptr = depthBuff + iy * width;
+            for (int x = ixMin; x <= ixMax; x++) {
+              int32_t z = accumH.z.floorToInt();
+              bool written = false;
+              if (z < zptr[x]) {
+                color4p12 c = accumH.c;
+                if (useTexture) {
+                  int32_t u = accumH.u.floorToInt() & uMask;
+                  int32_t v = accumH.v.floorToInt() & vMask;
+                  c *= color4444(texData[v * texW + u]);
+                }
+                if (c.a.raw != 0) {
+                  scanner.push444(c.to444());
+                  written = true;
+                  zptr[x] = z;
+                }
+              }
+              accumH.step(stepH);
+              if (!written) scanner.skip();
             }
           }
         }

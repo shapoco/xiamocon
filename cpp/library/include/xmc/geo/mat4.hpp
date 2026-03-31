@@ -162,13 +162,12 @@ struct mat4 {
    * @note If the w component after transformation is close to zero, returns
    * (0, 0, 0) to avoid division by zero
    */
-  XMC_INLINE vec3 transform(const vec3 &v, float *ww = nullptr) const {
+  XMC_INLINE vec3 transform(const vec3 &v) const {
     float x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
     float y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
     float z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
     float w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];
     float abs_w = fabsf(w);
-    if (ww) *ww = w;
     if (abs_w < 1e-6f) {
       return vec3(0, 0, 0);
     }

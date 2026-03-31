@@ -43,6 +43,26 @@ struct color4p12 {
     return ((result << 8) & 0xFF00) | ((result >> 8) & 0x00FF);
   }
 
+  XMC_INLINE uint16_t to444() const {
+    uint_fast16_t result = 0;
+    if (r.raw >= (1 << PRECISION)) {
+      result = 0x0F00;
+    } else if (r.raw >= 0) {
+      result = r.raw & 0x0F00;
+    }
+    if (g.raw >= (1 << PRECISION)) {
+      result |= 0x00F0;
+    } else if (g.raw >= 0) {
+      result |= (g.raw >> (PRECISION - 8)) & 0x00F0;
+    }
+    if (b.raw >= (1 << PRECISION)) {
+      result |= 0x000F;
+    } else if (b.raw >= 0) {
+      result |= (b.raw >> (PRECISION - 4)) & 0x000F;
+    }
+    return result;
+  }
+
   XMC_INLINE color4p12 operator+(const color4p12 &other) const {
     return color4p12{b + other.b, g + other.g, r + other.r, a + other.a};
   }
