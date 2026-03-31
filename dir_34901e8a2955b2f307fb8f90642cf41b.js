@@ -8,6 +8,7 @@ var dir_34901e8a2955b2f307fb8f90642cf41b =
     [ "audio.hpp", "audio_8hpp_source.html", null ],
     [ "battery.hpp", "battery_8hpp.html", null ],
     [ "display.hpp", "display_8hpp_source.html", null ],
+    [ "fixed4p12.hpp", "fixed4p12_8hpp_source.html", null ],
     [ "geo.hpp", "geo_8hpp_source.html", null ],
     [ "gfx.hpp", "gfx_8hpp_source.html", null ],
     [ "input.hpp", "input_8hpp.html", "input_8hpp" ],

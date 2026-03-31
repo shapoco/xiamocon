@@ -139,37 +139,40 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a17a2d62f09b8e7224d8fc135ea91ba27"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a> { <a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27a9f9b78ee279f44029c4b3b1ddd625832">XMC_RAM_CAP_NONE</a> = 0
-, <a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27a06ac0eb79a21660d84ac5e2bf7e1c382">XMC_RAM_CAP_DMA</a> = 1 &lt;&lt; 0
+<tr class="memitem:ae2bc93d918ac72dcd824d285f24f6c21"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21">XmcRamCap</a> { <a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21a9f9b78ee279f44029c4b3b1ddd625832">XMC_RAM_CAP_NONE</a> = 0
+, <a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21a06ac0eb79a21660d84ac5e2bf7e1c382">XMC_RAM_CAP_DMA</a> = 1 &lt;&lt; 0
+, <a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21aa35125833fe83c9c799fe79d23889c1d">XMC_RAM_CAP_SPIRAM</a> = 1 &lt;&lt; 1
  }</td></tr>
-<tr class="separator:a17a2d62f09b8e7224d8fc135ea91ba27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ae2bc93d918ac72dcd824d285f24f6c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa11069b6589b5629ddede2600e751a73"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8hpp.html#aa11069b6589b5629ddede2600e751a73">xmcMalloc</a> (size_t size, <a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a> caps)</td></tr>
-<tr class="separator:aa11069b6589b5629ddede2600e751a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fdfba57d64bb23bd732ec92c8927ee8"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8hpp.html#a8fdfba57d64bb23bd732ec92c8927ee8">xmcMalloc</a> (size_t size, <a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21">XmcRamCap</a> caps)</td></tr>
+<tr class="separator:a8fdfba57d64bb23bd732ec92c8927ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa87c679f780eb338b30dc3364968c673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ram_8hpp.html#aa87c679f780eb338b30dc3364968c673">xmcFree</a> (void *ptr)</td></tr>
 <tr class="separator:aa87c679f780eb338b30dc3364968c673"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>RAM management interface. </p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a17a2d62f09b8e7224d8fc135ea91ba27" name="a17a2d62f09b8e7224d8fc135ea91ba27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17a2d62f09b8e7224d8fc135ea91ba27">&#9670;&#160;</a></span>xmc_ram_cap_t</h2>
+<a id="ae2bc93d918ac72dcd824d285f24f6c21" name="ae2bc93d918ac72dcd824d285f24f6c21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2bc93d918ac72dcd824d285f24f6c21">&#9670;&#160;</a></span>XmcRamCap</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a></td>
+          <td class="memname">enum <a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21">XmcRamCap</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>RAM capabilities </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a17a2d62f09b8e7224d8fc135ea91ba27a9f9b78ee279f44029c4b3b1ddd625832" name="a17a2d62f09b8e7224d8fc135ea91ba27a9f9b78ee279f44029c4b3b1ddd625832"></a>XMC_RAM_CAP_NONE&#160;</td><td class="fielddoc"><p>No special capabilities </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae2bc93d918ac72dcd824d285f24f6c21a9f9b78ee279f44029c4b3b1ddd625832" name="ae2bc93d918ac72dcd824d285f24f6c21a9f9b78ee279f44029c4b3b1ddd625832"></a>XMC_RAM_CAP_NONE&#160;</td><td class="fielddoc"><p>No special capabilities </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a17a2d62f09b8e7224d8fc135ea91ba27a06ac0eb79a21660d84ac5e2bf7e1c382" name="a17a2d62f09b8e7224d8fc135ea91ba27a06ac0eb79a21660d84ac5e2bf7e1c382"></a>XMC_RAM_CAP_DMA&#160;</td><td class="fielddoc"><p>Supports DMA operations </p>
+<tr><td class="fieldname"><a id="ae2bc93d918ac72dcd824d285f24f6c21a06ac0eb79a21660d84ac5e2bf7e1c382" name="ae2bc93d918ac72dcd824d285f24f6c21a06ac0eb79a21660d84ac5e2bf7e1c382"></a>XMC_RAM_CAP_DMA&#160;</td><td class="fielddoc"><p>Supports DMA operations </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ae2bc93d918ac72dcd824d285f24f6c21aa35125833fe83c9c799fe79d23889c1d" name="ae2bc93d918ac72dcd824d285f24f6c21aa35125833fe83c9c799fe79d23889c1d"></a>XMC_RAM_CAP_SPIRAM&#160;</td><td class="fielddoc"><p>Supports SPIRAM </p>
 </td></tr>
 </table>
 
@@ -200,8 +203,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa11069b6589b5629ddede2600e751a73" name="aa11069b6589b5629ddede2600e751a73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa11069b6589b5629ddede2600e751a73">&#9670;&#160;</a></span>xmcMalloc()</h2>
+<a id="a8fdfba57d64bb23bd732ec92c8927ee8" name="a8fdfba57d64bb23bd732ec92c8927ee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fdfba57d64bb23bd732ec92c8927ee8">&#9670;&#160;</a></span>xmcMalloc()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +218,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27">xmc_ram_cap_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21">XmcRamCap</a>&#160;</td>
           <td class="paramname"><em>caps</em>&#160;</td>
         </tr>
         <tr>

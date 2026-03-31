@@ -2,6 +2,7 @@ var dir_2b4173ff96fb319b01e30349c3fe4ceb =
 [
     [ "3d", "dir_a178c45f112f5e2df3a98aa0169aca13.html", "dir_a178c45f112f5e2df3a98aa0169aca13" ],
     [ "attribute_buffer.hpp", "attribute__buffer_8hpp_source.html", null ],
+    [ "color4p12.hpp", "color4p12_8hpp_source.html", null ],
     [ "colorf.hpp", "colorf_8hpp_source.html", null ],
     [ "gfx_common.hpp", "gfx__common_8hpp_source.html", null ],
     [ "sprite.hpp", "sprite_8hpp_source.html", null ],

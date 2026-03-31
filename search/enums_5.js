@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xmc_5fram_5fcap_5ft_0',['xmc_ram_cap_t',['../ram_8hpp.html#a17a2d62f09b8e7224d8fc135ea91ba27',1,'ram.hpp']]]
+  ['xmcramcap_0',['XmcRamCap',['../ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21',1,'ram.hpp']]]
 ];
