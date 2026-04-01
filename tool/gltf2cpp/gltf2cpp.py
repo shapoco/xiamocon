@@ -96,15 +96,46 @@ def load_image(gltf, texture_index, gltf_dir):
     raise RuntimeError(f"Cannot load texture {texture_index}")
 
 
-def to_argb4444(image):
+def to_argb4444(image, dither=False):
     """Convert PIL Image to ARGB4444 pixel array (list of uint16)."""
     image = image.convert("RGBA")
     w, h = image.size
     raw = image.tobytes()
-    pixels = []
+
+    if not dither:
+        pixels = []
+        for i in range(0, len(raw), 4):
+            r, g, b, a = raw[i], raw[i + 1], raw[i + 2], raw[i + 3]
+            pixels.append(((a >> 4) << 12) | ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4))
+        return w, h, pixels
+
+    # Floyd-Steinberg error diffusion dithering
+    buf = [[0.0] * 4 for _ in range(w * h)]
     for i in range(0, len(raw), 4):
-        r, g, b, a = raw[i], raw[i + 1], raw[i + 2], raw[i + 3]
-        pixels.append(((a >> 4) << 12) | ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4))
+        idx = i // 4
+        buf[idx] = [float(raw[i]), float(raw[i + 1]), float(raw[i + 2]), float(raw[i + 3])]
+
+    pixels = []
+    for y in range(h):
+        for x in range(w):
+            idx = y * w + x
+            old = buf[idx]
+            # Quantize to 4-bit per channel
+            new = [max(0.0, min(255.0, c)) for c in old]
+            q = [(int(c + 0.5) >> 4) & 0xF for c in new]
+            # Expanded quantized values
+            eq = [v * 17 for v in q]  # 0xF -> 255, 0x0 -> 0
+            # Quantization error
+            err = [new[ch] - eq[ch] for ch in range(4)]
+            pixels.append((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2])
+            # Distribute error to neighbors (Floyd-Steinberg)
+            for dx, dy, weight in [(1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)]:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < w and 0 <= ny < h:
+                    ni = ny * w + nx
+                    for ch in range(4):
+                        buf[ni][ch] += err[ch] * weight
+
     return w, h, pixels
 
 
@@ -126,7 +157,7 @@ def sanitize_id(name):
     return result
 
 
-def generate(gltf, gltf_dir, prefix):
+def generate(gltf, gltf_dir, prefix, dither=False):
     """Generate C++ header content from glTF data."""
     out = []
     w = out.append
@@ -151,7 +182,7 @@ def generate(gltf, gltf_dir, prefix):
         if has_tex:
             try:
                 img = load_image(gltf, pbr.baseColorTexture.index, gltf_dir)
-                tw, th, pixels = to_argb4444(img)
+                tw, th, pixels = to_argb4444(img, dither=dither)
 
                 dn = f"{mn}_colorTextureData"
                 w(f"const uint16_t {dn}[] = {{")
@@ -456,6 +487,12 @@ def main():
         default=None,
         help="Prefix for C++ identifiers (default: derived from input filename)",
     )
+    parser.add_argument(
+        "--dither",
+        action="store_true",
+        default=False,
+        help="Apply Floyd-Steinberg error diffusion dithering when converting textures to ARGB4444",
+    )
     args = parser.parse_args()
 
     input_path = os.path.abspath(args.input)
@@ -468,7 +505,7 @@ def main():
     if gltf.binary_blob() is None:
         gltf.convert_buffers(pygltflib.BufferFormat.BINARYBLOB)
 
-    content = generate(gltf, gltf_dir, prefix)
+    content = generate(gltf, gltf_dir, prefix, dither=args.dither)
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, "w") as f:

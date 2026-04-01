@@ -94,8 +94,8 @@ class RasterizerClass {
  public:
   RasterizerClass(int w, int h, uint32_t stackSize)
       : width(w), height(h), stackSize(stackSize) {
-    depthBuff =
-        (depth_t *)xmcMalloc(sizeof(depth_t) * width * height, XMC_RAM_CAP_SPIRAM);
+    depthBuff = (depth_t *)xmcMalloc(sizeof(depth_t) * width * height,
+                                     XMC_RAM_CAP_SPIRAM);
     modelMatrixStack = (MatrixStackEntry *)xmcMalloc(
         sizeof(MatrixStackEntry) * stackSize, XMC_RAM_CAP_DMA);
     screenMatrix = mat4::identity();
@@ -128,8 +128,14 @@ class RasterizerClass {
     parallelLightColor = color;
   }
 
-  inline void setProjection(const mat4 &proj) {
-    projectionMatrix = proj;
+  inline void setScreenMatrix(const mat4 &mat) {
+    screenMatrix = mat;
+    vpDirty = true;
+    mvpDirty = true;
+  }
+
+  inline void setProjection(const mat4 &mat) {
+    projectionMatrix = mat;
     vpDirty = true;
     mvpDirty = true;
   }
@@ -404,8 +410,7 @@ class RasterizerClass {
               }
               accumH.step(stepH);
             }
-          }
-          else if (target->format == pixel_format_t::RGB444) {
+          } else if (target->format == pixel_format_t::RGB444) {
             Scanner444 scanner(*target, ixMin, iy);
             depth_t *__restrict__ zptr = depthBuff + iy * width;
             for (int x = ixMin; x <= ixMax; x++) {
