@@ -184,7 +184,8 @@ strap_cutter = (
         .box(4, 3, 10, centered=[True, False, False])
         .translate((0, 0, -7))
     )
-    .edges(">Y and >Z").fillet(3)
+    .edges(">Y and >Z")
+    .fillet(3)
 )
 
 result = result.cut(strap_cutter.translate((board_w / 2 - 15, -case_h / 2 + 2, 2)))
@@ -201,7 +202,7 @@ for px, py in [
 ]:
     pillar = (
         cyl(0, 0, 0, 3, pillar_h)
-        .cut(cyl(0, 0, wall_t, 1.25, 100))
+        .cut(cyl(0, 0, wall_t, 2.8 / 2, 100))
         .translate((px, py, 0))
     )
     result = result.union(pillar)
