@@ -6,7 +6,7 @@
 #ifndef XMC_SPRITE565_HPP
 #define XMC_SPRITE565_HPP
 
-#include "xmc/gfx/sprite.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 
 namespace xmc {
 
@@ -15,11 +15,11 @@ class Sprite565Class : public SpriteClass {
  public:
   Sprite565Class(int width, int height, uint32_t stride, void *data,
                  bool autoFree = false)
-      : SpriteClass(pixel_format_t::RGB565, width, height, stride, data,
+      : SpriteClass(PixelFormat::RGB565, width, height, stride, data,
                     autoFree) {}
 
   Sprite565Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
-      : SpriteClass(pixel_format_t::RGB565, width, height,
+      : SpriteClass(PixelFormat::RGB565, width, height,
                     sizeof(uint16_t) * width,
                     xmcMalloc(sizeof(uint16_t) * width * height, caps), true) {
   }

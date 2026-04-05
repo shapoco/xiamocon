@@ -5,7 +5,7 @@
 namespace xmc {
 
 /** Rectangle structure */
-struct rect_t {
+struct Rect {
   /** The x-coordinate of the top-left corner of the rectangle */
   int x;
   /** The y-coordinate of the top-left corner of the rectangle */
@@ -27,8 +27,8 @@ struct rect_t {
   inline int bottom() const { return y + height; }
 
   /** Get the intersection of this rectangle with another rectangle */
-  inline rect_t intersect(const rect_t& other) const {
-    rect_t result;
+  inline Rect intersect(const Rect& other) const {
+    Rect result;
     result.x = x > other.x ? x : other.x;
     result.y = y > other.y ? y : other.y;
     int r = right() < other.right() ? right() : other.right();

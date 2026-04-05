@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_COLORF_HPP
 #define XMC_GFX_COLORF_HPP
 
-#include "xmc/gfx/gfx_common.hpp"
+#include "xmc/gfx2d/gfx_common.hpp"
 
 namespace xmc {
 
@@ -32,7 +32,7 @@ struct colorf {
       b = 0;
     else if (b > 31)
       b = 31;
-    return rgb565(r, g, b);
+    return pack565(r, g, b);
   }
 
   inline colorf operator+(const colorf &other) const {

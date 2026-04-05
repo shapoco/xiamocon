@@ -1,4 +1,4 @@
-#include "xmc/gfx/3d/rasterizer.hpp"
+#include "xmc/gfx3d/graphics3d.hpp"
 
 #include <string.h>
 
@@ -17,7 +17,7 @@ void RasterizerClass::clearDepth(depth_t value) {
   }
 }
 
-void RasterizerClass::setTarget(Sprite &target, rect_t viewport) {
+void RasterizerClass::setTarget(Sprite &target, Rect viewport) {
   this->target = target;
   this->viewport = viewport;
   screenMatrix = mat4::identity();

@@ -164,7 +164,7 @@ def generate(gltf, gltf_dir, prefix, dither=False):
 
     w("#pragma once")
     w("")
-    w('#include "xmc/gfx/3d/scene3d.hpp"')
+    w('#include "xmc/gfx3d/scene3d.hpp"')
     w("")
     w("namespace {")
 

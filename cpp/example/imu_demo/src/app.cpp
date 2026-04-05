@@ -31,7 +31,7 @@ static Mesh3D sphere = createSphere(1.0f, 18, 9);
 static Sprite earth_texture =
     createSprite4444(256, 128, 0, (void *)bmp_earth_data);
 static Mesh3D r_gray1 = R_GRAY1_mesh0_create();
-static Rasterizer rasterizer =
+static Graphics3D rasterizer =
     createRasterizer(display::WIDTH, display::HEIGHT);
 static uint64_t lastImuUpdateUs = 0;
 

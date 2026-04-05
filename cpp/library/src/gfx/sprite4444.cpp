@@ -1,4 +1,4 @@
-#include "xmc/gfx/sprite4444.hpp"
+#include "xmc/gfx2d/sprite4444.hpp"
 #include "xmc/display.hpp"
 
 #include <string.h>

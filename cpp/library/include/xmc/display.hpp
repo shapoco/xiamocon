@@ -50,6 +50,13 @@ XmcStatus init(InterfaceFormat format, int rotation);
 XmcStatus deinit();
 
 /**
+ * Get the current interface format of the display. This returns the pixel format
+ * that was specified when the display was initialized.
+ * @return The current interface format of the display.
+ */
+InterfaceFormat getInterfaceFormat();
+
+/**
  * Clear the display to a specific color.
  * @param color The color to fill the display with, in the same format as the
  *              display interface.

@@ -1,6 +1,7 @@
 #include "xmc/system.hpp"
 #include "xmc/battery.hpp"
 #include "xmc/display.hpp"
+#include "xmc/fs.hpp"
 #include "xmc/hw/gpio.hpp"
 #include "xmc/hw/i2c.hpp"
 #include "xmc/hw/pins.hpp"
@@ -74,6 +75,7 @@ XmcStatus requestShutdown() {
   input::deinit();
   battery::deinit();
   speaker::deinit();
+  fs::deinit();
 
   spi::deinit();
 

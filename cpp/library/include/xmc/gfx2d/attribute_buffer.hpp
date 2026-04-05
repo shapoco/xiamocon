@@ -2,7 +2,7 @@
 #define XMC_GFX_ATTRIBUTE_BUFFER_HPP
 
 #include "xmc/geo.hpp"
-#include "xmc/gfx/colorf.hpp"
+#include "xmc/gfx2d/colorf.hpp"
 #include "xmc/hw/ram.hpp"
 
 #include <memory>

@@ -6,7 +6,7 @@
 #ifndef XMC_SPRITE4444_HPP
 #define XMC_SPRITE4444_HPP
 
-#include "xmc/gfx/sprite.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 
 namespace xmc {
 
@@ -15,11 +15,11 @@ class Sprite4444Class : public SpriteClass {
  public:
   Sprite4444Class(int width, int height, uint32_t stride, void *data,
                   bool autoFree = false)
-      : SpriteClass(pixel_format_t::ARGB4444, width, height, stride, data,
+      : SpriteClass(PixelFormat::ARGB4444, width, height, stride, data,
                     autoFree) {}
 
   Sprite4444Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
-      : SpriteClass(pixel_format_t::ARGB4444, width, height,
+      : SpriteClass(PixelFormat::ARGB4444, width, height,
                     width * sizeof(uint16_t),
                     xmcMalloc(width * height * sizeof(uint16_t), caps), true) {
   }

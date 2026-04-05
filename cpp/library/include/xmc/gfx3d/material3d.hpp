@@ -2,8 +2,8 @@
 #define XMC_GFX_MATERIAL3D_HPP
 
 #include "xmc/geo.hpp"
-#include "xmc/gfx/colorf.hpp"
-#include "xmc/gfx/sprite.hpp"
+#include "xmc/gfx2d/colorf.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 
 namespace xmc {
 

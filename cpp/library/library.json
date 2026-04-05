@@ -8,7 +8,9 @@
             "+<*>",
             "+<audio/*>",
             "+<geo/*>",
-            "+<gfx/*>"
+            "+<gfx/*>",
+            "+<../ext/fatfs/*>",
+            "+<../ext/tjpgd/*>"
         ],
         "unflags": [
             "-Os",
@@ -21,12 +23,15 @@
             "-fjump-tables",
             "-ftree-switch-conversion",
             "-Iinclude",
-            "-Isrc/fatfs"
+            "-Iext/fatfs",
+            "-Iext/tjpgd"
         ]
     },
     "export": {
         "include": [
-            "include"
+            "include",
+            "ext/fatfs",
+            "ext/tjpgd"
         ]
     },
     "platforms": "*",

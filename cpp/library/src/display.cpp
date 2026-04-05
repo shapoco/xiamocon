@@ -191,6 +191,8 @@ XmcStatus deinit() {
   return XMC_OK;
 }
 
+InterfaceFormat getInterfaceFormat() { return currentFormat; }
+
 XmcStatus clear(uint32_t color) {
   XMC_ERR_RET(fillRect(0, 0, WIDTH, HEIGHT, color));
   return XMC_OK;
@@ -261,7 +263,7 @@ XmcStatus writePixelsStart(const void *data, uint32_t num_bytes,
   dma::Config cfg = {
       .ptr = (void *)data,
       .elementSize = 1,
-      .length = num_bytes,
+      .length = (int)num_bytes,
   };
   XmcStatus sts = spi::dmaWriteStart(&cfg, XMC_PIN_DISPLAY_CS);
   if (sts != XMC_OK) {

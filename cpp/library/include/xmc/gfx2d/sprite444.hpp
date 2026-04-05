@@ -6,7 +6,7 @@
 #ifndef XMC_SPRITE444_HPP
 #define XMC_SPRITE444_HPP
 
-#include "xmc/gfx/sprite.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 
 namespace xmc {
 
@@ -18,11 +18,11 @@ class Sprite444Class : public SpriteClass {
  public:
   Sprite444Class(int width, int height, uint32_t stride, void *data,
                  bool autoFree = false)
-      : SpriteClass(pixel_format_t::RGB444, width, height, stride444(width),
-                    data, autoFree) {}
+      : SpriteClass(PixelFormat::RGB444, width, height, stride444(width), data,
+                    autoFree) {}
 
   Sprite444Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
-      : SpriteClass(pixel_format_t::RGB444, width, height, stride444(width),
+      : SpriteClass(PixelFormat::RGB444, width, height, stride444(width),
                     xmcMalloc(stride444(width) * height, caps), true) {}
 
  protected:
@@ -61,7 +61,8 @@ struct Scanner444 {
       *(ptr++) = (color >> 4) & 0xFF;
       *ptr = (*ptr & 0x0F) | ((color & 0x0F) << 4);
     } else {
-      *(ptr++) = (*(ptr) & 0xF0) | ((color >> 8) & 0x0F);
+      *ptr = (*ptr & 0xF0) | ((color >> 8) & 0x0F);
+      ptr++;
       *(ptr++) = color & 0xFF;
     }
   }
@@ -73,7 +74,6 @@ struct Scanner444 {
     } else if (a1 == 0) {
       skip();
     } else {
-      a1 >>= 12;
       uint16_t a2 = 16 - a1;
       uint16_t c = peek();
       uint32_t tmp1 =

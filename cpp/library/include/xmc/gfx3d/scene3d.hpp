@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_SCENE3D_HPP
 #define XMC_GFX_SCENE3D_HPP
 
-#include "xmc/gfx/3d/node3d.hpp"
+#include "xmc/gfx3d/node3d.hpp"
 
 namespace xmc {
 

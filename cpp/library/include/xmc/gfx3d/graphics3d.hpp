@@ -1,16 +1,14 @@
 #ifndef XMC_GFX_RASTERIZER_HPP
 #define XMC_GFX_RASTERIZER_HPP
 
-#include "xmc/gfx/3d/scene3d.hpp"
-#include "xmc/gfx/color4p12.hpp"
-#include "xmc/gfx/sprite444.hpp"
+#include "xmc/gfx3d/scene3d.hpp"
+#include "xmc/gfx2d/color4p12.hpp"
+#include "xmc/gfx2d/sprite444.hpp"
 
 namespace xmc {
 
 using depth_t = uint16_t;
 static constexpr depth_t MAX_DEPTH = (1 << (sizeof(depth_t) * 8)) - 1;
-
-static void getUvMask(int size, uint32_t *mask, uint32_t *shift);
 
 struct BakedVertex {
   vec3 pos;
@@ -46,9 +44,9 @@ struct ScanLineCounter {
 };
 
 class RasterizerClass;
-using Rasterizer = std::shared_ptr<RasterizerClass>;
+using Graphics3D = std::shared_ptr<RasterizerClass>;
 
-static inline Rasterizer createRasterizer(int width, int height,
+static inline Graphics3D createRasterizer(int width, int height,
                                           uint32_t stackSize = 16) {
   return std::make_shared<RasterizerClass>(width, height, stackSize);
 }
@@ -68,7 +66,7 @@ class RasterizerClass {
   depth_t *depthBuff;
 
   Sprite target;
-  rect_t viewport;
+  Rect viewport;
 
   mat4 screenMatrix;
   mat4 viewMatrix;
@@ -115,10 +113,10 @@ class RasterizerClass {
     }
   }
 
-  void setTarget(Sprite &target, rect_t viewport);
+  void setTarget(Sprite &target, Rect viewport);
 
   inline void setTarget(Sprite &target) {
-    setTarget(target, rect_t{0, 0, target->width, target->height});
+    setTarget(target, Rect{0, 0, target->width, target->height});
   }
 
   inline void setEnvironmentLight(const colorf &color) { envLight = color; }
@@ -391,7 +389,7 @@ class RasterizerClass {
           accumH.u += stepH.u * xOffset;
           accumH.v += stepH.v * xOffset;
 
-          if (target->format == pixel_format_t::RGB565) {
+          if (target->format == PixelFormat::RGB565) {
             uint16_t *__restrict__ cptr = (uint16_t *)target->linePtr(iy);
             depth_t *__restrict__ zptr = depthBuff + iy * width;
             for (int x = ixMin; x <= ixMax; x++) {
@@ -401,7 +399,7 @@ class RasterizerClass {
                 if (useTexture) {
                   int32_t u = accumH.u.floorToInt() & uMask;
                   int32_t v = accumH.v.floorToInt() & vMask;
-                  c *= color4444(texData[v * texW + u]);
+                  c *= color4444(texData[v * texStride + u]);
                 }
                 if (c.a.raw != 0) {
                   cptr[x] = c.to565();
@@ -410,7 +408,7 @@ class RasterizerClass {
               }
               accumH.step(stepH);
             }
-          } else if (target->format == pixel_format_t::RGB444) {
+          } else if (target->format == PixelFormat::RGB444) {
             Scanner444 scanner(*target, ixMin, iy);
             depth_t *__restrict__ zptr = depthBuff + iy * width;
             for (int x = ixMin; x <= ixMax; x++) {
@@ -421,7 +419,7 @@ class RasterizerClass {
                 if (useTexture) {
                   int32_t u = accumH.u.floorToInt() & uMask;
                   int32_t v = accumH.v.floorToInt() & vMask;
-                  c *= color4444(texData[v * texW + u]);
+                  c *= color4444(texData[v * texStride + u]);
                 }
                 if (c.a.raw != 0) {
                   scanner.push444(c.to444());

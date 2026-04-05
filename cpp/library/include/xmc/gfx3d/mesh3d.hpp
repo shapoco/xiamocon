@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_MESH3D_HPP
 #define XMC_GFX_MESH3D_HPP
 
-#include "xmc/gfx/3d/primitive3d.hpp"
+#include "xmc/gfx3d/primitive3d.hpp"
 
 #include <memory>
 #include <vector>

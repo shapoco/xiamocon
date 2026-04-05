@@ -1,8 +1,8 @@
 #ifndef XMC_GFX_PRIMITIVE3D_HPP
 #define XMC_GFX_PRIMITIVE3D_HPP
 
-#include "xmc/gfx/attribute_buffer.hpp"
-#include "xmc/gfx/3d/material3d.hpp"
+#include "xmc/gfx2d/attribute_buffer.hpp"
+#include "xmc/gfx3d/material3d.hpp"
 
 #include <memory>
 

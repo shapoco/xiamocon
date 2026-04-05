@@ -5,6 +5,7 @@ set(PFM_IMPL_SRC_DIR platform/impl/rp2350_pico_sdk/src)
 set(PFM_IMPL_INC_DIR platform/impl/rp2350_pico_sdk/include)
 set(LIB_SRC_DIR library/src)
 set(LIB_INC_DIR library/include)
+set(LIB_EXT_DIR library/ext)
 
 include(pico_sdk_import.cmake)
 include(pico_extras_import.cmake)
@@ -20,6 +21,8 @@ file(GLOB CPP_FILES
     ${LIB_SRC_DIR}/*.c
     ${LIB_SRC_DIR}/**/*.cpp
     ${LIB_SRC_DIR}/**/*.c
+    ${LIB_EXT_DIR}/**/*.cpp
+    ${LIB_EXT_DIR}/**/*.c
 )
 
 add_library(${LIB_NAME} STATIC
@@ -33,6 +36,8 @@ target_include_directories(${LIB_NAME} PUBLIC
     ${PFM_DECL_INC_DIR}
     ${PFM_IMPL_INC_DIR}
     ${LIB_INC_DIR}
+    ${LIB_EXT_DIR}/fatfs
+    ${LIB_EXT_DIR}/tjpgd
 )
 
 target_link_libraries(

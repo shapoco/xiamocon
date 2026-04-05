@@ -40,7 +40,7 @@ struct WeedInstance {
 };
 WeedInstance weedArray[NUM_WEEDS];
 
-Rasterizer rasterizer = createRasterizer(display::WIDTH, display::HEIGHT);
+Graphics3D rasterizer = createRasterizer(display::WIDTH, display::HEIGHT);
 
 float eyeYaw = 0;
 float eyePitch = 0;

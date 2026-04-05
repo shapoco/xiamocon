@@ -1,4 +1,4 @@
-#include "xmc/gfx/3d/mesh3d.hpp"
+#include "xmc/gfx3d/mesh3d.hpp"
 
 namespace xmc {
 

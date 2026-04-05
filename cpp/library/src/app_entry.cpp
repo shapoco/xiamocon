@@ -1,5 +1,7 @@
 #include "xmc/app_entry.hpp"
 #include "xmc/app.hpp"
+#include "xmc/diagnostic.hpp"
+#include "xmc/fs.hpp"
 #include "xmc/hw/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/speaker.hpp"
@@ -13,6 +15,7 @@ uint64_t fpsLastUpdateUs = 0;
 uint32_t fpsFrameCount = 0;
 char fpsString[16] = {0};
 AppConfig appConfig;
+diagnostic::App *diagnosticApp = nullptr;
 
 AppConfig getDefaultAppConfig() {
   AppConfig config = {
@@ -26,15 +29,30 @@ AppConfig getDefaultAppConfig() {
 }
 
 void libSetup() {
-  appConfig = appGetConfig();
   system::init();
-  display::init(appConfig.displayPixelFormat, 0);
   input::init();
+  fs::init();
+
+  input::service();
+  input::service();
+  if (input::isPressed(input::Button::FUNC)) {
+    diagnosticApp = new diagnostic::App();
+    appConfig = diagnosticApp->getConfig();
+  } else {
+    appConfig = appGetConfig();
+  }
+
+  display::init(appConfig.displayPixelFormat, 0);
   if (appConfig.speakerEnabled) {
     speaker::init(appConfig.speakerSampleFormat, appConfig.speakerSampleRateHz,
                   appConfig.speakerLatencySamples, NULL);
   }
-  appSetup();
+
+  if (diagnosticApp) {
+    diagnosticApp->setup();
+  } else {
+    appSetup();
+  }
 }
 
 void libLoop() {
@@ -42,22 +60,26 @@ void libLoop() {
   if (appConfig.speakerEnabled) {
     speaker::service();
   }
-  appLoop();
+  if (diagnosticApp) {
+    diagnosticApp->loop();
+  } else {
+    appLoop();
+  }
 }
 
-void appDrawStatusBar(Sprite &screen) {
+void appDrawStatusBar(Graphics2D &gfx) {
   uint64_t nowUs = getTimeUs();
 
   char buf[64];
-  int w = screen->width;
+  int w = gfx->getBounds().width;
   int h = 10;
   int baseLine = h - 1;
 
-  TextState prevTextState = screen->textState;
+  GraphicsState2D backup = gfx->getState();
 
-  screen->setFont(&ShapoSansP_s08c07, 1);
-  screen->setTextColor(0xFFFF);
-  screen->fillSmokeRect(0, 0, w, h, 0);
+  gfx->setFont(&ShapoSansP_s08c07, 1);
+  gfx->setTextColor(0xFFFF);
+  gfx->fillSmokeRect(0, 0, w, h, 0);
 
   if (true) {
     if (nowUs >= fpsLastUpdateUs + 1000000) {
@@ -66,8 +88,8 @@ void appDrawStatusBar(Sprite &screen) {
       fpsFrameCount = 0;
       fpsLastUpdateUs = nowUs;
     }
-    screen->setCursor(1, baseLine);
-    screen->drawString(fpsString);
+    gfx->setCursor(1, baseLine);
+    gfx->drawString(fpsString);
     fpsFrameCount++;
   }
 
@@ -81,37 +103,37 @@ void appDrawStatusBar(Sprite &screen) {
     } else if (batteryGuageWidth > 12) {
       batteryGuageWidth = 12;
     }
-    screen->drawRect(w - 50, 1, 15, h - 2, 0xFFFF);
-    screen->fillRect(w - 34, 4, 2, h - 7, 0xFFFF);
-    screen->fillRect(w - 48, 3, batteryGuageWidth, h - 5, 0xFFFF);
+    gfx->drawRect(w - 50, 1, 15, h - 2, 0xFFFF);
+    gfx->fillRect(w - 34, 4, 2, h - 7, 0xFFFF);
+    gfx->fillRect(w - 48, 3, batteryGuageWidth, h - 5, 0xFFFF);
 
     snprintf(buf, sizeof(buf), "%4.2fV", batMv / 1000.0f);
-    screen->setCursor(w - 30, baseLine);
-    screen->drawString(buf);
+    gfx->setCursor(w - 30, baseLine);
+    gfx->drawString(buf);
   }
 
-  screen->textState = prevTextState;
+  gfx->setState(backup);
 }
 
-void appDrawDebugInfo(Sprite &screen) {
+void appDrawDebugInfo(Graphics2D &gfx) {
   XmcStatus err;
   const char *file;
   int line;
   xmcGetLastError(&err, &file, &line);
   if (err == XMC_OK) return;
 
-  int w = screen->width;
+  int w = gfx->getBounds().width;
   int h = 10;
 
   char buf[64];
-  TextState prevTextState = screen->textState;
-  screen->fillSmokeRect(0, screen->height - h, w, h);
-  screen->setFont(&ShapoSansP_s08c07, 1);
+  GraphicsState2D backup = gfx->getState();
+  gfx->fillSmokeRect(0, gfx->getBounds().height - h, w, h);
+  gfx->setFont(&ShapoSansP_s08c07, 1);
   snprintf(buf, sizeof(buf), "ERR 0x%X: L%d in %s", err, line, file);
-  screen->setCursor(0, screen->height - 2);
-  screen->setTextColor(0xFFFF);
-  screen->drawString(buf);
-  screen->textState = prevTextState;
+  gfx->setCursor(0, gfx->getBounds().height - 2);
+  gfx->setTextColor(0xFFFF);
+  gfx->drawString(buf);
+  gfx->setState(backup);
 }
 
 }  // namespace xmc

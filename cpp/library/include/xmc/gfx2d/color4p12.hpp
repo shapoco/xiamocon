@@ -2,8 +2,8 @@
 #define XMC_GFX_COLOR4P12_HPP
 
 #include "xmc/ap_fixed.hpp"
-#include "xmc/gfx/colorf.hpp"
-#include "xmc/gfx/gfx_common.hpp"
+#include "xmc/gfx2d/colorf.hpp"
+#include "xmc/gfx2d/gfx_common.hpp"
 
 namespace xmc {
 

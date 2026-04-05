@@ -1,6 +1,6 @@
 #pragma once
 
-#include "xmc/gfx/3d/scene3d.hpp"
+#include "xmc/gfx3d/scene3d.hpp"
 
 namespace {
 

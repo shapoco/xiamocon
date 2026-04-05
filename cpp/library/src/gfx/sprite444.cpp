@@ -1,7 +1,7 @@
-#include "xmc/gfx/sprite444.hpp"
+#include "xmc/gfx2d/sprite444.hpp"
 #include "xmc/display.hpp"
 #include "xmc/geo.hpp"
-#include "xmc/gfx/sprite4444.hpp"
+#include "xmc/gfx2d/sprite4444.hpp"
 
 #include <string.h>
 #include <memory>
@@ -67,7 +67,7 @@ void Sprite444Class::onFillSmokeRect(int x, int y, int width, int height,
 void Sprite444Class::onDrawImage(const Sprite &image, int dx, int dy, int w,
                                  int h, int sx, int sy) {
   switch (image->format) {
-    case pixel_format_t::ARGB4444:
+    case PixelFormat::ARGB4444:
       for (int j = 0; j < h; j++) {
         const uint16_t *rdPtr = (const uint16_t *)image->linePtr(sy + j) + sx;
         Scanner444 wrPtr(*this, dx, dy + j);
