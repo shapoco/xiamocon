@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['xmc_5fspeakergetsupportedformats_0',['xmc_speakerGetSupportedFormats',['../speaker_8hpp.html#a75ef48e1f00a5b831cc519b8728c8f06',1,'xmc::speaker']]],
-  ['xmcfree_1',['xmcFree',['../ram_8hpp.html#aa87c679f780eb338b30dc3364968c673',1,'ram.hpp']]],
-  ['xmcmalloc_2',['xmcMalloc',['../ram_8hpp.html#a8fdfba57d64bb23bd732ec92c8927ee8',1,'ram.hpp']]]
+  ['waspressed_0',['wasPressed',['../input_8hpp.html#a8e14b2d52b9d2d3fb7748ab190c0ef2d',1,'xmc::input']]],
+  ['wasreleased_1',['wasReleased',['../input_8hpp.html#aecba0b9ff14745d24f4539bf6408ad9e',1,'xmc::input']]],
+  ['write_2',['write',['../classxmc_1_1fs_1_1File.html#a59ebf7bfaa975d4fc57b7c1afd407427',1,'xmc::fs::File::write()'],['../gpio_8hpp.html#a417c9ca51ad277e33fade1686a023fdc',1,'xmc::gpio::write()'],['../ioex_8hpp.html#a334ae4147772d83f268e7a5a0aad3359',1,'xmc::ioex::write(Pin pin, bool value)']]],
+  ['writemasked_3',['writeMasked',['../ioex_8hpp.html#a471dccb186c728f270b70db4597eb58b',1,'xmc::ioex']]]
 ];

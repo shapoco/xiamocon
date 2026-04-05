@@ -1,5 +1,0 @@
-<map id="xmc::TextState" name="xmc::TextState">
-<area shape="rect" id="node1" title=" " alt="" coords="5,181,124,207"/>
-<area shape="rect" id="node2" href="$structGFXfont.html" title="Data stored for FONT AS A WHOLE." alt="" coords="27,93,102,119"/>
-<area shape="rect" id="node3" href="$structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="22,5,107,31"/>
-</map>

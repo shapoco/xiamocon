@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['primitive3dclass_0',['Primitive3DClass',['../classxmc_1_1Primitive3DClass.html',1,'xmc']]]
+  ['node3dclass_0',['Node3DClass',['../classxmc_1_1Node3DClass.html',1,'xmc']]]
 ];

@@ -1,7 +1,8 @@
 <map id="xmc::Sprite4444Class" name="xmc::Sprite4444Class">
-<area shape="rect" id="node1" title=" " alt="" coords="5,344,168,369"/>
-<area shape="rect" id="node2" href="$classxmc_1_1SpriteClass.html" title=" " alt="" coords="21,269,152,295"/>
-<area shape="rect" id="node3" href="$structxmc_1_1TextState.html" title=" " alt="" coords="27,181,146,207"/>
-<area shape="rect" id="node4" href="$structGFXfont.html" title="Data stored for FONT AS A WHOLE." alt="" coords="49,93,124,119"/>
-<area shape="rect" id="node5" href="$structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="44,5,129,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="20,344,183,369"/>
+<area shape="rect" id="node2" href="$classxmc_1_1SpriteClass.html" title=" " alt="" coords="36,269,167,295"/>
+<area shape="rect" id="node3" href="$structxmc_1_1GraphicsState2D.html" title=" " alt="" coords="18,181,185,207"/>
+<area shape="rect" id="node4" href="$structGFXfont.html" title="Data stored for FONT AS A WHOLE." alt="" coords="11,93,85,119"/>
+<area shape="rect" id="node5" href="$structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="5,5,91,31"/>
+<area shape="rect" id="node6" href="$structxmc_1_1Rect.html" title=" " alt="" coords="110,93,197,119"/>
 </map>

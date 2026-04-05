@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Xiamocon: cpp/library/include/xmc/gfx/colorf.hpp Source File</title>
+<title>Xiamocon: cpp/library/include/xmc/gfx2d/colorf.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('colorf_8hpp_source.html',''); initResi
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XMC_GFX_COLORF_HPP</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XMC_GFX_COLORF_HPP</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;xmc/gfx/gfx_common.hpp&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;xmc/gfx2d/gfx_common.hpp&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>xmc {</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('colorf_8hpp_source.html',''); initResi
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      b = 0;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (b &gt; 31)</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>      b = 31;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> rgb565(r, g, b);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> pack565(r, g, b);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  }</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1colorf.html">colorf</a> operator+(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1colorf.html">colorf</a> &amp;other)<span class="keyword"> const </span>{</div>
@@ -196,13 +196,13 @@ $(document).ready(function(){initNavTree('colorf_8hpp_source.html',''); initResi
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="astructxmc_1_1colorf_html"><div class="ttname"><a href="structxmc_1_1colorf.html">xmc::colorf</a></div><div class="ttdef"><b>Definition:</b> colorf.hpp:8</div></div>
-<div class="ttc" id="aunionxmc_1_1color4444_html"><div class="ttname"><a href="unionxmc_1_1color4444.html">xmc::color4444</a></div><div class="ttdef"><b>Definition:</b> gfx_common.hpp:41</div></div>
+<div class="ttc" id="aunionxmc_1_1color4444_html"><div class="ttname"><a href="unionxmc_1_1color4444.html">xmc::color4444</a></div><div class="ttdef"><b>Definition:</b> gfx_common.hpp:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_e048eec7d1e763bfddf1d1355dfb8d1e.html">library</a></li><li class="navelem"><a class="el" href="dir_7f01bd199e72e3abf68e2c83e47127c4.html">include</a></li><li class="navelem"><a class="el" href="dir_34901e8a2955b2f307fb8f90642cf41b.html">xmc</a></li><li class="navelem"><a class="el" href="dir_2b4173ff96fb319b01e30349c3fe4ceb.html">gfx</a></li><li class="navelem"><b>colorf.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_df511e5bd85cec96854b39d5e1c27aa8.html">cpp</a></li><li class="navelem"><a class="el" href="dir_e048eec7d1e763bfddf1d1355dfb8d1e.html">library</a></li><li class="navelem"><a class="el" href="dir_7f01bd199e72e3abf68e2c83e47127c4.html">include</a></li><li class="navelem"><a class="el" href="dir_34901e8a2955b2f307fb8f90642cf41b.html">xmc</a></li><li class="navelem"><a class="el" href="dir_7add5fa5939f7335f3b967907ab68098.html">gfx2d</a></li><li class="navelem"><b>colorf.hpp</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

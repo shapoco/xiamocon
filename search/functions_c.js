@@ -1,21 +1,10 @@
 var searchData=
 [
-  ['service_0',['service',['../speaker_8hpp.html#a950a5ba94b477ea254e848f63aa37b0e',1,'xmc::speaker::service()'],['../input_8hpp.html#a5511fee4015fdb8eb96f61df0d05c76d',1,'xmc::input::service()'],['../power_8hpp.html#a623f74ada510be45555e240ddbddc901',1,'xmc::power::service()'],['../classxmc_1_1audio_1_1StreamingDac.html#ae017097d46db3ff0f5bc289ce3dd2fcd',1,'xmc::audio::StreamingDac::service()']]],
-  ['setdir_1',['setDir',['../ioex_8hpp.html#abcd6af06b7122fb2f8c3fa82033a1f7c',1,'xmc::ioex::setDir()'],['../gpio_8hpp.html#af8a1b4a85ccec4c7cf945f60a7fcb7d4',1,'xmc::gpio::setDir()']]],
-  ['setdirmasked_2',['setDirMasked',['../ioex_8hpp.html#a9c73eef4aeee9c10c5ce9ebbb9a0af49',1,'xmc::ioex']]],
-  ['setdutycycle_3',['setDutyCycle',['../classxmc_1_1pwm_1_1Driver.html#aea0fa36bb0207d88555d9d3377ba4dbf',1,'xmc::pwm::Driver']]],
-  ['setenvelope_4',['setEnvelope',['../classxmc_1_1audio_1_1Tone.html#ad7a299883c1e43d72a69fc905a96b19b',1,'xmc::audio::Tone']]],
-  ['setmuted_5',['setMuted',['../speaker_8hpp.html#af3cb568359d4d57efd1b1cb1de37ab05',1,'xmc::speaker']]],
-  ['setpullup_6',['setPullup',['../gpio_8hpp.html#a8195f908cc85ec20b8f55cf781360547',1,'xmc::gpio']]],
-  ['setsource_7',['setSource',['../classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595',1,'xmc::audio::Mixer::setSource()'],['../classxmc_1_1audio_1_1StreamingDac.html#a286c1ceacc1d1f622311b101348a4bdc',1,'xmc::audio::StreamingDac::setSource()']]],
-  ['setsourceport_8',['setSourcePort',['../speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f',1,'xmc::speaker']]],
-  ['setsweep_9',['setSweep',['../classxmc_1_1audio_1_1Tone.html#a8ac9a4dc5bdad021a0f2e0f4145ac82f',1,'xmc::audio::Tone']]],
-  ['setvelocity_10',['setVelocity',['../classxmc_1_1audio_1_1Tone.html#a5c9e6b7cbae199ac65649d8e19232535',1,'xmc::audio::Tone']]],
-  ['setwaveform_11',['setWaveform',['../classxmc_1_1audio_1_1Tone.html#af184f108f69742a59ab4189b35a22ae3',1,'xmc::audio::Tone']]],
-  ['sleepms_12',['sleepMs',['../timer_8hpp.html#ad63e2b2b612ad2787c058fe51c372ad1',1,'xmc']]],
-  ['sleepus_13',['sleepUs',['../timer_8hpp.html#ab237f8ae51a29255274aaf7bbab7cc86',1,'xmc']]],
-  ['start_14',['start',['../classxmc_1_1audio_1_1StreamingDac.html#a4e6a1c016668045a005c2b7126d52c7f',1,'xmc::audio::StreamingDac::start()'],['../classxmc_1_1pwm_1_1Driver.html#aecde815b22e011d78a84ca13fcf5a26d',1,'xmc::pwm::Driver::start()']]],
-  ['startms_15',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
-  ['stop_16',['stop',['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()'],['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()']]],
-  ['stride444_17',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]]
+  ['read_0',['read',['../classxmc_1_1fs_1_1File.html#a0b691cb07f2d0c6d36d1396cadfba323',1,'xmc::fs::File::read()'],['../gpio_8hpp.html#ab304c03428869f55f1da059811bd44f3',1,'xmc::gpio::read()'],['../ioex_8hpp.html#a39e16b40f3acb590481242c4b3177bc7',1,'xmc::ioex::read(Pin pin, bool *value)']]],
+  ['readall_1',['readAll',['../ioex_8hpp.html#af07ff39e2d0b543a010b76997922a587',1,'xmc::ioex']]],
+  ['readmasked_2',['readMasked',['../ioex_8hpp.html#a43673d54af51d89d61c4fd72cb4c5590',1,'xmc::ioex']]],
+  ['render_3',['render',['../classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b',1,'xmc::audio::Mixer::render()'],['../classxmc_1_1audio_1_1Tone.html#a4ce4f2b69fe4bad4676393f985eb32c0',1,'xmc::audio::Tone::render()']]],
+  ['reset_4',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],
+  ['right_5',['right',['../structxmc_1_1Rect.html#a671571b9966b8631c0dafc612a6bce50',1,'xmc::Rect']]],
+  ['rotate_6',['rotate',['../structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89',1,'xmc::quat']]]
 ];

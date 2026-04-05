@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['x_0',['x',['../structxmc_1_1rect__t.html#aaecab155e77dcb4c2e3045f3e32e73e6',1,'xmc::rect_t']]],
+  ['x_0',['x',['../structxmc_1_1Rect.html#ab3a31895d00f45bfbb1bba04d8d3b093',1,'xmc::Rect']]],
   ['x_1',['X',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a02129bb861061d1a052c592e2dc6b383',1,'xmc::input']]],
   ['xadvance_2',['xAdvance',['../structGFXglyph.html#a9b191040252aa9b5362087d65366bbf2',1,'GFXglyph']]],
   ['xmc_5fram_5fcap_5fdma_3',['XMC_RAM_CAP_DMA',['../ram_8hpp.html#ae2bc93d918ac72dcd824d285f24f6c21a06ac0eb79a21660d84ac5e2bf7e1c382',1,'ram.hpp']]],

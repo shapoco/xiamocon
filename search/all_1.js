@@ -5,7 +5,7 @@ var searchData=
   ['battery_2ehpp_2',['battery.hpp',['../battery_8hpp.html',1,'']]],
   ['bitmap_3',['bitmap',['../structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7',1,'GFXfont']]],
   ['bitmapoffset_4',['bitmapOffset',['../structGFXglyph.html#a24d52036821c10af52a742a1d7fbd9b8',1,'GFXglyph']]],
-  ['bottom_5',['bottom',['../structxmc_1_1rect__t.html#af82f4fd8c39143e9dc6b2b3eb5c2b85b',1,'xmc::rect_t']]],
+  ['bottom_5',['bottom',['../structxmc_1_1Rect.html#a1606eaf869de2b254b473052330e8c80',1,'xmc::Rect']]],
   ['btn_5fa_6',['BTN_A',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6ac3544ae7e377e3f38079ad275c0372d9',1,'xmc::ioex']]],
   ['btn_5fb_7',['BTN_B',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a09b31cfd48eb623d80a45d15ca759056',1,'xmc::ioex']]],
   ['btn_5fdown_8',['BTN_DOWN',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6a89edd405c4eda9ddd6aff7b3af1786c0',1,'xmc::ioex']]],

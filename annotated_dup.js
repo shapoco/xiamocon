@@ -9,8 +9,15 @@ var annotated_dup =
         [ "StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", "classxmc_1_1audio_1_1StreamingDac" ],
         [ "Tone", "classxmc_1_1audio_1_1Tone.html", "classxmc_1_1audio_1_1Tone" ]
       ] ],
+      [ "diagnostic", null, [
+        [ "App", "classxmc_1_1diagnostic_1_1App.html", null ]
+      ] ],
       [ "dma", null, [
         [ "Config", "structxmc_1_1dma_1_1Config.html", "structxmc_1_1dma_1_1Config" ]
+      ] ],
+      [ "fs", null, [
+        [ "File", "classxmc_1_1fs_1_1File.html", "classxmc_1_1fs_1_1File" ],
+        [ "FileInfo", "structxmc_1_1fs_1_1FileInfo.html", "structxmc_1_1fs_1_1FileInfo" ]
       ] ],
       [ "pwm", null, [
         [ "Config", "structxmc_1_1pwm_1_1Config.html", null ],
@@ -23,6 +30,11 @@ var annotated_dup =
       [ "color4444", "unionxmc_1_1color4444.html", null ],
       [ "color4p12", "structxmc_1_1color4p12.html", null ],
       [ "colorf", "structxmc_1_1colorf.html", null ],
+      [ "GlyphMetrics", "structxmc_1_1GlyphMetrics.html", null ],
+      [ "GlyphRenderer", "classxmc_1_1GlyphRenderer.html", null ],
+      [ "GlyphRendererAgfx", "classxmc_1_1GlyphRendererAgfx.html", null ],
+      [ "Graphics2DClass", "classxmc_1_1Graphics2DClass.html", null ],
+      [ "GraphicsState2D", "structxmc_1_1GraphicsState2D.html", null ],
       [ "mat4", "structxmc_1_1mat4.html", "structxmc_1_1mat4" ],
       [ "Material3DClass", "classxmc_1_1Material3DClass.html", null ],
       [ "MatrixStackEntry", "structxmc_1_1MatrixStackEntry.html", null ],
@@ -31,7 +43,11 @@ var annotated_dup =
       [ "Primitive3DClass", "classxmc_1_1Primitive3DClass.html", null ],
       [ "quat", "structxmc_1_1quat.html", "structxmc_1_1quat" ],
       [ "RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
-      [ "rect_t", "structxmc_1_1rect__t.html", "structxmc_1_1rect__t" ],
+      [ "RasterScan444", "classxmc_1_1RasterScan444.html", null ],
+      [ "RasterScan4444", "classxmc_1_1RasterScan4444.html", null ],
+      [ "RasterScan565", "classxmc_1_1RasterScan565.html", null ],
+      [ "RasterScanGray1", "classxmc_1_1RasterScanGray1.html", null ],
+      [ "Rect", "structxmc_1_1Rect.html", "structxmc_1_1Rect" ],
       [ "RepeatingTimer", "classxmc_1_1RepeatingTimer.html", "classxmc_1_1RepeatingTimer" ],
       [ "ScanLineCounter", "structxmc_1_1ScanLineCounter.html", null ],
       [ "Scanner444", "structxmc_1_1Scanner444.html", null ],
@@ -42,7 +58,7 @@ var annotated_dup =
       [ "Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
       [ "Sprite565Class", "classxmc_1_1Sprite565Class.html", null ],
       [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
-      [ "TextState", "structxmc_1_1TextState.html", null ],
+      [ "TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],

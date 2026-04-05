@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['identity_0',['identity',['../structxmc_1_1mat4.html#a33289a39a5e9005e7be0ab5786652406',1,'xmc::mat4']]],
-  ['init_1',['init',['../classxmc_1_1audio_1_1Tone.html#a7e66c370e2fa668c06ff459e4babb199',1,'xmc::audio::Tone::init()'],['../power_8hpp.html#a179c622ee944c851fd5827be67f883b0',1,'xmc::power::init()'],['../input_8hpp.html#a96ecd3a6e8ed1f536c747755d9f1e66a',1,'xmc::input::init()'],['../ioex_8hpp.html#a85258116c21e98fd08152f83cc7fa276',1,'xmc::ioex::init()'],['../speaker_8hpp.html#a791629d3f4ac2fcfb0f84475359efc03',1,'xmc::speaker::init()']]],
-  ['intersect_2',['intersect',['../structxmc_1_1rect__t.html#afb15b2978146f70403786463056675fb',1,'xmc::rect_t']]],
-  ['ispressed_3',['isPressed',['../input_8hpp.html#ae5277a8e09ce745a21307eeecc9a28b1',1,'xmc::input']]]
+  ['getoutputport_0',['getOutputPort',['../classxmc_1_1audio_1_1Mixer.html#a8a0929f66cc9a08a31e0e7854446fc04',1,'xmc::audio::Mixer::getOutputPort()'],['../classxmc_1_1audio_1_1Tone.html#a6046d95b1b5af9f5046bb08c348211db',1,'xmc::audio::Tone::getOutputPort()']]],
+  ['getstate_1',['getState',['../input_8hpp.html#a9576b8802b332182319c61d7c61e5f55',1,'xmc::input']]],
+  ['gettimems_2',['getTimeMs',['../timer_8hpp.html#a0b9d342b2c8dfdce5ded686858fb6463',1,'xmc']]],
+  ['gettimeus_3',['getTimeUs',['../timer_8hpp.html#aa3d0e79285a00f1939fbc5b1760f80ed',1,'xmc']]]
 ];

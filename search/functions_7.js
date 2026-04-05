@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['mixer_0',['Mixer',['../classxmc_1_1audio_1_1Mixer.html#a32ec28eb0c6cdd4495489db328c3c95f',1,'xmc::audio::Mixer']]],
-  ['mute_1',['mute',['../classxmc_1_1audio_1_1Tone.html#a283801b8fe29eeb5cbab913920a291ca',1,'xmc::audio::Tone']]]
+  ['length_0',['length',['../structxmc_1_1vec2.html#a1dd8d34c5d5e732d3d459b6b0ba66b9c',1,'xmc::vec2::length()'],['../structxmc_1_1vec3.html#a08ecfd2da87526012c93a433649eb072',1,'xmc::vec3::length()']]],
+  ['loadidentity_1',['loadIdentity',['../structxmc_1_1mat4.html#abdd46b120b89674f6343ce6502b3e4a9',1,'xmc::mat4']]]
 ];

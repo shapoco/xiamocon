@@ -8,5 +8,10 @@ var searchData=
   ['gfxfont_5',['GFXfont',['../structGFXfont.html',1,'']]],
   ['gfxglyph_6',['GFXglyph',['../structGFXglyph.html',1,'']]],
   ['glyph_7',['glyph',['../structGFXfont.html#af63d88fa053c9a634e86eab7c96db290',1,'GFXfont']]],
-  ['gpio_2ehpp_8',['gpio.hpp',['../gpio_8hpp.html',1,'']]]
+  ['glyphmetrics_8',['GlyphMetrics',['../structxmc_1_1GlyphMetrics.html',1,'xmc']]],
+  ['glyphrenderer_9',['GlyphRenderer',['../classxmc_1_1GlyphRenderer.html',1,'xmc']]],
+  ['glyphrendereragfx_10',['GlyphRendererAgfx',['../classxmc_1_1GlyphRendererAgfx.html',1,'xmc']]],
+  ['gpio_2ehpp_11',['gpio.hpp',['../gpio_8hpp.html',1,'']]],
+  ['graphics2dclass_12',['Graphics2DClass',['../classxmc_1_1Graphics2DClass.html',1,'xmc']]],
+  ['graphicsstate2d_13',['GraphicsState2D',['../structxmc_1_1GraphicsState2D.html',1,'xmc']]]
 ];

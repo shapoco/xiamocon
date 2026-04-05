@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['waspressed_0',['wasPressed',['../input_8hpp.html#a8e14b2d52b9d2d3fb7748ab190c0ef2d',1,'xmc::input']]],
-  ['wasreleased_1',['wasReleased',['../input_8hpp.html#aecba0b9ff14745d24f4539bf6408ad9e',1,'xmc::input']]],
-  ['write_2',['write',['../gpio_8hpp.html#a417c9ca51ad277e33fade1686a023fdc',1,'xmc::gpio::write()'],['../ioex_8hpp.html#a334ae4147772d83f268e7a5a0aad3359',1,'xmc::ioex::write(Pin pin, bool value)']]],
-  ['writemasked_3',['writeMasked',['../ioex_8hpp.html#a471dccb186c728f270b70db4597eb58b',1,'xmc::ioex']]]
+  ['toeuler_0',['toEuler',['../structxmc_1_1quat.html#ac7a8e6ccaa5f685bfd80ccc48ae4f485',1,'xmc::quat']]],
+  ['transform_1',['transform',['../structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10',1,'xmc::mat4']]],
+  ['truncate_2',['truncate',['../classxmc_1_1fs_1_1File.html#a88a3927b1d93dbf60e4ca06a2452040d',1,'xmc::fs::File']]],
+  ['tryreadall_3',['tryReadAll',['../ioex_8hpp.html#ac93c2070feda2bf52825abaf2eab7756',1,'xmc::ioex']]]
 ];
