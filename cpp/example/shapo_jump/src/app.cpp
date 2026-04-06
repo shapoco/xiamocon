@@ -2,7 +2,7 @@
 
 #include "bmp_back_data.h"
 #include "bmp_chara_data.h"
-#include "bmp_miku_data.h"
+#include "bmp_shapo_data.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -30,7 +30,7 @@ struct SpriteFrame {
   int offsetX, offsetY;
 };
 
-enum class MikuState {
+enum class ShapoState {
   RUN,
   JUMP,
   LAND,
@@ -78,7 +78,7 @@ int backIndex = 0;
 
 Sprite bmpChara = createSprite4444(256, 256, 0, (void *)bmp_chara_data);
 Sprite bmpBack = createSprite4444(256, 256, 0, (void *)bmp_back_data);
-Sprite bmpMiku = createSprite4444(256, 256, 0, (void *)bmp_miku_data);
+Sprite bmpShapo = createSprite4444(256, 256, 0, (void *)bmp_shapo_data);
 uint64_t nextVsyncTimeUs = 0;
 
 uint64_t lastMs = 0;
@@ -87,16 +87,16 @@ int groundY = 200;
 float level = 1;
 float speed = 3.0f;
 
-float mikuX = 64;
-float mikuY = groundY;
-float mikuVX = 0;
-float mikuVY = 0;
-bool mikuJumpingUp = false;
-int mikuAnimeIndex = 0;
-uint64_t mikuStateChangeTimeMs = 0;
-uint64_t mikuLastDamageTimeMs = 0;
-MikuState mikuState = MikuState::RUN;
-int mikuLife = 3;
+float shapoX = 64;
+float shapoY = groundY;
+float shapoVX = 0;
+float shapoVY = 0;
+bool shapoJumpingUp = false;
+int shapoAnimeIndex = 0;
+uint64_t shapoStateChangeTimeMs = 0;
+uint64_t shapoLastDamageTimeMs = 0;
+ShapoState shapoState = ShapoState::RUN;
+int shapoLife = 3;
 
 Enemy enemies[NUM_MAX_ENEMIES];
 uint64_t lastEnemySpawnTimeMs = 0;
@@ -110,27 +110,27 @@ CloudSprite cloudSprites[MAX_CLOUD_SPRITES];
 int numCloudSprites = 0;
 float cloudOffset = 0;
 
-SpriteFrame mikuAnimeRun[] = {
+SpriteFrame shapoAnimeRun[] = {
     {0 * 64, 0 * 64, 64, 64, -48, -64}, {1 * 64, 0 * 64, 64, 64, -48, -64},
     {2 * 64, 0 * 64, 64, 64, -48, -64}, {0 * 64, 1 * 64, 64, 64, -48, -64},
     {1 * 64, 1 * 64, 64, 64, -48, -64}, {2 * 64, 1 * 64, 64, 64, -48, -64},
 };
 
-SpriteFrame mikuAnimeJumpUp[] = {
+SpriteFrame shapoAnimeJumpUp[] = {
     {0 * 64, 2 * 64, 64, 64, -48, -64},
     {1 * 64, 2 * 64, 64, 64, -48, -64},
 };
-SpriteFrame mikuAnimeJumpTop[] = {
+SpriteFrame shapoAnimeJumpTop[] = {
     {3 * 64, 0 * 64, 64, 64, -48, -64},
 };
-SpriteFrame mikuAnimeJumpDown[] = {
+SpriteFrame shapoAnimeJumpDown[] = {
     {2 * 64, 2 * 64, 64, 64, -48, -64},
     {3 * 64, 2 * 64, 64, 64, -48, -64},
 };
-SpriteFrame mikuAnimeLand[] = {
+SpriteFrame shapoAnimeLand[] = {
     {3 * 64, 1 * 64, 64, 64, -48, -64},
 };
-SpriteFrame mikuAnimeDamage[] = {
+SpriteFrame shapoAnimeDamage[] = {
     {0 * 64, 3 * 64, 64, 64, -48, -60},
 };
 
@@ -144,8 +144,8 @@ static void updateScene();
 static void updateEnemies();
 static void updateCloud();
 static void updateWeeds(WeedArray &weedArray, float speedCoeff);
-static void updateMiku(uint64_t nowMs);
-static void mikuJump();
+static void updateShapo(uint64_t nowMs);
+static void shapoJump();
 
 static void renderScene(Graphics2D &gfx);
 static void renderEnemies(Graphics2D &gfx);
@@ -287,12 +287,12 @@ static void generateCloudRecursive(int i0, int i1) {
 static void updateScene() {
   uint64_t nowMs = getTimeMs();
 
-  if (mikuState != MikuState::GAME_OVER) {
+  if (shapoState != ShapoState::GAME_OVER) {
     level += 0.001f;
   }
   speed = 1.0f + level;
 
-  updateMiku(nowMs);
+  updateShapo(nowMs);
   updateCloud();
   updateWeeds(weedArrayBack, 0.8f);
   updateWeeds(weedArrayFront, 1.2f);
@@ -313,53 +313,53 @@ static void updateWeeds(WeedArray &weedArray, float speedCoeff) {
   }
 }
 
-static void updateMiku(uint64_t nowMs) {
-  MikuState lastState = mikuState;
+static void updateShapo(uint64_t nowMs) {
+  ShapoState lastState = shapoState;
 
-  if (mikuState == MikuState::GAME_OVER) {
+  if (shapoState == ShapoState::GAME_OVER) {
     return;
   }
 
-  uint64_t elapsedFromDamage = nowMs - mikuLastDamageTimeMs;
+  uint64_t elapsedFromDamage = nowMs - shapoLastDamageTimeMs;
 
   int num_anime_frames = 1;
-  switch (mikuState) {
+  switch (shapoState) {
     default:
-    case MikuState::RUN:
-      mikuX += (64 - mikuX) * 0.05f;
-      mikuY = groundY;
+    case ShapoState::RUN:
+      shapoX += (64 - shapoX) * 0.05f;
+      shapoY = groundY;
       lastMs = nowMs;
       num_anime_frames = 6;
       if (wasPressed(Button::A) && elapsedFromDamage > DAMAGING_MS) {
-        mikuJump();
+        shapoJump();
       }
       break;
-    case MikuState::JUMP:
-      if (mikuJumpingUp && isPressed(Button::A)) {
-        mikuVY += 0.15f;
+    case ShapoState::JUMP:
+      if (shapoJumpingUp && isPressed(Button::A)) {
+        shapoVY += 0.15f;
       } else {
-        mikuVY += 0.6f;
-        mikuJumpingUp = false;
+        shapoVY += 0.6f;
+        shapoJumpingUp = false;
       }
-      mikuX += mikuVX;
-      mikuY += mikuVY;
+      shapoX += shapoVX;
+      shapoY += shapoVY;
       num_anime_frames = 2;
-      if (mikuY >= groundY) {
-        mikuY = groundY;
-        mikuVY = 0;
-        mikuState = MikuState::LAND;
-        mikuAnimeIndex = 0;
+      if (shapoY >= groundY) {
+        shapoY = groundY;
+        shapoVY = 0;
+        shapoState = ShapoState::LAND;
+        shapoAnimeIndex = 0;
         tones[(int)Sound::LAND].noteOn(52, 1);
       }
       break;
-    case MikuState::LAND:
-      mikuVX -= speed / 2;
-      if (mikuVX < -1) mikuVX = -1;
-      mikuX += mikuVX;
+    case ShapoState::LAND:
+      shapoVX -= speed / 2;
+      if (shapoVX < -1) shapoVX = -1;
+      shapoX += shapoVX;
       if (wasPressed(Button::A)) {
-        mikuJump();
-      } else if (nowMs >= mikuStateChangeTimeMs + 100) {
-        mikuState = MikuState::RUN;
+        shapoJump();
+      } else if (nowMs >= shapoStateChangeTimeMs + 100) {
+        shapoState = ShapoState::RUN;
       }
       break;
   }
@@ -368,7 +368,7 @@ static void updateMiku(uint64_t nowMs) {
     for (int i = 0; i < NUM_MAX_ENEMIES; i++) {
       Enemy &e = enemies[i];
       if (!e.active) continue;
-      Rect mikuRect = {(int)(mikuX - 8), (int)(mikuY - 48), 16, 32};
+      Rect shapoRect = {(int)(shapoX - 8), (int)(shapoY - 48), 16, 32};
       Rect enemyRect;
       switch (e.type) {
         default:
@@ -383,12 +383,12 @@ static void updateMiku(uint64_t nowMs) {
       }
       enemyRect.x = e.x - enemyRect.width / 2;
       enemyRect.y = e.y - enemyRect.height;
-      Rect intersection = mikuRect.intersect(enemyRect);
+      Rect intersection = shapoRect.intersect(enemyRect);
       if (intersection.width > 0 && intersection.height > 0) {
-        if (mikuLife > 0) {
-          mikuLife--;
+        if (shapoLife > 0) {
+          shapoLife--;
         }
-        mikuLastDamageTimeMs = nowMs;
+        shapoLastDamageTimeMs = nowMs;
         tones[(int)Sound::DAMAGE_NOISE].noteOn(48, 200);
         tones[(int)Sound::DAMAGE_PULSE].noteOn(112, 200);
         break;
@@ -396,20 +396,20 @@ static void updateMiku(uint64_t nowMs) {
     }
   }
 
-  if (mikuState != lastState) {
-    mikuAnimeIndex = 0;
-    mikuStateChangeTimeMs = nowMs;
+  if (shapoState != lastState) {
+    shapoAnimeIndex = 0;
+    shapoStateChangeTimeMs = nowMs;
   }
 
-  int last_anime_index = mikuAnimeIndex;
-  mikuAnimeIndex = ((nowMs - mikuStateChangeTimeMs) / 100) % num_anime_frames;
-  if (mikuState == MikuState::RUN && mikuAnimeIndex != last_anime_index &&
-      mikuAnimeIndex % 3 == 1) {
+  int last_anime_index = shapoAnimeIndex;
+  shapoAnimeIndex = ((nowMs - shapoStateChangeTimeMs) / 100) % num_anime_frames;
+  if (shapoState == ShapoState::RUN && shapoAnimeIndex != last_anime_index &&
+      shapoAnimeIndex % 3 == 1) {
     tones[(int)Sound::STEP].noteOn(32, 1);
   }
 
-  if (mikuLife <= 0 && elapsedFromDamage > DAMAGING_MS) {
-    mikuState = MikuState::GAME_OVER;
+  if (shapoLife <= 0 && elapsedFromDamage > DAMAGING_MS) {
+    shapoState = ShapoState::GAME_OVER;
     tones[(int)Sound::GAME_OVER].noteOn(64, 1000);
   }
 }
@@ -449,12 +449,12 @@ static void updateEnemies() {
   }
 }
 
-static void mikuJump() {
-  mikuVY = -5.0f;
-  mikuVX = 0.5f;
-  mikuState = MikuState::JUMP;
-  mikuJumpingUp = true;
-  mikuAnimeIndex = 0;
+static void shapoJump() {
+  shapoVY = -5.0f;
+  shapoVX = 0.5f;
+  shapoState = ShapoState::JUMP;
+  shapoJumpingUp = true;
+  shapoAnimeIndex = 0;
   tones[(int)Sound::JUMP].noteOn(76, 1);
 }
 
@@ -484,28 +484,28 @@ static void renderScene(Graphics2D &gfx) {
   // enemies
   renderEnemies(gfx);
 
-  // miku
-  SpriteFrame *mikuFrame = nullptr;
-  switch (mikuState) {
-    case MikuState::RUN: mikuFrame = &mikuAnimeRun[mikuAnimeIndex]; break;
-    case MikuState::JUMP:
-      if (mikuVY < -3.0f) {
-        mikuFrame = &mikuAnimeJumpUp[mikuAnimeIndex];
-      } else if (mikuVY > 3.0f) {
-        mikuFrame = &mikuAnimeJumpDown[mikuAnimeIndex];
+  // shapo
+  SpriteFrame *shapoFrame = nullptr;
+  switch (shapoState) {
+    case ShapoState::RUN: shapoFrame = &shapoAnimeRun[shapoAnimeIndex]; break;
+    case ShapoState::JUMP:
+      if (shapoVY < -2.0f) {
+        shapoFrame = &shapoAnimeJumpUp[shapoAnimeIndex];
+      } else if (shapoVY > 2.0f) {
+        shapoFrame = &shapoAnimeJumpDown[shapoAnimeIndex];
       } else {
-        mikuFrame = &mikuAnimeJumpTop[0];
+        shapoFrame = &shapoAnimeJumpTop[0];
       }
       break;
-    case MikuState::LAND: mikuFrame = &mikuAnimeLand[0]; break;
-    default: mikuFrame = nullptr; break;
+    case ShapoState::LAND: shapoFrame = &shapoAnimeLand[0]; break;
+    default: shapoFrame = nullptr; break;
   }
-  uint64_t elapsedFromDamage = nowMs - mikuLastDamageTimeMs;
+  uint64_t elapsedFromDamage = nowMs - shapoLastDamageTimeMs;
   if (elapsedFromDamage < DAMAGING_MS) {
-    mikuFrame = &mikuAnimeDamage[0];
+    shapoFrame = &shapoAnimeDamage[0];
   }
-  if (mikuFrame && (elapsedFromDamage >= INVICIBILITY_MS || nowMs % 128 < 64)) {
-    renderSpriteFrame(gfx, bmpMiku, *mikuFrame, mikuX, mikuY);
+  if (shapoFrame && (elapsedFromDamage >= INVICIBILITY_MS || nowMs % 128 < 64)) {
+    renderSpriteFrame(gfx, bmpShapo, *shapoFrame, shapoX, shapoY);
   }
 
   // weeds (foreground)
@@ -594,10 +594,10 @@ static void renderSpriteFrame(Graphics2D &gfx, const Sprite &bmp,
 }
 
 static void renderStatus(Graphics2D &gfx) {
-  for (int i = 0; i < mikuLife; i++) {
+  for (int i = 0; i < shapoLife; i++) {
     gfx->drawImage(bmpChara, 4 + i * 16, 12, 16, 16, 0, 48);
   }
-  if (mikuState == MikuState::GAME_OVER) {
+  if (shapoState == ShapoState::GAME_OVER) {
     int w = 128;
     int h = 16;
     gfx->drawImage(bmpBack, (display::WIDTH - w) / 2, (display::HEIGHT - h) / 2,
