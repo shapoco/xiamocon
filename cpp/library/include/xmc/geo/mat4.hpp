@@ -131,27 +131,15 @@ struct mat4 {
     float wx = q.w * q.x;
     float wy = q.w * q.y;
     float wz = q.w * q.z;
-
-    result.m[0] = 1 - 2 * (yy + zz);
-    result.m[1] = 2 * (xy + wz);
-    result.m[2] = 2 * (xz - wy);
-    result.m[3] = 0;
-
-    result.m[4] = 2 * (xy - wz);
-    result.m[5] = 1 - 2 * (xx + zz);
-    result.m[6] = 2 * (yz + wx);
-    result.m[7] = 0;
-
-    result.m[8] = 2 * (xz + wy);
-    result.m[9] = 2 * (yz - wx);
-    result.m[10] = 1 - 2 * (xx + yy);
-    result.m[11] = 0;
-
-    result.m[12] = 0;
-    result.m[13] = 0;
-    result.m[14] = 0;
-    result.m[15] = 1;
-
+    result.m[0] = 1.0f - (yy + zz) * 2;
+    result.m[1] = (xy + wz) * 2;
+    result.m[2] = (xz - wy) * 2;
+    result.m[4] = (xy - wz) * 2;
+    result.m[5] = 1.0f - (xx + zz) * 2;
+    result.m[6] = (yz + wx) * 2;
+    result.m[8] = (xz + wy) * 2;
+    result.m[9] = (yz - wx) * 2;
+    result.m[10] = 1.0f - (xx + yy) * 2;
     return result;
   }
 
@@ -189,8 +177,8 @@ struct mat4 {
 
   void rotate(const quat &q) { *this = fromQuat(q) * (*this); }
 
-  void rotate(float pitch, float roll, float yaw) {
-    rotate(quat::fromEuler(pitch, roll, yaw));
+  void rotate(float pitch, float yaw, float roll) {
+    rotate(quat::fromEuler(pitch, yaw, roll));
   }
 
   void rotate(const vec3 &axis, float angle) {

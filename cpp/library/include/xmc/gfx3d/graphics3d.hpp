@@ -194,8 +194,8 @@ class RasterizerClass {
 
   inline void rotate(const quat &q) { dirtyModelMatrix().rotate(q); }
 
-  inline void rotate(float pitch, float roll, float yaw) {
-    dirtyModelMatrix().rotate(pitch, roll, yaw);
+  inline void rotate(float pitch, float yaw, float roll) {
+    dirtyModelMatrix().rotate(pitch, yaw, roll);
   }
 
   inline void rotate(const vec3 &axis, float angle) {

@@ -2,9 +2,8 @@
 
 #include <stdio.h>
 
-#include "bmp_earth.hpp"
+#include "bmp_earth_surface.hpp"
 #include "lsm6dsv16x.hpp"
-#include "r_gray1.hpp"
 #include "xmc/font/ShapoSansP_s08c07.h"
 
 #define DOUBLE_BUFFER (1)
@@ -26,13 +25,11 @@ int backIndex = 0;
 const int backIndex = 0;
 #endif
 
-static Mesh3D cube = createColoredCube();
-static Mesh3D sphere = createSphere(1.0f, 18, 9);
-static Sprite earth_texture =
-    createSprite4444(256, 128, 0, (void *)bmp_earth_data);
-static Mesh3D r_gray1 = R_GRAY1_mesh0_create();
-static Graphics3D rasterizer =
-    createRasterizer(display::WIDTH, display::HEIGHT);
+static Mesh3D earth = createSphere(1.0f, 18, 9);
+static Sprite earthSurface =
+    createSprite4444(256, 128, 0, (void *)bmp_earth_surface);
+static Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
+
 static uint64_t lastImuUpdateUs = 0;
 
 static void updateImuPosition(quat *p, float *imu_values, float dt);
@@ -53,9 +50,9 @@ AppConfig appGetConfig() {
 void appSetup() {
   imu.init();
   imuPos = {1, 0, 0, 0};
-  Material3D earthMat = createMaterial3D();
-  earthMat->colorTexture = earth_texture;
-  sphere->setMaterial(earthMat);
+  Material3D earthMaterial = createMaterial3D();
+  earthMaterial->colorTexture = earthSurface;
+  earth->setMaterial(earthMaterial);
 }
 
 void appLoop() {
@@ -124,26 +121,25 @@ static void renderScene() {
 
   mat4 proj;
   vec3 eye_pos = {0, 0.1f, 0.15f};
-  createProjectionMatrix(&proj, &imuPos, &eye_pos, 0.03f, 0.03f,
-                         display::WIDTH, display::HEIGHT);
-  rasterizer->setTarget(screen);
-  rasterizer->clearDepth();
-  rasterizer->setDepthRange(-1.0f, 1.0f);
+  createProjectionMatrix(&proj, &imuPos, &eye_pos, 0.03f, 0.03f, display::WIDTH,
+                         display::HEIGHT);
+  g3d->setTarget(screen);
+  g3d->clearDepth();
+  g3d->setDepthRange(-1.0f, 1.0f);
 
-  vec3 light_dir = {0, 0.5f, 1.0f};
+  vec3 light_dir = {1, 0, 0};
   light_dir = imuPos.conjugate().rotate(light_dir);
-  rasterizer->setParallelLight(light_dir, colorf(2.0f, 2.0f, 2.0f, 1));
+  g3d->setParallelLight(light_dir, colorf(2.0f, 2.0f, 2.0f, 1));
 
-  rasterizer->setScreenMatrix(mat4::identity());
-  rasterizer->setProjection(proj);
-  rasterizer->loadIdentity();
+  g3d->setScreenMatrix(mat4::identity());
+  g3d->setProjection(proj);
+  g3d->loadIdentity();
 
-  rasterizer->pushMatrix();
-  rasterizer->scale(0.002f);
-  rasterizer->rotate(0, M_PI / 2, 0);
-  rasterizer->rotate(pitch, 0, yaw);
-  rasterizer->renderMesh(r_gray1);
-  rasterizer->popMatrix();
+  g3d->pushMatrix();
+  g3d->scale(0.01f);
+  g3d->rotate(pitch, yaw, 0);
+  g3d->renderMesh(earth);
+  g3d->popMatrix();
 }
 
 static void updateImuPosition(quat *p, float *imu_values, float dt) {

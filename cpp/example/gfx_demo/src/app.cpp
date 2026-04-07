@@ -40,7 +40,7 @@ struct WeedInstance {
 };
 WeedInstance weedArray[NUM_WEEDS];
 
-Graphics3D rasterizer = createRasterizer(display::WIDTH, display::HEIGHT);
+Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
 
 float eyeYaw = 0;
 float eyePitch = 0;
@@ -128,13 +128,13 @@ void renderScene() {
   screen->clear(0x0000);
   // screen->clear(rgb565(0, 32, 31));
 
-  rasterizer->setTarget(screen);
-  rasterizer->clearDepth();
+  g3d->setTarget(screen);
+  g3d->clearDepth();
   // rasterizer->setDepthRange(-1.0f, 1.0f);
 
-  rasterizer->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
-  rasterizer->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
-  rasterizer->setPerspectiveProjection(
+  g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
+  g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
+  g3d->setPerspectiveProjection(
       M_PI / 4, (float)screen->width / screen->height, 0.01f, 100.0f);
   // rasterizer->setOrthoProjection(-1, 1, -1, 1);
   //    rasterizer->setParallelLight(vec3(0.5f, 0.5f, 1.0f),
@@ -144,21 +144,21 @@ void renderScene() {
   vec3 eye = focus + vec3(eyeDistance * sinf(eyeYaw) * cosf(eyePitch),
                           eyeDistance * sinf(eyePitch),
                           eyeDistance * cosf(eyeYaw) * cosf(eyePitch));
-  rasterizer->lookAt(eye, focus, vec3(0, 1, 0));
+  g3d->lookAt(eye, focus, vec3(0, 1, 0));
 
-  rasterizer->loadIdentity();
+  g3d->loadIdentity();
   // rasterizer->pushMatrix();
   //  rasterizer->scale(10);
   //  rasterizer->rotate(0, M_PI / 2, 0);
 
   // rasterizer->renderMesh(cube);
-  rasterizer->renderScene(tulip);
+  g3d->renderScene(tulip);
 
   for (int i = 0; i < NUM_WEEDS; i++) {
     weedPoses->data[0] = weedArray[i].pos - weedArray[i].rot;
     weedPoses->data[1] = weedArray[i].pos + weedArray[i].rot;
     weedPoses->data[2] = weedArray[i].pos + weedArray[i].dir;
-    rasterizer->renderMesh(weed);
+    g3d->renderMesh(weed);
   }
   // rasterizer->popMatrix();
 }

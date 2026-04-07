@@ -27,30 +27,30 @@ struct quat {
   }
 
   /**
-   * @brief Create a quaternion from Euler angles (pitch, roll, yaw)
+   * @brief Create a quaternion from Euler angles (pitch, yaw, roll)
    * @param pitch Rotation around the x-axis in radians
-   * @param roll Rotation around the y-axis in radians
-   * @param yaw Rotation around the z-axis in radians
+   * @param yaw Rotation around the y-axis in radians
+   * @param roll Rotation around the z-axis in radians
    * @return A quaternion representing the combined rotation
    */
-  static quat fromEuler(float pitch, float roll, float yaw) {
-    float cy = cosf(yaw * 0.5f);
-    float sy = sinf(yaw * 0.5f);
+  static quat fromEuler(float pitch, float yaw, float roll) {
     float cp = cosf(pitch * 0.5f);
     float sp = sinf(pitch * 0.5f);
+    float cy = cosf(yaw * 0.5f);
+    float sy = sinf(yaw * 0.5f);
     float cr = cosf(roll * 0.5f);
     float sr = sinf(roll * 0.5f);
-    return quat(cy * cp * cr + sy * sp * sr, cy * cp * sr - sy * sp * cr,
-                cy * sp * cr + sy * cp * sr, sy * cp * cr - cy * sp * sr);
+    return quat(cr * cy * cp + sr * sy * sp, cr * cy * sp - sr * sy * cp,
+                cr * sy * cp + sr * cy * sp, sr * cy * cp - cr * sy * sp);
   }
 
   /**
-   * @brief Convert the quaternion to Euler angles (pitch, roll, yaw)
+   * @brief Convert the quaternion to Euler angles (pitch, yaw, roll)
    * @param pitch Output parameter for rotation around the x-axis in radians
-   * @param roll Output parameter for rotation around the y-axis in radians
-   * @param yaw Output parameter for rotation around the z-axis in radians
+   * @param yaw Output parameter for rotation around the y-axis in radians
+   * @param roll Output parameter for rotation around the z-axis in radians
    */
-  void toEuler(float *pitch, float *roll, float *yaw) const {
+  void toEuler(float *pitch, float *yaw, float *roll) const {
     // pitch (x-axis rotation)
     float sinp = 2.0f * (w * x + y * z);
     if (fabsf(sinp) >= 1.0f) {
@@ -59,22 +59,23 @@ struct quat {
       *pitch = asinf(sinp);
     }
 
-    // roll (y-axis rotation)
-    float sinrCosp = 2.0f * (w * y - z * x);
-    float cosrCosp = 1.0f - 2.0f * (x * x + y * y);
-    *roll = atan2f(sinrCosp, cosrCosp);
-
-    // yaw (z-axis rotation)
-    float sinyCosp = 2.0f * (w * z + x * y);
-    float cosyCosp = 1.0f - 2.0f * (y * y + z * z);
+    // yaw (y-axis rotation)
+    float sinyCosp = 2.0f * (w * y - z * x);
+    float cosyCosp = 1.0f - 2.0f * (x * x + y * y);
     *yaw = atan2f(sinyCosp, cosyCosp);
+
+    // roll (z-axis rotation)
+    float sinrCosp = 2.0f * (w * z - x * y);
+    float cosrCosp = 1.0f - 2.0f * (y * y + z * z);
+    *roll = atan2f(sinrCosp, cosrCosp);
   }
 
   /**
    * @brief Create a quaternion from an axis-angle representation
    * @param axis The axis of rotation (should be normalized)
    * @param angle The angle of rotation in radians
-   * @return A quaternion representing the rotation around the given axis by the specified angle
+   * @return A quaternion representing the rotation around the given axis by the
+   * specified angle
    */
   static quat fromAxisAngle(const vec3 &axis, float angle) {
     float half = angle * 0.5f;
@@ -99,7 +100,8 @@ struct quat {
   quat conjugate() const { return quat(w, -x, -y, -z); }
 
   /**
-   * @return a normalized version of the quaternion (unit quaternion representing the same rotation)
+   * @return a normalized version of the quaternion (unit quaternion
+   * representing the same rotation)
    */
   quat normalized() const {
     float len = sqrtf(w * w + x * x + y * y + z * z);
