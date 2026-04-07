@@ -290,8 +290,8 @@ $(document).ready(function(){initNavTree('graphics3d_8hpp_source.html',''); init
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1quat.html">quat</a> &amp;q) { dirtyModelMatrix().rotate(q); }</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> rotate(<span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> roll, <span class="keywordtype">float</span> yaw) {</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    dirtyModelMatrix().rotate(pitch, roll, yaw);</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> rotate(<span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> yaw, <span class="keywordtype">float</span> roll) {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    dirtyModelMatrix().rotate(pitch, yaw, roll);</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>  }</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> &amp;axis, <span class="keywordtype">float</span> angle) {</div>

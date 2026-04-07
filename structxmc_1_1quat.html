@@ -108,9 +108,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab231a29a4ffb4e4ff39fe920ccbe06d1"><td class="memItemLeft" align="right" valign="top"><a id="ab231a29a4ffb4e4ff39fe920ccbe06d1" name="ab231a29a4ffb4e4ff39fe920ccbe06d1"></a>
 <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structxmc_1_1quat.html">quat</a> &amp;other) const</td></tr>
 <tr class="separator:ab231a29a4ffb4e4ff39fe920ccbe06d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#ac7a8e6ccaa5f685bfd80ccc48ae4f485">toEuler</a> (float *pitch, float *roll, float *yaw) const</td></tr>
-<tr class="memdesc:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the quaternion to Euler angles (pitch, roll, yaw)  <br /></td></tr>
-<tr class="separator:ac7a8e6ccaa5f685bfd80ccc48ae4f485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc3fe14fa1ef861413caeb7006fb492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#abbc3fe14fa1ef861413caeb7006fb492">toEuler</a> (float *pitch, float *yaw, float *roll) const</td></tr>
+<tr class="memdesc:abbc3fe14fa1ef861413caeb7006fb492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the quaternion to Euler angles (pitch, yaw, roll)  <br /></td></tr>
+<tr class="separator:abbc3fe14fa1ef861413caeb7006fb492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxmc_1_1vec3.html">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89">rotate</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;v) const</td></tr>
 <tr class="memdesc:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotate a vector by this quaternion.  <br /></td></tr>
 <tr class="separator:a70fcaa61392f2d0b315fd1d6d2b27b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,9 +121,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aac1ed4b1d8da80cb584a79c32da3b682"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#aac1ed4b1d8da80cb584a79c32da3b682">fromEuler</a> (float pitch, float roll, float yaw)</td></tr>
-<tr class="memdesc:aac1ed4b1d8da80cb584a79c32da3b682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from Euler angles (pitch, roll, yaw)  <br /></td></tr>
-<tr class="separator:aac1ed4b1d8da80cb584a79c32da3b682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2a67156e74aab5918c89fe21a455663"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#ac2a67156e74aab5918c89fe21a455663">fromEuler</a> (float pitch, float yaw, float roll)</td></tr>
+<tr class="memdesc:ac2a67156e74aab5918c89fe21a455663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from Euler angles (pitch, yaw, roll)  <br /></td></tr>
+<tr class="separator:ac2a67156e74aab5918c89fe21a455663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab80f364f165c663c656be0550d7096e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxmc_1_1quat.html">quat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">fromAxisAngle</a> (const <a class="el" href="structxmc_1_1vec3.html">vec3</a> &amp;axis, float angle)</td></tr>
 <tr class="memdesc:aab80f364f165c663c656be0550d7096e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a quaternion from an axis-angle representation.  <br /></td></tr>
 <tr class="separator:aab80f364f165c663c656be0550d7096e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,8 +216,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
-<a id="aac1ed4b1d8da80cb584a79c32da3b682" name="aac1ed4b1d8da80cb584a79c32da3b682"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac1ed4b1d8da80cb584a79c32da3b682">&#9670;&#160;</a></span>fromEuler()</h2>
+<a id="ac2a67156e74aab5918c89fe21a455663" name="ac2a67156e74aab5918c89fe21a455663"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2a67156e74aab5918c89fe21a455663">&#9670;&#160;</a></span>fromEuler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,13 +235,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>roll</em>, </td>
+          <td class="paramname"><em>yaw</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>yaw</em>&#160;</td>
+          <td class="paramname"><em>roll</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -256,12 +256,12 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create a quaternion from Euler angles (pitch, roll, yaw) </p>
+<p>Create a quaternion from Euler angles (pitch, yaw, roll) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pitch</td><td>Rotation around the x-axis in radians </td></tr>
-    <tr><td class="paramname">roll</td><td>Rotation around the y-axis in radians </td></tr>
-    <tr><td class="paramname">yaw</td><td>Rotation around the z-axis in radians </td></tr>
+    <tr><td class="paramname">yaw</td><td>Rotation around the y-axis in radians </td></tr>
+    <tr><td class="paramname">roll</td><td>Rotation around the z-axis in radians </td></tr>
   </table>
   </dd>
 </dl>
@@ -330,8 +330,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 
 </div>
 </div>
-<a id="ac7a8e6ccaa5f685bfd80ccc48ae4f485" name="ac7a8e6ccaa5f685bfd80ccc48ae4f485"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7a8e6ccaa5f685bfd80ccc48ae4f485">&#9670;&#160;</a></span>toEuler()</h2>
+<a id="abbc3fe14fa1ef861413caeb7006fb492" name="abbc3fe14fa1ef861413caeb7006fb492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbc3fe14fa1ef861413caeb7006fb492">&#9670;&#160;</a></span>toEuler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,13 +349,13 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>roll</em>, </td>
+          <td class="paramname"><em>yaw</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float *&#160;</td>
-          <td class="paramname"><em>yaw</em>&#160;</td>
+          <td class="paramname"><em>roll</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -370,12 +370,12 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>z</b></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Convert the quaternion to Euler angles (pitch, roll, yaw) </p>
+<p>Convert the quaternion to Euler angles (pitch, yaw, roll) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pitch</td><td>Output parameter for rotation around the x-axis in radians </td></tr>
-    <tr><td class="paramname">roll</td><td>Output parameter for rotation around the y-axis in radians </td></tr>
-    <tr><td class="paramname">yaw</td><td>Output parameter for rotation around the z-axis in radians </td></tr>
+    <tr><td class="paramname">yaw</td><td>Output parameter for rotation around the y-axis in radians </td></tr>
+    <tr><td class="paramname">roll</td><td>Output parameter for rotation around the z-axis in radians </td></tr>
   </table>
   </dd>
 </dl>

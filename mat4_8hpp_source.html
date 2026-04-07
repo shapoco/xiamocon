@@ -193,104 +193,92 @@ $(document).ready(function(){initNavTree('mat4_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordtype">float</span> wx = q.w * q.x;</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="keywordtype">float</span> wy = q.w * q.y;</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordtype">float</span> wz = q.w * q.z;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    result.m[0] = 1 - 2 * (yy + zz);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    result.m[1] = 2 * (xy + wz);</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    result.m[2] = 2 * (xz - wy);</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    result.m[3] = 0;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    result.m[4] = 2 * (xy - wz);</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    result.m[5] = 1 - 2 * (xx + zz);</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    result.m[6] = 2 * (yz + wx);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    result.m[7] = 0;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    result.m[8] = 2 * (xz + wy);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    result.m[9] = 2 * (yz - wx);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    result.m[10] = 1 - 2 * (xx + yy);</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    result.m[11] = 0;</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    result.m[12] = 0;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    result.m[13] = 0;</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    result.m[14] = 0;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    result.m[15] = 1;</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  }</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">  165</a></span>  XMC_INLINE <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> <a class="code hl_function" href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">transform</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> &amp;v)<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordtype">float</span> x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">float</span> y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordtype">float</span> z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keywordtype">float</span> w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordtype">float</span> abs_w = fabsf(w);</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordflow">if</span> (abs_w &lt; 1e-6f) {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>      <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a>(0, 0, 0);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    }</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">float</span> inv_w = 1.0f / abs_w;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a>(x * inv_w, y * inv_w, z * inv_w);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    result.m[0] = 1.0f - (yy + zz) * 2;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    result.m[1] = (xy + wz) * 2;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    result.m[2] = (xz - wy) * 2;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    result.m[4] = (xy - wz) * 2;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    result.m[5] = 1.0f - (xx + zz) * 2;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    result.m[6] = (yz + wx) * 2;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    result.m[8] = (xz + wy) * 2;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    result.m[9] = (yz - wx) * 2;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    result.m[10] = 1.0f - (xx + yy) * 2;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">  153</a></span>  XMC_INLINE <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> <a class="code hl_function" href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">transform</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> &amp;v)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordtype">float</span> x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordtype">float</span> y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keywordtype">float</span> z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keywordtype">float</span> w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordtype">float</span> abs_w = fabsf(w);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">if</span> (abs_w &lt; 1e-6f) {</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>      <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a>(0, 0, 0);</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">float</span> inv_w = 1.0f / abs_w;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a>(x * inv_w, y * inv_w, z * inv_w);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  XMC_INLINE <span class="keywordtype">void</span> translate(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> &amp;t) {</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    m[12] += t.x;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    m[13] += t.y;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    m[14] += t.z;</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>  }</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  XMC_INLINE <span class="keywordtype">void</span> translate(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z) {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    m[12] += x;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    m[13] += y;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    m[14] += z;</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  }</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  XMC_INLINE <span class="keywordtype">void</span> translate(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a> &amp;t) {</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    m[12] += t.x;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    m[13] += t.y;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    m[14] += t.z;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> quat &amp;q) { *<span class="keyword">this</span> = <a class="code hl_function" href="structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929">fromQuat</a>(q) * (*this); }</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  <span class="keywordtype">void</span> rotate(<span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> yaw, <span class="keywordtype">float</span> roll) {</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    rotate(<a class="code hl_function" href="structxmc_1_1quat.html#ac2a67156e74aab5918c89fe21a455663">quat::fromEuler</a>(pitch, yaw, roll));</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>  }</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  XMC_INLINE <span class="keywordtype">void</span> translate(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z) {</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    m[12] += x;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    m[13] += y;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    m[14] += z;</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  }</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> quat &amp;q) { *<span class="keyword">this</span> = <a class="code hl_function" href="structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929">fromQuat</a>(q) * (*this); }</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  <span class="keywordtype">void</span> rotate(<span class="keywordtype">float</span> pitch, <span class="keywordtype">float</span> roll, <span class="keywordtype">float</span> yaw) {</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    rotate(<a class="code hl_function" href="structxmc_1_1quat.html#aac1ed4b1d8da80cb584a79c32da3b682">quat::fromEuler</a>(pitch, roll, yaw));</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  }</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>  <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> vec3 &amp;axis, <span class="keywordtype">float</span> angle) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    rotate(<a class="code hl_function" href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">quat::fromAxisAngle</a>(axis, angle));</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>  <span class="keywordtype">void</span> rotate(<span class="keyword">const</span> vec3 &amp;axis, <span class="keywordtype">float</span> angle) {</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    rotate(<a class="code hl_function" href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">quat::fromAxisAngle</a>(axis, angle));</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>  }</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  XMC_INLINE <span class="keywordtype">void</span> scale(<span class="keyword">const</span> vec3 &amp;s) {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    m[0] *= s.x;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    m[5] *= s.y;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    m[10] *= s.z;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  }</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  XMC_INLINE <span class="keywordtype">void</span> scale(<span class="keywordtype">float</span> s) {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    m[0] *= s;</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    m[5] *= s;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    m[10] *= s;</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>  }</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  XMC_INLINE <span class="keywordtype">void</span> scale(<span class="keyword">const</span> vec3 &amp;s) {</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    m[0] *= s.x;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    m[5] *= s.y;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    m[10] *= s.z;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>  }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>  XMC_INLINE <span class="keywordtype">void</span> scale(<span class="keywordtype">float</span> s) {</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    m[0] *= s;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    m[5] *= s;</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    m[10] *= s;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>  }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  <span class="keywordtype">void</span> transpose() {</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordtype">float</span> tmp;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; i++) {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = i + 1; j &lt; 4; j++) {</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        tmp = m[i * 4 + j];</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        m[i * 4 + j] = m[j * 4 + i];</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        m[j * 4 + i] = tmp;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>      }</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>};</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  <span class="keywordtype">void</span> transpose() {</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordtype">float</span> tmp;</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; i++) {</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = i + 1; j &lt; 4; j++) {</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        tmp = m[i * 4 + j];</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        m[i * 4 + j] = m[j * 4 + i];</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        m[j * 4 + i] = tmp;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>      }</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    }</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>};</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>}  <span class="comment">// namespace xmc</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>}  <span class="comment">// namespace xmc</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ageo__common_8hpp_html"><div class="ttname"><a href="geo__common_8hpp.html">geo_common.hpp</a></div><div class="ttdoc">Common geometric utilities.</div></div>
 <div class="ttc" id="aquat_8hpp_html"><div class="ttname"><a href="quat_8hpp.html">quat.hpp</a></div><div class="ttdoc">Quaternion for 3D rotations.</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html"><div class="ttname"><a href="structxmc_1_1mat4.html">xmc::mat4</a></div><div class="ttdef"><b>Definition:</b> mat4.hpp:18</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html_a33289a39a5e9005e7be0ab5786652406"><div class="ttname"><a href="structxmc_1_1mat4.html#a33289a39a5e9005e7be0ab5786652406">xmc::mat4::identity</a></div><div class="ttdeci">static XMC_INLINE mat4 identity()</div><div class="ttdef"><b>Definition:</b> mat4.hpp:24</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html_a60fca9ace684a695700c9d071999f88f"><div class="ttname"><a href="structxmc_1_1mat4.html#a60fca9ace684a695700c9d071999f88f">xmc::mat4::perspective</a></div><div class="ttdeci">static mat4 perspective(float fovY, float aspect, float near, float far)</div><div class="ttdoc">Create a perspective projection matrix.</div><div class="ttdef"><b>Definition:</b> mat4.hpp:81</div></div>
-<div class="ttc" id="astructxmc_1_1mat4_html_a83887b1bba6e40c1182f02ef5af90b10"><div class="ttname"><a href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">xmc::mat4::transform</a></div><div class="ttdeci">XMC_INLINE vec3 transform(const vec3 &amp;v) const</div><div class="ttdoc">Transform a point by this matrix, applying perspective division.</div><div class="ttdef"><b>Definition:</b> mat4.hpp:165</div></div>
+<div class="ttc" id="astructxmc_1_1mat4_html_a83887b1bba6e40c1182f02ef5af90b10"><div class="ttname"><a href="structxmc_1_1mat4.html#a83887b1bba6e40c1182f02ef5af90b10">xmc::mat4::transform</a></div><div class="ttdeci">XMC_INLINE vec3 transform(const vec3 &amp;v) const</div><div class="ttdoc">Transform a point by this matrix, applying perspective division.</div><div class="ttdef"><b>Definition:</b> mat4.hpp:153</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html_abdd46b120b89674f6343ce6502b3e4a9"><div class="ttname"><a href="structxmc_1_1mat4.html#abdd46b120b89674f6343ce6502b3e4a9">xmc::mat4::loadIdentity</a></div><div class="ttdeci">XMC_INLINE void loadIdentity()</div><div class="ttdoc">Load the identity matrix into this matrix After calling this function, this matrix will be an identit...</div><div class="ttdef"><b>Definition:</b> mat4.hpp:116</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html_ae992d70f9207b82c746145316612d929"><div class="ttname"><a href="structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929">xmc::mat4::fromQuat</a></div><div class="ttdeci">static mat4 fromQuat(const quat &amp;q)</div><div class="ttdoc">Create a rotation matrix from a quaternion.</div><div class="ttdef"><b>Definition:</b> mat4.hpp:123</div></div>
 <div class="ttc" id="astructxmc_1_1mat4_html_ae9a4d43994abb898ad9ab132024adefc"><div class="ttname"><a href="structxmc_1_1mat4.html#ae9a4d43994abb898ad9ab132024adefc">xmc::mat4::ortho</a></div><div class="ttdeci">static mat4 ortho(float left, float right, float bottom, float top, float near=-1.0f, float far=1.0f)</div><div class="ttdoc">Create an orthographic projection matrix.</div><div class="ttdef"><b>Definition:</b> mat4.hpp:61</div></div>
 <div class="ttc" id="astructxmc_1_1quat_html"><div class="ttname"><a href="structxmc_1_1quat.html">xmc::quat</a></div><div class="ttdef"><b>Definition:</b> quat.hpp:16</div></div>
-<div class="ttc" id="astructxmc_1_1quat_html_aab80f364f165c663c656be0550d7096e"><div class="ttname"><a href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">xmc::quat::fromAxisAngle</a></div><div class="ttdeci">static quat fromAxisAngle(const vec3 &amp;axis, float angle)</div><div class="ttdoc">Create a quaternion from an axis-angle representation.</div><div class="ttdef"><b>Definition:</b> quat.hpp:79</div></div>
-<div class="ttc" id="astructxmc_1_1quat_html_aac1ed4b1d8da80cb584a79c32da3b682"><div class="ttname"><a href="structxmc_1_1quat.html#aac1ed4b1d8da80cb584a79c32da3b682">xmc::quat::fromEuler</a></div><div class="ttdeci">static quat fromEuler(float pitch, float roll, float yaw)</div><div class="ttdoc">Create a quaternion from Euler angles (pitch, roll, yaw)</div><div class="ttdef"><b>Definition:</b> quat.hpp:36</div></div>
+<div class="ttc" id="astructxmc_1_1quat_html_aab80f364f165c663c656be0550d7096e"><div class="ttname"><a href="structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e">xmc::quat::fromAxisAngle</a></div><div class="ttdeci">static quat fromAxisAngle(const vec3 &amp;axis, float angle)</div><div class="ttdoc">Create a quaternion from an axis-angle representation.</div><div class="ttdef"><b>Definition:</b> quat.hpp:80</div></div>
+<div class="ttc" id="astructxmc_1_1quat_html_ac2a67156e74aab5918c89fe21a455663"><div class="ttname"><a href="structxmc_1_1quat.html#ac2a67156e74aab5918c89fe21a455663">xmc::quat::fromEuler</a></div><div class="ttdeci">static quat fromEuler(float pitch, float yaw, float roll)</div><div class="ttdoc">Create a quaternion from Euler angles (pitch, yaw, roll)</div><div class="ttdef"><b>Definition:</b> quat.hpp:36</div></div>
 <div class="ttc" id="astructxmc_1_1vec3_html"><div class="ttname"><a href="structxmc_1_1vec3.html">xmc::vec3</a></div><div class="ttdef"><b>Definition:</b> vec3.hpp:15</div></div>
 <div class="ttc" id="astructxmc_1_1vec3_html_a01990eaf4a70fba721996c1cfb765056"><div class="ttname"><a href="structxmc_1_1vec3.html#a01990eaf4a70fba721996c1cfb765056">xmc::vec3::dot</a></div><div class="ttdeci">float dot(const vec3 &amp;other) const</div><div class="ttdoc">Calculate the dot product of this vector with another vector.</div><div class="ttdef"><b>Definition:</b> vec3.hpp:74</div></div>
 <div class="ttc" id="astructxmc_1_1vec3_html_a5f53e4a10ad93507f94fd79b55d6bf57"><div class="ttname"><a href="structxmc_1_1vec3.html#a5f53e4a10ad93507f94fd79b55d6bf57">xmc::vec3::normalized</a></div><div class="ttdeci">vec3 normalized() const</div><div class="ttdoc">Normalize the vector (make it unit length)</div><div class="ttdef"><b>Definition:</b> vec3.hpp:98</div></div>
