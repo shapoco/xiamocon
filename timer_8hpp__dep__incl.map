@@ -1,4 +1,5 @@
 <map id="cpp/platform/decl/include/xmc/hw/timer.hpp" name="cpp/platform/decl/include/xmc/hw/timer.hpp">
 <area shape="rect" id="node1" title="Timer hardware interface." alt="" coords="5,5,192,45"/>
-<area shape="rect" id="node2" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="27,93,170,133"/>
+<area shape="rect" id="node2" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="27,181,170,221"/>
+<area shape="rect" id="node3" href="$fps__keeper_8hpp.html" title="Frame rate keeper for synchronizing rendering to a target FPS." alt="" coords="79,93,235,133"/>
 </map>

@@ -30,6 +30,8 @@ var annotated_dup =
       [ "color4444", "unionxmc_1_1color4444.html", null ],
       [ "color4p12", "structxmc_1_1color4p12.html", null ],
       [ "colorf", "structxmc_1_1colorf.html", null ],
+      [ "FpsKeeper", "classxmc_1_1FpsKeeper.html", "classxmc_1_1FpsKeeper" ],
+      [ "FrameBuffer", "classxmc_1_1FrameBuffer.html", "classxmc_1_1FrameBuffer" ],
       [ "GlyphMetrics", "structxmc_1_1GlyphMetrics.html", null ],
       [ "GlyphRenderer", "classxmc_1_1GlyphRenderer.html", null ],
       [ "GlyphRendererAgfx", "classxmc_1_1GlyphRendererAgfx.html", null ],
@@ -59,6 +61,7 @@ var annotated_dup =
       [ "Sprite565Class", "classxmc_1_1Sprite565Class.html", null ],
       [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
       [ "TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
+      [ "TextureArgs", "structxmc_1_1TextureArgs.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ]
     ] ],

@@ -138,6 +138,8 @@ Functions</h2></td></tr>
 <tr class="separator:af3cb568359d4d57efd1b1cb1de37ab05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ababef22fe51309493e11986c1157ef2f"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f">xmc::speaker::setSourcePort</a> (audio::SourcePort *src)</td></tr>
 <tr class="separator:ababef22fe51309493e11986c1157ef2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2fb3f133410fb18a963895fc506d88e"><td class="memItemLeft" align="right" valign="top">audio::StreamFormat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e">xmc::speaker::getStreamFormat</a> (void)</td></tr>
+<tr class="separator:ac2fb3f133410fb18a963895fc506d88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a950a5ba94b477ea254e848f63aa37b0e"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="speaker_8hpp.html#a950a5ba94b477ea254e848f63aa37b0e">xmc::speaker::service</a> (void)</td></tr>
 <tr class="separator:a950a5ba94b477ea254e848f63aa37b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -160,6 +162,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Deinitializes the speaker. This function will free any resources allocated during initialization and reset the speaker hardware to a safe state. </p><dl class="section return"><dt>Returns</dt><dd>XMC_OK on success, or an appropriate error code on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ac2fb3f133410fb18a963895fc506d88e" name="ac2fb3f133410fb18a963895fc506d88e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2fb3f133410fb18a963895fc506d88e">&#9670;&#160;</a></span>getStreamFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">audio::StreamFormat xmc::speaker::getStreamFormat </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the current audio stream format of the speaker. This function will return the audio format that the speaker is currently configured to use. </p><dl class="section return"><dt>Returns</dt><dd>The current audio stream format of the speaker. </dd></dl>
 
 </div>
 </div>

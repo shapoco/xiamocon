@@ -17,6 +17,8 @@ var hierarchy =
     [ "xmc::pwm::Driver", "classxmc_1_1pwm_1_1Driver.html", null ],
     [ "xmc::fs::File", "classxmc_1_1fs_1_1File.html", null ],
     [ "xmc::fs::FileInfo", "structxmc_1_1fs_1_1FileInfo.html", null ],
+    [ "xmc::FpsKeeper", "classxmc_1_1FpsKeeper.html", null ],
+    [ "xmc::FrameBuffer", "classxmc_1_1FrameBuffer.html", null ],
     [ "GFXfont", "structGFXfont.html", null ],
     [ "GFXglyph", "structGFXglyph.html", null ],
     [ "xmc::GlyphMetrics", "structxmc_1_1GlyphMetrics.html", null ],
@@ -55,6 +57,7 @@ var hierarchy =
     [ "xmc::audio::StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
     [ "xmc::audio::StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", null ],
     [ "xmc::TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
+    [ "xmc::TextureArgs", "structxmc_1_1TextureArgs.html", null ],
     [ "xmc::audio::Tone", "classxmc_1_1audio_1_1Tone.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],
     [ "xmc::vec3", "structxmc_1_1vec3.html", null ]

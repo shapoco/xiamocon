@@ -9,5 +9,6 @@ var searchData=
   ['config_6',['Config',['../structxmc_1_1dma_1_1Config.html',1,'xmc::dma::Config'],['../structxmc_1_1pwm_1_1Config.html',1,'xmc::pwm::Config']]],
   ['conjugate_7',['conjugate',['../structxmc_1_1quat.html#aced56cd1f42a10cef5b48806c4919bea',1,'xmc::quat']]],
   ['contains_8',['contains',['../structxmc_1_1Rect.html#a27d66953daf14f26ec2e4ecbc33c696c',1,'xmc::Rect']]],
-  ['cross_9',['cross',['../structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e',1,'xmc::vec2::cross()'],['../structxmc_1_1vec3.html#ad8f508d0cce888aa961f6df7a6dbdc8e',1,'xmc::vec3::cross()']]]
+  ['creategraphics_9',['createGraphics',['../classxmc_1_1FrameBuffer.html#a953ea36cd96b99a78d90454f9f99b001',1,'xmc::FrameBuffer']]],
+  ['cross_10',['cross',['../structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e',1,'xmc::vec2::cross()'],['../structxmc_1_1vec3.html#ad8f508d0cce888aa961f6df7a6dbdc8e',1,'xmc::vec3::cross()']]]
 ];

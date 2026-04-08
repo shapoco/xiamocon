@@ -11,6 +11,7 @@ var dir_34901e8a2955b2f307fb8f90642cf41b =
     [ "battery.hpp", "battery_8hpp.html", null ],
     [ "diagnostic.hpp", "diagnostic_8hpp_source.html", null ],
     [ "display.hpp", "display_8hpp_source.html", null ],
+    [ "fps_keeper.hpp", "fps__keeper_8hpp.html", "fps__keeper_8hpp" ],
     [ "fs.hpp", "fs_8hpp_source.html", null ],
     [ "geo.hpp", "geo_8hpp_source.html", null ],
     [ "gfx.hpp", "gfx_8hpp_source.html", null ],

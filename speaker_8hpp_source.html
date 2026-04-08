@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('speaker_8hpp_source.html',''); initRes
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#a791629d3f4ac2fcfb0f84475359efc03">   35</a></span>XmcStatus init(audio::SampleFormat format, uint32_t rateHz,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                          uint32_t latencySamples, <span class="keywordtype">float</span> *actualRateHz);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>               uint32_t latencySamples, <span class="keywordtype">float</span> *actualRateHz);</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#aeeca184ff0b79137f8c72c33e3ac75e5">   43</a></span>XmcStatus deinit(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
@@ -115,15 +115,19 @@ $(document).ready(function(){initNavTree('speaker_8hpp_source.html',''); initRes
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f">   60</a></span>XmcStatus <a class="code hl_function" href="speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f">setSourcePort</a>(<a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">audio::SourcePort</a> *src);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#a950a5ba94b477ea254e848f63aa37b0e">   70</a></span>XmcStatus service(<span class="keywordtype">void</span>);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}  <span class="comment">// namespace xmc::speaker</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e">   67</a></span><a class="code hl_struct" href="structxmc_1_1audio_1_1StreamFormat.html">audio::StreamFormat</a> <a class="code hl_function" href="speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e">getStreamFormat</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="speaker_8hpp.html#a950a5ba94b477ea254e848f63aa37b0e">   77</a></span>XmcStatus service(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}  <span class="comment">// namespace xmc::speaker</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aspeaker_8hpp_html_a75ef48e1f00a5b831cc519b8728c8f06"><div class="ttname"><a href="speaker_8hpp.html#a75ef48e1f00a5b831cc519b8728c8f06">xmc::speaker::xmc_speakerGetSupportedFormats</a></div><div class="ttdeci">static audio::SampleFormat xmc_speakerGetSupportedFormats(void)</div><div class="ttdef"><b>Definition:</b> speaker.hpp:19</div></div>
 <div class="ttc" id="aspeaker_8hpp_html_ababef22fe51309493e11986c1157ef2f"><div class="ttname"><a href="speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f">xmc::speaker::setSourcePort</a></div><div class="ttdeci">XmcStatus setSourcePort(audio::SourcePort *src)</div></div>
+<div class="ttc" id="aspeaker_8hpp_html_ac2fb3f133410fb18a963895fc506d88e"><div class="ttname"><a href="speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e">xmc::speaker::getStreamFormat</a></div><div class="ttdeci">audio::StreamFormat getStreamFormat(void)</div></div>
 <div class="ttc" id="aspeaker_8hpp_html_af3cb568359d4d57efd1b1cb1de37ab05"><div class="ttname"><a href="speaker_8hpp.html#af3cb568359d4d57efd1b1cb1de37ab05">xmc::speaker::setMuted</a></div><div class="ttdeci">XmcStatus setMuted(bool muted)</div></div>
 <div class="ttc" id="astructxmc_1_1audio_1_1SourcePort_html"><div class="ttname"><a href="structxmc_1_1audio_1_1SourcePort.html">xmc::audio::SourcePort</a></div><div class="ttdef"><b>Definition:</b> audio_common.hpp:52</div></div>
+<div class="ttc" id="astructxmc_1_1audio_1_1StreamFormat_html"><div class="ttname"><a href="structxmc_1_1audio_1_1StreamFormat.html">xmc::audio::StreamFormat</a></div><div class="ttdef"><b>Definition:</b> audio_common.hpp:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

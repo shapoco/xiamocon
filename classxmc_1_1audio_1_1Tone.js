@@ -1,7 +1,7 @@
 var classxmc_1_1audio_1_1Tone =
 [
     [ "getOutputPort", "classxmc_1_1audio_1_1Tone.html#a6046d95b1b5af9f5046bb08c348211db", null ],
-    [ "init", "classxmc_1_1audio_1_1Tone.html#a7e66c370e2fa668c06ff459e4babb199", null ],
+    [ "init", "classxmc_1_1audio_1_1Tone.html#a5b77135e6cfad640f6fa847299af031f", null ],
     [ "mute", "classxmc_1_1audio_1_1Tone.html#a283801b8fe29eeb5cbab913920a291ca", null ],
     [ "noteOff", "classxmc_1_1audio_1_1Tone.html#a22ada38fc1679bb2848f7caf45be0f17", null ],
     [ "noteOn", "classxmc_1_1audio_1_1Tone.html#ac1b704fed1959e8de38e1d7abaa6d476", null ],
