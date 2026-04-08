@@ -10,6 +10,7 @@ class RasterScanGray1 {
   uint8_t *ptr;
   uint8_t mask;
   uint8_t temp;
+  bool changed = false;
   XMC_INLINE RasterScanGray1(uint8_t *data, int x)
       : ptr(data), mask(0x80 >> (x % 8)), temp(data[x / 8]) {}
   XMC_INLINE ~RasterScanGray1() { flush(); }
@@ -22,12 +23,16 @@ class RasterScanGray1 {
   XMC_INLINE void pushGray1(uint8_t value, const TextRenderArgs &args) {
     bool write = false;
     bool set = false;
-    if (value && hasFlag(args.flags, TextRenderFlags::USE_FORE_COLOR)) {
-      write = true;
-      set = !!args.foreColor;
-    } else if (hasFlag(args.flags, TextRenderFlags::USE_BACK_COLOR)) {
-      write = true;
-      set = !!args.backColor;
+    if (value) {
+      if (hasFlag(args.flags, TextRenderFlags::DRAW_FORE)) {
+        write = true;
+        set = !!args.foreColor;
+      }
+    } else {
+      if (hasFlag(args.flags, TextRenderFlags::DRAW_BACK)) {
+        write = true;
+        set = !!args.backColor;
+      }
     }
     if (write) {
       if (set) {
@@ -35,6 +40,7 @@ class RasterScanGray1 {
       } else {
         temp &= ~mask;
       }
+      changed = true;
     }
     skip();
   }
@@ -63,17 +69,26 @@ class RasterScanGray1 {
     }
   }
   XMC_INLINE void skip(int n = 1) {
-    if (mask == 0x01) {
-      *(ptr++) = temp;
-    }
     for (int i = 0; i < n; i++) {
-      mask = (mask >> 1) | ((mask & 1) << 7);
-    }
-    if (mask == 0x80) {
-      temp = *ptr;
+      if (mask == 0x01) {
+        if (changed) {
+          *ptr = temp;
+          changed = false;
+        }
+        ptr++;
+      }
+      mask = ((mask >> 1) & 0x7F) | ((mask & 1) << 7);
+      if (mask == 0x80) {
+        temp = *ptr;
+      }
     }
   }
-  XMC_INLINE void flush() { *ptr = temp; }
+  XMC_INLINE void flush() {
+    if (changed) {
+      *ptr = temp;
+      changed = false;
+    }
+  }
 };
 
 class RasterScan444 {
@@ -96,9 +111,10 @@ class RasterScan444 {
     return value;
   }
   XMC_INLINE void pushGray1(uint8_t value, const TextRenderArgs &args) {
-    if (value && hasFlag(args.flags, TextRenderFlags::USE_FORE_COLOR)) {
+    bool fore = !!value;
+    if (fore && hasFlag(args.flags, TextRenderFlags::DRAW_FORE)) {
       push444(args.foreColor);
-    } else if (hasFlag(args.flags, TextRenderFlags::USE_BACK_COLOR)) {
+    } else if (!fore && hasFlag(args.flags, TextRenderFlags::DRAW_BACK)) {
       push444(args.backColor);
     } else {
       skip();
@@ -137,10 +153,11 @@ class RasterScan565 {
   XMC_INLINE uint16_t peek() const { return *ptr; }
   XMC_INLINE uint16_t pop() { return *ptr++; }
   XMC_INLINE void pushGray1(uint8_t value, const TextRenderArgs &args) {
-    if (value && hasFlag(args.flags, TextRenderFlags::USE_FORE_COLOR)) {
-      *ptr++ = args.foreColor;
-    } else if (hasFlag(args.flags, TextRenderFlags::USE_BACK_COLOR)) {
-      *ptr++ = args.backColor;
+    bool fore = !!value;
+    if (fore && hasFlag(args.flags, TextRenderFlags::DRAW_FORE)) {
+      *(ptr++) = args.foreColor;
+    } else if (!fore && hasFlag(args.flags, TextRenderFlags::DRAW_BACK)) {
+      *(ptr++) = args.backColor;
     } else {
       ptr++;
     }
@@ -154,7 +171,7 @@ class RasterScan565 {
     } else if (a1 == 0) {
       skip();
     } else {
-      push444(blend4444To565(peek(), color));
+      push565(blend4444To565(peek(), color));
     }
   }
   XMC_INLINE void skip(int n = 1) { ptr += n; }
@@ -169,9 +186,10 @@ class RasterScan4444 {
   XMC_INLINE uint16_t peek() const { return *ptr; }
   XMC_INLINE uint16_t pop() { return *ptr++; }
   XMC_INLINE void pushGray1(uint8_t value, const TextRenderArgs &args) {
-    if (value && hasFlag(args.flags, TextRenderFlags::USE_FORE_COLOR)) {
+    bool fore = !!value;
+    if (fore && hasFlag(args.flags, TextRenderFlags::DRAW_FORE)) {
       push4444(args.foreColor);
-    } else if (hasFlag(args.flags, TextRenderFlags::USE_BACK_COLOR)) {
+    } else if (!fore && hasFlag(args.flags, TextRenderFlags::DRAW_BACK)) {
       push4444(args.backColor);
     } else {
       ptr++;

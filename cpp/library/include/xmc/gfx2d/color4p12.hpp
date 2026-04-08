@@ -9,6 +9,7 @@ namespace xmc {
 
 struct color4p12 {
   static constexpr int PRECISION = 12;
+  static constexpr int ONE = 1 << PRECISION;
   fixed4p12 b;
   fixed4p12 g;
   fixed4p12 r;
@@ -23,19 +24,32 @@ struct color4p12 {
         r(fixed4p12::fromFloat(c.r)),
         a(fixed4p12::fromFloat(c.a)) {}
 
+  XMC_INLINE static color4p12 from4444(uint16_t c) {
+    uint16_t a = (c >> 12) & 0xF;
+    uint16_t r = (c >> 8) & 0xF;
+    uint16_t g = (c >> 4) & 0xF;
+    uint16_t b = c & 0xF;
+    color4p12 result;
+    result.a.raw = a * ONE / 15;
+    result.r.raw = r * ONE / 15;
+    result.g.raw = g * ONE / 15;
+    result.b.raw = b * ONE / 15;
+    return result;
+  }
+
   XMC_INLINE uint16_t to565() const {
     uint_fast16_t result = 0;
-    if (r.raw >= (1 << PRECISION)) {
+    if (r.raw >= ONE) {
       result = 0xF800;
     } else if (r.raw >= 0) {
       result = (r.raw << (16 - PRECISION)) & 0xF800;
     }
-    if (g.raw >= (1 << PRECISION)) {
+    if (g.raw >= ONE) {
       result |= 0x07E0;
     } else if (g.raw >= 0) {
       result |= (g.raw >> (PRECISION - 11)) & 0x07E0;
     }
-    if (b.raw >= (1 << PRECISION)) {
+    if (b.raw >= ONE) {
       result |= 0x001F;
     } else if (b.raw >= 0) {
       result |= (b.raw >> (PRECISION - 5)) & 0x001F;
@@ -45,17 +59,42 @@ struct color4p12 {
 
   XMC_INLINE uint16_t to444() const {
     uint_fast16_t result = 0;
-    if (r.raw >= (1 << PRECISION)) {
+    if (r.raw >= ONE) {
       result = 0x0F00;
     } else if (r.raw >= 0) {
       result = r.raw & 0x0F00;
     }
-    if (g.raw >= (1 << PRECISION)) {
+    if (g.raw >= ONE) {
       result |= 0x00F0;
     } else if (g.raw >= 0) {
       result |= (g.raw >> (PRECISION - 8)) & 0x00F0;
     }
-    if (b.raw >= (1 << PRECISION)) {
+    if (b.raw >= ONE) {
+      result |= 0x000F;
+    } else if (b.raw >= 0) {
+      result |= (b.raw >> (PRECISION - 4)) & 0x000F;
+    }
+    return result;
+  }
+
+  XMC_INLINE uint16_t to4444() const {
+    uint_fast16_t result = 0;
+    if (a.raw >= ONE) {
+      result |= 0xF000;
+    } else if (a.raw >= 0) {
+      result |= (a.raw << (16 - PRECISION)) & 0xF000;
+    }
+    if (r.raw >= ONE) {
+      result |= 0x0F00;
+    } else if (r.raw >= 0) {
+      result |= r.raw & 0x0F00;
+    }
+    if (g.raw >= ONE) {
+      result |= 0x00F0;
+    } else if (g.raw >= 0) {
+      result |= (g.raw >> (PRECISION - 8)) & 0x00F0;
+    }
+    if (b.raw >= ONE) {
       result |= 0x000F;
     } else if (b.raw >= 0) {
       result |= (b.raw >> (PRECISION - 4)) & 0x000F;

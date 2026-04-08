@@ -7,5 +7,6 @@
 #include "xmc/gfx2d/sprite4444.hpp"
 #include "xmc/gfx2d/sprite565.hpp"
 #include "xmc/gfx2d/graphics2d.hpp"
+#include "xmc/gfx2d/frame_buffer.hpp"
 
 #endif

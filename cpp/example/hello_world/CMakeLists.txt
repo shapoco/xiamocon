@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(APP_NAME shapo_jump)
+set(APP_NAME hello_world)
 set(APP_INC_DIR ./include)
 set(APP_SRC_DIR ./src)
 

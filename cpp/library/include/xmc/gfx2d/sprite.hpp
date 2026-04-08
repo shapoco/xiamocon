@@ -22,7 +22,9 @@ using Sprite = std::shared_ptr<SpriteClass>;
 struct GraphicsState2D {
   const GFXfont *font = nullptr;
   int fontSize = 1;
-  uint16_t textColor = 0;
+  RawColor textColor = 0;
+  RawColor backColor = 0;
+  TextRenderFlags textFlags = TextRenderFlags::DRAW_FORE;
   int cursorX = 0;
   int cursorY = 0;
   Rect clipRect;
@@ -69,35 +71,31 @@ class SpriteClass {
     return (uint8_t *)data + stride * y;
   }
 
-  __attribute__((deprecated))
-  void setPixel(int x, int y, RawColor color) {
+  __attribute__((deprecated)) void setPixel(int x, int y, RawColor color) {
     if (x < 0 || x >= width || y < 0 || y >= height) return;
     onSetPixel(x, y, color);
   }
 
-  __attribute__((deprecated))
-  RawColor getPixel(int x, int y) const {
+  __attribute__((deprecated)) RawColor getPixel(int x, int y) const {
     if (x < 0 || x >= width || y < 0 || y >= height) return 0;
     return onGetPixel(x, y);
   }
 
-  __attribute__((deprecated))
-  void setFont(const GFXfont *font, int size = 1) {
+  __attribute__((deprecated)) void setFont(const GFXfont *font, int size = 1) {
     textState.font = font;
     textState.fontSize = size;
   }
 
-  __attribute__((deprecated))
-  void setCursor(int x, int y) {
+  __attribute__((deprecated)) void setCursor(int x, int y) {
     textState.cursorX = x;
     textState.cursorY = y;
   }
 
-  __attribute__((deprecated))
-  void setTextColor(RawColor color) { textState.textColor = color; }
+  __attribute__((deprecated)) void setTextColor(RawColor color) {
+    textState.textColor = color;
+  }
 
-  __attribute__((deprecated))
-  void drawString(const char *str) {
+  __attribute__((deprecated)) void drawString(const char *str) {
     if (!textState.font || !str) return;
     int x = textState.cursorX;
     for (const char *p = str; *p; p++) {
@@ -111,19 +109,20 @@ class SpriteClass {
     textState.cursorX = x;
   }
 
-  __attribute__((deprecated))
-  XmcStatus startTransferToDisplay(int dx, int dy) {
+  __attribute__((deprecated)) XmcStatus startTransferToDisplay(int dx, int dy) {
     return onStartTransferToDisplay(dx, dy, 0, height);
   }
 
-  __attribute__((deprecated))
-  XmcStatus completeTransfer() { return display::writePixelsComplete(); }
+  __attribute__((deprecated)) XmcStatus completeTransfer() {
+    return display::writePixelsComplete();
+  }
 
-  __attribute__((deprecated))
-  void clear(RawColor color) { onFillRect(0, 0, width, height, color); }
+  __attribute__((deprecated)) void clear(RawColor color) {
+    onFillRect(0, 0, width, height, color);
+  }
 
-  __attribute__((deprecated))
-  void fillRect(int x, int y, int w, int h, RawColor color) {
+  __attribute__((deprecated)) void fillRect(int x, int y, int w, int h,
+                                            RawColor color) {
     if (w < 0) {
       x += w;
       w = -w;
@@ -137,8 +136,8 @@ class SpriteClass {
     onFillRect(x, y, w, h, color);
   }
 
-  __attribute__((deprecated))
-  void drawRect(int x, int y, int w, int h, RawColor color) {
+  __attribute__((deprecated)) void drawRect(int x, int y, int w, int h,
+                                            RawColor color) {
     if (w < 0) {
       x += w;
       w = -w;
@@ -153,8 +152,8 @@ class SpriteClass {
     fillRect(x + w, y + 1, 1, h - 1, color);
   }
 
-  __attribute__((deprecated))
-  void fillSmokeRect(int x, int y, int w, int h, bool light = false) {
+  __attribute__((deprecated)) void fillSmokeRect(int x, int y, int w, int h,
+                                                 bool light = false) {
     if (w < 0) {
       x += w;
       w = -w;
@@ -168,9 +167,9 @@ class SpriteClass {
     onFillSmokeRect(x, y, w, h, light);
   }
 
-  __attribute__((deprecated))
-  inline void drawImage(const Sprite &image, int dx, int dy, int w, int h,
-                        int sx, int sy) {
+  __attribute__((deprecated)) inline void drawImage(const Sprite &image, int dx,
+                                                    int dy, int w, int h,
+                                                    int sx, int sy) {
     Rect view = {0, 0, width, height};
     Rect dst = {dx, dy, w, h};
     dst = dst.intersect(view);
@@ -232,6 +231,9 @@ class SpriteClass {
     return glyph->xAdvance * textState.fontSize;
   }
 };
+
+XmcStatus startTransferToDisplay(Sprite sprite, int dx, int dy);
+XmcStatus completeTransferToDisplay();
 
 }  // namespace xmc
 

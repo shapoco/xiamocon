@@ -1,14 +1,8 @@
-set(LIB_NAME libxmc)
-set(PFM_DECL_SRC_DIR platform/decl/src)
-set(PFM_DECL_INC_DIR platform/decl/include)
-set(PFM_IMPL_SRC_DIR platform/impl/rp2350_pico_sdk/src)
-set(PFM_IMPL_INC_DIR platform/impl/rp2350_pico_sdk/include)
-set(LIB_SRC_DIR library/src)
-set(LIB_INC_DIR library/include)
-set(LIB_EXT_DIR library/ext)
-
-include(pico_sdk_import.cmake)
-include(pico_extras_import.cmake)
+set(LIB_NAME xmc_pfm)
+set(PFM_DECL_SRC_DIR ../../decl/src)
+set(PFM_DECL_INC_DIR ../../decl/include)
+set(PFM_IMPL_SRC_DIR src)
+set(PFM_IMPL_INC_DIR include)
 
 project(${LIB_NAME} C CXX ASM)
 
@@ -17,12 +11,6 @@ file(GLOB CPP_FILES
     ${PFM_DECL_SRC_DIR}/*.c
     ${PFM_IMPL_SRC_DIR}/*.cpp
     ${PFM_IMPL_SRC_DIR}/*.c
-    ${LIB_SRC_DIR}/*.cpp
-    ${LIB_SRC_DIR}/*.c
-    ${LIB_SRC_DIR}/**/*.cpp
-    ${LIB_SRC_DIR}/**/*.c
-    ${LIB_EXT_DIR}/**/*.cpp
-    ${LIB_EXT_DIR}/**/*.c
 )
 
 add_library(${LIB_NAME} STATIC
@@ -35,9 +23,6 @@ target_compile_features(${LIB_NAME} PUBLIC cxx_std_17)
 target_include_directories(${LIB_NAME} PUBLIC
     ${PFM_DECL_INC_DIR}
     ${PFM_IMPL_INC_DIR}
-    ${LIB_INC_DIR}
-    ${LIB_EXT_DIR}/fatfs
-    ${LIB_EXT_DIR}/tjpgd
 )
 
 target_link_libraries(

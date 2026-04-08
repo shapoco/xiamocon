@@ -1,10 +1,4 @@
-#include "xmc/app.hpp"
-#include "xmc/audio.hpp"
-#include "xmc/display.hpp"
-#include "xmc/gfx.hpp"
-#include "xmc/hw/timer.hpp"
-#include "xmc/input.hpp"
-#include "xmc/speaker.hpp"
+#include <xiamocon.hpp>
 
 #include <math.h>
 #include <stdint.h>
@@ -16,7 +10,6 @@ using namespace xmc::audio;
 
 constexpr int SCREEN_W = display::WIDTH;
 constexpr int SCREEN_H = display::HEIGHT;
-constexpr uint32_t SAMPLE_RATE_HZ = 22050;
 constexpr int NUM_TONES = 4;
 
 constexpr int PADDLE_W = 44;
@@ -35,17 +28,13 @@ constexpr int BRICK_H = 10;
 constexpr int BRICK_W =
     (SCREEN_W - BRICK_MARGIN_X * 2 - BRICK_GAP * (BRICK_COLS - 1)) / BRICK_COLS;
 
-constexpr uint16_t rgb444(int r, int g, int b) {
-  return static_cast<uint16_t>(((r & 0xF) << 8) | ((g & 0xF) << 4) | (b & 0xF));
-}
-
-constexpr uint16_t COLOR_BG = rgb444(0, 0, 0);
-constexpr uint16_t COLOR_WALL = rgb444(1, 1, 2);
-constexpr uint16_t COLOR_PADDLE = rgb444(2, 15, 15);
-constexpr uint16_t COLOR_BALL = rgb444(15, 15, 15);
-constexpr uint16_t COLOR_SERVE = rgb444(15, 15, 0);
-constexpr uint16_t COLOR_CLEAR = rgb444(0, 10, 0);
-constexpr uint16_t COLOR_GAME_OVER = rgb444(10, 0, 0);
+constexpr uint16_t COLOR_BG = pack444(0, 0, 0);
+constexpr uint16_t COLOR_WALL = pack444(1, 1, 2);
+constexpr uint16_t COLOR_PADDLE = pack444(2, 15, 15);
+constexpr uint16_t COLOR_BALL = pack444(15, 15, 15);
+constexpr uint16_t COLOR_SERVE = pack444(15, 15, 0);
+constexpr uint16_t COLOR_CLEAR = pack444(0, 10, 0);
+constexpr uint16_t COLOR_GAME_OVER = pack444(10, 0, 0);
 
 struct Brick {
   int x;
@@ -61,29 +50,31 @@ enum class GameState {
   GameOver,
 };
 
-Sprite screen = xmc::createSprite444(SCREEN_W, SCREEN_H);
+FrameBuffer frameBuffer(PixelFormat::RGB444, true);
+FpsKeeper fpsKeeper(60.0f);
+
 Brick bricks[BRICK_ROWS][BRICK_COLS];
 Mixer mixer(NUM_TONES);
 Tone tones[NUM_TONES];
 
-GameState game_state = GameState::Serve;
-int next_tone_index = 0;
+GameState gameState = GameState::Serve;
+int nextToneIndex = 0;
 
-int paddle_x = (SCREEN_W - PADDLE_W) / 2;
+int paddleX = (SCREEN_W - PADDLE_W) / 2;
 
-float ball_x = 0.0f;
-float ball_y = 0.0f;
-float ball_vx = 0.0f;
-float ball_vy = 0.0f;
+float ballX = 0.0f;
+float ballY = 0.0f;
+float ballVX = 0.0f;
+float ballVY = 0.0f;
 
-int bricks_left = 0;
+int bricksLeft = 0;
 
-void play_tone(uint8_t note, uint32_t lenMs, audio::Waveform waveform,
-               uint8_t velocity, uint16_t attackMs, uint16_t decayMs,
-               uint16_t sustain, uint16_t releaseMs, int32_t sweep_delta,
-               uint32_t sweepPeriodMs) {
-  audio::Tone &tone = tones[next_tone_index];
-  next_tone_index = (next_tone_index + 1) % NUM_TONES;
+void playTone(uint8_t note, uint32_t lenMs, audio::Waveform waveform,
+              uint8_t velocity, uint16_t attackMs, uint16_t decayMs,
+              uint16_t sustain, uint16_t releaseMs, int32_t sweep_delta,
+              uint32_t sweepPeriodMs) {
+  audio::Tone &tone = tones[nextToneIndex];
+  nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
 
   tone.setWaveform(waveform);
   tone.setVelocity(velocity);
@@ -92,50 +83,50 @@ void play_tone(uint8_t note, uint32_t lenMs, audio::Waveform waveform,
   tone.noteOn(note, lenMs);
 }
 
-void sfx_launch() {
-  play_tone(76, 90, Waveform::SQUARE, 96, 0, 60, 140, 40, 2800, 7);
+void sfxLaunch() {
+  playTone(76, 90, Waveform::SQUARE, 96, 0, 60, 140, 40, 2800, 7);
 }
 
-void sfx_wall_bounce() {
-  play_tone(82, 28, Waveform::SQUARE, 72, 0, 24, 96, 18, 0, 10);
+void sfxWallBounce() {
+  playTone(82, 28, Waveform::SQUARE, 72, 0, 24, 96, 18, 0, 10);
 }
 
-void sfx_paddle_bounce() {
-  play_tone(62, 45, Waveform::TRIANGLE, 86, 0, 30, 120, 24, 900, 8);
+void sfxPaddleBounce() {
+  playTone(62, 45, Waveform::TRIANGLE, 86, 0, 30, 120, 24, 900, 8);
 }
 
-void sfx_brick_break() {
-  play_tone(72, 55, Waveform::SQUARE, 88, 0, 40, 96, 28, -1700, 10);
+void sfxBrickBreak() {
+  playTone(72, 55, Waveform::SQUARE, 88, 0, 40, 96, 28, -1700, 10);
 }
 
-void sfx_clear() {
-  play_tone(76, 130, Waveform::TRIANGLE, 104, 0, 80, 160, 40, 2200, 9);
-  play_tone(83, 150, Waveform::SINE, 90, 0, 100, 140, 50, 1100, 12);
+void sfxClear() {
+  playTone(76, 130, Waveform::TRIANGLE, 104, 0, 80, 160, 40, 2200, 9);
+  playTone(83, 150, Waveform::SINE, 90, 0, 100, 140, 50, 1100, 12);
 }
 
-void sfx_game_over() {
-  play_tone(45, 180, Waveform::SAWTOOTH, 92, 0, 120, 110, 70, -2400, 12);
+void sfxGameOver() {
+  playTone(45, 180, Waveform::SAWTOOTH, 92, 0, 120, 110, 70, -2400, 12);
 }
 
-bool intersects_rect(int ax, int ay, int aw, int ah, int bx, int by, int bw,
-                     int bh) {
+bool intersectsRect(int ax, int ay, int aw, int ah, int bx, int by, int bw,
+                    int bh) {
   return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
 
-void reset_ball_on_paddle() {
-  ball_x = static_cast<float>(paddle_x + PADDLE_W / 2 - BALL_SIZE / 2);
-  ball_y = static_cast<float>(PADDLE_Y - BALL_SIZE - 1);
-  ball_vx = 0.0f;
-  ball_vy = 0.0f;
+void resetBallOnPaddle() {
+  ballX = static_cast<float>(paddleX + PADDLE_W / 2 - BALL_SIZE / 2);
+  ballY = static_cast<float>(PADDLE_Y - BALL_SIZE - 1);
+  ballVX = 0.0f;
+  ballVY = 0.0f;
 }
 
-void build_stage() {
+void buildStage() {
   static constexpr uint16_t row_colors[BRICK_ROWS] = {
-      rgb444(15, 4, 4), rgb444(15, 8, 2),  rgb444(15, 12, 2),
-      rgb444(6, 15, 4), rgb444(4, 10, 15), rgb444(10, 6, 15),
+      pack444(15, 4, 4), pack444(15, 8, 2),  pack444(15, 12, 2),
+      pack444(6, 15, 4), pack444(4, 10, 15), pack444(10, 6, 15),
   };
 
-  bricks_left = BRICK_ROWS * BRICK_COLS;
+  bricksLeft = BRICK_ROWS * BRICK_COLS;
   for (int row = 0; row < BRICK_ROWS; ++row) {
     for (int col = 0; col < BRICK_COLS; ++col) {
       Brick &brick = bricks[row][col];
@@ -147,14 +138,14 @@ void build_stage() {
   }
 }
 
-void reset_game() {
-  paddle_x = (SCREEN_W - PADDLE_W) / 2;
-  build_stage();
-  reset_ball_on_paddle();
-  game_state = GameState::Serve;
+void resetGame() {
+  paddleX = (SCREEN_W - PADDLE_W) / 2;
+  buildStage();
+  resetBallOnPaddle();
+  gameState = GameState::Serve;
 }
 
-void launch_ball(input::Button buttons) {
+void launchBall(input::Button buttons) {
   float dir = 0.0f;
   if (hasFlag(buttons, input::Button::LEFT)) {
     dir = -1.0f;
@@ -162,75 +153,74 @@ void launch_ball(input::Button buttons) {
   if (hasFlag(buttons, input::Button::RIGHT)) {
     dir = 1.0f;
   }
-  ball_vx = dir * 1.4f;
-  ball_vy = -2.2f;
-  game_state = GameState::Playing;
-  sfx_launch();
+  ballVX = dir * 1.4f;
+  ballVY = -2.2f;
+  gameState = GameState::Playing;
+  sfxLaunch();
 }
 
-void move_paddle(input::Button buttons) {
+void movePaddle(input::Button buttons) {
   if (hasFlag(buttons, input::Button::LEFT)) {
-    paddle_x -= PADDLE_SPEED;
+    paddleX -= PADDLE_SPEED;
   }
   if (hasFlag(buttons, input::Button::RIGHT)) {
-    paddle_x += PADDLE_SPEED;
+    paddleX += PADDLE_SPEED;
   }
-  if (paddle_x < 0) {
-    paddle_x = 0;
+  if (paddleX < 0) {
+    paddleX = 0;
   }
-  if (paddle_x > SCREEN_W - PADDLE_W) {
-    paddle_x = SCREEN_W - PADDLE_W;
+  if (paddleX > SCREEN_W - PADDLE_W) {
+    paddleX = SCREEN_W - PADDLE_W;
   }
 }
 
-void update_ball() {
-  const float prev_x = ball_x;
-  const float prev_y = ball_y;
+void updateBall() {
+  const float prev_x = ballX;
+  const float prev_y = ballY;
 
-  ball_x += ball_vx;
-  ball_y += ball_vy;
+  ballX += ballVX;
+  ballY += ballVY;
 
-  if (ball_x < 0.0f) {
-    ball_x = 0.0f;
-    ball_vx = fabsf(ball_vx);
-    sfx_wall_bounce();
-  } else if (ball_x + BALL_SIZE > SCREEN_W) {
-    ball_x = static_cast<float>(SCREEN_W - BALL_SIZE);
-    ball_vx = -fabsf(ball_vx);
-    sfx_wall_bounce();
+  if (ballX < 0.0f) {
+    ballX = 0.0f;
+    ballVX = fabsf(ballVX);
+    sfxWallBounce();
+  } else if (ballX + BALL_SIZE > SCREEN_W) {
+    ballX = static_cast<float>(SCREEN_W - BALL_SIZE);
+    ballVX = -fabsf(ballVX);
+    sfxWallBounce();
   }
 
-  if (ball_y < 0.0f) {
-    ball_y = 0.0f;
-    ball_vy = fabsf(ball_vy);
-    sfx_wall_bounce();
+  if (ballY < 0.0f) {
+    ballY = 0.0f;
+    ballVY = fabsf(ballVY);
+    sfxWallBounce();
   }
 
-  if (ball_y > SCREEN_H) {
-    game_state = GameState::GameOver;
-    sfx_game_over();
+  if (ballY > SCREEN_H) {
+    gameState = GameState::GameOver;
+    sfxGameOver();
     return;
   }
 
-  const int bi_x = static_cast<int>(ball_x);
-  const int bi_y = static_cast<int>(ball_y);
+  const int biX = static_cast<int>(ballX);
+  const int biY = static_cast<int>(ballY);
 
-  if (ball_vy > 0.0f &&
-      intersects_rect(bi_x, bi_y, BALL_SIZE, BALL_SIZE, paddle_x, PADDLE_Y,
-                      PADDLE_W, PADDLE_H)) {
-    ball_y = static_cast<float>(PADDLE_Y - BALL_SIZE - 1);
+  if (ballVY > 0.0f && intersectsRect(biX, biY, BALL_SIZE, BALL_SIZE, paddleX,
+                                      PADDLE_Y, PADDLE_W, PADDLE_H)) {
+    ballY = static_cast<float>(PADDLE_Y - BALL_SIZE - 1);
     const float hit =
-        ((ball_x + BALL_SIZE * 0.5f) - (paddle_x + PADDLE_W * 0.5f)) /
+        ((ballX + BALL_SIZE * 0.5f) - (paddleX + PADDLE_W * 0.5f)) /
         (PADDLE_W * 0.5f);
-    ball_vx = hit * 2.4f;
-    ball_vy = -fabsf(ball_vy);
-    const float speed = sqrtf(ball_vx * ball_vx + ball_vy * ball_vy);
+    ballVX = hit * 2.4f;
+    ballVY = -fabsf(ballVY);
+    const float speed = sqrtf(ballVX * ballVX + ballVY * ballVY);
     if (speed < 3.2f) {
       const float scale = 3.2f / speed;
-      ball_vx *= scale;
-      ball_vy *= scale;
+      ballVX *= scale;
+      ballVY *= scale;
     }
-    sfx_paddle_bounce();
+    sfxPaddleBounce();
   }
 
   for (int row = 0; row < BRICK_ROWS; ++row) {
@@ -239,14 +229,14 @@ void update_ball() {
       if (!brick.alive) {
         continue;
       }
-      if (!intersects_rect(bi_x, bi_y, BALL_SIZE, BALL_SIZE, brick.x, brick.y,
-                           BRICK_W, BRICK_H)) {
+      if (!intersectsRect(biX, biY, BALL_SIZE, BALL_SIZE, brick.x, brick.y,
+                          BRICK_W, BRICK_H)) {
         continue;
       }
 
       brick.alive = false;
-      --bricks_left;
-      sfx_brick_break();
+      --bricksLeft;
+      sfxBrickBreak();
 
       const float prev_right = prev_x + BALL_SIZE;
       const float prev_bottom = prev_y + BALL_SIZE;
@@ -256,27 +246,27 @@ void update_ball() {
       const bool from_bottom = prev_y >= brick.y + BRICK_H;
 
       if (from_left || from_right) {
-        ball_vx = -ball_vx;
+        ballVX = -ballVX;
       } else if (from_top || from_bottom) {
-        ball_vy = -ball_vy;
+        ballVY = -ballVY;
       } else {
-        ball_vy = -ball_vy;
+        ballVY = -ballVY;
       }
 
-      if (bricks_left <= 0) {
-        game_state = GameState::Clear;
-        sfx_clear();
+      if (bricksLeft <= 0) {
+        gameState = GameState::Clear;
+        sfxClear();
       }
       return;
     }
   }
 }
 
-void draw_scene() {
-  screen->completeTransfer();
-  screen->clear(COLOR_BG);
+void drawScene() {
+  Graphics2D gfx = frameBuffer.createGraphics();
+  gfx->clear(COLOR_BG);
 
-  screen->fillRect(0, 0, SCREEN_W, 2, COLOR_WALL);
+  gfx->fillRect(0, 0, SCREEN_W, 2, COLOR_WALL);
 
   for (int row = 0; row < BRICK_ROWS; ++row) {
     for (int col = 0; col < BRICK_COLS; ++col) {
@@ -284,72 +274,73 @@ void draw_scene() {
       if (!brick.alive) {
         continue;
       }
-      screen->fillRect(brick.x, brick.y, BRICK_W, BRICK_H, brick.color);
+      gfx->fillRect(brick.x, brick.y, BRICK_W, BRICK_H, brick.color);
     }
   }
 
-  screen->fillRect(paddle_x, PADDLE_Y, PADDLE_W, PADDLE_H, COLOR_PADDLE);
-  screen->fillRect(static_cast<int>(ball_x), static_cast<int>(ball_y),
-                    BALL_SIZE, BALL_SIZE, COLOR_BALL);
+  gfx->fillRect(paddleX, PADDLE_Y, PADDLE_W, PADDLE_H, COLOR_PADDLE);
+  gfx->fillRect(static_cast<int>(ballX), static_cast<int>(ballY), BALL_SIZE,
+                BALL_SIZE, COLOR_BALL);
 
-  if (game_state == GameState::Serve) {
-    screen->fillRect(SCREEN_W / 2 - 40, SCREEN_H / 2 - 8, 80, 16, COLOR_SERVE);
-  } else if (game_state == GameState::Clear) {
-    screen->fillRect(SCREEN_W / 2 - 52, SCREEN_H / 2 - 12, 104, 24,
-                      COLOR_CLEAR);
-  } else if (game_state == GameState::GameOver) {
-    screen->fillRect(SCREEN_W / 2 - 52, SCREEN_H / 2 - 12, 104, 24,
-                      COLOR_GAME_OVER);
+  if (gameState == GameState::Serve) {
+    gfx->fillRect(SCREEN_W / 2 - 40, SCREEN_H / 2 - 8, 80, 16, COLOR_SERVE);
+  } else if (gameState == GameState::Clear) {
+    gfx->fillRect(SCREEN_W / 2 - 52, SCREEN_H / 2 - 12, 104, 24, COLOR_CLEAR);
+  } else if (gameState == GameState::GameOver) {
+    gfx->fillRect(SCREEN_W / 2 - 52, SCREEN_H / 2 - 12, 104, 24,
+                  COLOR_GAME_OVER);
   }
 
-  screen->drawLastError();
-  screen->startTransferToDisplay(0, 0);
+  appDrawDebugInfo(gfx);
+  appDrawStatusBar(gfx);
 }
 
 }  // namespace
 
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = display::InterfaceFormat::RGB444;
-  cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
-  cfg.speakerSampleRateHz = SAMPLE_RATE_HZ;
-  cfg.speakerLatencySamples = 512;
+  cfg.displayPixelFormat = PixelFormat::RGB444;
+  cfg.speakerEnabled = true;
   return cfg;
 }
 
 void xmc::appSetup() {
   for (int i = 0; i < NUM_TONES; ++i) {
-    tones[i].init(SAMPLE_RATE_HZ);
+    tones[i].init();
     mixer.setSource(i, tones[i].getOutputPort());
   }
   speaker::setSourcePort(mixer.getOutputPort());
   speaker::setMuted(false);
 
-  reset_game();
+  resetGame();
 }
 
 void xmc::appLoop() {
   const input::Button buttons = input::getState();
 
-  move_paddle(buttons);
+  movePaddle(buttons);
 
-  if (game_state == GameState::Serve) {
-    reset_ball_on_paddle();
+  if (gameState == GameState::Serve) {
+    resetBallOnPaddle();
     if (hasFlag(buttons, input::Button::A | input::Button::B |
                              input::Button::X | input::Button::Y |
                              input::Button::UP)) {
-      launch_ball(buttons);
+      launchBall(buttons);
     }
-  } else if (game_state == GameState::Playing) {
-    update_ball();
+  } else if (gameState == GameState::Playing) {
+    updateBall();
   } else {
     if (hasFlag(buttons, input::Button::A | input::Button::B |
                              input::Button::X | input::Button::Y |
                              input::Button::UP)) {
-      reset_game();
+      resetGame();
     }
   }
 
-  draw_scene();
-  xmc::sleepMs(16);
+  fpsKeeper.waitVsync();
+  if (!fpsKeeper.isFrameSkipping()) {
+    frameBuffer.beginRender();
+    drawScene();
+    frameBuffer.endRender();
+  }
 }

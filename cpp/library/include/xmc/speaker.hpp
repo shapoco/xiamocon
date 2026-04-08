@@ -33,7 +33,7 @@ static inline audio::SampleFormat xmc_speakerGetSupportedFormats(void) {
  * @return XMC_OK on success, or an appropriate error code on failure.
  */
 XmcStatus init(audio::SampleFormat format, uint32_t rateHz,
-                          uint32_t latencySamples, float *actualRateHz);
+               uint32_t latencySamples, float *actualRateHz);
 
 /**
  * Deinitializes the speaker. This function will free any resources allocated
@@ -58,6 +58,13 @@ XmcStatus setMuted(bool muted);
  * @return XMC_OK on success, or an appropriate error code on failure.
  */
 XmcStatus setSourcePort(audio::SourcePort *src);
+
+/**
+ * Gets the current audio stream format of the speaker. This function will
+ * return the audio format that the speaker is currently configured to use.
+ * @return The current audio stream format of the speaker.
+ */
+audio::StreamFormat getStreamFormat(void);
 
 /**
  * Services the speaker. This function should be called periodically to ensure

@@ -12,6 +12,8 @@ GlyphMetrics GlyphRenderer::beginRender(int code) {
   scaledMetrics.xOffset *= xScale;
   scaledMetrics.yOffset *= yScale;
   scaledMetrics.xAdvance *= xScale;
+  yCoarse = 0;
+  yFine = 0;
   return scaledMetrics;
 }
 
@@ -24,7 +26,7 @@ bool GlyphRenderer::renderNextLine(PixelFormat fmt, void *dst, int dstX,
 
   if (!skip) {
     copyPixelString(fmt, dst, dstX, PixelFormat::GRAY1, binaryBuff, srcX,
-                    metrics.width, tra);
+                    metrics.width * xScale, tra);
   }
 
   yFine++;

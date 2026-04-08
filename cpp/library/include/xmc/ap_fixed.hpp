@@ -3,13 +3,15 @@
 
 #include "xmc/xmc_common.hpp"
 
+#include <type_traits>
+
 namespace xmc {
 
 template <typename TRaw = int32_t, int PREC = 12>
 struct apFixed {
   static constexpr int PRECISION = PREC;
   using TDouble =
-      std::conditional_t<(sizeof(TRaw) <= sizeof(int16_t)), int32_t, int64_t>;
+      typename std::conditional<(sizeof(TRaw) <= sizeof(int16_t)), int32_t, int64_t>::type;
   TRaw raw;
   apFixed(TRaw raw) : raw(raw) {}
   apFixed() : raw(0) {}

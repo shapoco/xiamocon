@@ -104,7 +104,7 @@ typedef enum {
   XMC_ST7789_ADJUST_CONTROL_7 = 0xFF,
 } xmc_st7789_command_t;
 
-static InterfaceFormat currentFormat = InterfaceFormat::RGB444;
+static PixelFormat currentFormat = PixelFormat::RGB444;
 static bool inTransaction = false;
 
 // max 3 bytes per pixel for RGB666
@@ -114,7 +114,7 @@ static XmcStatus begin_command(uint8_t cmd);
 static void end_command();
 static XmcStatus write_data(const uint8_t *data, uint32_t size);
 
-XmcStatus init(InterfaceFormat format, int rotation) {
+XmcStatus init(PixelFormat format, int rotation) {
   currentFormat = format;
 
   gpio::setDir(XMC_PIN_DISPLAY_CS, true);
@@ -136,8 +136,8 @@ XmcStatus init(InterfaceFormat format, int rotation) {
 
   uint8_t intf_format;
   switch (currentFormat) {
-    case InterfaceFormat::RGB444: intf_format = 0x53; break;
-    case InterfaceFormat::RGB565: intf_format = 0x55; break;
+    case PixelFormat::RGB444: intf_format = 0x53; break;
+    case PixelFormat::RGB565: intf_format = 0x55; break;
     default: return XMC_ERR_DISPLAY_UNSUPPORTED_FORMAT;
   }
   XMC_ERR_RET(
@@ -191,7 +191,7 @@ XmcStatus deinit() {
   return XMC_OK;
 }
 
-InterfaceFormat getInterfaceFormat() { return currentFormat; }
+PixelFormat getPixelFormat() { return currentFormat; }
 
 XmcStatus clear(uint32_t color) {
   XMC_ERR_RET(fillRect(0, 0, WIDTH, HEIGHT, color));
@@ -220,7 +220,7 @@ XmcStatus fillRect(int x, int y, int width, int height, uint32_t color) {
 
   int lineBytes;
   switch (currentFormat) {
-    case InterfaceFormat::RGB444: {
+    case PixelFormat::RGB444: {
       lineBytes = width * 3 / 2;
       for (int i = 0; i < lineBytes; i += 3) {
         lineBuffer[i + 0] = (color >> 4) & 0xFF;
@@ -228,7 +228,7 @@ XmcStatus fillRect(int x, int y, int width, int height, uint32_t color) {
         lineBuffer[i + 2] = color & 0xFF;
       }
     } break;
-    case InterfaceFormat::RGB565: {
+    case PixelFormat::RGB565: {
       lineBytes = width * 2;
       uint16_t *lineBuffer565 = (uint16_t *)lineBuffer;
       for (int i = 0; i < width; i++) {

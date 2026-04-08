@@ -22,7 +22,7 @@ class App {
 
   static inline AppConfig getConfig() {
     AppConfig config = getDefaultAppConfig();
-    config.displayPixelFormat = display::InterfaceFormat::RGB565;
+    config.displayPixelFormat = PixelFormat::RGB565;
     return config;
   }
 

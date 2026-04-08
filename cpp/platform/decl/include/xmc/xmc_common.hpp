@@ -8,28 +8,40 @@
 
 #define XMC_INLINE inline __attribute__((always_inline))
 
-#define XMC_ENUM_FLAGS(TEnum, TBase)                                       \
-  inline constexpr TEnum operator|(TEnum a, TEnum b) {                     \
-    return (TEnum)((TBase)a | (TBase)b);                                   \
-  }                                                                        \
-  inline constexpr TEnum operator&(TEnum a, TEnum b) {                     \
-    return (TEnum)((TBase)a & (TBase)b);                                   \
-  }                                                                        \
-  inline constexpr TEnum operator~(TEnum a) { return (TEnum)(~(TBase)a); } \
-  inline constexpr bool operator!(TEnum a) { return !(TBase)a; }           \
-  inline TEnum &operator|=(TEnum &a, TEnum b) {                            \
-    a = (TEnum)((TBase)a | (TBase)b);                                      \
-    return a;                                                              \
-  }                                                                        \
-  inline TEnum &operator&=(TEnum &a, TEnum b) {                            \
-    a = (TEnum)((TBase)a & (TBase)b);                                      \
-    return a;                                                              \
-  }                                                                        \
-  inline constexpr bool hasFlag(TEnum value, TEnum flag) {                 \
-    return ((TBase)value & (TBase)flag) != 0;                              \
+#define XMC_ENUM_FLAGS(TEnum, TBase)                                           \
+  XMC_INLINE constexpr TEnum operator|(TEnum a, TEnum b) {                     \
+    return (TEnum)((TBase)a | (TBase)b);                                       \
+  }                                                                            \
+  XMC_INLINE constexpr TEnum operator&(TEnum a, TEnum b) {                     \
+    return (TEnum)((TBase)a & (TBase)b);                                       \
+  }                                                                            \
+  XMC_INLINE constexpr TEnum operator~(TEnum a) { return (TEnum)(~(TBase)a); } \
+  XMC_INLINE constexpr bool operator!(TEnum a) { return !(TBase)a; }           \
+  XMC_INLINE TEnum &operator|=(TEnum &a, TEnum b) {                            \
+    a = (TEnum)((TBase)a | (TBase)b);                                          \
+    return a;                                                                  \
+  }                                                                            \
+  XMC_INLINE TEnum &operator&=(TEnum &a, TEnum b) {                            \
+    a = (TEnum)((TBase)a & (TBase)b);                                          \
+    return a;                                                                  \
+  }                                                                            \
+  XMC_INLINE constexpr bool hasFlag(TEnum value, TEnum flag) {                 \
+    return ((TBase)value & (TBase)flag) != 0;                                  \
   }
 
 namespace xmc {
+
+/** Pixel formats for sprites and display interfaces. */
+enum class PixelFormat {
+  /** 1-bit grayscale format */
+  GRAY1,
+  /** 12-bit RGB format (4 bits per channel) */
+  RGB444,
+  /** 16-bit ARGB format (4 bits per channel) */
+  ARGB4444,
+  /** 16-bit RGB format (5 bits for red and blue, 6 bits for green) */
+  RGB565,
+};
 
 /**
  * Contents of a tight loop.
@@ -37,7 +49,7 @@ namespace xmc {
 void tightLoopContents();
 
 template <typename T>
-static XMC_INLINE T xmcClip(T min, T max, T value) {
+static constexpr XMC_INLINE T xmcClip(T min, T max, T value) {
   if (value < min) {
     return min;
   } else if (value > max) {

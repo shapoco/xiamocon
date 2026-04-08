@@ -44,6 +44,7 @@
                 "${PICO_SDK_PATH}/src/common/pico_sync/include",
                 "${PICO_SDK_PATH}/src/common/pico_binary_info/include",
                 "${workspaceFolder}/cpp/example/hwtest/build/generated/pico_base",
+                "${workspaceFolder}/cpp/example/hello_world/include",
                 "${workspaceFolder}/cpp/example/gfx_demo/include",
                 "${workspaceFolder}/cpp/example/imu_demo/include",
                 "${workspaceFolder}/cpp/example/shapo_jump/include",

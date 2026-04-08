@@ -12,18 +12,6 @@
 
 namespace xmc::display {
 
-/**
- * Display interface formats. This is used to specify the pixel format of the
- * display interface. The actual pixel format used by the display may be fixed,
- * but this allows the library to know how to format pixel data when writing to
- * the display.
- */
-enum class InterfaceFormat {
-  RGB444,
-  RGB565,
-  RGB666,
-};
-
 /** Display width in pixels */
 static constexpr int WIDTH = 240;
 
@@ -40,7 +28,7 @@ static constexpr int HEIGHT = 240;
  * @param rotation The rotation of the display.
  * @return XMC_OK if the display was successfully initialized.
  */
-XmcStatus init(InterfaceFormat format, int rotation);
+XmcStatus init(PixelFormat format, int rotation);
 
 /**
  * Deinitialize the display. This will reset the GPIO pins and put the display
@@ -50,11 +38,11 @@ XmcStatus init(InterfaceFormat format, int rotation);
 XmcStatus deinit();
 
 /**
- * Get the current interface format of the display. This returns the pixel format
- * that was specified when the display was initialized.
+ * Get the current interface format of the display. This returns the pixel
+ * format that was specified when the display was initialized.
  * @return The current interface format of the display.
  */
-InterfaceFormat getInterfaceFormat();
+PixelFormat getPixelFormat();
 
 /**
  * Clear the display to a specific color.
@@ -99,7 +87,8 @@ XmcStatus setWindow(int x, int y, int width, int height);
  * bytes have been written.
  * @return XMC_OK if the pixel data was successfully written to the display.
  */
-XmcStatus writePixelsStart(const void *data, uint32_t num_bytes, bool repeated);
+XmcStatus writePixelsStart(const void *data, uint32_t num_bytes,
+                           bool repeated = false);
 
 /**
  * Complete a pixel write operation started by writePixelsStart.

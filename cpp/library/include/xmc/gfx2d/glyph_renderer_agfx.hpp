@@ -14,7 +14,7 @@ class GlyphRendererAgfx : public GlyphRenderer {
 
  protected:
   GFXglyph glyph;
-  int yDecode = 0;
+  int ySrc = 0;
   uint32_t offsetBits = 0;
   uint8_t srcShiftReg = 0;
 

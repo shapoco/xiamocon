@@ -14,7 +14,7 @@
 namespace xmc {
 
 struct AppConfig {
-  display::InterfaceFormat displayPixelFormat;
+  PixelFormat displayPixelFormat;
   bool speakerEnabled;
   audio::SampleFormat speakerSampleFormat;
   uint32_t speakerSampleRateHz;

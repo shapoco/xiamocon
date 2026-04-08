@@ -45,14 +45,14 @@ class Graphics2DClass {
     TextRenderArgs tra;
     tra.foreColor = 0xFFFF;
     tra.backColor = 0x0000;
-    tra.flags =
-        TextRenderFlags::USE_FORE_COLOR | TextRenderFlags::USE_BACK_COLOR;
+    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
     drawImage(image, dx, dy, w, h, sx, sy, tra);
   }
 
   void setFont(const GFXfont *font, int size = 1);
   void setCursor(int x, int y);
-  void setTextColor(RawColor color);
+  void setTextColor(RawColor fg);
+  void setTextColor(RawColor fg, RawColor bg);
   void drawString(const char *str);
   int drawChar(GlyphRenderer &renderer, int x, int y, int code);
 };
@@ -63,7 +63,7 @@ static inline Graphics2D createGraphics2D() {
   return std::make_shared<Graphics2DClass>();
 }
 
-static inline Graphics2D createGraphics2D(Sprite &target) {
+static inline Graphics2D createGraphics2D(Sprite target) {
   return std::make_shared<Graphics2DClass>(target);
 }
 

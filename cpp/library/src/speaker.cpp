@@ -1,4 +1,5 @@
 #include "xmc/speaker.hpp"
+#include "xmc/audio_common.hpp"
 #include "xmc/hw/pins.hpp"
 #include "xmc/ioex.hpp"
 
@@ -27,6 +28,8 @@ XmcStatus setMuted(bool muted) {
 }
 
 XmcStatus setSourcePort(audio::SourcePort *src) { return sdac.setSource(src); }
+
+audio::StreamFormat getStreamFormat(void) { return sdac.getStreamFormat(); }
 
 XmcStatus service(void) { return sdac.service(); }
 

@@ -7,18 +7,6 @@
 
 namespace xmc {
 
-/** Pixel formats for sprites and display interfaces. */
-enum class PixelFormat {
-  /** 1-bit grayscale format */
-  GRAY1,
-  /** 12-bit RGB format (4 bits per channel) */
-  RGB444,
-  /** 16-bit ARGB format (4 bits per channel) */
-  ARGB4444,
-  /** 16-bit RGB format (5 bits for red and blue, 6 bits for green) */
-  RGB565,
-};
-
 using RawColor = uint16_t;
 
 static inline uint16_t blend4444(uint16_t a, uint16_t b, int32_t alpha) {
@@ -60,23 +48,19 @@ union color4444 {
         a(a < 0 ? 0 : (a > 15 ? 15 : a)) {}
 };
 
-static XMC_INLINE uint16_t pack565(int r, int g, int b) {
-  if (r < 0) {
-    r = 0;
-  } else if (r > 31) {
-    r = 31;
-  }
-  if (g < 0) {
-    g = 0;
-  } else if (g > 63) {
-    g = 63;
-  }
-  if (b < 0) {
-    b = 0;
-  } else if (b > 31) {
-    b = 31;
-  }
-  return (r << 3) | ((g & 0x38) >> 3) | ((g & 0x07) << 13) | (b << 8);
+static constexpr XMC_INLINE uint16_t pack444(int r, int g, int b) {
+  r = xmcClip(0, 15, r);
+  g = xmcClip(0, 15, g);
+  b = xmcClip(0, 15, b);
+  return static_cast<uint16_t>(((r & 0xF) << 8) | ((g & 0xF) << 4) | (b & 0xF));
+}
+
+static constexpr XMC_INLINE uint16_t pack565(int r, int g, int b) {
+  r = xmcClip(0, 31, r);
+  g = xmcClip(0, 63, g);
+  b = xmcClip(0, 31, b);
+  return static_cast<uint16_t>((r << 3) | ((g & 0x38) >> 3) |
+                               ((g & 0x07) << 13) | (b << 8));
 }
 
 static XMC_INLINE void unpack565(uint16_t color, int *r, int *g, int *b) {
@@ -114,6 +98,22 @@ static XMC_INLINE uint8_t convert444ToGray1(uint16_t color) {
   return gray >= (8 * 3) ? 1 : 0;
 }
 
+static XMC_INLINE uint16_t convert888To565(uint32_t color) {
+  uint16_t result = 0;
+  result |= (color >> 8) & 0xF800;
+  result |= (color >> 5) & 0x7E0;
+  result |= (color >> 3) & 0x1F;
+  return ((result << 8) & 0xFF00) | ((result >> 8) & 0x00FF);
+}
+
+static XMC_INLINE uint16_t convert888To444(uint32_t color) {
+  uint16_t result = 0;
+  result |= (color >> 12) & 0xF00;
+  result |= (color >> 8) & 0xF0;
+  result |= (color >> 4) & 0xF;
+  return result;
+}
+
 static XMC_INLINE uint16_t blend4444To565(uint16_t dest, uint16_t src) {
   uint32_t a2 = src & 0xF000;
   if (a2 == 0xF000) {
@@ -125,7 +125,8 @@ static XMC_INLINE uint16_t blend4444To565(uint16_t dest, uint16_t src) {
     uint32_t a1 = 15 - a2;
     uint32_t c2 = ((dest << 8) & 0xFF00) | ((dest >> 8) & 0x00FF);
     c2 = ((c2 & 0xF800) << 9) | ((c2 & 0x07E0) << 5) | (c2 & 0x001F);
-    uint32_t c1 = ((src & 0xF00) << 12) | ((src & 0x0F0) << 6) | (src & 0x00F);
+    uint32_t c1 =
+        ((src & 0xF00) << 13) | ((src & 0x0F0) << 8) | ((src & 0x00F) << 1);
     uint32_t r = c1 * a2 + c2 * a1;
     r = ((r >> 13) & 0xF800) | ((r >> 9) & 0x07E0) | ((r >> 4) & 0x001F);
     return ((r << 8) & 0xFF00) | ((r >> 8) & 0x00FF);
@@ -158,8 +159,8 @@ struct GlyphMetrics {
 };
 
 enum class TextRenderFlags : uint32_t {
-  USE_FORE_COLOR = 1 << 0,
-  USE_BACK_COLOR = 1 << 1,
+  DRAW_FORE = 1 << 0,
+  DRAW_BACK = 1 << 1,
 };
 XMC_ENUM_FLAGS(TextRenderFlags, uint32_t)
 

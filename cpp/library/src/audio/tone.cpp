@@ -1,4 +1,5 @@
 #include "xmc/audio/tone.hpp"
+#include "xmc/speaker.hpp"
 
 namespace xmc::audio {
 
@@ -11,6 +12,9 @@ Tone::Tone() {
 }
 
 void Tone::init(uint32_t rate_hz) {
+  if (rate_hz == 0) {
+    rate_hz = speaker::getStreamFormat().rateHz;
+  }
   rateHz = rate_hz;
   tickPhaseStep = 0x10000UL * 1000 / rateHz;
 
@@ -164,8 +168,7 @@ void Tone::tick() {
       uint32_t start = (uint32_t)velocity * (0x10000 / 128);
       uint32_t goal = start * sustainLevel / 256;
       if (envelopeCounter < decayMs) {
-        envelopeAmpCurr =
-            start - ((start - goal) * envelopeCounter / decayMs);
+        envelopeAmpCurr = start - ((start - goal) * envelopeCounter / decayMs);
       } else {
         envelopeState = EnvelopeState::SUSTAIN;
         envelopeCounter = 0;
@@ -178,8 +181,8 @@ void Tone::tick() {
     case EnvelopeState::RELEASE:
       envelopeCounter++;
       if (envelopeCounter < releaseMs) {
-        envelopeAmpCurr = envelopeAmpInit -
-                            (envelopeAmpInit * envelopeCounter / releaseMs);
+        envelopeAmpCurr =
+            envelopeAmpInit - (envelopeAmpInit * envelopeCounter / releaseMs);
       } else {
         envelopeState = EnvelopeState::IDLE;
         envelopeCounter = 0;
@@ -202,4 +205,4 @@ static void xmc_tone_request_data(void *buffer, uint32_t numSamples,
   ((Tone *)context)->render((int16_t *)buffer, numSamples);
 }
 
-}  // namespace xmc
+}  // namespace xmc::audio

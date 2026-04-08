@@ -1,5 +1,4 @@
 build/
-bin/
 *.nes
 *.spn
 settings.json
@@ -8,6 +7,9 @@ tmp.*/
 *.d
 *.o
 .venv/
+.cmake/
+.pio/
+*.log
 
 # for KiCad
 *-backups/

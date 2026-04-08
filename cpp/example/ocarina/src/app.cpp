@@ -27,7 +27,7 @@ bool disp_update = false;
 
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = display::InterfaceFormat::RGB444;
+  cfg.displayPixelFormat = PixelFormat::RGB444;
   cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
   cfg.speakerSampleRateHz = SAMPLE_RATE_HZ;
   cfg.speakerLatencySamples = 512;

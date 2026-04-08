@@ -1,23 +1,35 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(APP_NAME imu_demo)
-set(XMC_PLATFORM_DIR ../../platform)
-set(XMC_LIBRARY_DIR ../../library)
+set(APP_NAME gfx_demo)
 set(APP_INC_DIR ./include)
 set(APP_SRC_DIR ./src)
 
-include(../../pico_sdk_import.cmake)
-include(../../pico_extras_import.cmake)
+if (DEFINED XMC_PLATFORM)
+    message("Using XMC_PLATFORM from environment ('${XMC_PLATFORM}')")
+else()
+    set(XMC_PLATFORM rp2350_pico_sdk)
+endif()
+
+if ("${XMC_PLATFORM}" STREQUAL "rp2350_pico_sdk")
+    set(PICO_BOARD pico2)
+    include($ENV{XMC_REPO_PATH}/cpp/pico_sdk_import.cmake)
+    include($ENV{XMC_REPO_PATH}/cpp/pico_extras_import.cmake)
+endif()
 
 project(${APP_NAME} C CXX ASM)
 
-pico_sdk_init()
+if ("${XMC_PLATFORM}" STREQUAL "rp2350_pico_sdk")
+    pico_sdk_init()
+else()
+    message(FATAL_ERROR "Unsupported XMC_PLATFORM: ${XMC_PLATFORM}")
+endif()
 
 add_executable(${APP_NAME})
 
-target_compile_options(${APP_NAME} PUBLIC -O2 -Wall)
+include($ENV{XMC_REPO_PATH}/cpp/xmc_sdk_import.cmake)
 
-add_subdirectory(../../ libxmc)
+target_compile_options(${APP_NAME} PUBLIC -O2 -Wall)
+target_compile_features(${APP_NAME} PUBLIC cxx_std_17)
 
 file(GLOB CPP_FILES
     ${APP_SRC_DIR}/*.cpp
@@ -30,20 +42,11 @@ target_sources(${APP_NAME} PRIVATE
 
 target_include_directories(${APP_NAME} PRIVATE
     ${APP_INC_DIR}
-    ${XMC_PLATFORM_DIR}/common/include
-    ${XMC_LIBRARY_DIR}/include
 )
 
 target_link_libraries(${APP_NAME} PRIVATE
-    pico_stdlib
-    pico_multicore
-    hardware_dma
-    hardware_spi
-    hardware_i2c
-    libxmc
+    xmc_lib
+    xmc_pfm
 )
-
-pico_enable_stdio_usb(${APP_NAME} 0)
-pico_enable_stdio_uart(${APP_NAME} 0)
 
 pico_add_extra_outputs(${APP_NAME})

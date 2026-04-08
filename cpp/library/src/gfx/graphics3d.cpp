@@ -17,7 +17,7 @@ void RasterizerClass::clearDepth(depth_t value) {
   }
 }
 
-void RasterizerClass::setTarget(Sprite &target, Rect viewport) {
+void RasterizerClass::setTarget(Sprite target, Rect viewport) {
   this->target = target;
   this->viewport = viewport;
   screenMatrix = mat4::identity();
@@ -217,13 +217,26 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
         // shading
         BakedVertex &out = bakedVerts[j];
         out.pos = vpMatrix.transform(pos);
-        colorf vert_color = col;
-        if (mat) {
-          vert_color *= mat->baseColor;
+        
+        if (hasFlag(renderFlags, RenderFlags3D::VERTEX_SHADING)) {
+          colorf vertColor = col;
+          if (mat) {
+            vertColor *= mat->baseColor;
+          }
+          if (hasFlag(renderFlags, RenderFlags3D::LIGHTING)) {
+            colorf light;
+            light += envLight;
+            float ndotl = fmaxf(0, norm.dot(parallelLightDir));
+            colorf p = parallelLightColor;
+            p.a = 1;
+            p.r *= ndotl;
+            p.g *= ndotl;
+            p.b *= ndotl;
+            light += p;
+            vertColor *= light;
+          }
+          out.color = vertColor;
         }
-        vert_color *= (envLight + parallelLightColor *
-                                      fmaxf(0, norm.dot(parallelLightDir)));
-        out.color = vert_color;
         out.uv = uv;
       }
     }
@@ -249,6 +262,5 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
     }
   }
 }
-
 
 }  // namespace xmc

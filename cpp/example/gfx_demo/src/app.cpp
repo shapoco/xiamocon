@@ -4,138 +4,173 @@
 
 #include "tulip.hpp"
 
-#define DOUBLE_BUFFER (1)
+using namespace xmc;
+using namespace xmc::input;
 
-namespace xmc {
-
-Sprite frameBuffers[] = {
-    createSprite565(display::WIDTH, display::HEIGHT),
-#if DOUBLE_BUFFER
-    createSprite565(display::WIDTH, display::HEIGHT),
-#endif
-};
-#if DOUBLE_BUFFER
-int backIndex = 0;
-#else
-const int backIndex = 0;
-#endif
+static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
+FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 
 uint64_t nextVsyncTimeUs = 0;
 
-Scene3D tulip = tulip_scene0_create();
+Vec3Buffer leafVerts = createVec3Buffer(3);
+ColorBuffer leafColors = createColorBuffer(3);
+Material3D leafMat = createMaterial3D();
+Primitive3D leafPrim =
+    createPrimitive3D(PrimitiveMode::TRIANGLES, leafVerts, nullptr, leafColors,
+                      nullptr, nullptr, leafMat);
+Mesh3D leafMesh = createMesh3D({leafPrim});
 
-Vec3Buffer weedPoses = createVec3Buffer(3);
-ColorBuffer weedColors = createColorBuffer(3);
-Material3D weedMat = createMaterial3D();
-Primitive3D weedPrim =
-    createPrimitive3D(PrimitiveMode::TRIANGLES, weedPoses, nullptr, weedColors,
-                      nullptr, nullptr, weedMat);
-Mesh3D weed = createMesh3D({weedPrim});
-
-static constexpr int NUM_WEEDS = 1000;
-struct WeedInstance {
+static constexpr int NUM_LEAFS = 500;
+struct Leaf {
   vec3 pos;
   vec3 rot;
   vec3 dir;
 };
-WeedInstance weedArray[NUM_WEEDS];
+Leaf leafArray[NUM_LEAFS];
 
 Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
 
+uint64_t lastUs = 0;
+uint64_t autoRotationStartUs = 0;
 float eyeYaw = 0;
 float eyePitch = 0;
 float eyeDistance = 5.0f;
+float eyeYawSpeed = 0;
+float eyePitchSpeed = 0;
+float eyeDistanceSpeed = 0;
 
-void waitVsync();
 void updateScene();
 void renderScene();
 
-AppConfig appGetConfig() {
+AppConfig xmc::appGetConfig() {
   auto cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = display::InterfaceFormat::RGB565;
+  cfg.displayPixelFormat = DISPLAY_FORMAT;
+  cfg.speakerEnabled = false;
   return cfg;
 }
 
-void appSetup() {
-  weedPoses->data[0] = vec3(-0.2f, 0, 0);
-  weedPoses->data[1] = vec3(0.2f, 0, 0);
-  weedPoses->data[2] = vec3(0, 1.5f, 0);
-  weedColors->data[0] = {0, 0, 0, 1};
-  weedColors->data[1] = {0, 0, 0, 1};
-  weedColors->data[2] = {0, 1, 0, 1};
-  weedMat->doubleSided = true;
-  for (int i = 0; i < NUM_WEEDS; i++) {
-    const float r = 10.0f;
+void xmc::appSetup() {
+  // prepare leaf data
+  leafColors->data[0] = {0, 0, 0, 1};
+  leafColors->data[1] = {0, 0, 0, 1};
+  leafColors->data[2] = {0, 1, 0, 1};
+  leafMat->doubleSided = true;
+  for (int i = 0; i < NUM_LEAFS; i++) {
+    // distribute within a circle of radius R
+    const float R = 7.0f;
     do {
-      weedArray[i].pos = vec3(r * (float)(rand() % 1000) / 500.0f - r, 0,
-                              r * (float)(rand() % 1000) / 500.0f - r);
-    } while (weedArray[i].pos.length() > r);
-    float a = (float)(rand() & 0xFFFF) / 32768.0f * M_PI;
-    weedArray[i].rot = vec3(sinf(a) * 0.2f, 0, cosf(a) * 0.2f);
-    weedArray[i].dir = {
-        (float)((rand() & 0xFF) - 0x80) / 128.0f,
-        1.0f + (float)(rand() & 0xFF) / 512.0f,
-        (float)((rand() & 0xFF) - 0x80) / 128.0f,
+      vec3 pos(randomF32() * 2 - 1, 0, randomF32() * 2 - 1);
+      pos *= R * pow(pos.length(), 1.1f);
+      leafArray[i].pos = pos;
+    } while (leafArray[i].pos.length() > R);
+
+    // Random rotation
+    float a = randomF32() * 2 * M_PI;
+    leafArray[i].rot = vec3(sinf(a) * 0.2f, 0, cosf(a) * 0.2f);
+
+    // Random direction
+    leafArray[i].dir = {
+        randomF32() * 2 - 1,
+        1.0f + powf(randomF32(), 2),
+        randomF32() * 2 - 1,
     };
   }
 }
 
-void appLoop() {
-#if DOUBLE_BUFFER
-  int frontIndex = (backIndex + 1) % 2;
-#endif
-
+void xmc::appLoop() {
   updateScene();
 
-#if !DOUBLE_BUFFER
-  frameBuffers[0]->completeTransfer();
-#endif
-
+  frameBuffer.beginRender();
   renderScene();
-
-  // render status bar
-
-  appDrawStatusBar(frameBuffers[backIndex]);
-  appDrawDebugInfo(frameBuffers[backIndex]);
-
-#if DOUBLE_BUFFER
-  frameBuffers[frontIndex]->completeTransfer();
-#endif
-  waitVsync();
-  frameBuffers[backIndex]->startTransferToDisplay(0, 0);
-
-#if DOUBLE_BUFFER
-  backIndex = frontIndex;
-#endif
+  frameBuffer.endRender();
 }
 
 void updateScene() {
-  // vyaw += 0.01f;
-  // vpitch += 0.005f;
-  // yaw += vyaw;
-  // pitch += vpitch;
-  eyeYaw += 0.01f;
-  // eyePitch = sinf((float)getTimeMs() * 0.0005f) * 1.0f;
-  // eyePitch = -10.0f * M_PI / 180;
-  eyePitch = 10.0f * M_PI / 180;
-  // eyeDistance = 5.0f + sinf((float)getTimeMs() * 0.0002f) * 3.0f;
-  // eyeDistance = 10.0f;
-  eyeDistance = 5.0f;
+  uint64_t nowUs = getTimeUs();
+  float dt = (lastUs != 0) ? (nowUs - lastUs) * 1e-6f : 0.0f;
+  lastUs = nowUs;
+
+  bool pressed = false;
+
+  if (isPressed(Button::LEFT)) {
+    eyeYawSpeed -= dt;
+    pressed = true;
+  } else if (isPressed(Button::RIGHT)) {
+    eyeYawSpeed += dt;
+    pressed = true;
+  }
+
+  if (isPressed(Button::UP)) {
+    eyePitchSpeed += dt;
+    pressed = true;
+  } else if (isPressed(Button::DOWN)) {
+    eyePitchSpeed -= dt;
+    pressed = true;
+  }
+
+  if (isPressed(Button::A)) {
+    eyeDistanceSpeed -= dt * 5;
+    pressed = true;
+  } else if (isPressed(Button::B)) {
+    eyeDistanceSpeed += dt * 5;
+    pressed = true;
+  }
+
+  if (pressed) {
+    autoRotationStartUs = nowUs + 5 * 1000000;
+  }
+
+  if (nowUs > autoRotationStartUs) {
+    eyeYawSpeed += dt * 0.1f;
+    eyePitchSpeed += (sinf(nowUs * 2e-7f) * 0.5f - eyePitch) * dt * 0.1f;
+    eyeDistanceSpeed += (5.0f - eyeDistance) * dt * 0.1f;
+  }
+
+  eyeYawSpeed *= powf(0.5f, dt);
+  eyePitchSpeed *= powf(0.5f, dt);
+  eyeDistanceSpeed *= powf(0.5f, dt);
+
+  eyeYaw += dt * eyeYawSpeed;
+  if (eyeYaw > M_PI) {
+    eyeYaw -= 2 * M_PI;
+  }
+  if (eyeYaw < -M_PI) {
+    eyeYaw += 2 * M_PI;
+  }
+
+  eyePitch += dt * eyePitchSpeed;
+  if (eyePitch > M_PI / 2 - 0.01f) {
+    eyePitch = M_PI / 2 - 0.01f;
+    eyePitchSpeed = 0;
+  } else if (eyePitch < -M_PI / 2 + 0.01f) {
+    eyePitch = -M_PI / 2 + 0.01f;
+    eyePitchSpeed = 0;
+  }
+
+  eyeDistance += dt * eyeDistanceSpeed;
+  if (eyeDistance < 0.5f) {
+    eyeDistance = 0.5f;
+    eyeDistanceSpeed = 0;
+  } else if (eyeDistance > 30.0f) {
+    eyeDistance = 30.0f;
+    eyeDistanceSpeed = 0;
+  }
 }
 
 void renderScene() {
-  Sprite &screen = frameBuffers[backIndex];
-  screen->clear(0x0000);
-  // screen->clear(rgb565(0, 32, 31));
+  Graphics2D gfx = frameBuffer.createGraphics();
+  gfx->clear(0x0000);
+  // gfx->clear(rgb565(0, 32, 31));
 
-  g3d->setTarget(screen);
+  g3d->setTarget(frameBuffer.getBackBuffer());
   g3d->clearDepth();
   // rasterizer->setDepthRange(-1.0f, 1.0f);
 
   g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
   g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
   g3d->setPerspectiveProjection(
-      M_PI / 4, (float)screen->width / screen->height, 0.01f, 100.0f);
+      M_PI / 4, (float)frameBuffer.getWidth() / frameBuffer.getHeight(), 0.01f,
+      100.0f);
   // rasterizer->setOrthoProjection(-1, 1, -1, 1);
   //    rasterizer->setParallelLight(vec3(0.5f, 0.5f, 1.0f),
   //                                 {0.8f, 0.8f, 0.8f, 1.0f});
@@ -144,6 +179,10 @@ void renderScene() {
   vec3 eye = focus + vec3(eyeDistance * sinf(eyeYaw) * cosf(eyePitch),
                           eyeDistance * sinf(eyePitch),
                           eyeDistance * cosf(eyeYaw) * cosf(eyePitch));
+  if (eye.y < 0.5f) {
+    focus.y += 0.5f - eye.y;
+    eye.y = 0.5f;
+  }
   g3d->lookAt(eye, focus, vec3(0, 1, 0));
 
   g3d->loadIdentity();
@@ -152,26 +191,19 @@ void renderScene() {
   //  rasterizer->rotate(0, M_PI / 2, 0);
 
   // rasterizer->renderMesh(cube);
+  g3d->disableRenderFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->renderScene(tulip);
+  g3d->enableRenderFlags(RenderFlags3D::VERTEX_SHADING);
 
-  for (int i = 0; i < NUM_WEEDS; i++) {
-    weedPoses->data[0] = weedArray[i].pos - weedArray[i].rot;
-    weedPoses->data[1] = weedArray[i].pos + weedArray[i].rot;
-    weedPoses->data[2] = weedArray[i].pos + weedArray[i].dir;
-    g3d->renderMesh(weed);
+  for (int i = 0; i < NUM_LEAFS; i++) {
+    leafVerts->data[0] = leafArray[i].pos - leafArray[i].rot;
+    leafVerts->data[1] = leafArray[i].pos + leafArray[i].rot;
+    leafVerts->data[2] = leafArray[i].pos + leafArray[i].dir;
+    g3d->renderMesh(leafMesh);
   }
+
   // rasterizer->popMatrix();
-}
 
-void waitVsync() {
-  uint64_t nowUs = getTimeUs();
-  if (nowUs < nextVsyncTimeUs) {
-    sleepUs(nextVsyncTimeUs - nowUs);
-  }
-  nextVsyncTimeUs += 1000000 / 60;
-  if (nextVsyncTimeUs < nowUs) {
-    nextVsyncTimeUs = nowUs + 1000000 / 60;
-  }
+  appDrawStatusBar(gfx);
+  appDrawDebugInfo(gfx);
 }
-
-}  // namespace xmc

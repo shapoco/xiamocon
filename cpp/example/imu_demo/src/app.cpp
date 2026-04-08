@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 
+#include "bmp_earth_cloud.hpp"
 #include "bmp_earth_surface.hpp"
 #include "lsm6dsv16x.hpp"
 #include "xmc/font/ShapoSansP_s08c07.h"
@@ -26,8 +27,10 @@ const int backIndex = 0;
 #endif
 
 static Mesh3D earth = createSphere(1.0f, 18, 9);
-static Sprite earthSurface =
+static Sprite surfaceTexture =
     createSprite4444(256, 128, 0, (void *)bmp_earth_surface);
+static Sprite cloudTexture =
+    createSprite4444(256, 128, 0, (void *)bmp_earth_cloud);
 static Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
 
 static uint64_t lastImuUpdateUs = 0;
@@ -43,7 +46,7 @@ float vyaw = 0, vpitch = 0;
 
 AppConfig appGetConfig() {
   auto cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = display::InterfaceFormat::RGB565;
+  cfg.displayPixelFormat = PixelFormat::RGB565;
   return cfg;
 }
 
@@ -51,7 +54,7 @@ void appSetup() {
   imu.init();
   imuPos = {1, 0, 0, 0};
   Material3D earthMaterial = createMaterial3D();
-  earthMaterial->colorTexture = earthSurface;
+  earthMaterial->colorTexture = surfaceTexture;
   earth->setMaterial(earthMaterial);
 }
 
@@ -127,19 +130,35 @@ static void renderScene() {
   g3d->clearDepth();
   g3d->setDepthRange(-1.0f, 1.0f);
 
-  vec3 light_dir = {1, 0, 0};
+  vec3 light_dir = {1, 0, 1};
   light_dir = imuPos.conjugate().rotate(light_dir);
   g3d->setParallelLight(light_dir, colorf(2.0f, 2.0f, 2.0f, 1));
+  g3d->setEnvironmentLight(colorf(0.1f, 0.1f, 0.1f, 1));
 
   g3d->setScreenMatrix(mat4::identity());
   g3d->setProjection(proj);
   g3d->loadIdentity();
 
+  earth->primitives[0]->material->colorTexture = surfaceTexture;
+  earth->primitives[0]->material->baseColor.a = 1;
+  g3d->disableRenderFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(0.01f);
   g3d->rotate(pitch, yaw, 0);
   g3d->renderMesh(earth);
   g3d->popMatrix();
+
+#if 0
+  earth->primitives[0]->material->colorTexture = cloudTexture;
+  earth->primitives[0]->material->baseColor.a = 0.75f;
+  g3d->enableRenderFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->pushMatrix();
+  g3d->scale(0.0105f);
+  g3d->rotate(0, getTimeMs() * 0.0001f, 0);
+  g3d->rotate(pitch, yaw, 0);
+  g3d->renderMesh(earth);
+  g3d->popMatrix();
+#endif
 }
 
 static void updateImuPosition(quat *p, float *imu_values, float dt) {

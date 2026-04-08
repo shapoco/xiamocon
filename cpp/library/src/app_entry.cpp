@@ -19,7 +19,7 @@ diagnostic::App *diagnosticApp = nullptr;
 
 AppConfig getDefaultAppConfig() {
   AppConfig config = {
-      .displayPixelFormat = display::InterfaceFormat::RGB565,
+      .displayPixelFormat = PixelFormat::RGB565,
       .speakerEnabled = true,
       .speakerSampleFormat = audio::SampleFormat::LINEAR_PCM_S16_MONO,
       .speakerSampleRateHz = audio::getPreferredSamplingRate(),
@@ -79,7 +79,7 @@ void appDrawStatusBar(Graphics2D &gfx) {
 
   gfx->setFont(&ShapoSansP_s08c07, 1);
   gfx->setTextColor(0xFFFF);
-  gfx->fillSmokeRect(0, 0, w, h, 0);
+  gfx->fillSmokeRect(0, 0, w, h, false);
 
   if (true) {
     if (nowUs >= fpsLastUpdateUs + 1000000) {
@@ -127,7 +127,7 @@ void appDrawDebugInfo(Graphics2D &gfx) {
 
   char buf[64];
   GraphicsState2D backup = gfx->getState();
-  gfx->fillSmokeRect(0, gfx->getBounds().height - h, w, h);
+  gfx->fillSmokeRect(0, gfx->getBounds().height - h, w, h, false);
   gfx->setFont(&ShapoSansP_s08c07, 1);
   snprintf(buf, sizeof(buf), "ERR 0x%X: L%d in %s", err, line, file);
   gfx->setCursor(0, gfx->getBounds().height - 2);

@@ -90,7 +90,7 @@ class Tone {
    * Initializes the tone generator with the given sample rate.
    * @param rateHz The sample rate in Hz.
    */
-  void init(uint32_t rateHz);
+  void init(uint32_t rateHz = 0);
 
   /**
    * Sets the waveform of the tone.

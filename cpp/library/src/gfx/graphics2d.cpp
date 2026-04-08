@@ -37,36 +37,23 @@ void Graphics2DClass::fillRect(int x, int y, int w, int h, RawColor color) {
     fillRectUnchecked(target->format, target->linePtr(dstRect.y), dstRect.x,
                       dstRect.width, dstRect.height, target->stride, color);
   } else {
-    auto fmt = display::getInterfaceFormat();
+    auto fmt = display::getPixelFormat();
+    fillRectUnchecked(fmt, lineBuffer, 0, dstRect.width, 1, 0, color);
     uint32_t writeSize = 0;
     switch (fmt) {
-      case display::InterfaceFormat::RGB444: {
-        fillRectUnchecked(PixelFormat::RGB444, lineBuffer, 0, dstRect.width, 1,
-                          0, color);
+      case PixelFormat::RGB444: {
         writeSize = dstRect.width * 3 / 2;
       } break;
-      case display::InterfaceFormat::RGB565: {
-        fillRectUnchecked(PixelFormat::RGB565, lineBuffer, 0, dstRect.width, 1,
-                          0, color);
+      case PixelFormat::RGB565: {
         writeSize = dstRect.width * 2;
       } break;
-      case display::InterfaceFormat::RGB666: {
         // todo: support RGB666
-      } break;
     }
 
-    if (fmt == display::InterfaceFormat::RGB444) {
-      for (int j = 0; j < dstRect.height; j++) {
-        display::setWindow(dstRect.x, dstRect.y + j, dstRect.width, 1);
-        display::writePixelsStart(lineBuffer, writeSize, false);
-        display::writePixelsComplete();
-      }
-    } else {
-      display::setWindow(dstRect.x, dstRect.y, dstRect.width, dstRect.height);
-      for (int j = 0; j < dstRect.height; j++) {
-        display::writePixelsStart(lineBuffer, writeSize, false);
-        display::writePixelsComplete();
-      }
+    for (int j = 0; j < dstRect.height; j++) {
+      display::setWindow(dstRect.x, dstRect.y + j, dstRect.width, 1);
+      display::writePixelsStart(lineBuffer, writeSize, false);
+      display::writePixelsComplete();
     }
   }
 }
@@ -121,6 +108,8 @@ void Graphics2DClass::fillSmokeRect(int x, int y, int w, int h, bool white) {
         } break;
       }
     }
+  } else {
+    fillRect(x, y, w, h, white ? 0xFFFFFFFF : 0);
   }
 }
 
@@ -147,13 +136,9 @@ void Graphics2DClass::drawImage(const Sprite &image, int dx, int dy, int w,
     }
   } else {
     PixelFormat dstFmt;
-    switch (display::getInterfaceFormat()) {
-      case display::InterfaceFormat::RGB444:
-        dstFmt = PixelFormat::RGB444;
-        break;
-      case display::InterfaceFormat::RGB565:
-        dstFmt = PixelFormat::RGB565;
-        break;
+    switch (display::getPixelFormat()) {
+      case PixelFormat::RGB444: dstFmt = PixelFormat::RGB444; break;
+      case PixelFormat::RGB565: dstFmt = PixelFormat::RGB565; break;
       default:
         // todo: support RGB666
         return;
@@ -179,13 +164,19 @@ void Graphics2DClass::setCursor(int x, int y) {
   state.cursorY = y;
 }
 
-void Graphics2DClass::setTextColor(RawColor color) {
-  state.textColor = color;
+void Graphics2DClass::setTextColor(RawColor fg) {
+  state.textColor = fg;
+  state.textFlags = TextRenderFlags::DRAW_FORE;
+}
+
+void Graphics2DClass::setTextColor(RawColor fg, RawColor bg) {
+  state.textColor = fg;
+  state.backColor = bg;
+  state.textFlags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
 }
 
 void Graphics2DClass::drawString(const char *str) {
-  GlyphRendererAgfx renderer(state.font, state.fontSize,
-                             state.fontSize);
+  GlyphRendererAgfx renderer(state.font, state.fontSize, state.fontSize);
   if (!state.font || !str) return;
   int x = state.cursorX;
   for (const char *p = str; *p; p++) {
@@ -202,11 +193,13 @@ void Graphics2DClass::drawString(const char *str) {
 int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
   if (!state.font) return 0;
   if (code < state.font->first || code > state.font->last) return 0;
+
   GlyphMetrics metrics = renderer.beginRender(code);
-  int dx = x + metrics.xOffset * state.fontSize;
-  int dy = y + metrics.yOffset * state.fontSize;
+
+  int dx = x + metrics.xOffset;
+  int dy = y + metrics.yOffset;
   int sx = 0;
-  int w = metrics.width * state.fontSize;
+  int w = metrics.width;
   if (dx < 0) {
     sx = -dx;
     w += dx;
@@ -225,13 +218,9 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
     dstPtr = (uint8_t *)target->linePtr(dy >= 0 ? dy : 0);
     dstStride = target->stride;
   } else {
-    switch (display::getInterfaceFormat()) {
-      case display::InterfaceFormat::RGB444:
-        dstFmt = PixelFormat::RGB444;
-        break;
-      case display::InterfaceFormat::RGB565:
-        dstFmt = PixelFormat::RGB565;
-        break;
+    switch (display::getPixelFormat()) {
+      case PixelFormat::RGB444: dstFmt = PixelFormat::RGB444; break;
+      case PixelFormat::RGB565: dstFmt = PixelFormat::RGB565; break;
       default:
         // todo: support RGB666
         return 0;
@@ -242,16 +231,37 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
 
   TextRenderArgs tra;
   tra.foreColor = state.textColor;
-  tra.backColor = 0;
-  tra.flags = TextRenderFlags::USE_FORE_COLOR;
+  tra.backColor = state.backColor;
+  tra.flags = state.textFlags;
+  bool hasFore = hasFlag(tra.flags, TextRenderFlags::DRAW_FORE);
+  bool hasBack = hasFlag(tra.flags, TextRenderFlags::DRAW_BACK);
+  if (!target) {
+    if (!hasFore && !hasBack) {
+      tra.foreColor = 0xFFFFFFFF;
+      tra.backColor = 0x00000000;
+    } else if (hasFore) {
+      tra.backColor = tra.foreColor ? 0x00000000 : 0xFFFFFFFF;
+    } else if (hasBack) {
+      tra.foreColor = tra.backColor ? 0x00000000 : 0xFFFFFFFF;
+    }
+    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
+  }
 
-  for (int j = 0; j < metrics.height * state.fontSize; j++, dy++) {
+  for (int j = 0; j < metrics.height; j++, dy++) {
     if (dy >= state.clipRect.bottom()) break;
     bool skip = (dy < 0);
-    renderer.renderNextLine(dstFmt, dstPtr, dx, w, sx, tra, skip);
+
+    int rdx = target ? dx : 0;
+    renderer.renderNextLine(dstFmt, dstPtr, rdx, w, sx, tra, skip);
     dstPtr += dstStride;
+
+    if (!skip && !target) {
+      display::setWindow(dx, dy, w, 1);
+      display::writePixelsStart(lineBuffer, w * 2);
+      display::writePixelsComplete();
+    }
   }
-  return metrics.xAdvance * state.fontSize;
+  return metrics.xAdvance;
 }
 
 static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
@@ -261,7 +271,7 @@ static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
       TextRenderArgs tra;
       tra.foreColor = color;
       tra.backColor = 0;
-      tra.flags = TextRenderFlags::USE_FORE_COLOR;
+      tra.flags = TextRenderFlags::DRAW_FORE;
       uint8_t c = color ? 1 : 0;
       for (int j = 0; j < h; j++) {
         RasterScanGray1 scan((uint8_t *)(ptr + j * stride), x);

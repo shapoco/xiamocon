@@ -66,6 +66,13 @@ class StreamingDac {
   XmcStatus stop();
 
   /**
+   * Get the current stream format of the SDAC. This will return the audio
+   * format that the SDAC is currently using for audio output.
+   * @return The current stream format of the SDAC.
+   */
+  StreamFormat getStreamFormat() const;
+
+  /**
    * Set the audio source for the SDAC. The SDAC will call the requestData
    * callback of the source port when it needs more audio data to output.
    * @param src The audio source port to set for the SDAC.

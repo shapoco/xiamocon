@@ -1,0 +1,27 @@
+
+# Detect the repo root from the location of this script
+if [ -n "${BASH_SOURCE:-}" ]; then
+    _xmc_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+elif [ -n "${ZSH_VERSION:-}" ]; then
+    _xmc_dir="$(cd "$(dirname "${(%):-%x}")" && pwd)"
+elif [ -n "${XMC_REPO_PATH:-}" ]; then
+    _xmc_dir="${XMC_REPO_PATH}"
+else
+    echo "Error: Could not detect script path. Please set XMC_REPO_PATH before sourcing this file." >&2
+    return 1 2>/dev/null || exit 1
+fi
+
+export XMC_REPO_PATH="${_xmc_dir}"
+case ":${PATH}:" in
+    *:"${XMC_REPO_PATH}/bin":*) ;;
+    *) export PATH="${XMC_REPO_PATH}/bin:${PATH}" ;;
+esac
+unset _xmc_dir
+
+if [ -d "${XMC_REPO_PATH}/.venv" ]; then
+    source "${XMC_REPO_PATH}/.venv/bin/activate"
+else
+    python3 -m venv "${XMC_REPO_PATH}/.venv"
+    source "${XMC_REPO_PATH}/.venv/bin/activate"
+    pip install -r "${XMC_REPO_PATH}/requirements.txt"
+fi

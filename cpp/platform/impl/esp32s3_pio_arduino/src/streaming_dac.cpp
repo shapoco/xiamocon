@@ -8,7 +8,7 @@
 
 namespace xmc::audio {
 
-typedef struct {
+struct SdacHwEsp {
   SdacConfig cfg;
   SourcePort *source;
   i2s_chan_handle_t audio_i2s_ch;
@@ -17,7 +17,7 @@ typedef struct {
   bool full;
   uint8_t *srcFmtBuff;
   int16_t *s16Buff;
-} SdacHwEsp;
+};
 
 static void maintain(StreamingDac &inst, bool preload);
 static void fillBuffer(StreamingDac &inst, uint32_t fillSamples);
@@ -147,6 +147,12 @@ XmcStatus StreamingDac::stop() {
     gpio::setDir(pin, false);
   }
   return XMC_OK;
+}
+
+StreamFormat StreamingDac::getStreamFormat() const {
+  if (!handle) return {};
+  SdacHwEsp *hw = (SdacHwEsp *)handle;
+  return hw->cfg.format;
 }
 
 XmcStatus StreamingDac::setSource(SourcePort *src) {

@@ -14,7 +14,7 @@ namespace xmc::audio {
 
 static const uint32_t PDM_MIN_PDM_FREQ_HZ = 3000000;
 
-typedef struct {
+struct SdacHwRp {
   SdacConfig cfg;
   SourcePort *source;
   PIO pio;
@@ -35,7 +35,7 @@ typedef struct {
   // int32_t pdmWork2;
   // int32_t pdmWork3;
   uint32_t pdmLfsr;
-} RpSdacHw;
+};
 
 static const uint16_t pioInsts[] = {
     0x6001,
@@ -66,7 +66,7 @@ SampleFormat sdacGetSupportedFormats(void) { return SUPPORTED_FORMATS; }
 uint32_t getPreferredSamplingRate(void) { return 25000; }
 
 StreamingDac::StreamingDac(int pin) : pin(pin) {
-  handle = malloc(sizeof(RpSdacHw));
+  handle = malloc(sizeof(SdacHwRp));
 }
 
 StreamingDac::~StreamingDac() {
@@ -83,7 +83,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   // hardware capabilities
   *actualRateHz = cfg.format.rateHz;
 
-  RpSdacHw *hw = (RpSdacHw *)handle;
+  SdacHwRp *hw = (SdacHwRp *)handle;
   hw->cfg = cfg;
   hw->pdmWork0 = 0;
   hw->pdmWork1 = 0;
@@ -180,7 +180,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
 
 XmcStatus StreamingDac::stop() {
   if (handle) {
-    RpSdacHw *hw = (RpSdacHw *)handle;
+    SdacHwRp *hw = (SdacHwRp *)handle;
     if (hw->dmaCh >= 0) {
       dma_channel_wait_for_finish_blocking(hw->dmaCh);
       dma_channel_unclaim(hw->dmaCh);
@@ -216,13 +216,19 @@ XmcStatus StreamingDac::stop() {
   return XMC_OK;
 }
 
+StreamFormat StreamingDac::getStreamFormat() const {
+  if (!handle) return {};
+  SdacHwRp *hw = (SdacHwRp *)handle;
+  return hw->cfg.format;
+}
+
 XmcStatus StreamingDac::setSource(SourcePort *src) {
   this->source = *src;
   return XMC_OK;
 }
 
 XmcStatus StreamingDac::service() {
-  RpSdacHw *hw = (RpSdacHw *)handle;
+  SdacHwRp *hw = (SdacHwRp *)handle;
   if (hw->nextReadBank == hw->nextWriteBank) {
     fillBuffer(*this);
   }
@@ -238,7 +244,7 @@ static void dmaHandlerSlow(void *context) {
 }
 
 static void fillBuffer(StreamingDac &inst) {
-  RpSdacHw *hw = (RpSdacHw *)inst.handle;
+  SdacHwRp *hw = (SdacHwRp *)inst.handle;
 
   uint32_t dstSamples = hw->cfg.latencySamples * hw->extraOversample;
   uint32_t *dst = hw->dmaBuff + (hw->nextWriteBank * dstSamples);
@@ -339,7 +345,7 @@ static void fillBuffer(StreamingDac &inst) {
 }
 
 static void startNextDma(StreamingDac &inst) {
-  RpSdacHw *hw = (RpSdacHw *)inst.handle;
+  SdacHwRp *hw = (SdacHwRp *)inst.handle;
 
   uint32_t dstSamples = hw->cfg.latencySamples * hw->extraOversample;
   dma_channel_set_read_addr(

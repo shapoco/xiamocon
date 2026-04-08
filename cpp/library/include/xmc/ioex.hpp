@@ -84,13 +84,13 @@ enum class Pin {
    * Low-active signals that receive the pressed state of the X button.
    * Normally readed by the input API.
    */
-  BTN_X = 10,
+  BTN_X = 11,
 
   /**
    * Low-active signals that receive the pressed state of the Y button.
    * Normally readed by the input API.
    */
-  BTN_Y = 11,
+  BTN_Y = 10,
 
   /**
    * Low-active signals that receive the pressed state of the Up button.

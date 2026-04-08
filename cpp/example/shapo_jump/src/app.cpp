@@ -70,11 +70,8 @@ enum class Sound {
 };
 static constexpr int NUM_TONES = (int)Sound::NUM_SOUNDS;
 
-Sprite frameBuffers[] = {
-    createSprite444(display::WIDTH, display::HEIGHT),
-    createSprite444(display::WIDTH, display::HEIGHT),
-};
-int backIndex = 0;
+FrameBuffer frameBuffer(PixelFormat::RGB444, true);
+FpsKeeper fpsKeeper(60);
 
 Sprite bmpChara = createSprite4444(256, 256, 0, (void *)bmp_chara_data);
 Sprite bmpBack = createSprite4444(256, 256, 0, (void *)bmp_back_data);
@@ -156,11 +153,9 @@ static void renderSpriteFrame(Graphics2D &gfx, const Sprite &bmp,
                               const SpriteFrame &f, int x, int y);
 static void renderStatus(Graphics2D &gfx);
 
-static void waitVsync();
-
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = display::InterfaceFormat::RGB444;
+  cfg.displayPixelFormat = PixelFormat::RGB444;
   cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
   return cfg;
 }
@@ -222,22 +217,19 @@ void xmc::appSetup() {
 }
 
 void xmc::appLoop() {
-  int frontIndex = (backIndex + 1) % 2;
-
   updateScene();
 
-  Graphics2D gfx = createGraphics2D(frameBuffers[backIndex]);
-  renderScene(gfx);
+  fpsKeeper.waitVsync();
+  if (!fpsKeeper.isFrameSkipping()) {
+    frameBuffer.beginRender();
+    Graphics2D gfx = frameBuffer.createGraphics();
+    renderScene(gfx);
 
-  // render status bar
-  appDrawStatusBar(gfx);
-  appDrawDebugInfo(gfx);
-
-  frameBuffers[frontIndex]->completeTransfer();
-  waitVsync();
-  frameBuffers[backIndex]->startTransferToDisplay(0, 0);
-
-  backIndex = frontIndex;
+    // render status bar
+    appDrawStatusBar(gfx);
+    appDrawDebugInfo(gfx);
+    frameBuffer.endRender();
+  }
 }
 
 static void generateCloud() {
@@ -504,7 +496,8 @@ static void renderScene(Graphics2D &gfx) {
   if (elapsedFromDamage < DAMAGING_MS) {
     shapoFrame = &shapoAnimeDamage[0];
   }
-  if (shapoFrame && (elapsedFromDamage >= INVICIBILITY_MS || nowMs % 128 < 64)) {
+  if (shapoFrame &&
+      (elapsedFromDamage >= INVICIBILITY_MS || nowMs % 128 < 64)) {
     renderSpriteFrame(gfx, bmpShapo, *shapoFrame, shapoX, shapoY);
   }
 
@@ -602,16 +595,5 @@ static void renderStatus(Graphics2D &gfx) {
     int h = 16;
     gfx->drawImage(bmpBack, (display::WIDTH - w) / 2, (display::HEIGHT - h) / 2,
                    w, h, 0, 64);
-  }
-}
-
-static void waitVsync() {
-  uint64_t nowUs = getTimeUs();
-  if (nowUs < nextVsyncTimeUs) {
-    sleepUs(nextVsyncTimeUs - nowUs);
-  }
-  nextVsyncTimeUs += 1000000 / 60;
-  if (nextVsyncTimeUs < nowUs) {
-    nextVsyncTimeUs = nowUs + 1000000 / 60;
   }
 }

@@ -1,19 +1,47 @@
 #ifndef XMC_GFX_RASTERIZER_HPP
 #define XMC_GFX_RASTERIZER_HPP
 
-#include "xmc/gfx3d/scene3d.hpp"
 #include "xmc/gfx2d/color4p12.hpp"
+#include "xmc/gfx2d/raster_scan.hpp"
 #include "xmc/gfx2d/sprite444.hpp"
+#include "xmc/gfx3d/scene3d.hpp"
 
 namespace xmc {
 
 using depth_t = uint16_t;
 static constexpr depth_t MAX_DEPTH = (1 << (sizeof(depth_t) * 8)) - 1;
 
+enum class RenderFlags3D : uint32_t {
+  NONE,
+  VERTEX_SHADING = 1 << 0,
+  VERTEX_COLOR = 1 << 1,
+  LIGHTING = 1 << 2,
+  COLOR_TEXTURE = 1 << 4,
+  ALPHA_BLEND = 1 << 5,
+  DEFAULT = VERTEX_SHADING | VERTEX_COLOR | LIGHTING | COLOR_TEXTURE,
+};
+XMC_ENUM_FLAGS(RenderFlags3D, uint32_t);
+
+enum class TriangleRenderFlags : uint8_t {
+  NONE = 0,
+  FORMAT444 = 1 << 0,
+  VERTEX_SHADING = 1 << 1,
+  COLOR_TEXTURE = 1 << 2,
+  ALPHA_BLEND = 1 << 3,
+};
+XMC_ENUM_FLAGS(TriangleRenderFlags, uint8_t);
+
 struct BakedVertex {
   vec3 pos;
   colorf color;
   vec2 uv;
+};
+
+struct TextureArgs {
+  const uint16_t *data = nullptr;
+  uint32_t stride = 0;
+  uint32_t uMask = 0;
+  uint32_t vMask = 0;
 };
 
 struct ScanLineCounter {
@@ -76,6 +104,8 @@ class RasterizerClass {
   mat4 mvpMatrix;
   bool mvpDirty = true;
 
+  RenderFlags3D renderFlags = RenderFlags3D::DEFAULT;
+
   MatrixStackEntry *modelMatrixStack;
   int modelMatrixStackPtr = 0;
 
@@ -113,11 +143,16 @@ class RasterizerClass {
     }
   }
 
-  void setTarget(Sprite &target, Rect viewport);
+  void setTarget(Sprite target, Rect viewport);
 
-  inline void setTarget(Sprite &target) {
+  inline void setTarget(Sprite target) {
     setTarget(target, Rect{0, 0, target->width, target->height});
   }
+
+  inline RenderFlags3D getRenderFlags() const { return renderFlags; }
+  inline void setRenderFlags(RenderFlags3D flags) { renderFlags = flags; }
+  inline void enableRenderFlags(RenderFlags3D flags) { renderFlags |= flags; }
+  inline void disableRenderFlags(RenderFlags3D flags) { renderFlags &= ~flags; }
 
   inline void setEnvironmentLight(const colorf &color) { envLight = color; }
 
@@ -227,9 +262,123 @@ class RasterizerClass {
 
   void renderPrimitive(const Primitive3D &prim, const Material3D &mat);
 
-  template <bool useTexture>
-  void renderTriangleParam(const BakedVertex &v0, const BakedVertex &v1,
-                           const BakedVertex &v2, const Material3D &mat) {
+  template <bool ALPHA_BLEND, bool COLOR_TEXTURE, bool VERTEX_SHADING,
+            bool FORMAT_444>
+  XMC_INLINE void renderHalfTriangle(ScanLineCounter &accumVL,
+                                     ScanLineCounter &accumVR,
+                                     ScanLineCounter &stepVL,
+                                     ScanLineCounter &stepVR, int yStart,
+                                     int yEnd, const TextureArgs &tex) {
+    for (int iy = yStart; iy <= yEnd; iy++) {
+      int32_t ixMin = accumVL.x.roundToInt();
+      int32_t ixMax = accumVR.x.roundToInt();
+      int32_t hSpan = ixMax - ixMin + 1;
+
+      if (ixMin < viewport.x) ixMin = viewport.x;
+      if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
+
+      if (ixMin <= ixMax) {
+        ScanLineCounter accumH = accumVL;
+        ScanLineCounter stepH =
+            ScanLineCounter::calcStep(accumVL, accumVR, hSpan);
+
+        int32_t xOffset = ixMin - accumVL.x.roundToInt();
+        accumH.x += stepH.x * xOffset;
+        accumH.z += stepH.z * xOffset;
+        accumH.c += stepH.c * xOffset;
+        if (COLOR_TEXTURE) {
+          accumH.u += stepH.u * xOffset;
+          accumH.v += stepH.v * xOffset;
+        }
+
+        uint16_t *__restrict__ texData = (uint16_t *)tex.data;
+        depth_t *__restrict__ zPtr = depthBuff + iy * width;
+        RasterScan444 cPtr444((uint8_t *)target->linePtr(iy), ixMin);
+        uint16_t *__restrict__ ptr565 = (uint16_t *)target->linePtr(iy) + ixMin;
+        for (int x = ixMin; x <= ixMax; x++) {
+          int32_t z = accumH.z.floorToInt();
+          bool written = false;
+          if (z < zPtr[x]) {
+            if (VERTEX_SHADING) {
+              color4p12 c = accumH.c;
+              if (COLOR_TEXTURE) {
+                uint32_t u = accumH.u.floorToInt() & tex.uMask;
+                uint32_t v = accumH.v.floorToInt() & tex.vMask;
+                c *= color4444(texData[v * tex.stride + u]);
+              }
+              if (ALPHA_BLEND) {
+                if (c.a.raw > 0) {
+                  if (FORMAT_444) {
+                    cPtr444.push4444(c.to4444());
+                  } else {
+                    uint16_t dst565 = *ptr565;
+                    *(ptr565++) = blend4444To565(dst565, c.to4444());
+                  }
+                  zPtr[x] = z;
+                  written = true;
+                }
+              } else {
+                if (FORMAT_444) {
+                  cPtr444.push444(c.to444());
+                } else {
+                  *(ptr565++) = c.to565();
+                }
+                written = true;
+                zPtr[x] = z;
+              }
+            } else {
+              uint16_t c = 0xFFFF;
+              if (COLOR_TEXTURE) {
+                uint32_t u = accumH.u.floorToInt() & tex.uMask;
+                uint32_t v = accumH.v.floorToInt() & tex.vMask;
+                c = texData[v * tex.stride + u];
+              }
+              if (ALPHA_BLEND) {
+                if (c & 0xF000) {
+                  if (FORMAT_444) {
+                    cPtr444.push4444(c);
+                  } else {
+                    uint16_t dst565 = *ptr565;
+                    *(ptr565++) = blend4444To565(dst565, c);
+                  }
+                  zPtr[x] = z;
+                  written = true;
+                }
+              } else {
+                if (FORMAT_444) {
+                  cPtr444.push444(c);
+                } else {
+                  *(ptr565++) = convert444To565(c);
+                }
+                written = true;
+                zPtr[x] = z;
+              }
+            }
+          }
+          if (!written) {
+            if (FORMAT_444) {
+              cPtr444.skip();
+            } else {
+              ptr565++;
+            }
+          }
+          accumH.step(stepH);
+        }
+      }
+
+      accumVL.step(stepVL);
+      accumVR.step(stepVR);
+    }
+  }
+
+  void renderTriangle(const BakedVertex &v0, const BakedVertex &v1,
+                      const BakedVertex &v2, const Material3D &mat) {
+    RenderFlags3D flags = renderFlags;
+    if (!mat || !mat->colorTexture ||
+        !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      flags &= ~RenderFlags3D::COLOR_TEXTURE;
+    }
+
     int vpl = viewport.x;
     int vpr = viewport.right() - 1;
     if (v0.pos.x < vpl && v1.pos.x < vpl && v2.pos.x < vpl) return;
@@ -279,14 +428,6 @@ class RasterizerClass {
       return;
     }
 
-    const colorf &c0 = tri[i0]->color;
-    const colorf &c1 = tri[i1]->color;
-    const colorf &c2 = tri[i2]->color;
-
-    const vec2 &uv0 = tri[i0]->uv;
-    const vec2 &uv1 = tri[i1]->uv;
-    const vec2 &uv2 = tri[i2]->uv;
-
     int iy0 = (int)floorf(y0);
     int iy1 = (int)roundf(y1);
     int iy2 = (int)ceilf(y2);
@@ -298,21 +439,6 @@ class RasterizerClass {
     if (iyMin < viewport.y) iyMin = viewport.y;
     if (iyMax >= viewport.bottom()) iyMax = viewport.bottom() - 1;
     if (iyMin > iyMax) return;
-
-    const uint16_t *__restrict__ texData = nullptr;
-    uint32_t texStride = 0;
-    uint32_t texW = 0, texH = 0;
-    uint32_t uMask = 0;
-    uint32_t vMask = 0;
-    if (mat && mat->colorTexture) {
-      const auto &tex = mat->colorTexture;
-      texData = (const uint16_t *)tex->linePtr(0);
-      texStride = tex->stride / sizeof(uint16_t);
-      texW = 1 << (int)floorf(log2f(tex->width));
-      texH = 1 << (int)floorf(log2f(tex->height));
-      uMask = texW - 1;
-      vMask = texH - 1;
-    }
 
     float yT = (float)vSpanT / vSpan;
     ScanLineCounter cornerT, cornerL, cornerR, cornerB;
@@ -327,23 +453,54 @@ class RasterizerClass {
     cornerR.z = fixed20p12::fromFloat(z0 + (z2 - z0) * yT);
     cornerB.z = fixed20p12::fromFloat(z2);
 
-    cornerT.u = fixed12p20::fromFloat(uv0.x * texW);
-    cornerL.u = fixed12p20::fromFloat(uv1.x * texW);
-    cornerR.u = fixed12p20::fromFloat((uv0.x + (uv2.x - uv0.x) * yT) * texW);
-    cornerB.u = fixed12p20::fromFloat(uv2.x * texW);
+    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+      const colorf &c0 = tri[i0]->color;
+      const colorf &c1 = tri[i1]->color;
+      const colorf &c2 = tri[i2]->color;
+      cornerT.c = color4p12(c0);
+      cornerL.c = color4p12(c1);
+      cornerR.c = color4p12(c0 + (c2 - c0) * yT);
+      cornerB.c = color4p12(c2);
+    }
 
-    cornerT.v = fixed12p20::fromFloat(uv0.y * texH);
-    cornerL.v = fixed12p20::fromFloat(uv1.y * texH);
-    cornerR.v = fixed12p20::fromFloat((uv0.y + (uv2.y - uv0.y) * yT) * texH);
-    cornerB.v = fixed12p20::fromFloat(uv2.y * texH);
-
-    cornerT.c = color4p12(c0);
-    cornerL.c = color4p12(c1);
-    cornerR.c = color4p12(c0 + (c2 - c0) * yT);
-    cornerB.c = color4p12(c2);
+    TextureArgs tex;
+    if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      const auto &t = mat->colorTexture;
+      tex.data = (const uint16_t *)t->linePtr(0);
+      tex.stride = t->stride / sizeof(uint16_t);
+      int texW = 1 << (int)floorf(log2f(t->width));
+      int texH = 1 << (int)floorf(log2f(t->height));
+      tex.uMask = texW - 1;
+      tex.vMask = texH - 1;
+      const vec2 &uv0 = tri[i0]->uv;
+      const vec2 &uv1 = tri[i1]->uv;
+      const vec2 &uv2 = tri[i2]->uv;
+      cornerT.u = fixed12p20::fromFloat(uv0.x * texW);
+      cornerL.u = fixed12p20::fromFloat(uv1.x * texW);
+      cornerR.u = fixed12p20::fromFloat((uv0.x + (uv2.x - uv0.x) * yT) * texW);
+      cornerB.u = fixed12p20::fromFloat(uv2.x * texW);
+      cornerT.v = fixed12p20::fromFloat(uv0.y * texH);
+      cornerL.v = fixed12p20::fromFloat(uv1.y * texH);
+      cornerR.v = fixed12p20::fromFloat((uv0.y + (uv2.y - uv0.y) * yT) * texH);
+      cornerB.v = fixed12p20::fromFloat(uv2.y * texH);
+    }
 
     if (cornerL.x > cornerR.x) {
       std::swap(cornerL, cornerR);
+    }
+
+    TriangleRenderFlags trf = TriangleRenderFlags::NONE;
+    if (target->format == PixelFormat::RGB444) {
+      trf |= TriangleRenderFlags::FORMAT444;
+    }
+    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+      trf |= TriangleRenderFlags::VERTEX_SHADING;
+    }
+    if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      trf |= TriangleRenderFlags::COLOR_TEXTURE;
+    }
+    if (hasFlag(flags, RenderFlags3D::ALPHA_BLEND)) {
+      trf |= TriangleRenderFlags::ALPHA_BLEND;
     }
 
     // rasterize the triangle using a scanline algorithm
@@ -369,82 +526,31 @@ class RasterizerClass {
         yEnd = iyMax;
       }
 
-      for (int iy = yStart; iy <= yEnd; iy++) {
-        int32_t ixMin = accumVL.x.roundToInt();
-        int32_t ixMax = accumVR.x.roundToInt();
-        int32_t hSpan = ixMax - ixMin + 1;
+#define XMC_GFX3D_HALF_TRIANGLE(aBlend, colorTex, vertShade, format444) \
+  renderHalfTriangle<aBlend, colorTex, vertShade, format444>(           \
+      accumVL, accumVR, stepVL, stepVR, yStart, yEnd, tex)
 
-        if (ixMin < viewport.x) ixMin = viewport.x;
-        if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
-
-        if (ixMin <= ixMax) {
-          ScanLineCounter accumH = accumVL;
-          ScanLineCounter stepH =
-              ScanLineCounter::calcStep(accumVL, accumVR, hSpan);
-
-          int32_t xOffset = ixMin - accumVL.x.roundToInt();
-          accumH.x += stepH.x * xOffset;
-          accumH.z += stepH.z * xOffset;
-          accumH.c += stepH.c * xOffset;
-          accumH.u += stepH.u * xOffset;
-          accumH.v += stepH.v * xOffset;
-
-          if (target->format == PixelFormat::RGB565) {
-            uint16_t *__restrict__ cptr = (uint16_t *)target->linePtr(iy);
-            depth_t *__restrict__ zptr = depthBuff + iy * width;
-            for (int x = ixMin; x <= ixMax; x++) {
-              int32_t z = accumH.z.floorToInt();
-              if (z < zptr[x]) {
-                color4p12 c = accumH.c;
-                if (useTexture) {
-                  int32_t u = accumH.u.floorToInt() & uMask;
-                  int32_t v = accumH.v.floorToInt() & vMask;
-                  c *= color4444(texData[v * texStride + u]);
-                }
-                if (c.a.raw != 0) {
-                  cptr[x] = c.to565();
-                  zptr[x] = z;
-                }
-              }
-              accumH.step(stepH);
-            }
-          } else if (target->format == PixelFormat::RGB444) {
-            Scanner444 scanner(*target, ixMin, iy);
-            depth_t *__restrict__ zptr = depthBuff + iy * width;
-            for (int x = ixMin; x <= ixMax; x++) {
-              int32_t z = accumH.z.floorToInt();
-              bool written = false;
-              if (z < zptr[x]) {
-                color4p12 c = accumH.c;
-                if (useTexture) {
-                  int32_t u = accumH.u.floorToInt() & uMask;
-                  int32_t v = accumH.v.floorToInt() & vMask;
-                  c *= color4444(texData[v * texStride + u]);
-                }
-                if (c.a.raw != 0) {
-                  scanner.push444(c.to444());
-                  written = true;
-                  zptr[x] = z;
-                }
-              }
-              accumH.step(stepH);
-              if (!written) scanner.skip();
-            }
-          }
-        }
-
-        accumVL.step(stepVL);
-        accumVR.step(stepVR);
+      switch ((uint32_t)trf) {
+        case 0: XMC_GFX3D_HALF_TRIANGLE(false, false, false, false); break;
+        case 1: XMC_GFX3D_HALF_TRIANGLE(false, false, false, true); break;
+        case 2: XMC_GFX3D_HALF_TRIANGLE(false, false, true, false); break;
+        case 3: XMC_GFX3D_HALF_TRIANGLE(false, false, true, true); break;
+        case 4: XMC_GFX3D_HALF_TRIANGLE(false, true, false, false); break;
+        case 5: XMC_GFX3D_HALF_TRIANGLE(false, true, false, true); break;
+        case 6: XMC_GFX3D_HALF_TRIANGLE(false, true, true, false); break;
+        case 7: XMC_GFX3D_HALF_TRIANGLE(false, true, true, true); break;
+        case 8: XMC_GFX3D_HALF_TRIANGLE(true, false, false, false); break;
+        case 9: XMC_GFX3D_HALF_TRIANGLE(true, false, false, true); break;
+        case 10: XMC_GFX3D_HALF_TRIANGLE(true, false, true, false); break;
+        case 11: XMC_GFX3D_HALF_TRIANGLE(true, false, true, true); break;
+        case 12: XMC_GFX3D_HALF_TRIANGLE(true, true, false, false); break;
+        case 13: XMC_GFX3D_HALF_TRIANGLE(true, true, false, true); break;
+        case 14: XMC_GFX3D_HALF_TRIANGLE(true, true, true, false); break;
+        case 15: XMC_GFX3D_HALF_TRIANGLE(true, true, true, true); break;
+        default: break;
       }
-    }
-  }
 
-  void renderTriangle(const BakedVertex &v0, const BakedVertex &v1,
-                      const BakedVertex &v2, const Material3D &mat) {
-    if (mat && mat->colorTexture) {
-      renderTriangleParam<true>(v0, v1, v2, mat);
-    } else {
-      renderTriangleParam<false>(v0, v1, v2, mat);
+#undef XMC_GFX3D_HALF_TRIANGLE
     }
   }
 
@@ -456,7 +562,7 @@ class RasterizerClass {
   }
 
   void validateMatrix(bool force = false);
-};
+};  // namespace xmc
 
 }  // namespace xmc
 

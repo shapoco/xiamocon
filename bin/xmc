@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+
+BOARD_RP2350_PICO_SDK = "rp2350_pico_sdk"
+BOARD_ESP32S3_PIO_ARDUINO = "esp32s3_pio_arduino"
+PLATFORMS = [BOARD_RP2350_PICO_SDK, BOARD_ESP32S3_PIO_ARDUINO]
+
+XMC_REPO_PATH = os.getenv("XMC_REPO_PATH")
+if not XMC_REPO_PATH:
+    print("Error: XMC_REPO_PATH environment variable is not set.")
+    exit(1)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="XMC - Xiamocon Utility")
+    parser.add_argument(
+        "command", choices=["init", "build", "run", "clean"], help="Command to execute"
+    )
+    parser.add_argument(
+        "-n", "--name", required=False, help="Project name (required for init)"
+    )
+    parser.add_argument(
+        "-p",
+        "--platform",
+        required=True,
+        choices=PLATFORMS,
+        help="Target platform (e.g., rp2350_pico_sdk)",
+    )
+    parser.add_argument("-d", "--drive", help="Drive letter for XIAO RP2350")
+    args = parser.parse_args()
+
+    if args.command == "init":
+        xmc_init(args)
+    elif args.command == "build":
+        xmc_build(args)
+    elif args.command == "run":
+        xmc_run(args)
+    elif args.command == "clean":
+        xmc_clean(args)
+    else:
+        print(f"Error: Unsupported command '{args.command}'")
+        exit(1)
+
+
+def xmc_init(args):
+    proj_name = args.name if args.name else os.path.basename(os.getcwd())
+    example_dir = os.path.join(XMC_REPO_PATH, "cpp", "example", "hello_world")
+    os.system(f"cp {example_dir}/CMakeLists.txt .")
+    os.system(f"cp {example_dir}/platformio.ini .")
+    os.system(f'grep -rl "hello_world" . | xargs sed -i "s/hello_world/{proj_name}/g"')
+
+
+def xmc_build(args):
+    if args.platform == BOARD_RP2350_PICO_SDK:
+        os.makedirs(".cmake", exist_ok=True)
+        os.chdir(".cmake")
+        ret = os.system(f"cmake .. -DPICO_BOARD=pico2 -DXMC_PLATFORM={args.platform}")
+        if ret != 0:
+            print("Error: CMake configuration failed")
+            exit(1)
+        ret = os.system("make -j")
+        if ret != 0:
+            print("Error: Make build failed")
+            exit(1)
+        os.chdir("..")
+    elif args.platform == BOARD_ESP32S3_PIO_ARDUINO:
+        ret = os.system("pio run -e esp32s3_arduino")
+        if ret != 0:
+            print("Error: PlatformIO build failed")
+            exit(1)
+    else:
+        print(f"Error: Unsupported platform '{args.platform}'")
+        exit(1)
+
+
+def xmc_run(args):
+    xmc_build(args)
+    proj_name = os.path.basename(os.getcwd())
+    if args.platform == BOARD_RP2350_PICO_SDK:
+        if not args.drive:
+            print("Error: Drive letter is required for RP2350 upload")
+            exit(1)
+        if "WSL2" in os.uname().release:
+            drv = args.drive.lower()
+            os.system(f"sudo mkdir -p /mnt/{drv}")
+            os.system(f"sudo mount -t drvfs {drv}: /mnt/{drv}/")
+            os.system(f"sudo cp ./.cmake/{proj_name}.uf2 /mnt/{drv}/")
+        elif os.name == "nt":
+            os.system(f"copy .\\.cmake\\{proj_name}.uf2 {args.drive}:\\")
+        else:
+            print("Error: Unsupported OS for RP2350 upload")
+            exit(1)
+    elif args.platform == BOARD_ESP32S3_PIO_ARDUINO:
+        os.system("pio run -e esp32s3_arduino --target upload")
+    else:
+        print(f"Error: Unsupported platform '{args.platform}'")
+        exit(1)
+
+
+def xmc_clean(args):
+    if args.platform == BOARD_RP2350_PICO_SDK:
+        os.system("rm -rf .cmake")
+    elif args.platform == BOARD_ESP32S3_PIO_ARDUINO:
+        os.system("rm -rf .pio")
+    else:
+        print(f"Error: Unsupported platform '{args.platform}'")
+        exit(1)
+
+
+if __name__ == "__main__":
+    main()
