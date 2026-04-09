@@ -67,6 +67,6 @@ xmc run -p esp32s3_pio_arduino
 
 ## Videos
 
-[![](./image/thumb-jumping-game.jpg)](https://x.com/shapoco/status/2031408937321591036)
+[![](./image/thumb-jumping-game.jpg)](https://x.com/shapoco/status/2041168789505794345)
 
 [![](./image/thumb-3d-gfx.jpg)](https://x.com/shapoco/status/2038788120653824424)
