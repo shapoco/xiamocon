@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('classxmc_1_1FrameBuffer.html',''); ini
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classxmc_1_1FrameBuffer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">xmc::FrameBuffer Class Reference</div></div>
 </div><!--header-->
@@ -104,6 +104,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae61ee65e46ad48ec39a46e5bb524e216"><td class="memItemLeft" align="right" valign="top"><a id="ae61ee65e46ad48ec39a46e5bb524e216" name="ae61ee65e46ad48ec39a46e5bb524e216"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FrameBuffer</b> (PixelFormat fmt, bool doubleBuffered=false, int width=display::WIDTH, int height=display::HEIGHT)</td></tr>
 <tr class="separator:ae61ee65e46ad48ec39a46e5bb524e216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4af9deaa4b86b434a74b743053ba01d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#ab4af9deaa4b86b434a74b743053ba01d">isDoubleBuffered</a> () const</td></tr>
+<tr class="memdesc:ab4af9deaa4b86b434a74b743053ba01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the frame buffer is double buffered.  <br /></td></tr>
+<tr class="separator:ab4af9deaa4b86b434a74b743053ba01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c0a38974814887406fef1992b5fb80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#a14c0a38974814887406fef1992b5fb80">enableFlag</a> (FrameBufferFlags flag)</td></tr>
+<tr class="memdesc:a14c0a38974814887406fef1992b5fb80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a specific flag for the frame buffer.  <br /></td></tr>
+<tr class="separator:a14c0a38974814887406fef1992b5fb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a367fb1e93ad3527ea18a79a97afbee57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#a367fb1e93ad3527ea18a79a97afbee57">disableFlag</a> (FrameBufferFlags flag)</td></tr>
+<tr class="memdesc:a367fb1e93ad3527ea18a79a97afbee57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable a specific flag for the frame buffer.  <br /></td></tr>
+<tr class="separator:a367fb1e93ad3527ea18a79a97afbee57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af84592247c47371e1b4e103e17ec461f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#af84592247c47371e1b4e103e17ec461f">getWidth</a> () const</td></tr>
 <tr class="memdesc:af84592247c47371e1b4e103e17ec461f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the width of the frame buffer.  <br /></td></tr>
 <tr class="separator:af84592247c47371e1b4e103e17ec461f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,21 +137,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a717f8732d9720179dca01bc4030f6bd4"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#a717f8732d9720179dca01bc4030f6bd4">endRender</a> (bool transferToDisplay=true)</td></tr>
 <tr class="memdesc:a717f8732d9720179dca01bc4030f6bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">End rendering to the frame buffer. If transferToDisplay is true, this function will initiate a transfer of the back buffer to the display. If double buffering is enabled and a transfer is already in progress, this function will wait for the current transfer to complete before starting a new one.  <br /></td></tr>
 <tr class="separator:a717f8732d9720179dca01bc4030f6bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a601cbfc8671698a37db8e067b656b937"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#a601cbfc8671698a37db8e067b656b937">renderStatusBar</a> (Graphics2D &amp;gfx)</td></tr>
+<tr class="memdesc:a601cbfc8671698a37db8e067b656b937"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the status bar on the frame buffer. This function should be called during the rendering process if the SHOW_STATUS_BAR flag is enabled. It will draw the status bar at the top of the frame buffer, displaying information such as battery level and FPS if the corresponding flags are enabled.  <br /></td></tr>
+<tr class="separator:a601cbfc8671698a37db8e067b656b937"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dbd58f857c0fc4703ad8a3c859ed398"><td class="memItemLeft" align="right" valign="top">XmcStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1FrameBuffer.html#a9dbd58f857c0fc4703ad8a3c859ed398">renderDebugBar</a> (Graphics2D &amp;gfx)</td></tr>
+<tr class="memdesc:a9dbd58f857c0fc4703ad8a3c859ed398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render debug information on the frame buffer. This function should be called during the rendering process if the SHOW_DEBUG_INFO flag is enabled. It can be used to display various debug information such as memory usage, performance metrics, or any other relevant data for debugging purposes.  <br /></td></tr>
+<tr class="separator:a9dbd58f857c0fc4703ad8a3c859ed398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:adf0dd5880b6935a844e3710077bfb211"><td class="memItemLeft" align="right" valign="top"><a id="adf0dd5880b6935a844e3710077bfb211" name="adf0dd5880b6935a844e3710077bfb211"></a>
-const int&#160;</td><td class="memItemRight" valign="bottom"><b>numBuffers</b></td></tr>
-<tr class="separator:adf0dd5880b6935a844e3710077bfb211"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2580bce58a95cd57374812cef32e579"><td class="memItemLeft" align="right" valign="top"><a id="ae2580bce58a95cd57374812cef32e579" name="ae2580bce58a95cd57374812cef32e579"></a>
-Sprite&#160;</td><td class="memItemRight" valign="bottom"><b>sprites</b> [2]</td></tr>
-<tr class="separator:ae2580bce58a95cd57374812cef32e579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa03a71115773e71257f946fc5e054646"><td class="memItemLeft" align="right" valign="top"><a id="aa03a71115773e71257f946fc5e054646" name="aa03a71115773e71257f946fc5e054646"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>frontIndex</b> = 0</td></tr>
-<tr class="separator:aa03a71115773e71257f946fc5e054646"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac883cd95a600bc954f4b743eda4ba2a7"><td class="memItemLeft" align="right" valign="top"><a id="ac883cd95a600bc954f4b743eda4ba2a7" name="ac883cd95a600bc954f4b743eda4ba2a7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>transferInProgress</b> = false</td></tr>
-<tr class="separator:ac883cd95a600bc954f4b743eda4ba2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a221be51e0290a9fbd96e8227b9cb02f4"><td class="memItemLeft" align="right" valign="top"><a id="a221be51e0290a9fbd96e8227b9cb02f4" name="a221be51e0290a9fbd96e8227b9cb02f4"></a>
+static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>STATUS_BAR_HEIGHT</b> = 10</td></tr>
+<tr class="separator:a221be51e0290a9fbd96e8227b9cb02f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8afe08e4219dfaa560369078676a44fd" name="a8afe08e4219dfaa560369078676a44fd"></a>
@@ -190,6 +196,74 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>transferInProgress</b
 
 <p>Create a Graphics2D object for rendering to the back buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>A shared pointer to a Graphics2D object targeting the back buffer </dd></dl>
+
+</div>
+</div>
+<a id="a367fb1e93ad3527ea18a79a97afbee57" name="a367fb1e93ad3527ea18a79a97afbee57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a367fb1e93ad3527ea18a79a97afbee57">&#9670;&#160;</a></span>disableFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::FrameBuffer::disableFlag </td>
+          <td>(</td>
+          <td class="paramtype">FrameBufferFlags&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disable a specific flag for the frame buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>The flag to disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a14c0a38974814887406fef1992b5fb80" name="a14c0a38974814887406fef1992b5fb80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14c0a38974814887406fef1992b5fb80">&#9670;&#160;</a></span>enableFlag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void xmc::FrameBuffer::enableFlag </td>
+          <td>(</td>
+          <td class="paramtype">FrameBufferFlags&#160;</td>
+          <td class="paramname"><em>flag</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable a specific flag for the frame buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">flag</td><td>The flag to enable </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -357,6 +431,88 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>transferInProgress</b
 
 <p>Get the width of the frame buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>The width of the frame buffer in pixels </dd></dl>
+
+</div>
+</div>
+<a id="ab4af9deaa4b86b434a74b743053ba01d" name="ab4af9deaa4b86b434a74b743053ba01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4af9deaa4b86b434a74b743053ba01d">&#9670;&#160;</a></span>isDoubleBuffered()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xmc::FrameBuffer::isDoubleBuffered </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if the frame buffer is double buffered. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if double buffering is enabled, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a9dbd58f857c0fc4703ad8a3c859ed398" name="a9dbd58f857c0fc4703ad8a3c859ed398"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dbd58f857c0fc4703ad8a3c859ed398">&#9670;&#160;</a></span>renderDebugBar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XmcStatus xmc::FrameBuffer::renderDebugBar </td>
+          <td>(</td>
+          <td class="paramtype">Graphics2D &amp;&#160;</td>
+          <td class="paramname"><em>gfx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render debug information on the frame buffer. This function should be called during the rendering process if the SHOW_DEBUG_INFO flag is enabled. It can be used to display various debug information such as memory usage, performance metrics, or any other relevant data for debugging purposes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gfx</td><td>A Graphics2D object to use for rendering the debug information </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An XmcStatus code indicating success or failure of the operation </dd></dl>
+
+</div>
+</div>
+<a id="a601cbfc8671698a37db8e067b656b937" name="a601cbfc8671698a37db8e067b656b937"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a601cbfc8671698a37db8e067b656b937">&#9670;&#160;</a></span>renderStatusBar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">XmcStatus xmc::FrameBuffer::renderStatusBar </td>
+          <td>(</td>
+          <td class="paramtype">Graphics2D &amp;&#160;</td>
+          <td class="paramname"><em>gfx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Render the status bar on the frame buffer. This function should be called during the rendering process if the SHOW_STATUS_BAR flag is enabled. It will draw the status bar at the top of the frame buffer, displaying information such as battery level and FPS if the corresponding flags are enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gfx</td><td>A Graphics2D object to use for rendering the status bar </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An XmcStatus code indicating success or failure of the operation </dd></dl>
 
 </div>
 </div>

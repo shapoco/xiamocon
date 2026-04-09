@@ -4,7 +4,9 @@ var searchData=
   ['readall_1',['readAll',['../ioex_8hpp.html#af07ff39e2d0b543a010b76997922a587',1,'xmc::ioex']]],
   ['readmasked_2',['readMasked',['../ioex_8hpp.html#a43673d54af51d89d61c4fd72cb4c5590',1,'xmc::ioex']]],
   ['render_3',['render',['../classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b',1,'xmc::audio::Mixer::render()'],['../classxmc_1_1audio_1_1Tone.html#a4ce4f2b69fe4bad4676393f985eb32c0',1,'xmc::audio::Tone::render()']]],
-  ['reset_4',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],
-  ['right_5',['right',['../structxmc_1_1Rect.html#a671571b9966b8631c0dafc612a6bce50',1,'xmc::Rect']]],
-  ['rotate_6',['rotate',['../structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89',1,'xmc::quat']]]
+  ['renderdebugbar_4',['renderDebugBar',['../classxmc_1_1FrameBuffer.html#a9dbd58f857c0fc4703ad8a3c859ed398',1,'xmc::FrameBuffer']]],
+  ['renderstatusbar_5',['renderStatusBar',['../classxmc_1_1FrameBuffer.html#a601cbfc8671698a37db8e067b656b937',1,'xmc::FrameBuffer']]],
+  ['reset_6',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],
+  ['right_7',['right',['../structxmc_1_1Rect.html#a671571b9966b8631c0dafc612a6bce50',1,'xmc::Rect']]],
+  ['rotate_8',['rotate',['../structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89',1,'xmc::quat']]]
 ];

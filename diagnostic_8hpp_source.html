@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('diagnostic_8hpp_source.html',''); init
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_struct" href="structxmc_1_1fs_1_1FileInfo.html">fs::FileInfo</a> fileList[MAX_FILES];</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keywordtype">int</span> numFiles = 0;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  <span class="keywordtype">int</span> fileCursor = 0;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keywordtype">char</span> currentDir[fs::MAX_PATH_LENGTH + 1] = <span class="stringliteral">&quot;/&quot;</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keywordtype">char</span> currentDir[path::MAX_PATH_LENGTH + 1] = <span class="stringliteral">&quot;/&quot;</span>;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1AppConfig.html">AppConfig</a> getConfig() {</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <a class="code hl_struct" href="structxmc_1_1AppConfig.html">AppConfig</a> config = getDefaultAppConfig();</div>
@@ -147,33 +147,34 @@ $(document).ready(function(){initNavTree('diagnostic_8hpp_source.html',''); init
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>          <span class="keywordflow">if</span> (app-&gt;numFiles &lt; App::MAX_FILES) {</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            app-&gt;fileList[app-&gt;numFiles++] = info;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>          }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        },</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">this</span>);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="comment">// void renderFileList() {</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="comment">//   int y = 12;</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="comment">//   for (int i = 0; i &lt; numFiles; i++) {</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="comment">//     const fs::FileInfo &amp;info = fileList[i];</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="comment">//     char buf[fs::MAX_FILENAME_LENGTH + 32];</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="comment">//     snprintf(buf, sizeof(buf), &quot;%c %s (%lu bytes)&quot;,</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="comment">//              info.isDirectory ? &#39;D&#39; : &#39;F&#39;, info.name, info.size);</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="comment">//     frameBuffer-&gt;setTextColor(i == fileCursor ? 0xF800 : 0xFFFF);</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="comment">//     frameBuffer-&gt;setFont(&amp;ShapoSansP_s08c07, 1);</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="comment">//     frameBuffer-&gt;setCursor(4, y);</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="comment">//     frameBuffer-&gt;drawString(buf);</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="comment">//     y += 10;</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="comment">//   }</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="comment">// }</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>};</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}  <span class="comment">// namespace xmc::diagnostic</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>          <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        },</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">this</span>);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="comment">// void renderFileList() {</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="comment">//   int y = 12;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="comment">//   for (int i = 0; i &lt; numFiles; i++) {</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="comment">//     const fs::FileInfo &amp;info = fileList[i];</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="comment">//     char buf[fs::MAX_FILENAME_LENGTH + 32];</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="comment">//     snprintf(buf, sizeof(buf), &quot;%c %s (%lu bytes)&quot;,</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="comment">//              info.isDirectory ? &#39;D&#39; : &#39;F&#39;, info.name, info.size);</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="comment">//     frameBuffer-&gt;setTextColor(i == fileCursor ? 0xF800 : 0xFFFF);</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="comment">//     frameBuffer-&gt;setFont(&amp;ShapoSansP_s08c07, 1);</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="comment">//     frameBuffer-&gt;setCursor(4, y);</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="comment">//     frameBuffer-&gt;drawString(buf);</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="comment">//     y += 10;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="comment">//   }</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="comment">// }</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>};</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>}  <span class="comment">// namespace xmc::diagnostic</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassxmc_1_1diagnostic_1_1App_html"><div class="ttname"><a href="classxmc_1_1diagnostic_1_1App.html">xmc::diagnostic::App</a></div><div class="ttdef"><b>Definition:</b> diagnostic.hpp:13</div></div>
 <div class="ttc" id="ainput_8hpp_html"><div class="ttname"><a href="input_8hpp.html">input.hpp</a></div><div class="ttdoc">Input handling for XMC library.</div></div>
 <div class="ttc" id="astructxmc_1_1AppConfig_html"><div class="ttname"><a href="structxmc_1_1AppConfig.html">xmc::AppConfig</a></div><div class="ttdef"><b>Definition:</b> app.hpp:16</div></div>
-<div class="ttc" id="astructxmc_1_1fs_1_1FileInfo_html"><div class="ttname"><a href="structxmc_1_1fs_1_1FileInfo.html">xmc::fs::FileInfo</a></div><div class="ttdef"><b>Definition:</b> fs.hpp:18</div></div>
+<div class="ttc" id="astructxmc_1_1fs_1_1FileInfo_html"><div class="ttname"><a href="structxmc_1_1fs_1_1FileInfo.html">xmc::fs::FileInfo</a></div><div class="ttdef"><b>Definition:</b> fs.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

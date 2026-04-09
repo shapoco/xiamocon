@@ -11,11 +11,13 @@ var searchData=
   ['readmasked_8',['readMasked',['../ioex_8hpp.html#a43673d54af51d89d61c4fd72cb4c5590',1,'xmc::ioex']]],
   ['rect_9',['Rect',['../structxmc_1_1Rect.html',1,'xmc']]],
   ['release_10',['RELEASE',['../tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70a7d649ef069df9885e382417c79f3d5cd',1,'xmc::audio']]],
-  ['render_11',['render',['../classxmc_1_1audio_1_1Tone.html#a4ce4f2b69fe4bad4676393f985eb32c0',1,'xmc::audio::Tone::render()'],['../classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b',1,'xmc::audio::Mixer::render()']]],
-  ['repeatingtimer_12',['RepeatingTimer',['../classxmc_1_1RepeatingTimer.html',1,'xmc']]],
-  ['reset_13',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],
-  ['resetmode_14',['ResetMode',['../power_8hpp.html#a144da1a4d9a8d7677af4b11d4f0b75f0',1,'xmc::power']]],
-  ['right_15',['right',['../structxmc_1_1Rect.html#a671571b9966b8631c0dafc612a6bce50',1,'xmc::Rect']]],
-  ['right_16',['RIGHT',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a21507b40c80068eda19865706fdc2403',1,'xmc::input']]],
-  ['rotate_17',['rotate',['../structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89',1,'xmc::quat']]]
+  ['render_11',['render',['../classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b',1,'xmc::audio::Mixer::render()'],['../classxmc_1_1audio_1_1Tone.html#a4ce4f2b69fe4bad4676393f985eb32c0',1,'xmc::audio::Tone::render()']]],
+  ['renderdebugbar_12',['renderDebugBar',['../classxmc_1_1FrameBuffer.html#a9dbd58f857c0fc4703ad8a3c859ed398',1,'xmc::FrameBuffer']]],
+  ['renderstatusbar_13',['renderStatusBar',['../classxmc_1_1FrameBuffer.html#a601cbfc8671698a37db8e067b656b937',1,'xmc::FrameBuffer']]],
+  ['repeatingtimer_14',['RepeatingTimer',['../classxmc_1_1RepeatingTimer.html',1,'xmc']]],
+  ['reset_15',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],
+  ['resetmode_16',['ResetMode',['../power_8hpp.html#a144da1a4d9a8d7677af4b11d4f0b75f0',1,'xmc::power']]],
+  ['right_17',['right',['../structxmc_1_1Rect.html#a671571b9966b8631c0dafc612a6bce50',1,'xmc::Rect']]],
+  ['right_18',['RIGHT',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a21507b40c80068eda19865706fdc2403',1,'xmc::input']]],
+  ['rotate_19',['rotate',['../structxmc_1_1quat.html#a70fcaa61392f2d0b315fd1d6d2b27b89',1,'xmc::quat']]]
 ];

@@ -17,6 +17,7 @@ var dir_34901e8a2955b2f307fb8f90642cf41b =
     [ "gfx.hpp", "gfx_8hpp_source.html", null ],
     [ "input.hpp", "input_8hpp.html", "input_8hpp" ],
     [ "ioex.hpp", "ioex_8hpp.html", "ioex_8hpp" ],
+    [ "path.hpp", "path_8hpp_source.html", null ],
     [ "random.hpp", "random_8hpp_source.html", null ],
     [ "speaker.hpp", "speaker_8hpp.html", "speaker_8hpp" ],
     [ "system.hpp", "system_8hpp_source.html", null ]
