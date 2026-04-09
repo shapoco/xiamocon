@@ -13,7 +13,7 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
 
 ![](./image/arch-hw.png)
 
-## Setup Development Environment
+## Setup Development Environment (Linux/WSL2)
 
 ### for RP2350
 
@@ -44,17 +44,19 @@ git clone https://github.com/shapoco/xiamocon
 > export XMC_REPO_PATH=${HOME}/xiamocon
 > ```
 
-## Creating new project
-
-### for Linux/WSL2
+## Creating Your Project (Linux/WSL2)
 
 ```bash
-source ${HOME}/xiamocon/setup.shrc
+export XMC_REPO_PATH=${HOME}/xiamocon
+source ${XMC_REPO_PATH}/setup.shrc
 mkdir -p my_project
 cd my_project
-xmc init -n my_project
+xmc init
 cp -r $XMC_REPO_PATH/cpp/example/hello_world/src .
-xmc build
+# for RP2350:
+xmc build -p rp2350_pico_sdk
+# for ESP32S3:
+xmc run -p esp32s3_pio_arduino
 ```
 
 ## Pictures

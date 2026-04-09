@@ -24,7 +24,6 @@ def main():
     parser.add_argument(
         "-p",
         "--platform",
-        required=True,
         choices=PLATFORMS,
         help="Target platform (e.g., rp2350_pico_sdk)",
     )
@@ -34,9 +33,19 @@ def main():
     if args.command == "init":
         xmc_init(args)
     elif args.command == "build":
-        xmc_build(args)
+        if args.platform is None:
+            for p in PLATFORMS:
+                args.platform = p
+                xmc_build(args)
+        else:
+            xmc_build(args)
     elif args.command == "run":
-        xmc_run(args)
+        if args.platform is None:
+            for p in PLATFORMS:
+                args.platform = p
+                xmc_run(args)
+        else:
+            xmc_run(args)
     elif args.command == "clean":
         xmc_clean(args)
     else:
