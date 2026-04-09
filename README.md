@@ -32,7 +32,6 @@ python3 get-platformio.py
 ### Install Xiamocon SDK
 
 ```bash
-mkdir -p ${HOME}
 cd ${HOME}
 git clone https://github.com/shapoco/xiamocon
 ```
