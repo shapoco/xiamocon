@@ -18,9 +18,7 @@ namespace xmc::fs {
 bool mounted = false;
 FATFS ffFs;
 
-XmcStatus init() {
-  return XMC_OK;
-}
+XmcStatus init() { return XMC_OK; }
 
 XmcStatus deinit() {
   unmount();
@@ -30,7 +28,7 @@ XmcStatus deinit() {
 XmcStatus mount() {
   if (mounted) return XMC_OK;
 
-  FRESULT res = f_mount(&ffFs, "/", 0);
+  FRESULT res = f_mount(&ffFs, "/", 1);
   if (res != FR_OK) {
     XMC_ERR_RET(XMC_ERR_FS_MOUNT_FAILED);
   }
@@ -48,6 +46,10 @@ XmcStatus enumFiles(const char* path, EnumFileCallback cb, void* userData) {
   DIR dir;
   FILINFO fno;
 
+  if (!mounted) {
+    XMC_ERR_RET(XMC_ERR_FS_NOT_MOUNTED);
+  }
+
   FRESULT res = f_opendir(&dir, path);
   if (res != FR_OK) {
     XMC_ERR_RET(XMC_ERR_FS_OPEN_FAILED);
@@ -63,13 +65,43 @@ XmcStatus enumFiles(const char* path, EnumFileCallback cb, void* userData) {
     }
 
     FileInfo info;
-    strncpy(info.name, fno.fname, MAX_FILENAME_LENGTH);
+    strncpy(info.name, fno.fname, path::MAX_FILENAME_LENGTH);
     info.size = fno.fsize;
     info.isDirectory = (fno.fattrib & AM_DIR) != 0;
 
-    cb(info, userData);
+    if (!cb(info, userData)) {
+      break;
+    }
   }
 
+  return XMC_OK;
+}
+
+XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
+                    size_t* outNumFiles) {
+  struct EnumData {
+    FileInfo* out;
+    size_t maxFiles;
+    size_t numFiles;
+  } data{out, maxFiles, 0};
+  // 既存の enumFiles を使用
+  XmcStatus sts = enumFiles(
+      path,
+      [](const FileInfo& info, void* userData) {
+        EnumData* data = (EnumData*)userData;
+        if (data->numFiles < data->maxFiles) {
+          data->out[data->numFiles++] = info;
+          return true;
+        }
+        return false;  // これ以上ファイル情報を格納できない場合は列挙を停止
+      },
+      &data);
+  if (sts != XMC_OK) {
+    XMC_ERR_RET(sts);
+  }
+  if (outNumFiles) {
+    *outNumFiles = data.numFiles;
+  }
   return XMC_OK;
 }
 
@@ -119,8 +151,8 @@ XmcStatus removeDirectory(const char* path) {
       break;  // end of directory
     }
 
-    char childPath[MAX_PATH_LENGTH + 1];
-    snprintf(childPath, MAX_PATH_LENGTH + 1, "%s/%s", path, fno.fname);
+    char childPath[path::MAX_PATH_LENGTH + 1];
+    snprintf(childPath, path::MAX_PATH_LENGTH + 1, "%s/%s", path, fno.fname);
 
     if ((fno.fattrib & AM_DIR) != 0) {
       // Directory

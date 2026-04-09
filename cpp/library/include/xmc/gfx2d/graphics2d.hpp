@@ -25,6 +25,9 @@ class Graphics2DClass {
 
   void setTarget(Sprite &s);
   void setClipRect(const Rect &rect);
+  inline void setClipRect(int x, int y, int w, int h) {
+    setClipRect(Rect{x, y, w, h});
+  }
   void clearClipRect();
   Rect getBounds();
   GraphicsState2D getState() { return state; }
@@ -49,7 +52,12 @@ class Graphics2DClass {
     drawImage(image, dx, dy, w, h, sx, sy, tra);
   }
 
-  void setFont(const GFXfont *font, int size = 1);
+  inline void setFont(const GFXfont *font, int size) {
+    setFont(font);
+    setFontSize(size);
+  }
+  void setFont(const GFXfont *font);
+  void setFontSize(int size);
   void setCursor(int x, int y);
   void setTextColor(RawColor fg);
   void setTextColor(RawColor fg, RawColor bg);

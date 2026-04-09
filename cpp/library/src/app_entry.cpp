@@ -67,6 +67,7 @@ void libLoop() {
   }
 }
 
+__attribute__((deprecated))
 void appDrawStatusBar(Graphics2D &gfx) {
   uint64_t nowUs = getTimeUs();
 
@@ -115,6 +116,7 @@ void appDrawStatusBar(Graphics2D &gfx) {
   gfx->setState(backup);
 }
 
+__attribute__((deprecated))
 void appDrawDebugInfo(Graphics2D &gfx) {
   XmcStatus err;
   const char *file;

@@ -154,10 +154,26 @@ void Graphics2DClass::drawImage(const Sprite &image, int dx, int dy, int w,
   }
 }
 
-void Graphics2DClass::setFont(const GFXfont *font, int size) {
+void Graphics2DClass::setFont(const GFXfont *font) {
   state.font = font;
-  state.fontSize = size;
+  state.fontOffsetY = 0;
+  state.fontHeight = 0;
+  int maxBottom = 0;
+  for (int i = 0; i < font->last - font->first + 1; i++) {
+    const GFXglyph &glyph = font->glyph[i];
+    int yOffset = -glyph.yOffset;
+    if (i == 0 || yOffset > state.fontOffsetY) {
+      state.fontOffsetY = yOffset;
+    }
+    int bottom = yOffset + glyph.height;
+    if (i == 0 || bottom > maxBottom) {
+      maxBottom = bottom;
+    }
+  }
+  state.fontHeight = maxBottom + state.fontOffsetY;
 }
+
+void Graphics2DClass::setFontSize(int size) { state.fontSize = size; }
 
 void Graphics2DClass::setCursor(int x, int y) {
   state.cursorX = x;
@@ -197,13 +213,13 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
   GlyphMetrics metrics = renderer.beginRender(code);
 
   int dx = x + metrics.xOffset;
-  int dy = y + metrics.yOffset;
+  int dy = y + metrics.yOffset + state.fontOffsetY;
   int sx = 0;
   int w = metrics.width;
-  if (dx < 0) {
-    sx = -dx;
-    w += dx;
-    dx = 0;
+  if (dx < state.clipRect.x) {
+    sx = state.clipRect.x - dx;
+    w -= sx;
+    dx = state.clipRect.x;
   }
 
   if (dx + w >= state.clipRect.right()) {
@@ -249,7 +265,7 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
 
   for (int j = 0; j < metrics.height; j++, dy++) {
     if (dy >= state.clipRect.bottom()) break;
-    bool skip = (dy < 0);
+    bool skip = (dy < state.clipRect.y);
 
     int rdx = target ? dx : 0;
     renderer.renderNextLine(dstFmt, dstPtr, rdx, w, sx, tra, skip);

@@ -1,0 +1,224 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import re
+import sys
+from PIL import Image
+import numpy as np
+
+
+def file_name_to_identifiers(output_path: str):
+    """出力ファイル名から C++ 識別子を生成する"""
+    base = os.path.splitext(os.path.basename(output_path))[0]
+    # 英数字とアンダースコアのみ残す
+    clean = re.sub(r"[^a-zA-Z0-9_]", "_", base)
+    # 先頭が数字の場合はアンダースコアを付ける
+    if clean and clean[0].isdigit():
+        clean = "_" + clean
+
+    # UPPER_SNAKE_CASE (インクルードガード用)
+    upper = re.sub(r"([a-z])([A-Z])", r"\1_\2", clean).upper()
+
+    # camelCase (変数名用)
+    parts = re.split(r"_+", clean)
+    camel = parts[0].lower() + "".join(p.capitalize() for p in parts[1:]) if parts else clean
+
+    # PascalCase (関数名用)
+    pascal = "".join(p.capitalize() for p in parts) if parts else clean
+
+    return upper, camel, pascal
+
+
+def convert_argb4444(image: Image.Image, dither: str):
+    """画像を ARGB4444 に変換する"""
+    img = image.convert("RGBA")
+    w, h = img.size
+    arr = np.array(img, dtype=np.float64)  # (h, w, 4)
+
+    if dither == "none":
+        q = (np.array(img, dtype=np.uint16) >> 4) & 0xF
+        a, r, g, b = q[:, :, 3], q[:, :, 0], q[:, :, 1], q[:, :, 2]
+        pixels = (a << 12) | (r << 8) | (g << 4) | b
+        return w, h, pixels.flatten().tolist()
+
+    if dither == "diffusion":
+        buf = arr.copy()
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                old = buf[y, x]
+                clamped = np.clip(old, 0.0, 255.0)
+                q = ((clamped + 0.5).astype(np.int32) >> 4) & 0xF
+                eq = q * 17
+                err = clamped - eq.astype(np.float64)
+                pixels.append(int((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2]))
+                for dx, dy, weight in [(1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        buf[ny, nx] += err * weight
+        return w, h, pixels
+
+    if dither == "pattern":
+        # 4x4 Bayer マトリクス (0-15 の閾値)
+        bayer = np.array([
+            [ 0,  8,  2, 10],
+            [12,  4, 14,  6],
+            [ 3, 11,  1,  9],
+            [15,  7, 13,  5],
+        ], dtype=np.float64)
+        threshold = (bayer / 16.0 - 0.5) * (255.0 / 15.0)
+
+        result = np.empty((h, w), dtype=np.uint16)
+        for y in range(h):
+            for x in range(w):
+                t = threshold[y % 4, x % 4]
+                clamped = np.clip(arr[y, x] + t, 0.0, 255.0)
+                q = (clamped.astype(np.int32) >> 4) & 0xF
+                result[y, x] = (q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2]
+        return w, h, result.flatten().tolist()
+
+    raise ValueError(f"Unknown dither mode: {dither}")
+
+
+def convert_rgb565(image: Image.Image, dither: str):
+    """画像を RGB565 (バイトスワップ) に変換する"""
+    img = image.convert("RGB")
+    w, h = img.size
+    arr = np.array(img, dtype=np.float64)  # (h, w, 3)
+
+    if dither == "none":
+        raw = np.array(img, dtype=np.uint16)
+        r, g, b = raw[:, :, 0], raw[:, :, 1], raw[:, :, 2]
+        val = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3)
+        # バイトスワップ
+        swapped = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+        return w, h, swapped.flatten().tolist()
+
+    if dither == "diffusion":
+        buf = arr.copy()
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                old = buf[y, x]
+                clamped = np.clip(old, 0.0, 255.0)
+                # R: 5bit, G: 6bit, B: 5bit
+                rq = int(clamped[0] + 0.5) >> 3
+                gq = int(clamped[1] + 0.5) >> 2
+                bq = int(clamped[2] + 0.5) >> 3
+                rq = max(0, min(31, rq))
+                gq = max(0, min(63, gq))
+                bq = max(0, min(31, bq))
+                # 展開値
+                re_ = (rq * 255 + 15) // 31
+                ge_ = (gq * 255 + 31) // 63
+                be_ = (bq * 255 + 15) // 31
+                err = np.array([clamped[0] - re_, clamped[1] - ge_, clamped[2] - be_])
+                val = (rq << 11) | (gq << 5) | bq
+                swapped = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+                pixels.append(int(swapped))
+                for dx, dy, weight in [(1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        buf[ny, nx] += err * weight
+        return w, h, pixels
+
+    if dither == "pattern":
+        bayer = np.array([
+            [ 0,  8,  2, 10],
+            [12,  4, 14,  6],
+            [ 3, 11,  1,  9],
+            [15,  7, 13,  5],
+        ], dtype=np.float64)
+
+        result = np.empty((h, w), dtype=np.uint16)
+        for y in range(h):
+            for x in range(w):
+                t = bayer[y % 4, x % 4]
+                r_val = np.clip(arr[y, x, 0] + t * (255.0 / 31.0) / 16.0 - (255.0 / 31.0) / 2.0, 0.0, 255.0)
+                g_val = np.clip(arr[y, x, 1] + t * (255.0 / 63.0) / 16.0 - (255.0 / 63.0) / 2.0, 0.0, 255.0)
+                b_val = np.clip(arr[y, x, 2] + t * (255.0 / 31.0) / 16.0 - (255.0 / 31.0) / 2.0, 0.0, 255.0)
+                rq = max(0, min(31, int(r_val + 0.5) >> 3))
+                gq = max(0, min(63, int(g_val + 0.5) >> 2))
+                bq = max(0, min(31, int(b_val + 0.5) >> 3))
+                val = (rq << 11) | (gq << 5) | bq
+                result[y, x] = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+        return w, h, result.flatten().tolist()
+
+    raise ValueError(f"Unknown dither mode: {dither}")
+
+
+def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: list):
+    """C++ ヘッダファイルを生成する"""
+    upper, camel, pascal = file_name_to_identifiers(output_path)
+
+    guard = f"{upper}_HPP"
+    data_name = f"{camel}Data"
+    func_name = f"create{pascal}Sprite"
+    stride = width * 2  # uint16_t = 2 bytes
+
+    if fmt == "argb4444":
+        create_func = "xmc::createSprite4444"
+    else:
+        create_func = "xmc::createSprite565"
+
+    lines = []
+    lines.append(f"#ifndef {guard}")
+    lines.append(f"#define {guard}")
+    lines.append("")
+    lines.append('#include "xmc/gfx.hpp"')
+    lines.append("")
+    lines.append(f"static const uint16_t {data_name}[] = {{")
+
+    cols = 8
+    for i in range(0, len(pixels), cols):
+        chunk = pixels[i:i + cols]
+        line = "    " + ", ".join(f"0x{v:04X}" for v in chunk) + ","
+        lines.append(line)
+
+    lines.append("};")
+    lines.append("")
+    lines.append(f"static inline xmc::Sprite {func_name}() {{")
+    lines.append(f"  return {create_func}(")
+    lines.append(f"    {width},")
+    lines.append(f"    {height},")
+    lines.append(f"    {stride},")
+    lines.append(f"    (void *){data_name},")
+    lines.append(f"    false")
+    lines.append(f"  );")
+    lines.append("}")
+    lines.append("")
+    lines.append(f"#endif")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="画像ファイルを C++ 配列コードに変換する")
+    parser.add_argument("-f", "--format", choices=["argb4444", "rgb565"], default="rgb565",
+                        help="出力ピクセルフォーマット (デフォルト: rgb565)")
+    parser.add_argument("-d", "--dither", choices=["none", "diffusion", "pattern"], default="none",
+                        help="ディザリング方式 (デフォルト: none)")
+    parser.add_argument("input", help="入力画像ファイルのパス")
+    parser.add_argument("output", help="出力 C++ ヘッダ (*.hpp) のパス")
+    args = parser.parse_args()
+
+    image = Image.open(args.input)
+
+    if args.format == "argb4444":
+        w, h, pixels = convert_argb4444(image, args.dither)
+    else:
+        w, h, pixels = convert_rgb565(image, args.dither)
+
+    code = generate_cpp(args.output, args.format, w, h, pixels)
+
+    os.makedirs(os.path.dirname(os.path.abspath(args.output)), exist_ok=True)
+    with open(args.output, "w") as f:
+        f.write(code)
+
+    print(f"Generated {args.output} ({w}x{h}, {args.format}, dither={args.dither})")
+
+
+if __name__ == "__main__":
+    main()

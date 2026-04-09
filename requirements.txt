@@ -1,2 +1,3 @@
 pygltflib
 Pillow
+numpy

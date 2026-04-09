@@ -18,7 +18,7 @@ class App {
   fs::FileInfo fileList[MAX_FILES];
   int numFiles = 0;
   int fileCursor = 0;
-  char currentDir[fs::MAX_PATH_LENGTH + 1] = "/";
+  char currentDir[path::MAX_PATH_LENGTH + 1] = "/";
 
   static inline AppConfig getConfig() {
     AppConfig config = getDefaultAppConfig();
@@ -52,6 +52,7 @@ class App {
           if (app->numFiles < App::MAX_FILES) {
             app->fileList[app->numFiles++] = info;
           }
+          return true;
         },
         this);
   }

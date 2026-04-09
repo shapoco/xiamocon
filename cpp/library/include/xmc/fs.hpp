@@ -1,6 +1,7 @@
 #ifndef XMC_FS_HPP
 #define XMC_FS_HPP
 
+#include "xmc/path.hpp"
 #include "xmc/xmc_common.hpp"
 
 #include <stddef.h>
@@ -8,16 +9,10 @@
 
 namespace xmc::fs {
 
-/** Maximum length of a path, excluding the null terminator. */
-static constexpr uint32_t MAX_PATH_LENGTH = 255;
-
-/** Maximum length of a filename, excluding the null terminator. */
-static constexpr uint32_t MAX_FILENAME_LENGTH = 255;
-
 /** Information about a file or directory. */
 struct FileInfo {
   /** Name of the file or directory. */
-  char name[MAX_FILENAME_LENGTH + 1];
+  char name[path::MAX_FILENAME_LENGTH + 1];
 
   /** Size of the file in bytes. */
   uint32_t size;
@@ -38,7 +33,7 @@ XMC_ENUM_FLAGS(FileMode, int)
 enum class SeekOrigin : int { BEGIN = 0, CURRENT = 1, END = 2 };
 
 /** Callback function type for enumerating files. */
-using EnumFileCallback = void (*)(const FileInfo& info, void* userData);
+using EnumFileCallback = bool (*)(const FileInfo& info, void* userData);
 
 /**
  * Initialize the filesystem module.
@@ -64,13 +59,26 @@ XmcStatus mount();
  */
 XmcStatus unmount();
 
-/** Enumerate files in a directory.
+/**
+ * Enumerate files in a directory.
  * @param path The path of the directory to enumerate.
  * @param cb The callback function to call for each file or directory found.
  * @param userData User data to pass to the callback function.
  * @return XMC_OK on success, or an error code on failure.
  */
 XmcStatus enumFiles(const char* path, EnumFileCallback cb, void* userData);
+
+/**
+ * Enumerate files in a directory and store the results in an output array.
+ * @param path The path of the directory to enumerate.
+ * @param out The output array to store the file information.
+ * @param maxFiles The maximum number of files to store in the output array.
+ * @param outNumFiles A pointer to a variable to receive the actual number of
+ * files found and stored in the output array.
+ * @return XMC_OK on success, or an error code on failure.
+ */
+XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
+                    size_t* outNumFiles);
 
 /**
  * Get the size of a file.

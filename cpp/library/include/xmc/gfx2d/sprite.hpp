@@ -22,6 +22,8 @@ using Sprite = std::shared_ptr<SpriteClass>;
 struct GraphicsState2D {
   const GFXfont *font = nullptr;
   int fontSize = 1;
+  int fontOffsetY = 0;
+  int fontHeight = 0;
   RawColor textColor = 0;
   RawColor backColor = 0;
   TextRenderFlags textFlags = TextRenderFlags::DRAW_FORE;

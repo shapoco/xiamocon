@@ -3,7 +3,7 @@
 using namespace xmc;
 using namespace xmc::input;
 
-const PixelFormat DISPLAY_FORMAT =
+static constexpr PixelFormat DISPLAY_FORMAT =
     PixelFormat::RGB565;
 
 FrameBuffer frameBuffer(DISPLAY_FORMAT, false);

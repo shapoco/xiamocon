@@ -9,4 +9,9 @@
 #include "xmc/gfx2d/graphics2d.hpp"
 #include "xmc/gfx2d/frame_buffer.hpp"
 
+#include "xmc/font/ShapoSansMono_s08c07.h"
+#include "xmc/font/ShapoSansP_s08c07.h"
+#include "xmc/font/ShapoSansP_s12c09a01w02.h"
+#include "xmc/font/ShapoSansP_s21c16a01w03.h"
+
 #endif

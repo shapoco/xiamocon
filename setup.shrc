@@ -11,12 +11,7 @@ else
     return 1 2>/dev/null || exit 1
 fi
 
-export XMC_REPO_PATH="${_xmc_dir}"
-case ":${PATH}:" in
-    *:"${XMC_REPO_PATH}/bin":*) ;;
-    *) export PATH="${XMC_REPO_PATH}/bin:${PATH}" ;;
-esac
-unset _xmc_dir
+export PATH="${PATH}:${XMC_REPO_PATH}/bin"
 
 if [ -d "${XMC_REPO_PATH}/.venv" ]; then
     source "${XMC_REPO_PATH}/.venv/bin/activate"
