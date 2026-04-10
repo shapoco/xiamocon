@@ -91,6 +91,7 @@ void xmc::appSetup() {
     };
   }
 
+  // prepare particle data
   for (int i = 0; i < NUM_PARTICLES; i++) {
     vec3 pos;
     do {
@@ -118,6 +119,7 @@ void updateScene() {
 
   bool pressed = false;
 
+  // camera position control
   if (isPressed(Button::LEFT)) {
     eyeYawSpeed -= dt;
     pressed = true;
@@ -125,7 +127,6 @@ void updateScene() {
     eyeYawSpeed += dt;
     pressed = true;
   }
-
   if (isPressed(Button::UP)) {
     eyePitchSpeed += dt;
     pressed = true;
@@ -134,6 +135,7 @@ void updateScene() {
     pressed = true;
   }
 
+  // zoom control
   if (isPressed(Button::A)) {
     eyeDistanceSpeed -= dt * 5;
     pressed = true;
@@ -142,20 +144,23 @@ void updateScene() {
     pressed = true;
   }
 
+  // if any control button is pressed, start auto rotation after 5 seconds of
+  // inactivity
   if (pressed) {
     autoRotationStartUs = nowUs + 5 * 1000000;
   }
-
   if (nowUs > autoRotationStartUs) {
     eyeYawSpeed += dt * 0.1f;
     eyePitchSpeed += (sinf(nowUs * 2e-7f) * 0.5f - eyePitch) * dt * 0.1f;
     eyeDistanceSpeed += (5.0f - eyeDistance) * dt * 0.1f;
   }
 
+  // apply damping to camera movement
   eyeYawSpeed *= powf(0.5f, dt);
   eyePitchSpeed *= powf(0.5f, dt);
   eyeDistanceSpeed *= powf(0.5f, dt);
 
+  // update camera angles and distance
   eyeYaw += dt * eyeYawSpeed;
   if (eyeYaw > M_PI) {
     eyeYaw -= 2 * M_PI;
@@ -182,6 +187,7 @@ void updateScene() {
     eyeDistanceSpeed = 0;
   }
 
+  // update particles
   float pt = (float)(nowUs / 10000) * 0.01f;
   float friction = powf(0.1f, dt);
   for (int i = 0; i < NUM_PARTICLES; i++) {
@@ -205,24 +211,21 @@ void updateScene() {
 
 void renderScene() {
   Graphics2D gfx = frameBuffer.createGraphics();
+
+  // clear screen
   gfx->clear(0x0000);
-  // gfx->clear(rgb565(0, 32, 31));
 
+  // specify target frame buffer for 3D rendering
   g3d->setTarget(frameBuffer.getBackBuffer());
+
+  // clear depth buffer
   g3d->clearDepth();
-  // rasterizer->setDepthRange(-1.0f, 1.0f);
 
+  // setup camera
   g3d->setDepthRange(0.1f, 10.0f);
-
-  g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
-  g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
   g3d->setPerspectiveProjection(
       M_PI / 4, (float)frameBuffer.getWidth() / frameBuffer.getHeight(), 0.01f,
       100.0f);
-  // rasterizer->setOrthoProjection(-1, 1, -1, 1);
-  //    rasterizer->setParallelLight(vec3(0.5f, 0.5f, 1.0f),
-  //                                 {0.8f, 0.8f, 0.8f, 1.0f});
-
   vec3 focus = vec3(0, 3.3f, 0);
   vec3 eye = focus + vec3(eyeDistance * sinf(eyeYaw) * cosf(eyePitch),
                           eyeDistance * sinf(eyePitch),
@@ -233,17 +236,20 @@ void renderScene() {
   }
   g3d->lookAt(eye, focus, vec3(0, 1, 0));
 
-  g3d->loadIdentity();
-  // rasterizer->pushMatrix();
-  //  rasterizer->scale(10);
-  //  rasterizer->rotate(0, M_PI / 2, 0);
-  // rasterizer->renderMesh(cube);
+  // setup lights
+  g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
+  g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
 
+  // reset model matrix
+  g3d->loadIdentity();
+
+  // flower
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderScene(tulip);
 
+  // crystals
   g3d->enableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
@@ -271,6 +277,7 @@ void renderScene() {
   g3d->renderScene(quarts_scene0);
   g3d->popMatrix();
 
+  // leafs
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
@@ -281,6 +288,7 @@ void renderScene() {
     g3d->renderMesh(leafMesh);
   }
 
+  // cave hole and light
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
@@ -290,11 +298,10 @@ void renderScene() {
   g3d->renderScene(cave_light);
   g3d->popMatrix();
 
+  // particles
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderMesh(particleMesh);
   g3d->popMatrix();
-
-  // rasterizer->popMatrix();
 }
