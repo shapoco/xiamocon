@@ -21,7 +21,7 @@ static Sprite surfaceTexture =
     createSprite4444(256, 128, 0, (void *)bmp_earth_surface);
 static Sprite cloudTexture =
     createSprite4444(256, 128, 0, (void *)bmp_earth_cloud);
-static Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
+static Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
 
 static uint64_t lastImuUpdateUs = 0;
 

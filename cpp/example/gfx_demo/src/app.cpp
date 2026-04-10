@@ -43,7 +43,7 @@ Primitive3D particlePrim =
     createPrimitive3D(PrimitiveMode::POINTS, particleVerts, nullptr, nullptr);
 Mesh3D particleMesh = createMesh3D({particlePrim});
 
-Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
+Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
 
 uint64_t lastUs = 0;
 uint64_t autoRotationStartUs = 0;

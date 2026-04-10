@@ -86,7 +86,7 @@ struct ScanLineCounter {
 class RasterizerClass;
 using Graphics3D = std::shared_ptr<RasterizerClass>;
 
-static inline Graphics3D createRasterizer(int width, int height,
+static inline Graphics3D createGraphics3D(int width, int height,
                                           uint32_t stackSize = 16) {
   return std::make_shared<RasterizerClass>(width, height, stackSize);
 }
