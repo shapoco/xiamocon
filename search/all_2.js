@@ -4,7 +4,7 @@ var searchData=
   ['cliprect_1',['clipRect',['../geo__common_8hpp.html#ad5973c70dd24db934e9cac3599478506',1,'xmc']]],
   ['close_2',['close',['../classxmc_1_1fs_1_1File.html#a95520ce8da953af566b4b913731f4c5f',1,'xmc::fs::File']]],
   ['color4444_3',['color4444',['../unionxmc_1_1color4444.html',1,'xmc']]],
-  ['color4p12_4',['color4p12',['../structxmc_1_1color4p12.html',1,'xmc']]],
+  ['color8p24_4',['color8p24',['../structxmc_1_1color8p24.html',1,'xmc']]],
   ['colorf_5',['colorf',['../structxmc_1_1colorf.html',1,'xmc']]],
   ['config_6',['Config',['../structxmc_1_1dma_1_1Config.html',1,'xmc::dma::Config'],['../structxmc_1_1pwm_1_1Config.html',1,'xmc::pwm::Config']]],
   ['conjugate_7',['conjugate',['../structxmc_1_1quat.html#aced56cd1f42a10cef5b48806c4919bea',1,'xmc::quat']]],

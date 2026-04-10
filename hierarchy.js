@@ -1,16 +1,16 @@
 var hierarchy =
 [
     [ "xmc::apFixed< TRaw, PREC >", "structxmc_1_1apFixed.html", null ],
-    [ "xmc::apFixed< int16_t, 12 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::apFixed< int32_t, 12 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::apFixed< int32_t, 16 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::apFixed< int32_t, 20 >", "structxmc_1_1apFixed.html", null ],
+    [ "xmc::apFixed< int32_t, 24 >", "structxmc_1_1apFixed.html", null ],
     [ "xmc::diagnostic::App", "classxmc_1_1diagnostic_1_1App.html", null ],
     [ "xmc::AppConfig", "structxmc_1_1AppConfig.html", null ],
     [ "xmc::AttributeBufferClass< T >", "classxmc_1_1AttributeBufferClass.html", null ],
     [ "xmc::BakedVertex", "structxmc_1_1BakedVertex.html", null ],
     [ "xmc::color4444", "unionxmc_1_1color4444.html", null ],
-    [ "xmc::color4p12", "structxmc_1_1color4p12.html", null ],
+    [ "xmc::color8p24", "structxmc_1_1color8p24.html", null ],
     [ "xmc::colorf", "structxmc_1_1colorf.html", null ],
     [ "xmc::dma::Config", "structxmc_1_1dma_1_1Config.html", null ],
     [ "xmc::pwm::Config", "structxmc_1_1pwm_1_1Config.html", null ],

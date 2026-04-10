@@ -94,7 +94,7 @@ var NAVTREEINDEX0 =
 "classxmc_1_1pwm_1_1Driver.html#aea0fa36bb0207d88555d9d3377ba4dbf":[0,0,0,4,1,0],
 "classxmc_1_1pwm_1_1Driver.html#aecde815b22e011d78a84ca13fcf5a26d":[0,0,0,4,1,1],
 "classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4":[0,0,0,4,1,2],
-"color4p12_8hpp_source.html":[1,0,0,0,0,0,3,1],
+"color8p24_8hpp_source.html":[1,0,0,0,0,0,3,1],
 "colorf_8hpp_source.html":[1,0,0,0,0,0,3,2],
 "diagnostic_8hpp_source.html":[1,0,0,0,0,0,9],
 "dir_1bf3ee269b29a912afbccdba97f085b5.html":[1,0,0,0,0,0,1],

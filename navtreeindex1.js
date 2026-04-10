@@ -39,7 +39,7 @@ var NAVTREEINDEX1 =
 "structxmc_1_1audio_1_1SdacConfig.html":[0,0,0,0,1],
 "structxmc_1_1audio_1_1SourcePort.html":[0,0,0,0,2],
 "structxmc_1_1audio_1_1StreamFormat.html":[0,0,0,0,3],
-"structxmc_1_1color4p12.html":[0,0,0,10],
+"structxmc_1_1color8p24.html":[0,0,0,10],
 "structxmc_1_1colorf.html":[0,0,0,11],
 "structxmc_1_1dma_1_1Config.html":[0,0,0,2,0],
 "structxmc_1_1dma_1_1Config.html#a364c84635e5e741e30c8e2b7a6d86b98":[0,0,0,2,0,1],

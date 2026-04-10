@@ -109,18 +109,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setTarget</b> (Sprite
 <tr class="memitem:ac3749c482792169ef515f788cb140782"><td class="memItemLeft" align="right" valign="top"><a id="ac3749c482792169ef515f788cb140782" name="ac3749c482792169ef515f788cb140782"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setTarget</b> (Sprite target)</td></tr>
 <tr class="separator:ac3749c482792169ef515f788cb140782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8005453bc62c2cc5ecfaddf0ab985cce"><td class="memItemLeft" align="right" valign="top"><a id="a8005453bc62c2cc5ecfaddf0ab985cce" name="a8005453bc62c2cc5ecfaddf0ab985cce"></a>
-RenderFlags3D&#160;</td><td class="memItemRight" valign="bottom"><b>getRenderFlags</b> () const</td></tr>
-<tr class="separator:a8005453bc62c2cc5ecfaddf0ab985cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a928da9b9ed382449123489b3c5079250"><td class="memItemLeft" align="right" valign="top"><a id="a928da9b9ed382449123489b3c5079250" name="a928da9b9ed382449123489b3c5079250"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setRenderFlags</b> (RenderFlags3D flags)</td></tr>
-<tr class="separator:a928da9b9ed382449123489b3c5079250"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a797e65aa67d2b231cdf4c55321fb891c"><td class="memItemLeft" align="right" valign="top"><a id="a797e65aa67d2b231cdf4c55321fb891c" name="a797e65aa67d2b231cdf4c55321fb891c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>enableRenderFlags</b> (RenderFlags3D flags)</td></tr>
-<tr class="separator:a797e65aa67d2b231cdf4c55321fb891c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a459d6a4b8ec70b01b938bada0b4bcaae"><td class="memItemLeft" align="right" valign="top"><a id="a459d6a4b8ec70b01b938bada0b4bcaae" name="a459d6a4b8ec70b01b938bada0b4bcaae"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>disableRenderFlags</b> (RenderFlags3D flags)</td></tr>
-<tr class="separator:a459d6a4b8ec70b01b938bada0b4bcaae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b1cf582b282f712246f1ae87b4b045"><td class="memItemLeft" align="right" valign="top"><a id="a68b1cf582b282f712246f1ae87b4b045" name="a68b1cf582b282f712246f1ae87b4b045"></a>
+RenderFlags3D&#160;</td><td class="memItemRight" valign="bottom"><b>getFlags</b> () const</td></tr>
+<tr class="separator:a68b1cf582b282f712246f1ae87b4b045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adafdfde08c064a5cf0a2fa82eff3fe72"><td class="memItemLeft" align="right" valign="top"><a id="adafdfde08c064a5cf0a2fa82eff3fe72" name="adafdfde08c064a5cf0a2fa82eff3fe72"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setFlags</b> (RenderFlags3D flags)</td></tr>
+<tr class="separator:adafdfde08c064a5cf0a2fa82eff3fe72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a980ddbc3d124e21ea0ccff574b5ef5f2"><td class="memItemLeft" align="right" valign="top"><a id="a980ddbc3d124e21ea0ccff574b5ef5f2" name="a980ddbc3d124e21ea0ccff574b5ef5f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>enableFlags</b> (RenderFlags3D flags)</td></tr>
+<tr class="separator:a980ddbc3d124e21ea0ccff574b5ef5f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a558311162f4d1c71bea911a72c07367d"><td class="memItemLeft" align="right" valign="top"><a id="a558311162f4d1c71bea911a72c07367d" name="a558311162f4d1c71bea911a72c07367d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>disableFlags</b> (RenderFlags3D flags)</td></tr>
+<tr class="separator:a558311162f4d1c71bea911a72c07367d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5687fcb830e7407cdd2e2afa13f5693"><td class="memItemLeft" align="right" valign="top"><a id="ae5687fcb830e7407cdd2e2afa13f5693" name="ae5687fcb830e7407cdd2e2afa13f5693"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnvironmentLight</b> (const <a class="el" href="structxmc_1_1colorf.html">colorf</a> &amp;color)</td></tr>
 <tr class="separator:ae5687fcb830e7407cdd2e2afa13f5693"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -224,6 +224,9 @@ template&lt;bool ALPHA_BLEND, bool COLOR_TEXTURE, bool VERTEX_SHADING, bool FORM
 <tr class="memitem:ab0395ddee4dd5378b0fe2d131fd3ccc5"><td class="memItemLeft" align="right" valign="top"><a id="ab0395ddee4dd5378b0fe2d131fd3ccc5" name="ab0395ddee4dd5378b0fe2d131fd3ccc5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>renderTriangle</b> (const <a class="el" href="structxmc_1_1BakedVertex.html">BakedVertex</a> &amp;v0, const <a class="el" href="structxmc_1_1BakedVertex.html">BakedVertex</a> &amp;v1, const <a class="el" href="structxmc_1_1BakedVertex.html">BakedVertex</a> &amp;v2, const Material3D &amp;mat)</td></tr>
 <tr class="separator:ab0395ddee4dd5378b0fe2d131fd3ccc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ac94b4b74c6a306ed34bfaedf1667c"><td class="memItemLeft" align="right" valign="top"><a id="a58ac94b4b74c6a306ed34bfaedf1667c" name="a58ac94b4b74c6a306ed34bfaedf1667c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>renderPoint</b> (const <a class="el" href="structxmc_1_1BakedVertex.html">BakedVertex</a> &amp;v0, const Material3D &amp;mat)</td></tr>
+<tr class="separator:a58ac94b4b74c6a306ed34bfaedf1667c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>cpp/library/include/xmc/gfx3d/<a class="el" href="graphics3d_8hpp_source.html">graphics3d.hpp</a></li>

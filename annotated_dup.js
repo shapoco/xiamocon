@@ -28,7 +28,7 @@ var annotated_dup =
       [ "AttributeBufferClass", "classxmc_1_1AttributeBufferClass.html", null ],
       [ "BakedVertex", "structxmc_1_1BakedVertex.html", null ],
       [ "color4444", "unionxmc_1_1color4444.html", null ],
-      [ "color4p12", "structxmc_1_1color4p12.html", null ],
+      [ "color8p24", "structxmc_1_1color8p24.html", null ],
       [ "colorf", "structxmc_1_1colorf.html", null ],
       [ "FpsKeeper", "classxmc_1_1FpsKeeper.html", "classxmc_1_1FpsKeeper" ],
       [ "FrameBuffer", "classxmc_1_1FrameBuffer.html", "classxmc_1_1FrameBuffer" ],

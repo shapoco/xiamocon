@@ -1,7 +1,7 @@
 var dir_7add5fa5939f7335f3b967907ab68098 =
 [
     [ "attribute_buffer.hpp", "attribute__buffer_8hpp_source.html", null ],
-    [ "color4p12.hpp", "color4p12_8hpp_source.html", null ],
+    [ "color8p24.hpp", "color8p24_8hpp_source.html", null ],
     [ "colorf.hpp", "colorf_8hpp_source.html", null ],
     [ "frame_buffer.hpp", "frame__buffer_8hpp.html", "frame__buffer_8hpp" ],
     [ "gfx_common.hpp", "gfx__common_8hpp_source.html", null ],

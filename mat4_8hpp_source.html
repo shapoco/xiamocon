@@ -211,7 +211,7 @@ $(document).ready(function(){initNavTree('mat4_8hpp_source.html',''); initResiza
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keywordtype">float</span> z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keywordtype">float</span> w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordtype">float</span> abs_w = fabsf(w);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">if</span> (abs_w &lt; 1e-6f) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="keywordflow">if</span> (abs_w &lt; 1e-8f) {</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>      <span class="keywordflow">return</span> <a class="code hl_struct" href="structxmc_1_1vec3.html">vec3</a>(0, 0, 0);</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">float</span> inv_w = 1.0f / abs_w;</div>
