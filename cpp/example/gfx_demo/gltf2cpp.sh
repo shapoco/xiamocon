@@ -2,13 +2,26 @@
 
 set -eux
 
-TOOL_DIR="$(cd ../../../tool && pwd)"
-MATERIAL_DIR="$(cd ../../../material && pwd)"
+GLTF2CPP="python3 ${XMC_REPO_PATH}/bin/gltf2cpp"
+MATERIAL_DIR="$(cd ${XMC_REPO_PATH}/material && pwd)"
 OUT_DIR="$(pwd)/include"
-GLTF2CPP="python3 ${TOOL_DIR}/gltf2cpp/gltf2cpp.py"
 
 ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/tulip.glb \
     ${OUT_DIR}/tulip.hpp \
     --dither
 
+${GLTF2CPP} \
+    ${MATERIAL_DIR}/3d/cave_hole.glb \
+    ${OUT_DIR}/cave_hole.hpp \
+    --dither
+
+${GLTF2CPP} \
+    ${MATERIAL_DIR}/3d/cave_light.glb \
+    ${OUT_DIR}/cave_light.hpp \
+    --dither
+
+${GLTF2CPP} \
+    ${MATERIAL_DIR}/3d/quarts.glb \
+    ${OUT_DIR}/quarts.hpp \
+    --dither

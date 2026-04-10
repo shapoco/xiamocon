@@ -29,6 +29,9 @@
     return ((TBase)value & (TBase)flag) != 0;                                  \
   }
 
+#define XMC_CLIP(min, max, value) \
+  ((value) < (min) ? (min) : ((value) > (max) ? (max) : (value)))
+
 namespace xmc {
 
 /** Pixel formats for sprites and display interfaces. */
@@ -47,17 +50,6 @@ enum class PixelFormat {
  * Contents of a tight loop.
  */
 void tightLoopContents();
-
-template <typename T>
-static constexpr XMC_INLINE T xmcClip(T min, T max, T value) {
-  if (value < min) {
-    return min;
-  } else if (value > max) {
-    return max;
-  } else {
-    return value;
-  }
-}
 
 }  // namespace xmc
 

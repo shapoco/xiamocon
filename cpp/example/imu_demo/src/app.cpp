@@ -7,24 +7,14 @@
 #include "lsm6dsv16x.hpp"
 #include "xmc/font/ShapoSansP_s08c07.h"
 
-#define DOUBLE_BUFFER (1)
-
 namespace xmc {
+
+static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
 
 static lsm6dsv16x::SensorI2C imu;
 static quat imuPos;
 
-Sprite frameBuffers[] = {
-    createSprite565(display::WIDTH, display::HEIGHT),
-#if DOUBLE_BUFFER
-    createSprite565(display::WIDTH, display::HEIGHT),
-#endif
-};
-#if DOUBLE_BUFFER
-int backIndex = 0;
-#else
-const int backIndex = 0;
-#endif
+FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 
 static Mesh3D earth = createSphere(1.0f, 18, 9);
 static Sprite surfaceTexture =
@@ -46,7 +36,7 @@ float vyaw = 0, vpitch = 0;
 
 AppConfig appGetConfig() {
   auto cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = PixelFormat::RGB565;
+  cfg.displayPixelFormat = DISPLAY_FORMAT;
   return cfg;
 }
 
@@ -59,29 +49,11 @@ void appSetup() {
 }
 
 void appLoop() {
-#if DOUBLE_BUFFER
-  int frontIndex = (backIndex + 1) % 2;
-#endif
-
   updateScene();
 
-#if !DOUBLE_BUFFER
-  frameBuffers[0]->completeTransfer();
-#endif
-
+  frameBuffer.beginRender();
   renderScene();
-
-  appDrawStatusBar(frameBuffers[backIndex]);
-  appDrawDebugInfo(frameBuffers[backIndex]);
-
-#if DOUBLE_BUFFER
-  frameBuffers[frontIndex]->completeTransfer();
-#endif
-  frameBuffers[backIndex]->startTransferToDisplay(0, 0);
-
-#if DOUBLE_BUFFER
-  backIndex = frontIndex;
-#endif
+  frameBuffer.endRender();
 }
 
 static void updateScene() {
@@ -118,15 +90,15 @@ static void updateScene() {
 }
 
 static void renderScene() {
-  Sprite &screen = frameBuffers[backIndex];
+  Graphics2D gfx = frameBuffer.createGraphics();
 
-  screen->clear(0);
+  gfx->clear(0);
 
   mat4 proj;
   vec3 eye_pos = {0, 0.1f, 0.15f};
   createProjectionMatrix(&proj, &imuPos, &eye_pos, 0.03f, 0.03f, display::WIDTH,
                          display::HEIGHT);
-  g3d->setTarget(screen);
+  g3d->setTarget(frameBuffer.getBackBuffer());
   g3d->clearDepth();
   g3d->setDepthRange(-1.0f, 1.0f);
 
@@ -141,7 +113,7 @@ static void renderScene() {
 
   earth->primitives[0]->material->colorTexture = surfaceTexture;
   earth->primitives[0]->material->baseColor.a = 1;
-  g3d->disableRenderFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(0.01f);
   g3d->rotate(pitch, yaw, 0);

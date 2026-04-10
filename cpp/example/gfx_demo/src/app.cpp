@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 
+#include "cave_hole.hpp"
+#include "cave_light.hpp"
+#include "quarts.hpp"
 #include "tulip.hpp"
 
 using namespace xmc;
@@ -27,6 +30,18 @@ struct Leaf {
   vec3 dir;
 };
 Leaf leafArray[NUM_LEAFS];
+
+static constexpr int NUM_PARTICLES = 100;
+static constexpr float PARTICLE_SPAWN_R = 8;
+static constexpr float PARTICLE_MAX_Y = 20;
+struct Particle {
+  vec3 vel;
+};
+Particle particleArray[NUM_PARTICLES];
+Vec3Buffer particleVerts = createVec3Buffer(NUM_PARTICLES);
+Primitive3D particlePrim =
+    createPrimitive3D(PrimitiveMode::POINTS, particleVerts, nullptr, nullptr);
+Mesh3D particleMesh = createMesh3D({particlePrim});
 
 Graphics3D g3d = createRasterizer(display::WIDTH, display::HEIGHT);
 
@@ -74,6 +89,17 @@ void xmc::appSetup() {
         1.0f + powf(randomF32(), 2),
         randomF32() * 2 - 1,
     };
+  }
+
+  for (int i = 0; i < NUM_PARTICLES; i++) {
+    vec3 pos;
+    do {
+      pos.x = (randomF32() * 2 - 1) * PARTICLE_SPAWN_R;
+      pos.z = (randomF32() * 2 - 1) * PARTICLE_SPAWN_R;
+    } while (pos.length() > PARTICLE_SPAWN_R);
+    pos.y = randomF32() * PARTICLE_MAX_Y;
+    particleVerts->data[i] = pos;
+    particleArray[i].vel = {0, 1, 0};
   }
 }
 
@@ -155,6 +181,26 @@ void updateScene() {
     eyeDistance = 30.0f;
     eyeDistanceSpeed = 0;
   }
+
+  float pt = (float)(nowUs / 10000) * 0.01f;
+  float friction = powf(0.1f, dt);
+  for (int i = 0; i < NUM_PARTICLES; i++) {
+    vec3 &vel = particleArray[i].vel;
+    vel *= friction;
+    vel.x += sin(i + pt) * dt;
+    vel.y += (cos(i + pt * 1.3f) * 0.1f + 0.5f) * dt;
+    vel.z += cos(i + pt * 1.1f) * 0.5f * dt;
+    vec3 &pos = particleVerts->data[i];
+    pos += particleArray[i].vel * dt;
+    if (pos.y < 0 || pos.y > PARTICLE_MAX_Y) {
+      pos.y = 0;
+      do {
+        pos.x = (randomF32() * 2 - 1) * PARTICLE_SPAWN_R;
+        pos.z = (randomF32() * 2 - 1) * PARTICLE_SPAWN_R;
+      } while (pos.length() > PARTICLE_SPAWN_R);
+      vel = {0, 1, 0};
+    }
+  }
 }
 
 void renderScene() {
@@ -165,6 +211,8 @@ void renderScene() {
   g3d->setTarget(frameBuffer.getBackBuffer());
   g3d->clearDepth();
   // rasterizer->setDepthRange(-1.0f, 1.0f);
+
+  g3d->setDepthRange(0.1f, 10.0f);
 
   g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
   g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
@@ -189,12 +237,43 @@ void renderScene() {
   // rasterizer->pushMatrix();
   //  rasterizer->scale(10);
   //  rasterizer->rotate(0, M_PI / 2, 0);
-
   // rasterizer->renderMesh(cube);
-  g3d->disableRenderFlags(RenderFlags3D::VERTEX_SHADING);
-  g3d->renderScene(tulip);
-  g3d->enableRenderFlags(RenderFlags3D::VERTEX_SHADING);
 
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->renderScene(tulip);
+
+  g3d->enableFlags(RenderFlags3D::LIGHTING);
+  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->pushMatrix();
+  g3d->scale(2.5f);
+  g3d->translate(0, 0, -20);
+  g3d->renderScene(quarts_scene0);
+  g3d->popMatrix();
+  g3d->pushMatrix();
+  g3d->scale(3);
+  g3d->translate(0, 0, -20);
+  g3d->rotate(0, 90 * M_PI / 180.0f, 0);
+  g3d->renderScene(quarts_scene0);
+  g3d->popMatrix();
+  g3d->pushMatrix();
+  g3d->scale(2);
+  g3d->translate(0, 0, -20);
+  g3d->rotate(0, 180 * M_PI / 180.0f, 0);
+  g3d->renderScene(quarts_scene0);
+  g3d->popMatrix();
+  g3d->pushMatrix();
+  g3d->scale(3.5f);
+  g3d->translate(0, 0, -20);
+  g3d->rotate(0, 270 * M_PI / 180.0f, 0);
+  g3d->renderScene(quarts_scene0);
+  g3d->popMatrix();
+
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   for (int i = 0; i < NUM_LEAFS; i++) {
     leafVerts->data[0] = leafArray[i].pos - leafArray[i].rot;
     leafVerts->data[1] = leafArray[i].pos + leafArray[i].rot;
@@ -202,8 +281,20 @@ void renderScene() {
     g3d->renderMesh(leafMesh);
   }
 
-  // rasterizer->popMatrix();
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->pushMatrix();
+  g3d->scale(4);
+  g3d->renderScene(cave_hole);
+  g3d->renderScene(cave_light);
+  g3d->popMatrix();
 
-  appDrawStatusBar(gfx);
-  appDrawDebugInfo(gfx);
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->renderMesh(particleMesh);
+  g3d->popMatrix();
+
+  // rasterizer->popMatrix();
 }

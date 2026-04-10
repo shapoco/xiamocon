@@ -156,7 +156,7 @@ struct mat4 {
     float z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
     float w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];
     float abs_w = fabsf(w);
-    if (abs_w < 1e-6f) {
+    if (abs_w < 1e-8f) {
       return vec3(0, 0, 0);
     }
     float inv_w = 1.0f / abs_w;

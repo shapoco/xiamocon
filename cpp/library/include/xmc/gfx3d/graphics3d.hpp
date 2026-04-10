@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_RASTERIZER_HPP
 #define XMC_GFX_RASTERIZER_HPP
 
-#include "xmc/gfx2d/color4p12.hpp"
+#include "xmc/gfx2d/color8p24.hpp"
 #include "xmc/gfx2d/raster_scan.hpp"
 #include "xmc/gfx2d/sprite444.hpp"
 #include "xmc/gfx3d/scene3d.hpp"
@@ -45,29 +45,41 @@ struct TextureArgs {
 };
 
 struct ScanLineCounter {
-  fixed16p16 x;
-  fixed20p12 z;
-  color4p12 c;
-  fixed12p20 u;
-  fixed12p20 v;
+  fixed16p16 x = 0;
+  fixed20p12 z = 0;
+  color8p24 c = {0, 0, 0, 0};
+  fixed12p20 u = 0;
+  fixed12p20 v = 0;
 
-  static XMC_INLINE ScanLineCounter calcStep(const ScanLineCounter &start,
-                                             const ScanLineCounter &end,
-                                             int32_t span) {
+  static XMC_INLINE ScanLineCounter subDiv(const ScanLineCounter &start,
+                                           const ScanLineCounter &end,
+                                           int32_t span) {
     if (span <= 0) span = 1;
     return ScanLineCounter{
-        (end.x - start.x) / span, (end.z - start.z) / span,
-        (end.c - start.c) / span, (end.u - start.u) / span,
+        // fixed16p16::subDiv(end.x, start.x, span),
+        (end.x - start.x) / span,
+        // fixed20p12::subDiv(end.z, start.z, span),
+        (end.z - start.z) / span,
+        (end.c - start.c) / span,
+        (end.u - start.u) / span,
         (end.v - start.v) / span,
     };
   }
 
-  XMC_INLINE void step(const ScanLineCounter &step) {
-    x += step.x;
-    z += step.z;
-    c += step.c;
-    u += step.u;
-    v += step.v;
+  XMC_INLINE void step(const ScanLineCounter &step, int n = 1) {
+    if (n == 1) {
+      x += step.x;
+      z += step.z;
+      c += step.c;
+      u += step.u;
+      v += step.v;
+    } else {
+      x += step.x * n;
+      z += step.z * n;
+      c += step.c * n;
+      u += step.u * n;
+      v += step.v * n;
+    }
   }
 };
 
@@ -149,10 +161,10 @@ class RasterizerClass {
     setTarget(target, Rect{0, 0, target->width, target->height});
   }
 
-  inline RenderFlags3D getRenderFlags() const { return renderFlags; }
-  inline void setRenderFlags(RenderFlags3D flags) { renderFlags = flags; }
-  inline void enableRenderFlags(RenderFlags3D flags) { renderFlags |= flags; }
-  inline void disableRenderFlags(RenderFlags3D flags) { renderFlags &= ~flags; }
+  inline RenderFlags3D getFlags() const { return renderFlags; }
+  inline void setFlags(RenderFlags3D flags) { renderFlags = flags; }
+  inline void enableFlags(RenderFlags3D flags) { renderFlags |= flags; }
+  inline void disableFlags(RenderFlags3D flags) { renderFlags &= ~flags; }
 
   inline void setEnvironmentLight(const colorf &color) { envLight = color; }
 
@@ -272,35 +284,29 @@ class RasterizerClass {
     for (int iy = yStart; iy <= yEnd; iy++) {
       int32_t ixMin = accumVL.x.roundToInt();
       int32_t ixMax = accumVR.x.roundToInt();
-      int32_t hSpan = ixMax - ixMin + 1;
+      int32_t hSpan = ixMax - ixMin;
 
       if (ixMin < viewport.x) ixMin = viewport.x;
-      if (ixMax >= viewport.right()) ixMax = viewport.right() - 1;
+      if (ixMax > viewport.right()) ixMax = viewport.right();
 
-      if (ixMin <= ixMax) {
+      if (ixMin < ixMax) {
         ScanLineCounter accumH = accumVL;
         ScanLineCounter stepH =
-            ScanLineCounter::calcStep(accumVL, accumVR, hSpan);
+            ScanLineCounter::subDiv(accumVL, accumVR, hSpan);
 
         int32_t xOffset = ixMin - accumVL.x.roundToInt();
-        accumH.x += stepH.x * xOffset;
-        accumH.z += stepH.z * xOffset;
-        accumH.c += stepH.c * xOffset;
-        if (COLOR_TEXTURE) {
-          accumH.u += stepH.u * xOffset;
-          accumH.v += stepH.v * xOffset;
-        }
+        accumH.step(stepH, xOffset);
 
         uint16_t *__restrict__ texData = (uint16_t *)tex.data;
         depth_t *__restrict__ zPtr = depthBuff + iy * width;
         RasterScan444 cPtr444((uint8_t *)target->linePtr(iy), ixMin);
         uint16_t *__restrict__ ptr565 = (uint16_t *)target->linePtr(iy) + ixMin;
-        for (int x = ixMin; x <= ixMax; x++) {
+        for (int x = ixMin; x < ixMax; x++) {
           int32_t z = accumH.z.floorToInt();
           bool written = false;
           if (z < zPtr[x]) {
             if (VERTEX_SHADING) {
-              color4p12 c = accumH.c;
+              color8p24 c = accumH.c;
               if (COLOR_TEXTURE) {
                 uint32_t u = accumH.u.floorToInt() & tex.uMask;
                 uint32_t v = accumH.v.floorToInt() & tex.vMask;
@@ -312,7 +318,7 @@ class RasterizerClass {
                     cPtr444.push4444(c.to4444());
                   } else {
                     uint16_t dst565 = *ptr565;
-                    *(ptr565++) = blend4444To565(dst565, c.to4444());
+                    *(ptr565++) = blend8p24To565(dst565, c);
                   }
                   zPtr[x] = z;
                   written = true;
@@ -327,7 +333,7 @@ class RasterizerClass {
                 zPtr[x] = z;
               }
             } else {
-              uint16_t c = 0xFFFF;
+              uint16_t c = accumH.c.to4444();
               if (COLOR_TEXTURE) {
                 uint32_t u = accumH.u.floorToInt() & tex.uMask;
                 uint32_t v = accumH.v.floorToInt() & tex.vMask;
@@ -380,9 +386,9 @@ class RasterizerClass {
     }
 
     int vpl = viewport.x;
-    int vpr = viewport.right() - 1;
+    int vpr = viewport.right();
     if (v0.pos.x < vpl && v1.pos.x < vpl && v2.pos.x < vpl) return;
-    if (v0.pos.x > vpr && v1.pos.x > vpr && v2.pos.x > vpr) return;
+    if (v0.pos.x >= vpr && v1.pos.x >= vpr && v2.pos.x >= vpr) return;
 
     if (!mat || !mat->doubleSided) {
       // back-face culling
@@ -423,7 +429,7 @@ class RasterizerClass {
     float z0 = (float)MAX_DEPTH * (tri[i0]->pos.z - zNear) / (zFar - zNear);
     float z1 = (float)MAX_DEPTH * (tri[i1]->pos.z - zNear) / (zFar - zNear);
     float z2 = (float)MAX_DEPTH * (tri[i2]->pos.z - zNear) / (zFar - zNear);
-    if (z0 < 0 || z0 > MAX_DEPTH || z1 < 0 || z1 > MAX_DEPTH || z2 < 0 ||
+    if (z0 < 0 || z1 < 0 || z2 < 0 || z0 > MAX_DEPTH || z1 > MAX_DEPTH ||
         z2 > MAX_DEPTH) {
       return;
     }
@@ -457,10 +463,10 @@ class RasterizerClass {
       const colorf &c0 = tri[i0]->color;
       const colorf &c1 = tri[i1]->color;
       const colorf &c2 = tri[i2]->color;
-      cornerT.c = color4p12(c0);
-      cornerL.c = color4p12(c1);
-      cornerR.c = color4p12(c0 + (c2 - c0) * yT);
-      cornerB.c = color4p12(c2);
+      cornerT.c = color8p24(c0);
+      cornerL.c = color8p24(c1);
+      cornerR.c = color8p24(c0 + (c2 - c0) * yT);
+      cornerB.c = color8p24(c2);
     }
 
     TextureArgs tex;
@@ -513,17 +519,23 @@ class RasterizerClass {
       if (ic == 0) {
         accumVL = cornerT;
         accumVR = cornerT;
-        stepVL = ScanLineCounter::calcStep(cornerT, cornerL, vSpanT);
-        stepVR = ScanLineCounter::calcStep(cornerT, cornerR, vSpanT);
-        yStart = iyMin;
+        stepVL = ScanLineCounter::subDiv(cornerT, cornerL, vSpanT);
+        stepVR = ScanLineCounter::subDiv(cornerT, cornerR, vSpanT);
+        int yOffset = iyMin > iy0 ? iyMin - iy0 : 0;
+        accumVL.step(stepVL, yOffset);
+        accumVR.step(stepVR, yOffset);
+        yStart = iy0 + yOffset;
         yEnd = (int)fminf(iy1, iyMax);
       } else {
         accumVL = cornerL;
         accumVR = cornerR;
-        stepVL = ScanLineCounter::calcStep(cornerL, cornerB, vSpanB);
-        stepVR = ScanLineCounter::calcStep(cornerR, cornerB, vSpanB);
-        yStart = (int)fmaxf(iy1, iyMin);
-        yEnd = iyMax;
+        stepVL = ScanLineCounter::subDiv(cornerL, cornerB, vSpanB);
+        stepVR = ScanLineCounter::subDiv(cornerR, cornerB, vSpanB);
+        int yOffset = iyMin > iy1 ? iyMin - iy1 : 0;
+        accumVL.step(stepVL, yOffset);
+        accumVR.step(stepVR, yOffset);
+        yStart = iy1 + yOffset;
+        yEnd = (int)fminf(iy2, iyMax);
       }
 
 #define XMC_GFX3D_HALF_TRIANGLE(aBlend, colorTex, vertShade, format444) \
@@ -552,6 +564,101 @@ class RasterizerClass {
 
 #undef XMC_GFX3D_HALF_TRIANGLE
     }
+  }
+
+  void renderPoint(const BakedVertex &v0, const Material3D &mat) {
+    RenderFlags3D flags = renderFlags;
+    if (!mat || !mat->colorTexture ||
+        !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      flags &= ~RenderFlags3D::COLOR_TEXTURE;
+    }
+
+    if (v0.pos.x < viewport.x || v0.pos.x >= viewport.right()) return;
+
+    float x0 = v0.pos.x, y0 = v0.pos.y;
+
+    float z0 = (float)MAX_DEPTH * (v0.pos.z - zNear) / (zFar - zNear);
+    if (z0 < 0 || z0 > MAX_DEPTH) {
+      return;
+    }
+
+    int iy0 = (int)floorf(y0);
+    if (iy0 < viewport.y || iy0 >= viewport.bottom()) return;
+
+    ScanLineCounter cornerL, cornerR;
+
+    cornerL.x = fixed16p16::fromFloat(x0);
+    cornerR.x = fixed16p16::fromFloat(x0 + 1);
+    cornerL.z = fixed20p12::fromFloat(z0);
+    cornerR.z = fixed20p12::fromFloat(z0);
+
+    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+      cornerL.c = color8p24(v0.color);
+      cornerR.c = cornerL.c;
+    } else {
+      cornerL.c =
+          color8p24(fixed8p24::fromFloat(1.0f), fixed8p24::fromFloat(1.0f),
+                    fixed8p24::fromFloat(1.0f), fixed8p24::fromFloat(1.0f));
+      cornerR.c = cornerL.c;
+    }
+
+    TextureArgs tex;
+    if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      const auto &t = mat->colorTexture;
+      tex.data = (const uint16_t *)t->linePtr(0);
+      tex.stride = t->stride / sizeof(uint16_t);
+      int texW = 1 << (int)floorf(log2f(t->width));
+      int texH = 1 << (int)floorf(log2f(t->height));
+      tex.uMask = texW - 1;
+      tex.vMask = texH - 1;
+      const vec2 &uv0 = v0.uv;
+      cornerL.u = fixed12p20::fromFloat(uv0.x * texW);
+      cornerR.u = fixed12p20::fromFloat(uv0.x * texW);
+      cornerL.v = fixed12p20::fromFloat(uv0.y * texH);
+      cornerR.v = fixed12p20::fromFloat(uv0.y * texH);
+    }
+
+    TriangleRenderFlags trf = TriangleRenderFlags::NONE;
+    if (target->format == PixelFormat::RGB444) {
+      trf |= TriangleRenderFlags::FORMAT444;
+    }
+    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+      trf |= TriangleRenderFlags::VERTEX_SHADING;
+    }
+    if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
+      trf |= TriangleRenderFlags::COLOR_TEXTURE;
+    }
+    if (hasFlag(flags, RenderFlags3D::ALPHA_BLEND)) {
+      trf |= TriangleRenderFlags::ALPHA_BLEND;
+    }
+
+    ScanLineCounter dummyStep;
+
+#define XMC_GFX3D_HALF_TRIANGLE(aBlend, colorTex, vertShade, format444) \
+  renderHalfTriangle<aBlend, colorTex, vertShade, format444>(           \
+      cornerL, cornerR, dummyStep, dummyStep, iy0, iy0, tex)
+
+    switch ((uint32_t)trf) {
+      case 0: XMC_GFX3D_HALF_TRIANGLE(false, false, false, false); break;
+      case 1: XMC_GFX3D_HALF_TRIANGLE(false, false, false, true); break;
+      case 2: XMC_GFX3D_HALF_TRIANGLE(false, false, true, false); break;
+      case 3: XMC_GFX3D_HALF_TRIANGLE(false, false, true, true); break;
+      case 4: XMC_GFX3D_HALF_TRIANGLE(false, true, false, false); break;
+      case 5: XMC_GFX3D_HALF_TRIANGLE(false, true, false, true); break;
+      case 6: XMC_GFX3D_HALF_TRIANGLE(false, true, true, false); break;
+      case 7: XMC_GFX3D_HALF_TRIANGLE(false, true, true, true); break;
+      case 8: XMC_GFX3D_HALF_TRIANGLE(true, false, false, false); break;
+      case 9: XMC_GFX3D_HALF_TRIANGLE(true, false, false, true); break;
+      case 10: XMC_GFX3D_HALF_TRIANGLE(true, false, true, false); break;
+      case 11: XMC_GFX3D_HALF_TRIANGLE(true, false, true, true); break;
+      case 12: XMC_GFX3D_HALF_TRIANGLE(true, true, false, false); break;
+      case 13: XMC_GFX3D_HALF_TRIANGLE(true, true, false, true); break;
+      case 14: XMC_GFX3D_HALF_TRIANGLE(true, true, true, false); break;
+      case 15: XMC_GFX3D_HALF_TRIANGLE(true, true, true, true); break;
+      default: break;
+    }
+
+#undef XMC_GFX3D_HALF_TRIANGLE
   }
 
  private:

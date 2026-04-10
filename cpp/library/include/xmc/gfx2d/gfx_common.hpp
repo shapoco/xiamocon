@@ -49,16 +49,16 @@ union color4444 {
 };
 
 static constexpr XMC_INLINE uint16_t pack444(int r, int g, int b) {
-  r = xmcClip(0, 15, r);
-  g = xmcClip(0, 15, g);
-  b = xmcClip(0, 15, b);
+  r = XMC_CLIP(0, 15, r);
+  g = XMC_CLIP(0, 15, g);
+  b = XMC_CLIP(0, 15, b);
   return static_cast<uint16_t>(((r & 0xF) << 8) | ((g & 0xF) << 4) | (b & 0xF));
 }
 
 static constexpr XMC_INLINE uint16_t pack565(int r, int g, int b) {
-  r = xmcClip(0, 31, r);
-  g = xmcClip(0, 63, g);
-  b = xmcClip(0, 31, b);
+  r = XMC_CLIP(0, 31, r);
+  g = XMC_CLIP(0, 63, g);
+  b = XMC_CLIP(0, 31, b);
   return static_cast<uint16_t>((r << 3) | ((g & 0x38) >> 3) |
                                ((g & 0x07) << 13) | (b << 8));
 }
@@ -123,11 +123,11 @@ static XMC_INLINE uint16_t blend4444To565(uint16_t dest, uint16_t src) {
   } else {
     a2 >>= 12;
     uint32_t a1 = 15 - a2;
-    uint32_t c2 = ((dest << 8) & 0xFF00) | ((dest >> 8) & 0x00FF);
-    c2 = ((c2 & 0xF800) << 9) | ((c2 & 0x07E0) << 5) | (c2 & 0x001F);
-    uint32_t c1 =
+    uint32_t c1 = ((dest << 8) & 0xFF00) | ((dest >> 8) & 0x00FF);
+    c1 = ((c1 & 0xF800) << 9) | ((c1 & 0x07E0) << 5) | (c1 & 0x001F);
+    uint32_t c2 =
         ((src & 0xF00) << 13) | ((src & 0x0F0) << 8) | ((src & 0x00F) << 1);
-    uint32_t r = c1 * a2 + c2 * a1;
+    uint32_t r = c1 * a1 + c2 * a2;
     r = ((r >> 13) & 0xF800) | ((r >> 9) & 0x07E0) | ((r >> 4) & 0x001F);
     return ((r << 8) & 0xFF00) | ((r >> 8) & 0x00FF);
   }
@@ -142,10 +142,10 @@ static XMC_INLINE uint16_t blend4444To444(uint16_t dest, uint16_t src) {
   } else {
     a2 >>= 12;
     uint32_t a1 = 15 - a2;
-    uint32_t c2 = dest & 0x0FFF;
-    c2 = ((c2 & 0xF00) << 8) | ((c2 & 0x0F0) << 4) | (c2 & 0x00F);
-    uint32_t c1 = ((src & 0xF00) << 12) | ((src & 0x0F0) << 6) | (src & 0x00F);
-    uint32_t r = c1 * a2 + c2 * a1;
+    uint32_t c1 =
+        ((dest & 0xF00) << 8) | ((dest & 0x0F0) << 4) | (dest & 0x00F);
+    uint32_t c2 = ((src & 0xF00) << 8) | ((src & 0x0F0) << 4) | (src & 0x00F);
+    uint32_t r = c1 * a1 + c2 * a2;
     return ((r >> 12) & 0xF00) | ((r >> 8) & 0x0F0) | ((r >> 4) & 0x00F);
   }
 }

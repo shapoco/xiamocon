@@ -24,6 +24,7 @@ class Graphics2DClass {
   }
 
   void setTarget(Sprite &s);
+  inline Sprite getTarget() const { return target; }
   void setClipRect(const Rect &rect);
   inline void setClipRect(int x, int y, int w, int h) {
     setClipRect(Rect{x, y, w, h});

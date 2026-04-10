@@ -1,6 +1,7 @@
 #ifndef XMC_GFX_RASTER_SCANNER_HPP
 #define XMC_GFX_RASTER_SCANNER_HPP
 
+#include "xmc/gfx2d/color8p24.hpp"
 #include "xmc/gfx2d/gfx_common.hpp"
 
 namespace xmc {
@@ -172,6 +173,15 @@ class RasterScan565 {
       skip();
     } else {
       push565(blend4444To565(peek(), color));
+    }
+  }
+  XMC_INLINE void push8p24(color8p24 color) {
+    if (color.a.raw <= 0) {
+      skip();
+    } else if (color.a.raw >= color8p24::ONE) {
+      push565(color.to565());
+    } else {
+      push565(blend8p24To565(peek(), color));
     }
   }
   XMC_INLINE void skip(int n = 1) { ptr += n; }

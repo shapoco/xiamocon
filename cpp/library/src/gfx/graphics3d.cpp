@@ -217,33 +217,31 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
         // shading
         BakedVertex &out = bakedVerts[j];
         out.pos = vpMatrix.transform(pos);
-        
-        if (hasFlag(renderFlags, RenderFlags3D::VERTEX_SHADING)) {
-          colorf vertColor = col;
-          if (mat) {
-            vertColor *= mat->baseColor;
-          }
-          if (hasFlag(renderFlags, RenderFlags3D::LIGHTING)) {
-            colorf light;
-            light += envLight;
-            float ndotl = fmaxf(0, norm.dot(parallelLightDir));
-            colorf p = parallelLightColor;
-            p.a = 1;
-            p.r *= ndotl;
-            p.g *= ndotl;
-            p.b *= ndotl;
-            light += p;
-            vertColor *= light;
-          }
-          out.color = vertColor;
+
+        colorf vertColor = col;
+        if (mat) {
+          vertColor *= mat->baseColor;
         }
+        if (hasFlag(renderFlags, RenderFlags3D::LIGHTING)) {
+          colorf light;
+          light += envLight;
+          float ndotl = fmaxf(0, norm.dot(parallelLightDir));
+          colorf p = parallelLightColor;
+          p.a = 1;
+          p.r *= ndotl;
+          p.g *= ndotl;
+          p.b *= ndotl;
+          light += p;
+          vertColor *= light;
+        }
+        out.color = vertColor;
         out.uv = uv;
       }
     }
 
     switch (prim->mode) {
       case PrimitiveMode::POINTS:
-        // todo: implement
+        renderPoint(bakedVerts[0], mat);
         break;
       case PrimitiveMode::LINES:
       case PrimitiveMode::LINE_LOOP:
