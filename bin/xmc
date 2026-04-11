@@ -12,7 +12,6 @@ if not XMC_REPO_PATH:
     print("Error: XMC_REPO_PATH environment variable is not set.")
     exit(1)
 
-
 def main():
     parser = argparse.ArgumentParser(description="XMC - Xiamocon Utility")
     parser.add_argument(
@@ -28,7 +27,16 @@ def main():
         help="Target platform (e.g., rp2350_pico_sdk)",
     )
     parser.add_argument("-d", "--drive", help="Drive letter for XIAO RP2350")
+    
     args = parser.parse_args()
+
+    default_platform = os.getenv("XMC_DEFAULT_PLATFORM")
+    if not args.platform and default_platform:
+        args.platform = default_platform
+    
+    default_drive = os.getenv("XMC_DEFAULT_DRIVE")
+    if not args.drive and default_drive:
+        args.drive = default_drive    
 
     if args.command == "init":
         xmc_init(args)

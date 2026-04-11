@@ -290,11 +290,13 @@ void renderScene() {
 
   // cave hole and light
   g3d->disableFlags(RenderFlags3D::LIGHTING);
-  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
-  g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(4);
   g3d->renderScene(cave_hole);
+  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderScene(cave_light);
   g3d->popMatrix();
 
