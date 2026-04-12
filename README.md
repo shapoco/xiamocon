@@ -26,7 +26,7 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
     sudo apt install build-essential cmake git
     ```
 
-2. Install [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/gnu-rm)
+2. Install [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 
     ```sh
     mkdir -p ${HOME}/.xmc
