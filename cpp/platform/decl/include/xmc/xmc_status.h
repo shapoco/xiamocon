@@ -20,9 +20,10 @@ typedef enum {
   XMC_ERR_TIMER_REPEATING_TIMER_INIT_FAILED = XMC_ERR_BASE_TIMER + 1,
   XMC_ERR_BASE_I2C = 0x600,
   XMC_ERR_I2C_NOT_INITIALIZED = XMC_ERR_BASE_I2C + 1,
-  XMC_ERR_I2C_INVALID_BAUDRATE = XMC_ERR_BASE_I2C + 2,
-  XMC_ERR_I2C_WRITE_FAILED = XMC_ERR_BASE_I2C + 3,
-  XMC_ERR_I2C_READ_FAILED = XMC_ERR_BASE_I2C + 4,
+  XNC_ERR_I2C_BUS_RESET_FAILED = XMC_ERR_BASE_I2C + 2,
+  XMC_ERR_I2C_INVALID_BAUDRATE = XMC_ERR_BASE_I2C + 3,
+  XMC_ERR_I2C_WRITE_FAILED = XMC_ERR_BASE_I2C + 4,
+  XMC_ERR_I2C_READ_FAILED = XMC_ERR_BASE_I2C + 5,
   XMC_ERR_BASE_SPI = 0x700,
   XMC_ERR_SPI_NOT_INITIALIZED = XMC_ERR_BASE_SPI + 1,
   XMC_ERR_SPI_INVALID_BAUDRATE = XMC_ERR_BASE_SPI + 2,
@@ -60,7 +61,7 @@ typedef enum {
 
 #define XMC_ERR_LOG(status)                             \
   do {                                                  \
-    xmcSetLastError((status), __FILE_NAME__, __LINE__); \
+    xmcSetLastError((status), __FILE__, __LINE__); \
   } while (0)
 
 // if the status is not XMC_OK, log the error and return from the current

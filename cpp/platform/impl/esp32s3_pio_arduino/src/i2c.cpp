@@ -2,12 +2,14 @@
 #include "xmc/hw/gpio.hpp"
 #include "xmc/hw/pins.hpp"
 #include "xmc/hw/semaphore.hpp"
+#include "xmc/hw/timer.hpp"
 
 #include <Wire.h>
 
 namespace xmc::i2c {
 
 static Semaphore *semaphore = nullptr;
+bool isInited = false;
 
 uint32_t getPreferredFrequency(Chipset device) {
   switch (device) {
@@ -18,8 +20,10 @@ uint32_t getPreferredFrequency(Chipset device) {
 }
 
 XmcStatus init() {
+  resetBus();
   Wire.begin();
   Wire.setClock(getPreferredFrequency(Chipset::IO_EXPANDER));
+  isInited = true;
   if (semaphore) delete semaphore;
   semaphore = new Semaphore();
   if (!semaphore->isInitialized()) {
@@ -36,6 +40,7 @@ void deinit() {
     delete semaphore;
     semaphore = nullptr;
   }
+  isInited = false;
 }
 
 bool tryLock() {
@@ -51,6 +56,54 @@ XmcStatus unlock() {
 XmcStatus setBaudrate(uint32_t baudrate) {
   Wire.setClock(baudrate);
   return XMC_OK;
+}
+
+XmcStatus resetBus() {
+  XmcStatus sts = XMC_OK;
+
+  bool reInit = isInited;
+  if (reInit) {
+    deinit();
+  }
+
+  gpio::setDir(XMC_PIN_I2C_SDA, false);
+  gpio::setDir(XMC_PIN_I2C_SCL, false);
+  int numRetriesLeft = BUS_RESET_RETRY_COUNT;
+  while (--numRetriesLeft >= 0) {
+    if (!gpio::read(XMC_PIN_I2C_SDA)) {
+      // Clock the bus until the slave releases the SDA line
+      gpio::setDir(XMC_PIN_I2C_SCL, true);
+      gpio::write(XMC_PIN_I2C_SCL, false);
+      sleepUs(100);
+      for (int i = 0; i < 9; i++) {
+        gpio::write(XMC_PIN_I2C_SCL, true);
+        sleepUs(100);
+        gpio::write(XMC_PIN_I2C_SCL, false);
+        sleepUs(100);
+        if (gpio::read(XMC_PIN_I2C_SDA)) {
+          break;
+        }
+      }
+      // Send a stop condition
+      gpio::write(XMC_PIN_I2C_SCL, false);
+      gpio::write(XMC_PIN_I2C_SDA, false);
+      gpio::setDir(XMC_PIN_I2C_SCL, true);
+      gpio::setDir(XMC_PIN_I2C_SDA, true);
+      sleepUs(100);
+      gpio::setDir(XMC_PIN_I2C_SCL, false);
+      sleepUs(100);
+      gpio::setDir(XMC_PIN_I2C_SDA, false);
+      sleepUs(100);
+    }
+  }
+  if (numRetriesLeft < 0) {
+    sts = XNC_ERR_I2C_BUS_RESET_FAILED;
+  }
+
+  if (reInit) {
+    sts = init();
+  }
+  return sts;
 }
 
 XmcStatus writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size,

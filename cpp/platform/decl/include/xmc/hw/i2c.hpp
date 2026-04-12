@@ -13,6 +13,8 @@
 
 namespace xmc::i2c {
 
+static constexpr int BUS_RESET_RETRY_COUNT = 3;
+
 /**
  * Get the preferred I2C frequency for a given device. This can be used to set
  * the baud rate when initializing the I2C peripheral.
@@ -73,6 +75,15 @@ XmcStatus unlock();
  * adjusted to the nearest supported value.
  */
 XmcStatus setBaudrate(uint32_t baudrate);
+
+/**
+ * Reset the I2C bus by manually toggling the SCL line until the SDA line is
+ * released by any stuck slave devices. This can be used to recover from a
+ * bus lockup condition.
+ * @return XMC_OK if the bus was successfully reset, or an error code if the
+ * reset failed.
+ */
+XmcStatus resetBus();
 
 /**
  * Write data to an I2C device in a blocking manner.

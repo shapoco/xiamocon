@@ -80,6 +80,7 @@ XmcStatus requestShutdown() {
   spi::deinit();
 
   // shutdown peripherals
+  i2c::resetBus();
   ioex::write(ioex::Pin::PERI_EN, true);
   sleepMs(1000);
 

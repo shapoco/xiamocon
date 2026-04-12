@@ -1,6 +1,7 @@
 #include "xmc/gfx2d/frame_buffer.hpp"
 #include "xmc/display.hpp"
 #include "xmc/hw/timer.hpp"
+#include "xmc/path.hpp"
 
 namespace xmc {
 
@@ -107,14 +108,18 @@ XmcStatus FrameBuffer::renderDebugBar(Graphics2D &gfx) {
   if (err == XMC_OK) return XMC_OK;
 
   int w = gfx->getBounds().width;
-  int h = 10;
+  int h = STATUS_BAR_HEIGHT;
+  int baseLine = gfx->getBounds().height - h + 1;
+
+  const char *fileName;
+  path::basename(file, &fileName);
 
   char buf[64];
   GraphicsState2D backup = gfx->getState();
   gfx->fillSmokeRect(0, gfx->getBounds().height - h, w, h, false);
   gfx->setFont(&ShapoSansP_s08c07, 1);
-  snprintf(buf, sizeof(buf), "ERR 0x%X: L%d in %s", err, line, file);
-  gfx->setCursor(0, gfx->getBounds().height - 2);
+  snprintf(buf, sizeof(buf), "ERR#%Xh %s:%d", err, fileName, line);
+  gfx->setCursor(0, baseLine);
   gfx->setTextColor(0xFFFF);
   gfx->drawString(buf);
   gfx->setState(backup);

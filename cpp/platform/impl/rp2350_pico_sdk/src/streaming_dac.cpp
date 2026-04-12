@@ -67,6 +67,7 @@ uint32_t getPreferredSamplingRate(void) { return 25000; }
 
 StreamingDac::StreamingDac(int pin) : pin(pin) {
   handle = malloc(sizeof(SdacHwRp));
+  memset(handle, 0, sizeof(SdacHwRp));
 }
 
 StreamingDac::~StreamingDac() {

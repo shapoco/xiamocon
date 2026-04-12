@@ -18,7 +18,9 @@ AppConfig xmc::appGetConfig() {
   return cfg;
 }
 
-void xmc::appSetup() {}
+void xmc::appSetup() {
+  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+}
 
 void xmc::appLoop() {
   fpsKeeper.waitVsync();
@@ -42,8 +44,6 @@ void xmc::appLoop() {
     drawButtonState(gfx, Button::A, xr + 30, y);
     drawButtonState(gfx, Button::B, xr, y + 30);
     drawButtonState(gfx, Button::FUNC, xr + 30, y - 60);
-    appDrawStatusBar(gfx);
-    appDrawDebugInfo(gfx);
     frameBuffer.endRender();
   }
 }
