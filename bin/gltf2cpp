@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""gltf2cpp - Convert glTF 2.0 files to C++ header files for xmc."""
 
 import argparse
 import io

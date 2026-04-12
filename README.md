@@ -17,26 +17,18 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
 
 ### 1. Install Build Tools
 
+#### Install required packages.
+
+```sh
+sudo apt update
+sudo apt -y install curl git
+sudo apt -y install build-essential cmake gcc-arm-none-eabi
+sudo apt -y install python3 python3-pip python3-venv
+```
+
 #### for RP2350
 
-1. Install required packages.
-
-    ```sh
-    sudo apt update
-    sudo apt install build-essential cmake git gcc-arm-none-eabi
-    ```
-
-2. Install [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-
-    ```sh
-    mkdir -p ${HOME}/.xmc
-    cd ${HOME}/.xmc
-    wget https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
-    tar xf arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
-    export PICO_TOOLCHAIN_PATH=${HOME}/.xmc/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi/bin
-    ```
-
-3. Install [Pico SDK](https://github.com/raspberrypi/pico-sdk) and set `PICO_SDK_PATH` environment variable.
+1. Install [Pico SDK](https://github.com/raspberrypi/pico-sdk) and set `PICO_SDK_PATH` environment variable.
 
     ```sh
     mkdir -p ${HOME}/.xmc
@@ -47,7 +39,7 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
     export PICO_SDK_PATH=${HOME}/.xmc/pico-sdk
     ```
 
-4. Install [Pico Extras](https://github.com/raspberrypi/pico-extras) and set `PICO_EXTRAS_PATH` environment variable.
+2. Install [Pico Extras](https://github.com/raspberrypi/pico-extras) and set `PICO_EXTRAS_PATH` environment variable.
 
     ```sh
     mkdir -p ${HOME}/.xmc
@@ -58,20 +50,13 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
 
 #### for ESP32S3
 
-1. Install required packages.
+Install [PlatformIO](https://docs.platformio.org/) and set `PATH` environment variable.
 
-    ```sh
-    sudo apt update
-    sudo apt install python3 python3-venv
-    ```
-
-2. Install [PlatformIO](https://docs.platformio.org/).
-
-    ```sh
-    curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
-    python3 get-platformio.py
-    export PATH=$PATH:${HOME}/.platformio/penv/bin
-    ```
+```sh
+curl -L -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
+python3 get-platformio.py
+export PATH=$PATH:${HOME}/.platformio/penv/bin
+```
 
 ### 2. Install Xiamocon SDK
 
@@ -87,7 +72,6 @@ It is recommended to add the environment variables to your shell configuration f
 
 ```sh
 # for RP2350:
-export PICO_TOOLCHAIN_PATH=${HOME}/.xmc/gcc-arm-none-eabi-10.3-2021.10/bin
 export PICO_SDK_PATH=${HOME}/.xmc/pico-sdk
 export PICO_EXTRAS_PATH=${HOME}/.xmc/pico-extras
 

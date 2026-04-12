@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eux
+
+docker run \
+    --rm \
+    -e HOST_UID=$(id -u) \
+    -e HOST_GID=$(id -g) \
+    -v ${XMC_REPO_PATH}:/opt/.xmc/xiamocon \
+    -v $(pwd):/opt/workspace \
+    -w /opt/workspace \
+    xiamocon:latest \
+    xmc $@

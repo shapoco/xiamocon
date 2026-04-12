@@ -55,7 +55,12 @@ def main():
         else:
             xmc_run(args)
     elif args.command == "clean":
-        xmc_clean(args)
+        if args.platform is None:
+            for p in PLATFORMS:
+                args.platform = p
+                xmc_clean(args)
+        else:
+            xmc_clean(args)
     else:
         print(f"Error: Unsupported command '{args.command}'")
         exit(1)

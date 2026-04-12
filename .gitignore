@@ -9,6 +9,7 @@ tmp.*/
 .venv/
 .cmake/
 .pio/
+.platformio/
 *.log
 
 # for KiCad
