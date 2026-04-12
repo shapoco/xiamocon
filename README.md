@@ -128,3 +128,7 @@ cp -r $XMC_REPO_PATH/cpp/example/hello_world/src .
 [![](./image/thumb-jumping-game.jpg)](https://x.com/shapoco/status/2041168789505794345)
 
 [![](./image/thumb-3d-gfx.jpg)](https://x.com/shapoco/status/2038788120653824424)
+
+## License
+
+T.B.D.
