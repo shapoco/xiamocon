@@ -23,20 +23,10 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
 
     ```sh
     sudo apt update
-    sudo apt install build-essential cmake git
+    sudo apt install build-essential cmake git gcc-arm-none-eabi
     ```
 
-2. Install [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
-
-    ```sh
-    mkdir -p ${HOME}/.xmc
-    cd ${HOME}/.xmc
-    wget https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
-    tar xf arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi.tar.xz
-    export PICO_TOOLCHAIN_PATH=${HOME}/.xmc/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-eabi/bin
-    ```
-
-3. Install [Pico SDK](https://github.com/raspberrypi/pico-sdk) and set `PICO_SDK_PATH` environment variable.
+2. Install [Pico SDK](https://github.com/raspberrypi/pico-sdk) and set `PICO_SDK_PATH` environment variable.
 
     ```sh
     mkdir -p ${HOME}/.xmc
@@ -47,7 +37,7 @@ Game Console-Shaped Motherboard for XIAO RP2350/ESP32S3
     export PICO_SDK_PATH=${HOME}/.xmc/pico-sdk
     ```
 
-4. Install [Pico Extras](https://github.com/raspberrypi/pico-extras) and set `PICO_EXTRAS_PATH` environment variable.
+3. Install [Pico Extras](https://github.com/raspberrypi/pico-extras) and set `PICO_EXTRAS_PATH` environment variable.
 
     ```sh
     mkdir -p ${HOME}/.xmc

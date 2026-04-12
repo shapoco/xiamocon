@@ -25,19 +25,19 @@ Mesh3D createColoredCube(float s) {
   colorf c4 = {cd, cd, cl, 1};
   colorf c5 = {cl, cl, cd, 1};
 
-  vec3 *poses = new vec3[]{
+  vec3 *poses = new vec3[24]{
       v0, v2, v4, v6, v1, v5, v3, v7, v0, v4, v1, v5,
       v2, v3, v6, v7, v0, v1, v2, v3, v4, v6, v5, v7,
   };
-  vec3 *norms = new vec3[]{
+  vec3 *norms = new vec3[24]{
       n0, n0, n0, n0, n1, n1, n1, n1, n2, n2, n2, n2,
       n3, n3, n3, n3, n4, n4, n4, n4, n5, n5, n5, n5,
   };
-  colorf *cols = new colorf[]{
+  colorf *cols = new colorf[24]{
       c0, c0, c0, c0, c1, c1, c1, c1, c2, c2, c2, c2,
       c3, c3, c3, c3, c4, c4, c4, c4, c5, c5, c5, c5,
   };
-  uint16_t *idxs = new uint16_t[]{
+  uint16_t *idxs = new uint16_t[36]{
       2,  1,  0,  1,  2,  3,  6,  5,  4,  5,  6,  7,  10, 9,  8,  9,  10, 11,
       14, 13, 12, 13, 14, 15, 18, 17, 16, 17, 18, 19, 22, 21, 20, 21, 22, 23,
   };
