@@ -15,6 +15,8 @@
 
 namespace xmc {
 
+static constexpr int GFX2D_STRIDE_AUTO = 0;
+
 class SpriteClass;
 using Sprite = std::shared_ptr<SpriteClass>;
 

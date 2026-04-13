@@ -31,6 +31,14 @@ static inline Mesh3D createMesh3D(std::vector<Primitive3D> &&prims) {
 }
 
 /**
+ * @brief Create a cube mesh centered at the origin with side length s
+ * @param s The side length of the cube
+ * @param uv Whether to include UV coordinates
+ * @return A Mesh3D object representing the cube
+ */
+Mesh3D createCube(float s = 1.0f, bool uv = true);
+
+/**
  * @brief Create a colored cube mesh centered at the origin with side length s
  * @param s The side length of the cube
  * @return A Mesh3D object representing the cube

@@ -163,6 +163,13 @@ struct mat4 {
     return vec3(x * inv_w, y * inv_w, z * inv_w);
   }
 
+  XMC_INLINE vec3 transformNormal(const vec3 &v) const {
+    float nx = m[0] * v.x + m[4] * v.y + m[8] * v.z;
+    float ny = m[1] * v.x + m[5] * v.y + m[9] * v.z;
+    float nz = m[2] * v.x + m[6] * v.y + m[10] * v.z;
+    return vec3(nx, ny, nz).normalized();
+  }
+
   XMC_INLINE void translate(const vec3 &t) {
     m[12] += t.x;
     m[13] += t.y;

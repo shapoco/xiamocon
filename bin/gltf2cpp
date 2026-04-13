@@ -22,12 +22,12 @@ GLTF_PRIMITIVE_MODES = {
 }
 
 COMPONENT_SIZES = {
-    5120: 1,   # BYTE
-    5121: 1,   # UNSIGNED_BYTE
-    5122: 2,   # SHORT
-    5123: 2,   # UNSIGNED_SHORT
-    5125: 4,   # UNSIGNED_INT
-    5126: 4,   # FLOAT
+    5120: 1,  # BYTE
+    5121: 1,  # UNSIGNED_BYTE
+    5122: 2,  # SHORT
+    5123: 2,  # UNSIGNED_SHORT
+    5125: 4,  # UNSIGNED_INT
+    5126: 4,  # FLOAT
 }
 
 COMPONENT_FMT = {
@@ -48,6 +48,12 @@ TYPE_COMPONENTS = {
     "MAT3": 9,
     "MAT4": 16,
 }
+
+
+def is_white(r, g, b, a):
+    """Check if a color is effectively white (used for debugging)."""
+    thresh = 255.0 / 256.0
+    return r >= thresh and g >= thresh and b >= thresh and a >= thresh
 
 
 def read_accessor(gltf, accessor_index):
@@ -105,14 +111,21 @@ def to_argb4444(image, dither=False):
         pixels = []
         for i in range(0, len(raw), 4):
             r, g, b, a = raw[i], raw[i + 1], raw[i + 2], raw[i + 3]
-            pixels.append(((a >> 4) << 12) | ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4))
+            pixels.append(
+                ((a >> 4) << 12) | ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4)
+            )
         return w, h, pixels
 
     # Floyd-Steinberg error diffusion dithering
     buf = [[0.0] * 4 for _ in range(w * h)]
     for i in range(0, len(raw), 4):
         idx = i // 4
-        buf[idx] = [float(raw[i]), float(raw[i + 1]), float(raw[i + 2]), float(raw[i + 3])]
+        buf[idx] = [
+            float(raw[i]),
+            float(raw[i + 1]),
+            float(raw[i + 2]),
+            float(raw[i + 3]),
+        ]
 
     pixels = []
     for y in range(h):
@@ -128,7 +141,12 @@ def to_argb4444(image, dither=False):
             err = [new[ch] - eq[ch] for ch in range(4)]
             pixels.append((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2])
             # Distribute error to neighbors (Floyd-Steinberg)
-            for dx, dy, weight in [(1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)]:
+            for dx, dy, weight in [
+                (1, 0, 7 / 16),
+                (-1, 1, 3 / 16),
+                (0, 1, 5 / 16),
+                (1, 1, 1 / 16),
+            ]:
                 nx, ny = x + dx, y + dy
                 if 0 <= nx < w and 0 <= ny < h:
                     ni = ny * w + nx
@@ -177,7 +195,9 @@ def generate(gltf, gltf_dir, prefix, dither=False):
 
         # Base color texture
         tex_var = None
-        has_tex = pbr and pbr.baseColorTexture and pbr.baseColorTexture.index is not None
+        has_tex = (
+            pbr and pbr.baseColorTexture and pbr.baseColorTexture.index is not None
+        )
         if has_tex:
             try:
                 img = load_image(gltf, pbr.baseColorTexture.index, gltf_dir)
@@ -198,7 +218,10 @@ def generate(gltf, gltf_dir, prefix, dither=False):
                 w(");")
                 w("")
             except Exception as e:
-                print(f"Warning: Could not load texture for material {mi}: {e}", file=sys.stderr)
+                print(
+                    f"Warning: Could not load texture for material {mi}: {e}",
+                    file=sys.stderr,
+                )
 
         # Base color factor
         bc = [1.0, 1.0, 1.0, 1.0]
@@ -210,11 +233,16 @@ def generate(gltf, gltf_dir, prefix, dither=False):
         fn = f"{mn}_create"
         w(f"xmc::Material3D {fn}() {{")
         w("  xmc::Material3DClass mat;")
-        w(f"  mat.baseColor = {{{fmt_float(bc[0])}, {fmt_float(bc[1])}, {fmt_float(bc[2])}, {fmt_float(bc[3])}}};")
+        w(
+            f"  mat.baseColor = {{{fmt_float(bc[0])}, {fmt_float(bc[1])}, {fmt_float(bc[2])}, {fmt_float(bc[3])}}};"
+        )
+        w("  mat.flags = xmc::MaterialFlags3D::NONE;")
+        if not is_white(*bc):
+            w("  mat.flags |= xmc::MaterialFlags3D::HAS_BASE_COLOR;")
         if tex_var:
             w(f"  mat.colorTexture = {tex_var};")
         if mat.doubleSided:
-            w("  mat.doubleSided = true;")
+            w("  mat.flags |= xmc::MaterialFlags3D::DOUBLE_SIDED;")
         w("  return std::make_shared<xmc::Material3DClass>(mat);")
         w("}")
         w("")
@@ -274,10 +302,9 @@ def generate(gltf, gltf_dir, prefix, dither=False):
                 data, acc = read_accessor(gltf, attrs.COLOR_0)
                 ct = acc.componentType
                 nc = TYPE_COMPONENTS[acc.type]
-                dn = f"{pn}_colData"
-                vn = f"{pn}_col"
-                w("")
-                w(f"const float {dn}[] = {{")
+
+                rgba = []
+                is_all_white = True
                 for v in data:
                     if ct == 5126:  # FLOAT
                         r, g, b = v[0], v[1], v[2]
@@ -290,13 +317,25 @@ def generate(gltf, gltf_dir, prefix, dither=False):
                         a = v[3] / 65535.0 if nc >= 4 else 1.0
                     else:
                         r, g, b, a = 1.0, 1.0, 1.0, 1.0
-                    w(f"    {fmt_float(r)}, {fmt_float(g)}, {fmt_float(b)}, {fmt_float(a)},")
-                w("};")
-                w("")
-                w(f"const xmc::ColorBuffer {vn} = xmc::createColorBuffer(")
-                w(f"    (xmc::colorf *){dn}, {len(data)}, false")
-                w(");")
-                col_var = f"(xmc::ColorBuffer){vn}"
+                    if not is_white(r, g, b, a):
+                        is_all_white = False
+                    rgba.append((r, g, b, a))
+
+                if not is_all_white:
+                    dn = f"{pn}_colData"
+                    vn = f"{pn}_col"
+                    w("")
+                    w(f"const float {dn}[] = {{")
+                    for v in rgba:
+                        w(
+                            f"    {fmt_float(v[0])}, {fmt_float(v[1])}, {fmt_float(v[2])}, {fmt_float(v[3])},"
+                        )
+                    w("};")
+                    w("")
+                    w(f"const xmc::ColorBuffer {vn} = xmc::createColorBuffer(")
+                    w(f"    (xmc::colorf *){dn}, {len(data)}, false")
+                    w(");")
+                    col_var = f"(xmc::ColorBuffer){vn}"
 
             # ── TEXCOORD_0 ──
             uv_var = "nullptr"
@@ -392,7 +431,22 @@ def generate(gltf, gltf_dir, prefix, dither=False):
 
         # ── Transform ──
         has_matrix = node.matrix is not None and list(node.matrix) != [
-            1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
         ]
         has_trs = (
             (node.translation is not None and list(node.translation) != [0, 0, 0])
@@ -418,13 +472,19 @@ def generate(gltf, gltf_dir, prefix, dither=False):
             w("  xmc::mat4 t = xmc::mat4::identity();")
             if node.scale is not None and list(node.scale) != [1, 1, 1]:
                 s = list(node.scale)
-                w(f"  t.scale(xmc::vec3({fmt_float(s[0])}, {fmt_float(s[1])}, {fmt_float(s[2])}));")
+                w(
+                    f"  t.scale(xmc::vec3({fmt_float(s[0])}, {fmt_float(s[1])}, {fmt_float(s[2])}));"
+                )
             if node.rotation is not None and list(node.rotation) != [0, 0, 0, 1]:
                 r = list(node.rotation)
-                w(f"  t.rotate(xmc::quat({fmt_float(r[3])}, {fmt_float(r[0])}, {fmt_float(r[1])}, {fmt_float(r[2])}));")
+                w(
+                    f"  t.rotate(xmc::quat({fmt_float(r[3])}, {fmt_float(r[0])}, {fmt_float(r[1])}, {fmt_float(r[2])}));"
+                )
             if node.translation is not None and list(node.translation) != [0, 0, 0]:
                 tr = list(node.translation)
-                w(f"  t.translate({fmt_float(tr[0])}, {fmt_float(tr[1])}, {fmt_float(tr[2])});")
+                w(
+                    f"  t.translate({fmt_float(tr[0])}, {fmt_float(tr[1])}, {fmt_float(tr[2])});"
+                )
 
         if has_matrix or has_trs:
             w(f"  xmc::Node3D node = xmc::createNode3D({mesh_ref}, t);")
@@ -463,7 +523,9 @@ def generate(gltf, gltf_dir, prefix, dither=False):
         w(f"const xmc::Scene3D {sn} = {fn}();")
 
     # ── Default scene alias ──
-    default_scene_idx = gltf.scene if gltf.scene is not None else (0 if scenes else None)
+    default_scene_idx = (
+        gltf.scene if gltf.scene is not None else (0 if scenes else None)
+    )
     if default_scene_idx is not None and default_scene_idx in scene_vars:
         w("")
         w(f"const xmc::Scene3D {prefix} = {scene_vars[default_scene_idx]};")

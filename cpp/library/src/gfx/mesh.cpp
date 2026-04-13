@@ -2,6 +2,50 @@
 
 namespace xmc {
 
+Mesh3D createCube(float s, bool uv) {
+  vec3 v0 = {-s, -s, -s};
+  vec3 v1 = {s, -s, -s};
+  vec3 v2 = {-s, s, -s};
+  vec3 v3 = {s, s, -s};
+  vec3 v4 = {-s, -s, s};
+  vec3 v5 = {s, -s, s};
+  vec3 v6 = {-s, s, s};
+  vec3 v7 = {s, s, s};
+  vec3 n0 = {-1, 0, 0};
+  vec3 n1 = {1, 0, 0};
+  vec3 n2 = {0, -1, 0};
+  vec3 n3 = {0, 1, 0};
+  vec3 n4 = {0, 0, -1};
+  vec3 n5 = {0, 0, 1};
+  vec2 uv0 = {0, 0};
+  vec2 uv1 = {1, 0};
+  vec2 uv2 = {0, 1};
+  vec2 uv3 = {1, 1};
+
+  vec3 *poses = new vec3[24]{
+      v0, v2, v4, v6, v1, v5, v3, v7, v0, v4, v1, v5,
+      v2, v3, v6, v7, v0, v1, v2, v3, v4, v6, v5, v7,
+  };
+  vec3 *norms = new vec3[24]{
+      n0, n0, n0, n0, n1, n1, n1, n1, n2, n2, n2, n2,
+      n3, n3, n3, n3, n4, n4, n4, n4, n5, n5, n5, n5,
+  };
+  vec2 *uvs = new vec2[24]{
+      uv0, uv1, uv2, uv3, uv0, uv1, uv2, uv3, uv0, uv1, uv2, uv3,
+      uv0, uv1, uv2, uv3, uv0, uv1, uv2, uv3, uv0, uv1, uv2, uv3,
+  };
+  uint16_t *idxs = new uint16_t[36]{
+      2,  1,  0,  1,  2,  3,  6,  5,  4,  5,  6,  7,  10, 9,  8,  9,  10, 11,
+      14, 13, 12, 13, 14, 15, 18, 17, 16, 17, 18, 19, 22, 21, 20, 21, 22, 23,
+  };
+
+  return createMesh3D({createPrimitive3D(
+      PrimitiveMode::TRIANGLES, createVec3Buffer(poses, 24, true),
+      createVec3Buffer(norms, 24, true), nullptr,
+      uv ? createVec2Buffer(uvs, 24, true) : nullptr,
+      createIndexBuffer(idxs, 36, true))});
+}
+
 Mesh3D createColoredCube(float s) {
   vec3 v0 = {-s, -s, -s};
   vec3 v1 = {s, -s, -s};

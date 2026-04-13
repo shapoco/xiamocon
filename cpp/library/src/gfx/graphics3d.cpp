@@ -1,10 +1,11 @@
 #include "xmc/gfx3d/graphics3d.hpp"
+#include "xmc/gfx3d/custom_shader.hpp"
 
 #include <string.h>
 
 namespace xmc {
 
-void RasterizerClass::clearDepth(depth_t value) {
+void Graphics3DClass::clearDepth(depth_t value) {
   int pixelCount = width * height;
   if (value == 0) {
     memset(depthBuff, 0x00, sizeof(depth_t) * pixelCount);
@@ -17,7 +18,7 @@ void RasterizerClass::clearDepth(depth_t value) {
   }
 }
 
-void RasterizerClass::setTarget(Sprite target, Rect viewport) {
+void Graphics3DClass::setTarget(Sprite target, Rect viewport) {
   this->target = target;
   this->viewport = viewport;
   screenMatrix = mat4::identity();
@@ -25,11 +26,11 @@ void RasterizerClass::setTarget(Sprite target, Rect viewport) {
   screenMatrix.m[5] = -viewport.height / 2.0f;
   screenMatrix.m[12] = viewport.x + viewport.width / 2.0f;
   screenMatrix.m[13] = viewport.y + viewport.height / 2.0f;
-  vpDirty = true;
+  viewProjectionDirty = true;
   mvpDirty = true;
 }
 
-void RasterizerClass::validateMatrix(bool force) {
+void Graphics3DClass::validateMatrix(bool force) {
   if (mvpDirty || force) {
     // Recalculate model matrix
     int dirtyIndex = modelMatrixStackPtr + 1;
@@ -52,59 +53,67 @@ void RasterizerClass::validateMatrix(bool force) {
       dirtyIndex++;
     }
 
-    // Recalculate PV matrix
-    if (vpDirty || force) {
-      vpMatrix = screenMatrix * projectionMatrix * viewMatrix;
-      vpDirty = false;
+    // Recalculate view-projection matrix
+    if (viewProjectionDirty || force) {
+      viewProjectionMatrix = screenMatrix * projectionMatrix * viewMatrix;
+      viewProjectionDirty = false;
     }
 
     // Recalculate MVP matrix
-    mvpMatrix = vpMatrix * modelMatrixStack[modelMatrixStackPtr].world;
+    mvpMatrix =
+        viewProjectionMatrix * modelMatrixStack[modelMatrixStackPtr].world;
     mvpDirty = false;
   }
 }
 
-void RasterizerClass::getModelMatrix(mat4 &out) {
+void Graphics3DClass::getModelMatrix(mat4 &out) {
   validateMatrix();
   out = modelMatrixStack[modelMatrixStackPtr].world;
 }
 
-void RasterizerClass::getMvpMatrix(mat4 &out) {
+void Graphics3DClass::getMvpMatrix(mat4 &out) {
   validateMatrix();
   out = mvpMatrix;
 }
 
-void RasterizerClass::renderScene(const Scene3D &scene) {
+void Graphics3DClass::renderScene(const Scene3D &scene, void *userContext) {
   for (const Node3D &node : scene->rootNodes) {
-    renderNode(node);
+    renderNode(node, userContext);
   }
 }
 
-void RasterizerClass::renderNode(const Node3D &node) {
+void Graphics3DClass::renderNode(const Node3D &node, void *userContext) {
   pushMatrix();
   loadMatrix(node->transform);
   if (node->mesh) {
-    renderMesh(node->mesh);
+    renderMesh(node->mesh, userContext);
   }
   for (const Node3D &child : node->children) {
-    renderNode(child);
+    renderNode(child, userContext);
   }
   popMatrix();
 }
 
-void RasterizerClass::renderMesh(const Mesh3D &mesh) {
+void Graphics3DClass::renderMesh(const Mesh3D &mesh, void *userContext) {
   for (const Primitive3D &prim : mesh->primitives) {
-    renderPrimitive(prim, prim->material);
+    renderPrimitive(prim, prim->material, userContext);
   }
 }
 
-void RasterizerClass::renderPrimitive(const Primitive3D &prim,
-                                      const Material3D &mat) {
+void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
+                                      const Material3D &mat,
+                                      void *userContext) {
+  RenderFlags3D flags = renderFlags;
   const Vec3Buffer &primPos = prim->position;
   const Vec3Buffer &primNorm = prim->normal;
   const ColorBuffer &primCol = prim->color;
   const Vec2Buffer &primUv = prim->uv;
   const IndexBuffer &primIdx = prim->indexes;
+
+  MaterialFlags3D matFlags = MaterialFlags3D::NONE;
+  if (mat) {
+    matFlags = mat->flags;
+  }
 
   if (!primPos) return;
 
@@ -113,10 +122,29 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
 
   validateMatrix(true);
 
+  if (!primNorm) {
+    flags &= ~RenderFlags3D::VERTEX_NORMAL;
+    flags &= ~RenderFlags3D::GOURAUD_SHADING;
+    flags &= ~RenderFlags3D::LIGHTING;
+  }
+  if (!primCol) {
+    flags &= ~RenderFlags3D::VERTEX_COLOR;
+  }
+  if (!mat || !mat->vertexShader) {
+    flags &= ~RenderFlags3D::CUSTOM_VERTEX_SHADER;
+  }
+
+  mat4 &modelMatrix = modelMatrixStack[modelMatrixStackPtr].world;
+  if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
+    VertexShaderArgs shaderArgs(flags, modelMatrix, viewProjectionMatrix, prim,
+                                mat);
+    mat->vertexShader->beginPrimitive(shaderArgs);
+  }
+
   int numVertices = prim->numVertices();
   int numElems = prim->numElements();
 
-  BakedVertex bakedVerts[3];
+  Vertex3D bakedVerts[3];
 
   for (int i = 0; i < numElems; i++) {
     bool reverse = false;
@@ -197,52 +225,75 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
       }
     }
 
-    mat4 &modelMatrix = modelMatrixStack[modelMatrixStackPtr].world;
     for (int j = 0; j < 3; j++) {
       if (fetchFlags & (1 << j)) {
-        // fetch attributes
-        vec3 pos = primPos->data[idxData[j]];
-        vec3 norm = primNorm ? primNorm->data[idxData[j]] : vec3(0, 0, 1);
-        colorf col = primCol ? primCol->data[idxData[j]]
-                             : colorf(1.0f, 1.0f, 1.0f, 1.0f);
-        vec2 uv = primUv ? primUv->data[idxData[j]] : vec2(0, 0);
+        Vertex3D out;
 
-        // transform
-        norm += pos;
-        norm = modelMatrix.transform(norm);
-        pos = modelMatrix.transform(pos);
-        norm -= pos;
-        norm = norm.normalized();
-
-        // shading
-        BakedVertex &out = bakedVerts[j];
-        out.pos = vpMatrix.transform(pos);
-
-        colorf vertColor = col;
-        if (mat) {
-          vertColor *= mat->baseColor;
+        // model transform
+        out.pos = primPos->data[idxData[j]];
+        if (hasFlag(flags, RenderFlags3D::VERTEX_NORMAL)) {
+          out.normal = primNorm->data[idxData[j]];
+        } else {
+          out.normal = vec3(0, 0, 1);
         }
-        if (hasFlag(renderFlags, RenderFlags3D::LIGHTING)) {
-          colorf light;
-          light += envLight;
-          float ndotl = fmaxf(0, norm.dot(parallelLightDir));
-          colorf p = parallelLightColor;
-          p.a = 1;
-          p.r *= ndotl;
-          p.g *= ndotl;
-          p.b *= ndotl;
-          light += p;
-          vertColor *= light;
+
+        // vertex color
+        if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
+          out.color = primCol->data[idxData[j]];
+        } else {
+          out.color = colorf(1.0f, 1.0f, 1.0f, 1.0f);
         }
-        out.color = vertColor;
-        out.uv = uv;
+
+        // uv
+        if (primUv) {
+          out.uv = primUv->data[idxData[j]];
+        } else {
+          out.uv = vec2(0, 0);
+        }
+
+        // vertex shading
+        if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
+          mat->vertexShader->process(&out);
+          out.pos = viewProjectionMatrix.transform(out.pos);
+        } else {
+          out.normal = modelMatrix.transformNormal(out.normal);
+          if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
+            vec3 worldPos = modelMatrix.transform(out.pos);
+            vec3 viewDir = (eyePosition - worldPos).normalized();
+            vec3 reflectDir =
+                (out.normal * 2 * out.normal.dot(viewDir) - viewDir)
+                    .normalized();
+            out.uv.x = 0.5f + atan2f(reflectDir.z, reflectDir.x) / (2 * M_PI);
+            out.uv.y = 0.5f - asinf(reflectDir.y) / M_PI;
+          }
+          out.pos = mvpMatrix.transform(out.pos);
+          if (mat && hasFlag(mat->flags, MaterialFlags3D::HAS_BASE_COLOR)) {
+            if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
+              out.color *= mat->baseColor;
+            } else {
+              out.color = mat->baseColor;
+            }
+          }
+          if (hasFlag(flags, RenderFlags3D::LIGHTING)) {
+            colorf light;
+            light += envLight;
+            float ndotl = fmaxf(0, out.normal.dot(parallelLightDir));
+            colorf p = parallelLightColor;
+            p.a = 1;
+            p.r *= ndotl;
+            p.g *= ndotl;
+            p.b *= ndotl;
+            light += p;
+            out.color *= light;
+          }
+        }
+
+        bakedVerts[j] = out;
       }
     }
 
     switch (prim->mode) {
-      case PrimitiveMode::POINTS:
-        renderPoint(bakedVerts[0], mat);
-        break;
+      case PrimitiveMode::POINTS: renderPoint(bakedVerts[0], mat); break;
       case PrimitiveMode::LINES:
       case PrimitiveMode::LINE_LOOP:
       case PrimitiveMode::LINE_STRIP:
@@ -251,6 +302,33 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
       case PrimitiveMode::TRIANGLES:
       case PrimitiveMode::TRIANGLE_STRIP:
       case PrimitiveMode::TRIANGLE_FAN:
+        if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
+          // fix uv seam for environment mapping
+          float dx01 = bakedVerts[1].uv.x - bakedVerts[0].uv.x;
+          float dx02 = bakedVerts[2].uv.x - bakedVerts[0].uv.x;
+          if (dx01 > 0.5f) {
+            bakedVerts[1].uv.x -= 1.0f;
+          } else if (dx01 < -0.5f) {
+            bakedVerts[1].uv.x += 1.0f;
+          }
+          if (dx02 > 0.5f) {
+            bakedVerts[2].uv.x -= 1.0f;
+          } else if (dx02 < -0.5f) {
+            bakedVerts[2].uv.x += 1.0f;
+          }
+          float dy01 = bakedVerts[1].uv.y - bakedVerts[0].uv.y;
+          float dy02 = bakedVerts[2].uv.y - bakedVerts[0].uv.y;
+          if (dy01 > 0.5f) {
+            bakedVerts[1].uv.y -= 1.0f;
+          } else if (dy01 < -0.5f) {
+            bakedVerts[1].uv.y += 1.0f;
+          }
+          if (dy02 > 0.5f) {
+            bakedVerts[2].uv.y -= 1.0f;
+          } else if (dy02 < -0.5f) {
+            bakedVerts[2].uv.y += 1.0f;
+          }
+        }
         if (reverse) {
           renderTriangle(bakedVerts[0], bakedVerts[2], bakedVerts[1], mat);
         } else {
@@ -258,6 +336,10 @@ void RasterizerClass::renderPrimitive(const Primitive3D &prim,
         }
         break;
     }
+  }
+
+  if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
+    mat->vertexShader->endPrimitive();
   }
 }
 

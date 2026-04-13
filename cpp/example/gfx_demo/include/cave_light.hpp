@@ -7,6 +7,7 @@ namespace {
 xmc::Material3D cave_light_mat0_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
+  mat.flags = xmc::MaterialFlags3D::NONE;
   return std::make_shared<xmc::Material3DClass>(mat);
 }
 

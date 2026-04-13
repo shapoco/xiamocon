@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 
+#include "cave_env_texture.hpp"
 #include "cave_hole.hpp"
 #include "cave_light.hpp"
 #include "quarts.hpp"
@@ -33,7 +34,7 @@ Leaf leafArray[NUM_LEAFS];
 
 static constexpr int NUM_PARTICLES = 100;
 static constexpr float PARTICLE_SPAWN_R = 8;
-static constexpr float PARTICLE_MAX_Y = 20;
+static constexpr float PARTICLE_MAX_Y = 10;
 struct Particle {
   vec3 vel;
 };
@@ -44,6 +45,13 @@ Primitive3D particlePrim =
 Mesh3D particleMesh = createMesh3D({particlePrim});
 
 Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
+
+Sprite envTexture = createSprite4444(256, 128, GFX2D_STRIDE_AUTO,
+                                     (void *)caveEnvTextureData, false);
+Material3D envMat = createMaterial3D();
+Mesh3D cube = createCube(0.5f);
+
+int modelIndex = 0;
 
 uint64_t lastUs = 0;
 uint64_t autoRotationStartUs = 0;
@@ -69,7 +77,7 @@ void xmc::appSetup() {
   leafColors->data[0] = {0, 0, 0, 1};
   leafColors->data[1] = {0, 0, 0, 1};
   leafColors->data[2] = {0, 1, 0, 1};
-  leafMat->doubleSided = true;
+  leafMat->flags |= MaterialFlags3D::DOUBLE_SIDED;
   for (int i = 0; i < NUM_LEAFS; i++) {
     // distribute within a circle of radius R
     const float R = 7.0f;
@@ -102,6 +110,11 @@ void xmc::appSetup() {
     particleVerts->data[i] = pos;
     particleArray[i].vel = {0, 1, 0};
   }
+
+  // prepare environment map
+  envMat->flags |= MaterialFlags3D::ENVIRONMENT_MAPPED;
+  envMat->colorTexture = envTexture;
+  cube->setMaterial(envMat);
 }
 
 void xmc::appLoop() {
@@ -141,6 +154,12 @@ void updateScene() {
     pressed = true;
   } else if (isPressed(Button::B)) {
     eyeDistanceSpeed += dt * 5;
+    pressed = true;
+  }
+
+  // model switch
+  if (wasPressed(Button::Y)) {
+    modelIndex = (modelIndex + 1) % 2;
     pressed = true;
   }
 
@@ -210,6 +229,8 @@ void updateScene() {
 }
 
 void renderScene() {
+  uint64_t nowMs = getTimeMs();
+
   Graphics2D gfx = frameBuffer.createGraphics();
 
   // clear screen
@@ -243,15 +264,61 @@ void renderScene() {
   // reset model matrix
   g3d->loadIdentity();
 
-  // flower
-  g3d->disableFlags(RenderFlags3D::LIGHTING);
-  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
-  g3d->renderScene(tulip);
+  if (modelIndex == 0) {
+    // flower
+    g3d->disableFlags(RenderFlags3D::LIGHTING);
+    g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
+    g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+    g3d->renderScene(tulip);
+  } else if (modelIndex == 1) {
+    // mirror cubes
+    g3d->disableFlags(RenderFlags3D::LIGHTING);
+    g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
+    g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+    g3d->pushMatrix();
+    float largeRot = (float)nowMs * 0.0002f;
+    g3d->rotate(largeRot * 1.1f, largeRot * 1.2f, largeRot * 1.3f);
+    g3d->translate(0, 3.3f, 0);
+    for (int iz = 0; iz < 2; iz++) {
+      for (int iy = 0; iy < 2; iy++) {
+        for (int ix = 0; ix < 2; ix++) {
+          int i = ix + iy * 2 + iz * 4;
+          float t = ((float)nowMs * 0.0002f);
+          int tInt = (int)floorf(t);
+          int axis = tInt % 3;
+          float p = (t - tInt) * 2;
+          g3d->pushMatrix();
+          if (tInt % 8 == i && p < 1.0f) {
+            if (p < 0.5f) {
+              p *= 2;
+              p *= p;
+              p /= 2;
+            } else {
+              p = (1 - p) * 2;
+              p *= p;
+              p = 1 - p / 2;
+            }
+            float rot = p * (M_PI / 2);
+            switch (axis) {
+              case 0: g3d->rotate(rot, 0, 0); break;
+              case 1: g3d->rotate(0, rot, 0); break;
+              case 2: g3d->rotate(0, 0, rot); break;
+              default: break;
+            }
+          }
+          g3d->translate((ix * 2 - 1) * 0.6f, (iy * 2 - 1) * 0.6f,
+                         (iz * 2 - 1) * 0.6f);
+          g3d->renderMesh(cube);
+          g3d->popMatrix();
+        }
+      }
+    }
+    g3d->popMatrix();
+  }
 
   // crystals
   g3d->enableFlags(RenderFlags3D::LIGHTING);
-  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(2.5f);
@@ -279,7 +346,7 @@ void renderScene() {
 
   // leafs
   g3d->disableFlags(RenderFlags3D::LIGHTING);
-  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   for (int i = 0; i < NUM_LEAFS; i++) {
     leafVerts->data[0] = leafArray[i].pos - leafArray[i].rot;
@@ -290,19 +357,19 @@ void renderScene() {
 
   // cave hole and light
   g3d->disableFlags(RenderFlags3D::LIGHTING);
-  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(4);
   g3d->renderScene(cave_hole);
-  g3d->enableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderScene(cave_light);
   g3d->popMatrix();
 
   // particles
   g3d->disableFlags(RenderFlags3D::LIGHTING);
-  g3d->disableFlags(RenderFlags3D::VERTEX_SHADING);
+  g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderMesh(particleMesh);
   g3d->popMatrix();

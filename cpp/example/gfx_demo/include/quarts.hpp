@@ -7,6 +7,7 @@ namespace {
 xmc::Material3D quarts_mat0_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
+  mat.flags = xmc::MaterialFlags3D::NONE;
   return std::make_shared<xmc::Material3DClass>(mat);
 }
 
@@ -15,6 +16,7 @@ const xmc::Material3D quarts_mat0 = quarts_mat0_create();
 xmc::Material3D quarts_mat1_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
+  mat.flags = xmc::MaterialFlags3D::NONE;
   return std::make_shared<xmc::Material3DClass>(mat);
 }
 

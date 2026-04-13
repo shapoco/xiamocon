@@ -3,6 +3,7 @@
 set -eux
 
 GLTF2CPP="python3 ${XMC_REPO_PATH}/bin/gltf2cpp"
+IMG2CPP="python3 ${XMC_REPO_PATH}/bin/img2cpp"
 MATERIAL_DIR="$(cd ${XMC_REPO_PATH}/material && pwd)"
 OUT_DIR="$(pwd)/include"
 
@@ -25,3 +26,9 @@ ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/quarts.glb \
     ${OUT_DIR}/quarts.hpp \
     --dither
+
+${IMG2CPP} \
+    ${MATERIAL_DIR}/texture/cave_env_texture.png \
+    ${OUT_DIR}/cave_env_texture.hpp \
+    --dither diffusion \
+    --format argb4444

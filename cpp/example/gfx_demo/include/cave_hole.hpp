@@ -7,6 +7,8 @@ namespace {
 xmc::Material3D cave_hole_mat0_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {0.0f, 0.0f, 0.0f, 1.0f};
+  mat.flags = xmc::MaterialFlags3D::NONE;
+  mat.flags |= xmc::MaterialFlags3D::HAS_BASE_COLOR;
   return std::make_shared<xmc::Material3DClass>(mat);
 }
 
@@ -2071,6 +2073,7 @@ const xmc::Sprite cave_hole_mat1_colorTexture = xmc::createSprite4444(
 xmc::Material3D cave_hole_mat1_create() {
   xmc::Material3DClass mat;
   mat.baseColor = {1.0f, 1.0f, 1.0f, 1.0f};
+  mat.flags = xmc::MaterialFlags3D::NONE;
   mat.colorTexture = cave_hole_mat1_colorTexture;
   return std::make_shared<xmc::Material3DClass>(mat);
 }

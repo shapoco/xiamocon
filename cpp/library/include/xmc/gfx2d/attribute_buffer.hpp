@@ -3,6 +3,7 @@
 
 #include "xmc/geo.hpp"
 #include "xmc/gfx2d/colorf.hpp"
+#include "xmc/gfx3d/gfx3d_common.hpp"
 #include "xmc/hw/ram.hpp"
 
 #include <memory>

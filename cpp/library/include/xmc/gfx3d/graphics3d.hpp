@@ -4,6 +4,7 @@
 #include "xmc/gfx2d/color8p24.hpp"
 #include "xmc/gfx2d/raster_scan.hpp"
 #include "xmc/gfx2d/sprite444.hpp"
+#include "xmc/gfx3d/gfx3d_common.hpp"
 #include "xmc/gfx3d/scene3d.hpp"
 
 namespace xmc {
@@ -11,31 +12,14 @@ namespace xmc {
 using depth_t = uint16_t;
 static constexpr depth_t MAX_DEPTH = (1 << (sizeof(depth_t) * 8)) - 1;
 
-enum class RenderFlags3D : uint32_t {
-  NONE,
-  VERTEX_SHADING = 1 << 0,
-  VERTEX_COLOR = 1 << 1,
-  LIGHTING = 1 << 2,
-  COLOR_TEXTURE = 1 << 4,
-  ALPHA_BLEND = 1 << 5,
-  DEFAULT = VERTEX_SHADING | VERTEX_COLOR | LIGHTING | COLOR_TEXTURE,
-};
-XMC_ENUM_FLAGS(RenderFlags3D, uint32_t);
-
 enum class TriangleRenderFlags : uint8_t {
   NONE = 0,
   FORMAT444 = 1 << 0,
-  VERTEX_SHADING = 1 << 1,
+  GOURAUD_SHADING = 1 << 1,
   COLOR_TEXTURE = 1 << 2,
   ALPHA_BLEND = 1 << 3,
 };
 XMC_ENUM_FLAGS(TriangleRenderFlags, uint8_t);
-
-struct BakedVertex {
-  vec3 pos;
-  colorf color;
-  vec2 uv;
-};
 
 struct TextureArgs {
   const uint16_t *data = nullptr;
@@ -83,12 +67,12 @@ struct ScanLineCounter {
   }
 };
 
-class RasterizerClass;
-using Graphics3D = std::shared_ptr<RasterizerClass>;
+class Graphics3DClass;
+using Graphics3D = std::shared_ptr<Graphics3DClass>;
 
 static inline Graphics3D createGraphics3D(int width, int height,
                                           uint32_t stackSize = 16) {
-  return std::make_shared<RasterizerClass>(width, height, stackSize);
+  return std::make_shared<Graphics3DClass>(width, height, stackSize);
 }
 
 struct MatrixStackEntry {
@@ -97,7 +81,7 @@ struct MatrixStackEntry {
   bool dirty = true;
 };
 
-class RasterizerClass {
+class Graphics3DClass {
  private:
   const int width;
   const int height;
@@ -107,12 +91,13 @@ class RasterizerClass {
 
   Sprite target;
   Rect viewport;
+  vec3 eyePosition;
 
   mat4 screenMatrix;
   mat4 viewMatrix;
   mat4 projectionMatrix;
-  mat4 vpMatrix;
-  bool vpDirty = true;
+  mat4 viewProjectionMatrix;
+  bool viewProjectionDirty = true;
   mat4 mvpMatrix;
   bool mvpDirty = true;
 
@@ -132,7 +117,7 @@ class RasterizerClass {
   Material3D material;
 
  public:
-  RasterizerClass(int w, int h, uint32_t stackSize)
+  Graphics3DClass(int w, int h, uint32_t stackSize)
       : width(w), height(h), stackSize(stackSize) {
     depthBuff = (depth_t *)xmcMalloc(sizeof(depth_t) * width * height,
                                      XMC_RAM_CAP_SPIRAM);
@@ -144,7 +129,7 @@ class RasterizerClass {
     loadIdentity();
   };
 
-  ~RasterizerClass() {
+  ~Graphics3DClass() {
     if (depthBuff) {
       xmcFree(depthBuff);
       depthBuff = nullptr;
@@ -175,13 +160,13 @@ class RasterizerClass {
 
   inline void setScreenMatrix(const mat4 &mat) {
     screenMatrix = mat;
-    vpDirty = true;
+    viewProjectionDirty = true;
     mvpDirty = true;
   }
 
   inline void setProjection(const mat4 &mat) {
     projectionMatrix = mat;
-    vpDirty = true;
+    viewProjectionDirty = true;
     mvpDirty = true;
   }
   inline const mat4 &getProjection() const { return projectionMatrix; }
@@ -198,13 +183,14 @@ class RasterizerClass {
 
   inline void setViewMatrix(const mat4 &mv) {
     viewMatrix = mv;
-    vpDirty = true;
+    viewProjectionDirty = true;
     mvpDirty = true;
   }
 
   inline const mat4 &getViewMatrix() const { return viewMatrix; }
 
   inline void lookAt(const vec3 &eye, const vec3 &focus, const vec3 &up) {
+    eyePosition = eye;
     setViewMatrix(mat4::lookAt(eye, focus, up));
   }
 
@@ -262,19 +248,21 @@ class RasterizerClass {
 
   void clearDepth(depth_t value = MAX_DEPTH);
 
-  void renderScene(const Scene3D &scene);
+  void renderScene(const Scene3D &scene, void *userContext = nullptr);
 
-  void renderNode(const Node3D &node);
+  void renderNode(const Node3D &node, void *userContext = nullptr);
 
-  void renderMesh(const Mesh3D &mesh);
+  void renderMesh(const Mesh3D &mesh, void *userContext = nullptr);
 
-  inline void renderPrimitive(const Primitive3D &prim) {
-    renderPrimitive(prim, material);
+  inline void renderPrimitive(const Primitive3D &prim,
+                              void *userContext = nullptr) {
+    renderPrimitive(prim, material, userContext);
   }
 
-  void renderPrimitive(const Primitive3D &prim, const Material3D &mat);
+  void renderPrimitive(const Primitive3D &prim, const Material3D &mat,
+                       void *userContext = nullptr);
 
-  template <bool ALPHA_BLEND, bool COLOR_TEXTURE, bool VERTEX_SHADING,
+  template <bool ALPHA_BLEND, bool COLOR_TEXTURE, bool GOURAUD_SHADING,
             bool FORMAT_444>
   XMC_INLINE void renderHalfTriangle(ScanLineCounter &accumVL,
                                      ScanLineCounter &accumVR,
@@ -305,7 +293,7 @@ class RasterizerClass {
           int32_t z = accumH.z.floorToInt();
           bool written = false;
           if (z < zPtr[x]) {
-            if (VERTEX_SHADING) {
+            if (GOURAUD_SHADING) {
               color8p24 c = accumH.c;
               if (COLOR_TEXTURE) {
                 uint32_t u = accumH.u.floorToInt() & tex.uMask;
@@ -377,8 +365,8 @@ class RasterizerClass {
     }
   }
 
-  void renderTriangle(const BakedVertex &v0, const BakedVertex &v1,
-                      const BakedVertex &v2, const Material3D &mat) {
+  void renderTriangle(const Vertex3D &v0, const Vertex3D &v1,
+                      const Vertex3D &v2, const Material3D &mat) {
     RenderFlags3D flags = renderFlags;
     if (!mat || !mat->colorTexture ||
         !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
@@ -390,7 +378,7 @@ class RasterizerClass {
     if (v0.pos.x < vpl && v1.pos.x < vpl && v2.pos.x < vpl) return;
     if (v0.pos.x >= vpr && v1.pos.x >= vpr && v2.pos.x >= vpr) return;
 
-    if (!mat || !mat->doubleSided) {
+    if (!mat || !hasFlag(mat->flags, MaterialFlags3D::DOUBLE_SIDED)) {
       // back-face culling
       float ax = v1.pos.x - v0.pos.x;
       float ay = v1.pos.y - v0.pos.y;
@@ -399,7 +387,7 @@ class RasterizerClass {
       if (ax * by - ay * bx >= 0) return;
     }
 
-    const BakedVertex *tri[] = {&v0, &v1, &v2};
+    const Vertex3D *tri[] = {&v0, &v1, &v2};
 
     int i0 = 0;
     int i1 = 1;
@@ -459,7 +447,7 @@ class RasterizerClass {
     cornerR.z = fixed20p12::fromFloat(z0 + (z2 - z0) * yT);
     cornerB.z = fixed20p12::fromFloat(z2);
 
-    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+    if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
       const colorf &c0 = tri[i0]->color;
       const colorf &c1 = tri[i1]->color;
       const colorf &c2 = tri[i2]->color;
@@ -499,8 +487,8 @@ class RasterizerClass {
     if (target->format == PixelFormat::RGB444) {
       trf |= TriangleRenderFlags::FORMAT444;
     }
-    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
-      trf |= TriangleRenderFlags::VERTEX_SHADING;
+    if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
+      trf |= TriangleRenderFlags::GOURAUD_SHADING;
     }
     if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
       trf |= TriangleRenderFlags::COLOR_TEXTURE;
@@ -566,7 +554,7 @@ class RasterizerClass {
     }
   }
 
-  void renderPoint(const BakedVertex &v0, const Material3D &mat) {
+  void renderPoint(const Vertex3D &v0, const Material3D &mat) {
     RenderFlags3D flags = renderFlags;
     if (!mat || !mat->colorTexture ||
         !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
@@ -592,7 +580,7 @@ class RasterizerClass {
     cornerL.z = fixed20p12::fromFloat(z0);
     cornerR.z = fixed20p12::fromFloat(z0);
 
-    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
+    if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
       cornerL.c = color8p24(v0.color);
       cornerR.c = cornerL.c;
     } else {
@@ -622,8 +610,8 @@ class RasterizerClass {
     if (target->format == PixelFormat::RGB444) {
       trf |= TriangleRenderFlags::FORMAT444;
     }
-    if (hasFlag(flags, RenderFlags3D::VERTEX_SHADING)) {
-      trf |= TriangleRenderFlags::VERTEX_SHADING;
+    if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
+      trf |= TriangleRenderFlags::GOURAUD_SHADING;
     }
     if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
       trf |= TriangleRenderFlags::COLOR_TEXTURE;
