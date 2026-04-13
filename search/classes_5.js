@@ -6,5 +6,6 @@ var searchData=
   ['glyphrenderer_3',['GlyphRenderer',['../classxmc_1_1GlyphRenderer.html',1,'xmc']]],
   ['glyphrendereragfx_4',['GlyphRendererAgfx',['../classxmc_1_1GlyphRendererAgfx.html',1,'xmc']]],
   ['graphics2dclass_5',['Graphics2DClass',['../classxmc_1_1Graphics2DClass.html',1,'xmc']]],
-  ['graphicsstate2d_6',['GraphicsState2D',['../structxmc_1_1GraphicsState2D.html',1,'xmc']]]
+  ['graphics3dclass_6',['Graphics3DClass',['../classxmc_1_1Graphics3DClass.html',1,'xmc']]],
+  ['graphicsstate2d_7',['GraphicsState2D',['../structxmc_1_1GraphicsState2D.html',1,'xmc']]]
 ];

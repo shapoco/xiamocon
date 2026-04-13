@@ -8,7 +8,6 @@ var hierarchy =
     [ "xmc::diagnostic::App", "classxmc_1_1diagnostic_1_1App.html", null ],
     [ "xmc::AppConfig", "structxmc_1_1AppConfig.html", null ],
     [ "xmc::AttributeBufferClass< T >", "classxmc_1_1AttributeBufferClass.html", null ],
-    [ "xmc::BakedVertex", "structxmc_1_1BakedVertex.html", null ],
     [ "xmc::color4444", "unionxmc_1_1color4444.html", null ],
     [ "xmc::color8p24", "structxmc_1_1color8p24.html", null ],
     [ "xmc::colorf", "structxmc_1_1colorf.html", null ],
@@ -26,6 +25,7 @@ var hierarchy =
       [ "xmc::GlyphRendererAgfx", "classxmc_1_1GlyphRendererAgfx.html", null ]
     ] ],
     [ "xmc::Graphics2DClass", "classxmc_1_1Graphics2DClass.html", null ],
+    [ "xmc::Graphics3DClass", "classxmc_1_1Graphics3DClass.html", null ],
     [ "xmc::GraphicsState2D", "structxmc_1_1GraphicsState2D.html", null ],
     [ "xmc::mat4", "structxmc_1_1mat4.html", null ],
     [ "xmc::Material3DClass", "classxmc_1_1Material3DClass.html", null ],
@@ -35,7 +35,6 @@ var hierarchy =
     [ "xmc::Node3DClass", "classxmc_1_1Node3DClass.html", null ],
     [ "xmc::Primitive3DClass", "classxmc_1_1Primitive3DClass.html", null ],
     [ "xmc::quat", "structxmc_1_1quat.html", null ],
-    [ "xmc::RasterizerClass", "classxmc_1_1RasterizerClass.html", null ],
     [ "xmc::RasterScan444", "classxmc_1_1RasterScan444.html", null ],
     [ "xmc::RasterScan4444", "classxmc_1_1RasterScan4444.html", null ],
     [ "xmc::RasterScan565", "classxmc_1_1RasterScan565.html", null ],
@@ -60,5 +59,10 @@ var hierarchy =
     [ "xmc::TextureArgs", "structxmc_1_1TextureArgs.html", null ],
     [ "xmc::audio::Tone", "classxmc_1_1audio_1_1Tone.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],
-    [ "xmc::vec3", "structxmc_1_1vec3.html", null ]
+    [ "xmc::vec3", "structxmc_1_1vec3.html", null ],
+    [ "xmc::Vertex3D", "structxmc_1_1Vertex3D.html", null ],
+    [ "xmc::VertexShader", "classxmc_1_1VertexShader.html", [
+      [ "xmc::EnvironmentMapShader", "classxmc_1_1EnvironmentMapShader.html", null ]
+    ] ],
+    [ "xmc::VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ]
 ];

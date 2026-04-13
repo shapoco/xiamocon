@@ -19,5 +19,6 @@ var searchData=
   ['glyphrendereragfx_16',['GlyphRendererAgfx',['../classxmc_1_1GlyphRendererAgfx.html',1,'xmc']]],
   ['gpio_2ehpp_17',['gpio.hpp',['../gpio_8hpp.html',1,'']]],
   ['graphics2dclass_18',['Graphics2DClass',['../classxmc_1_1Graphics2DClass.html',1,'xmc']]],
-  ['graphicsstate2d_19',['GraphicsState2D',['../structxmc_1_1GraphicsState2D.html',1,'xmc']]]
+  ['graphics3dclass_19',['Graphics3DClass',['../classxmc_1_1Graphics3DClass.html',1,'xmc']]],
+  ['graphicsstate2d_20',['GraphicsState2D',['../structxmc_1_1GraphicsState2D.html',1,'xmc']]]
 ];

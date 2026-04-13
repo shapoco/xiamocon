@@ -1,20 +1,21 @@
 <map id="cpp/platform/decl/include/xmc/hw/ram.hpp" name="cpp/platform/decl/include/xmc/hw/ram.hpp">
-<area shape="rect" id="node1" title="RAM management interface." alt="" coords="268,5,455,45"/>
-<area shape="rect" id="node2" href="$attribute__buffer_8hpp_source.html" title=" " alt="" coords="192,93,347,148"/>
-<area shape="rect" id="node12" href="$sprite_8hpp_source.html" title=" " alt="" coords="415,101,579,141"/>
-<area shape="rect" id="node3" href="$primitive3d_8hpp_source.html" title=" " alt="" coords="99,284,301,324"/>
-<area shape="rect" id="node4" href="$mesh3d_8hpp_source.html" title=" " alt="" coords="84,372,263,412"/>
-<area shape="rect" id="node5" href="$node3d_8hpp_source.html" title=" " alt="" coords="34,460,209,500"/>
-<area shape="rect" id="node6" href="$scene3d_8hpp_source.html" title=" " alt="" coords="5,548,187,588"/>
-<area shape="rect" id="node7" href="$graphics3d_8hpp_source.html" title=" " alt="" coords="169,636,367,676"/>
-<area shape="rect" id="node8" href="$gfx_8hpp_source.html" title=" " alt="" coords="454,724,597,764"/>
-<area shape="rect" id="node9" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="367,900,510,940"/>
-<area shape="rect" id="node10" href="$app_8hpp_source.html" title=" " alt="" coords="454,812,597,852"/>
-<area shape="rect" id="node11" href="$diagnostic_8hpp_source.html" title=" " alt="" coords="546,900,699,940"/>
-<area shape="rect" id="node13" href="$graphics2d_8hpp_source.html" title=" " alt="" coords="423,548,622,588"/>
-<area shape="rect" id="node15" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="211,548,399,588"/>
-<area shape="rect" id="node16" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="734,284,930,324"/>
-<area shape="rect" id="node17" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="646,548,834,588"/>
-<area shape="rect" id="node18" href="$material3d_8hpp_source.html" title=" " alt="" coords="237,196,435,236"/>
-<area shape="rect" id="node14" href="$frame__buffer_8hpp.html" title="Frame buffer management for 2D graphics in XMC library." alt="" coords="492,636,703,676"/>
+<area shape="rect" id="node1" title="RAM management interface." alt="" coords="417,5,603,45"/>
+<area shape="rect" id="node2" href="$attribute__buffer_8hpp_source.html" title=" " alt="" coords="341,93,495,148"/>
+<area shape="rect" id="node13" href="$sprite_8hpp_source.html" title=" " alt="" coords="564,101,728,141"/>
+<area shape="rect" id="node3" href="$primitive3d_8hpp_source.html" title=" " alt="" coords="243,284,446,324"/>
+<area shape="rect" id="node4" href="$custom__shader_8hpp_source.html" title=" " alt="" coords="5,372,231,412"/>
+<area shape="rect" id="node9" href="$mesh3d_8hpp_source.html" title=" " alt="" coords="255,372,434,412"/>
+<area shape="rect" id="node5" href="$gfx_8hpp_source.html" title=" " alt="" coords="477,724,620,764"/>
+<area shape="rect" id="node6" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="391,900,533,940"/>
+<area shape="rect" id="node7" href="$app_8hpp_source.html" title=" " alt="" coords="477,812,620,852"/>
+<area shape="rect" id="node8" href="$diagnostic_8hpp_source.html" title=" " alt="" coords="569,900,723,940"/>
+<area shape="rect" id="node10" href="$node3d_8hpp_source.html" title=" " alt="" coords="208,460,383,500"/>
+<area shape="rect" id="node11" href="$scene3d_8hpp_source.html" title=" " alt="" coords="155,548,337,588"/>
+<area shape="rect" id="node12" href="$graphics3d_8hpp_source.html" title=" " alt="" coords="263,636,461,676"/>
+<area shape="rect" id="node14" href="$graphics2d_8hpp_source.html" title=" " alt="" coords="573,548,772,588"/>
+<area shape="rect" id="node16" href="$sprite444_8hpp.html" title="Sprite class for 12&#45;bit RGB444 images." alt="" coords="361,548,549,588"/>
+<area shape="rect" id="node17" href="$sprite4444_8hpp.html" title="Sprite class for 16&#45;bit ARGB4444 images." alt="" coords="883,284,1079,324"/>
+<area shape="rect" id="node18" href="$sprite565_8hpp.html" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="796,548,984,588"/>
+<area shape="rect" id="node19" href="$material3d_8hpp_source.html" title=" " alt="" coords="384,196,583,236"/>
+<area shape="rect" id="node15" href="$frame__buffer_8hpp.html" title="Frame buffer management for 2D graphics in XMC library." alt="" coords="586,636,797,676"/>
 </map>
