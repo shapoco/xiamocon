@@ -2,8 +2,8 @@
 
 #include <stdio.h>
 
-#include "bmp_earth_cloud.hpp"
-#include "bmp_earth_surface.hpp"
+#include "earth_cloud.hpp"
+#include "earth_surface.hpp"
 #include "lsm6dsv16x.hpp"
 #include "xmc/font/ShapoSansP_s08c07.h"
 
@@ -18,9 +18,9 @@ FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 
 static Mesh3D earth = createSphere(1.0f, 18, 9);
 static Sprite surfaceTexture =
-    createSprite4444(256, 128, 0, (void *)bmp_earth_surface);
+    createSprite565(256, 128, GFX2D_STRIDE_AUTO, (void *)earthSurfaceData);
 static Sprite cloudTexture =
-    createSprite4444(256, 128, 0, (void *)bmp_earth_cloud);
+    createSprite4444(256, 128, GFX2D_STRIDE_AUTO, (void *)earthCloudData);
 static Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
 
 static uint64_t lastImuUpdateUs = 0;
@@ -110,10 +110,10 @@ static void renderScene() {
   g3d->setScreenMatrix(mat4::identity());
   g3d->setProjection(proj);
   g3d->loadIdentity();
+  g3d->setBlendMode(BlendMode::OVERWRITE);
 
   earth->primitives[0]->material->colorTexture = surfaceTexture;
   earth->primitives[0]->material->baseColor.a = 1;
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(0.01f);
   g3d->rotate(pitch, yaw, 0);
@@ -123,12 +123,13 @@ static void renderScene() {
 #if 0
   earth->primitives[0]->material->colorTexture = cloudTexture;
   earth->primitives[0]->material->baseColor.a = 0.75f;
-  g3d->enableRenderFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(0.0105f);
   g3d->rotate(0, getTimeMs() * 0.0001f, 0);
   g3d->rotate(pitch, yaw, 0);
+  g3d->setBlendMode(BlendMode::ALPHA_BLEND);
   g3d->renderMesh(earth);
+  g3d->setBlendMode(BlendMode::OVERWRITE);
   g3d->popMatrix();
 #endif
 }

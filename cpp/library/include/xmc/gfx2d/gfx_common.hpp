@@ -49,18 +49,26 @@ union color4444 {
 };
 
 static constexpr XMC_INLINE uint16_t pack444(int r, int g, int b) {
-  r = XMC_CLIP(0, 15, r);
-  g = XMC_CLIP(0, 15, g);
-  b = XMC_CLIP(0, 15, b);
   return static_cast<uint16_t>(((r & 0xF) << 8) | ((g & 0xF) << 4) | (b & 0xF));
 }
 
+static constexpr XMC_INLINE uint16_t clipPack444(int r, int g, int b) {
+  return pack444(XMC_CLIP(0, 15, r), XMC_CLIP(0, 15, g), XMC_CLIP(0, 15, b));
+}
+
 static constexpr XMC_INLINE uint16_t pack565(int r, int g, int b) {
-  r = XMC_CLIP(0, 31, r);
-  g = XMC_CLIP(0, 63, g);
-  b = XMC_CLIP(0, 31, b);
   return static_cast<uint16_t>((r << 3) | ((g & 0x38) >> 3) |
                                ((g & 0x07) << 13) | (b << 8));
+}
+
+static constexpr XMC_INLINE uint16_t clipPack565(int r, int g, int b) {
+  return pack565(XMC_CLIP(0, 31, r), XMC_CLIP(0, 63, g), XMC_CLIP(0, 31, b));
+}
+
+static XMC_INLINE void unpack444(uint16_t color, int *r, int *g, int *b) {
+  *r = (color >> 8) & 0xF;
+  *g = (color >> 4) & 0xF;
+  *b = color & 0xF;
 }
 
 static XMC_INLINE void unpack565(uint16_t color, int *r, int *g, int *b) {
@@ -75,7 +83,7 @@ static XMC_INLINE uint16_t convert444To565(uint16_t color) {
   result |= ((color << 4) & 0xF000) | (color & 0x0800);
   result |= ((color << 3) & 0x0780) | ((color >> 1) & 0x0060);
   result |= ((color << 1) & 0x001E) | ((color >> 3) & 0x0001);
-  return ((result << 8) & 0xFFF0) | ((result >> 8) & 0x00FF);
+  return ((result << 8) & 0xFF00) | ((result >> 8) & 0x00FF);
 }
 
 static XMC_INLINE uint16_t convert565To444(uint16_t color) {
@@ -168,6 +176,12 @@ struct TextRenderArgs {
   RawColor foreColor;
   RawColor backColor;
   TextRenderFlags flags;
+};
+
+enum class BlendMode {
+  OVERWRITE,
+  ALPHA_BLEND,
+  ADD,
 };
 
 void copyPixelString(PixelFormat dstFmt, void *dst, int dstX,

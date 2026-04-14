@@ -28,13 +28,13 @@ constexpr int BRICK_H = 10;
 constexpr int BRICK_W =
     (SCREEN_W - BRICK_MARGIN_X * 2 - BRICK_GAP * (BRICK_COLS - 1)) / BRICK_COLS;
 
-constexpr uint16_t COLOR_BG = pack444(0, 0, 0);
-constexpr uint16_t COLOR_WALL = pack444(1, 1, 2);
-constexpr uint16_t COLOR_PADDLE = pack444(2, 15, 15);
-constexpr uint16_t COLOR_BALL = pack444(15, 15, 15);
-constexpr uint16_t COLOR_SERVE = pack444(15, 15, 0);
-constexpr uint16_t COLOR_CLEAR = pack444(0, 10, 0);
-constexpr uint16_t COLOR_GAME_OVER = pack444(10, 0, 0);
+constexpr uint16_t COLOR_BG = clipPack444(0, 0, 0);
+constexpr uint16_t COLOR_WALL = clipPack444(1, 1, 2);
+constexpr uint16_t COLOR_PADDLE = clipPack444(2, 15, 15);
+constexpr uint16_t COLOR_BALL = clipPack444(15, 15, 15);
+constexpr uint16_t COLOR_SERVE = clipPack444(15, 15, 0);
+constexpr uint16_t COLOR_CLEAR = clipPack444(0, 10, 0);
+constexpr uint16_t COLOR_GAME_OVER = clipPack444(10, 0, 0);
 
 struct Brick {
   int x;
@@ -122,8 +122,8 @@ void resetBallOnPaddle() {
 
 void buildStage() {
   static constexpr uint16_t row_colors[BRICK_ROWS] = {
-      pack444(15, 4, 4), pack444(15, 8, 2),  pack444(15, 12, 2),
-      pack444(6, 15, 4), pack444(4, 10, 15), pack444(10, 6, 15),
+      clipPack444(15, 4, 4), clipPack444(15, 8, 2),  clipPack444(15, 12, 2),
+      clipPack444(6, 15, 4), clipPack444(4, 10, 15), clipPack444(10, 6, 15),
   };
 
   bricksLeft = BRICK_ROWS * BRICK_COLS;

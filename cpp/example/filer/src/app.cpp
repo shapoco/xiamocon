@@ -138,7 +138,7 @@ class FileList {
     for (int i = 0; i < numFiles; i++) {
       if (y >= TOP - ITEM_HEIGHT) {
         const fs::FileInfo &info = files[i];
-        uint16_t bgColor = (i == selectedIndex) ? pack565(0, 24, 24) : 0x0000;
+        uint16_t bgColor = (i == selectedIndex) ? clipPack565(0, 24, 24) : 0x0000;
         gfx->fillRect(0, y, display::WIDTH, ITEM_HEIGHT, bgColor);
         Sprite icon = info.isDirectory ? icon16folder : icon16file;
         gfx->drawImage(icon, 10, y + (ITEM_HEIGHT - 16) / 2, 16, 16, 0, 0);
@@ -224,7 +224,7 @@ XmcStatus renderAddressBar(Graphics2D &gfx) {
   gfx->setFont(&ShapoSansP_s12c09a01w02, 1);
   gfx->setTextColor(0xFFFF);
   gfx->fillRect(0, ADDR_BAR_TOP, display::WIDTH, ADDR_BAR_HEIGHT,
-                pack565(16, 32, 16));
+                clipPack565(16, 32, 16));
   gfx->setCursor(5, ADDR_BAR_TOP + TEXT_Y_OFFSET);
   gfx->drawString(currentDirectory);
   return XMC_OK;

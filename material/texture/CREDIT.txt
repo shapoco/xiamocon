@@ -1,0 +1,6 @@
+earth_surface.png:
+    NASA
+
+earth_cloud.png:
+    NASA/Goddard Space Flight Center Scientific Visualization Studio
+    https://svs.gsfc.nasa.gov/3208/

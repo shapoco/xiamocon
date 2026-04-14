@@ -18,8 +18,8 @@ class Sprite444Class : public SpriteClass {
  public:
   Sprite444Class(int width, int height, uint32_t stride, void *data,
                  bool autoFree = false)
-      : SpriteClass(PixelFormat::RGB444, width, height, stride444(width), data,
-                    autoFree) {}
+      : SpriteClass(PixelFormat::RGB444, width, height,
+                    stride <= 0 ? stride444(width) : stride, data, autoFree) {}
 
   Sprite444Class(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA)
       : SpriteClass(PixelFormat::RGB444, width, height, stride444(width),

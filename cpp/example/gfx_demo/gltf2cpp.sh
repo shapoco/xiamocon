@@ -10,25 +10,25 @@ OUT_DIR="$(pwd)/include"
 ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/tulip.glb \
     ${OUT_DIR}/tulip.hpp \
-    --dither
+    --dither diffusion \
+    --texformat rgb565
 
 ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/cave_hole.glb \
     ${OUT_DIR}/cave_hole.hpp \
-    --dither
+    --dither diffusion \
+    --texformat rgb565
 
 ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/cave_light.glb \
-    ${OUT_DIR}/cave_light.hpp \
-    --dither
+    ${OUT_DIR}/cave_light.hpp
 
 ${GLTF2CPP} \
     ${MATERIAL_DIR}/3d/quarts.glb \
-    ${OUT_DIR}/quarts.hpp \
-    --dither
+    ${OUT_DIR}/quarts.hpp
 
 ${IMG2CPP} \
     ${MATERIAL_DIR}/texture/cave_env_texture.png \
     ${OUT_DIR}/cave_env_texture.hpp \
     --dither diffusion \
-    --format argb4444
+    --format rgb565

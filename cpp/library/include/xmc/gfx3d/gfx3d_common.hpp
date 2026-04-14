@@ -13,7 +13,6 @@ enum class RenderFlags3D : uint32_t {
   GOURAUD_SHADING = 1 << 2,
   LIGHTING = 1 << 3,
   COLOR_TEXTURE = 1 << 4,
-  ALPHA_BLEND = 1 << 5,
   CUSTOM_VERTEX_SHADER = 1 << 6,
   CUSTOM_PIXEL_SHADER = 1 << 7,
   DEFAULT =

@@ -101,13 +101,13 @@ def load_image(gltf, texture_index, gltf_dir):
     raise RuntimeError(f"Cannot load texture {texture_index}")
 
 
-def to_argb4444(image, dither=False):
+def to_argb4444(image, dither="none"):
     """Convert PIL Image to ARGB4444 pixel array (list of uint16)."""
     image = image.convert("RGBA")
     w, h = image.size
     raw = image.tobytes()
 
-    if not dither:
+    if dither == "none":
         pixels = []
         for i in range(0, len(raw), 4):
             r, g, b, a = raw[i], raw[i + 1], raw[i + 2], raw[i + 3]
@@ -116,44 +116,147 @@ def to_argb4444(image, dither=False):
             )
         return w, h, pixels
 
-    # Floyd-Steinberg error diffusion dithering
-    buf = [[0.0] * 4 for _ in range(w * h)]
-    for i in range(0, len(raw), 4):
-        idx = i // 4
-        buf[idx] = [
-            float(raw[i]),
-            float(raw[i + 1]),
-            float(raw[i + 2]),
-            float(raw[i + 3]),
+    if dither == "diffusion":
+        # Floyd-Steinberg error diffusion dithering
+        buf = [[0.0] * 4 for _ in range(w * h)]
+        for i in range(0, len(raw), 4):
+            idx = i // 4
+            buf[idx] = [
+                float(raw[i]),
+                float(raw[i + 1]),
+                float(raw[i + 2]),
+                float(raw[i + 3]),
+            ]
+
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                idx = y * w + x
+                old = buf[idx]
+                # Quantize to 4-bit per channel
+                new = [max(0.0, min(255.0, c)) for c in old]
+                q = [(int(c + 0.5) >> 4) & 0xF for c in new]
+                # Expanded quantized values
+                eq = [v * 17 for v in q]  # 0xF -> 255, 0x0 -> 0
+                # Quantization error
+                err = [new[ch] - eq[ch] for ch in range(4)]
+                pixels.append((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2])
+                # Distribute error to neighbors (Floyd-Steinberg)
+                for dx, dy, weight in [
+                    (1, 0, 7 / 16),
+                    (-1, 1, 3 / 16),
+                    (0, 1, 5 / 16),
+                    (1, 1, 1 / 16),
+                ]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        ni = ny * w + nx
+                        for ch in range(4):
+                            buf[ni][ch] += err[ch] * weight
+
+        return w, h, pixels
+
+    if dither == "pattern":
+        # 4x4 Bayer matrix pattern dithering
+        bayer = [
+            [ 0,  8,  2, 10],
+            [12,  4, 14,  6],
+            [ 3, 11,  1,  9],
+            [15,  7, 13,  5],
         ]
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                i = (y * w + x) * 4
+                t = (bayer[y % 4][x % 4] / 16.0 - 0.5) * (255.0 / 15.0)
+                r = max(0.0, min(255.0, raw[i] + t))
+                g = max(0.0, min(255.0, raw[i + 1] + t))
+                b = max(0.0, min(255.0, raw[i + 2] + t))
+                a = max(0.0, min(255.0, raw[i + 3] + t))
+                q = [(int(c + 0.5) >> 4) & 0xF for c in [r, g, b, a]]
+                pixels.append((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2])
+        return w, h, pixels
 
-    pixels = []
-    for y in range(h):
-        for x in range(w):
-            idx = y * w + x
-            old = buf[idx]
-            # Quantize to 4-bit per channel
-            new = [max(0.0, min(255.0, c)) for c in old]
-            q = [(int(c + 0.5) >> 4) & 0xF for c in new]
-            # Expanded quantized values
-            eq = [v * 17 for v in q]  # 0xF -> 255, 0x0 -> 0
-            # Quantization error
-            err = [new[ch] - eq[ch] for ch in range(4)]
-            pixels.append((q[3] << 12) | (q[0] << 8) | (q[1] << 4) | q[2])
-            # Distribute error to neighbors (Floyd-Steinberg)
-            for dx, dy, weight in [
-                (1, 0, 7 / 16),
-                (-1, 1, 3 / 16),
-                (0, 1, 5 / 16),
-                (1, 1, 1 / 16),
-            ]:
-                nx, ny = x + dx, y + dy
-                if 0 <= nx < w and 0 <= ny < h:
-                    ni = ny * w + nx
-                    for ch in range(4):
-                        buf[ni][ch] += err[ch] * weight
+    raise ValueError(f"Unknown dither mode: {dither}")
 
-    return w, h, pixels
+
+def to_rgb565(image, dither="none"):
+    """Convert PIL Image to RGB565 (byte-swapped) pixel array (list of uint16)."""
+    image = image.convert("RGB")
+    w, h = image.size
+    raw = image.tobytes()
+
+    if dither == "none":
+        pixels = []
+        for i in range(0, len(raw), 3):
+            r, g, b = raw[i], raw[i + 1], raw[i + 2]
+            val = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3)
+            swapped = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+            pixels.append(swapped)
+        return w, h, pixels
+
+    if dither == "diffusion":
+        # Floyd-Steinberg error diffusion dithering
+        buf = [[0.0] * 3 for _ in range(w * h)]
+        for i in range(0, len(raw), 3):
+            idx = i // 3
+            buf[idx] = [float(raw[i]), float(raw[i + 1]), float(raw[i + 2])]
+
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                idx = y * w + x
+                old = buf[idx]
+                clamped = [max(0.0, min(255.0, c)) for c in old]
+                rq = max(0, min(31, (int(clamped[0] + 0.5) >> 3)))
+                gq = max(0, min(63, (int(clamped[1] + 0.5) >> 2)))
+                bq = max(0, min(31, (int(clamped[2] + 0.5) >> 3)))
+                re_ = (rq * 255 + 15) // 31
+                ge_ = (gq * 255 + 31) // 63
+                be_ = (bq * 255 + 15) // 31
+                err = [clamped[0] - re_, clamped[1] - ge_, clamped[2] - be_]
+                val = (rq << 11) | (gq << 5) | bq
+                swapped = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+                pixels.append(swapped)
+                for dx, dy, weight in [
+                    (1, 0, 7 / 16),
+                    (-1, 1, 3 / 16),
+                    (0, 1, 5 / 16),
+                    (1, 1, 1 / 16),
+                ]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        ni = ny * w + nx
+                        for ch in range(3):
+                            buf[ni][ch] += err[ch] * weight
+
+        return w, h, pixels
+
+    if dither == "pattern":
+        # 4x4 Bayer matrix pattern dithering
+        bayer = [
+            [ 0,  8,  2, 10],
+            [12,  4, 14,  6],
+            [ 3, 11,  1,  9],
+            [15,  7, 13,  5],
+        ]
+        pixels = []
+        for y in range(h):
+            for x in range(w):
+                i = (y * w + x) * 3
+                t = bayer[y % 4][x % 4]
+                r_val = max(0.0, min(255.0, raw[i] + t * (255.0 / 31.0) / 16.0 - (255.0 / 31.0) / 2.0))
+                g_val = max(0.0, min(255.0, raw[i + 1] + t * (255.0 / 63.0) / 16.0 - (255.0 / 63.0) / 2.0))
+                b_val = max(0.0, min(255.0, raw[i + 2] + t * (255.0 / 31.0) / 16.0 - (255.0 / 31.0) / 2.0))
+                rq = max(0, min(31, int(r_val + 0.5) >> 3))
+                gq = max(0, min(63, int(g_val + 0.5) >> 2))
+                bq = max(0, min(31, int(b_val + 0.5) >> 3))
+                val = (rq << 11) | (gq << 5) | bq
+                swapped = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF)
+                pixels.append(swapped)
+        return w, h, pixels
+
+    raise ValueError(f"Unknown dither mode: {dither}")
 
 
 def fmt_float(f):
@@ -174,7 +277,7 @@ def sanitize_id(name):
     return result
 
 
-def generate(gltf, gltf_dir, prefix, dither=False):
+def generate(gltf, gltf_dir, prefix, dither="none", texformat="rgb565"):
     """Generate C++ header content from glTF data."""
     out = []
     w = out.append
@@ -201,7 +304,12 @@ def generate(gltf, gltf_dir, prefix, dither=False):
         if has_tex:
             try:
                 img = load_image(gltf, pbr.baseColorTexture.index, gltf_dir)
-                tw, th, pixels = to_argb4444(img, dither=dither)
+                if texformat == "argb4444":
+                    tw, th, pixels = to_argb4444(img, dither=dither)
+                    create_sprite_func = "xmc::createSprite4444"
+                else:
+                    tw, th, pixels = to_rgb565(img, dither=dither)
+                    create_sprite_func = "xmc::createSprite565"
 
                 dn = f"{mn}_colorTextureData"
                 w(f"const uint16_t {dn}[] = {{")
@@ -212,10 +320,11 @@ def generate(gltf, gltf_dir, prefix, dither=False):
                 w("")
 
                 tex_var = f"{mn}_colorTexture"
-                w(f"const xmc::Sprite {tex_var} = xmc::createSprite4444(")
+                w(f"const xmc::Sprite {tex_var} = {create_sprite_func}(")
                 w(f"    {tw}, {th}, 0,")
                 w(f"    (uint16_t *){dn}, false")
                 w(");")
+                w("")
                 w("")
             except Exception as e:
                 print(
@@ -550,9 +659,17 @@ def main():
     )
     parser.add_argument(
         "--dither",
-        action="store_true",
-        default=False,
-        help="Apply Floyd-Steinberg error diffusion dithering when converting textures to ARGB4444",
+        "-d",
+        choices=["none", "diffusion", "pattern"],
+        default="none",
+        help="Dithering mode for texture conversion (default: none)",
+    )
+    parser.add_argument(
+        "--texformat",
+        "-t",
+        choices=["rgb565", "argb4444"],
+        default="rgb565",
+        help="Texture pixel format (default: rgb565)",
     )
     args = parser.parse_args()
 
@@ -566,7 +683,7 @@ def main():
     if gltf.binary_blob() is None:
         gltf.convert_buffers(pygltflib.BufferFormat.BINARYBLOB)
 
-    content = generate(gltf, gltf_dir, prefix, dither=args.dither)
+    content = generate(gltf, gltf_dir, prefix, dither=args.dither, texformat=args.texformat)
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, "w") as f:

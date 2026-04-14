@@ -46,8 +46,8 @@ Mesh3D particleMesh = createMesh3D({particlePrim});
 
 Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
 
-Sprite envTexture = createSprite4444(256, 128, GFX2D_STRIDE_AUTO,
-                                     (void *)caveEnvTextureData, false);
+Sprite envTexture = createSprite565(256, 128, GFX2D_STRIDE_AUTO,
+                                    (void *)caveEnvTextureData, false);
 Material3D envMat = createMaterial3D();
 Mesh3D cube = createCube(0.5f);
 
@@ -263,18 +263,18 @@ void renderScene() {
 
   // reset model matrix
   g3d->loadIdentity();
+  g3d->setBlendMode(BlendMode::OVERWRITE);
 
   if (modelIndex == 0) {
     // flower
     g3d->disableFlags(RenderFlags3D::LIGHTING);
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-    g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
+
     g3d->renderScene(tulip);
   } else if (modelIndex == 1) {
     // mirror cubes
     g3d->disableFlags(RenderFlags3D::LIGHTING);
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-    g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
     g3d->pushMatrix();
     float largeRot = (float)nowMs * 0.0002f;
     g3d->rotate(largeRot * 1.1f, largeRot * 1.2f, largeRot * 1.3f);
@@ -319,7 +319,6 @@ void renderScene() {
   // crystals
   g3d->enableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(2.5f);
   g3d->translate(0, 0, -20);
@@ -347,7 +346,6 @@ void renderScene() {
   // leafs
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   for (int i = 0; i < NUM_LEAFS; i++) {
     leafVerts->data[0] = leafArray[i].pos - leafArray[i].rot;
     leafVerts->data[1] = leafArray[i].pos + leafArray[i].rot;
@@ -358,19 +356,18 @@ void renderScene() {
   // cave hole and light
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->pushMatrix();
   g3d->scale(4);
   g3d->renderScene(cave_hole);
   g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->enableFlags(RenderFlags3D::ALPHA_BLEND);
+  g3d->setBlendMode(BlendMode::ADD);
   g3d->renderScene(cave_light);
+  g3d->setBlendMode(BlendMode::OVERWRITE);
   g3d->popMatrix();
 
   // particles
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->disableFlags(RenderFlags3D::ALPHA_BLEND);
   g3d->renderMesh(particleMesh);
   g3d->popMatrix();
 }

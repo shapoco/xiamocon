@@ -12,14 +12,15 @@ namespace xmc {
 using depth_t = uint16_t;
 static constexpr depth_t MAX_DEPTH = (1 << (sizeof(depth_t) * 8)) - 1;
 
-enum class TriangleRenderFlags : uint8_t {
+enum class TrapezoidFlags : uint8_t {
   NONE = 0,
-  FORMAT444 = 1 << 0,
+  OUTPUT_444 = 1 << 0,
   GOURAUD_SHADING = 1 << 1,
   COLOR_TEXTURE = 1 << 2,
-  ALPHA_BLEND = 1 << 3,
+  TEXTURE_4444 = 1 << 3,
+  BLEND = 1 << 4,
 };
-XMC_ENUM_FLAGS(TriangleRenderFlags, uint8_t);
+XMC_ENUM_FLAGS(TrapezoidFlags, uint8_t);
 
 struct TextureArgs {
   const uint16_t *data = nullptr;
@@ -102,6 +103,7 @@ class Graphics3DClass {
   bool mvpDirty = true;
 
   RenderFlags3D renderFlags = RenderFlags3D::DEFAULT;
+  BlendMode blendMode = BlendMode::OVERWRITE;
 
   MatrixStackEntry *modelMatrixStack;
   int modelMatrixStackPtr = 0;
@@ -150,6 +152,9 @@ class Graphics3DClass {
   inline void setFlags(RenderFlags3D flags) { renderFlags = flags; }
   inline void enableFlags(RenderFlags3D flags) { renderFlags |= flags; }
   inline void disableFlags(RenderFlags3D flags) { renderFlags &= ~flags; }
+
+  inline BlendMode getBlendMode() const { return blendMode; }
+  inline void setBlendMode(BlendMode mode) { blendMode = mode; }
 
   inline void setEnvironmentLight(const colorf &color) { envLight = color; }
 
@@ -262,13 +267,13 @@ class Graphics3DClass {
   void renderPrimitive(const Primitive3D &prim, const Material3D &mat,
                        void *userContext = nullptr);
 
-  template <bool ALPHA_BLEND, bool COLOR_TEXTURE, bool GOURAUD_SHADING,
-            bool FORMAT_444>
-  XMC_INLINE void renderHalfTriangle(ScanLineCounter &accumVL,
-                                     ScanLineCounter &accumVR,
-                                     ScanLineCounter &stepVL,
-                                     ScanLineCounter &stepVR, int yStart,
-                                     int yEnd, const TextureArgs &tex) {
+  template <bool BLEND, bool TEXTURE_4444, bool COLOR_TEXTURE,
+            bool GOURAUD_SHADING, bool OUTPUT_444>
+  XMC_INLINE void renderTrapezoid(ScanLineCounter &accumVL,
+                                  ScanLineCounter &accumVR,
+                                  ScanLineCounter &stepVL,
+                                  ScanLineCounter &stepVR, int yStart, int yEnd,
+                                  const TextureArgs &tex) {
     for (int iy = yStart; iy <= yEnd; iy++) {
       int32_t ixMin = accumVL.x.roundToInt();
       int32_t ixMax = accumVR.x.roundToInt();
@@ -293,26 +298,41 @@ class Graphics3DClass {
           int32_t z = accumH.z.floorToInt();
           bool written = false;
           if (z < zPtr[x]) {
-            if (GOURAUD_SHADING) {
+            if (GOURAUD_SHADING || BLEND) {
               color8p24 c = accumH.c;
               if (COLOR_TEXTURE) {
                 uint32_t u = accumH.u.floorToInt() & tex.uMask;
                 uint32_t v = accumH.v.floorToInt() & tex.vMask;
-                c *= color4444(texData[v * tex.stride + u]);
+                if (TEXTURE_4444) {
+                  c.multSelf4444(texData[v * tex.stride + u]);
+                } else {
+                  c.multSelf565(texData[v * tex.stride + u]);
+                }
               }
-              if (ALPHA_BLEND) {
+              if (BLEND) {
                 if (c.a.raw > 0) {
-                  if (FORMAT_444) {
-                    cPtr444.push4444(c.to4444());
+                  if (blendMode == BlendMode::ADD) {
+                    if (OUTPUT_444) {
+                      uint16_t dst444 = cPtr444.peek();
+                      cPtr444.push444(add8p24To444(dst444, c));
+                    } else {
+                      uint16_t dst565 = *ptr565;
+                      *(ptr565++) = add8p24To565(dst565, c);
+                    }
                   } else {
-                    uint16_t dst565 = *ptr565;
-                    *(ptr565++) = blend8p24To565(dst565, c);
+                    if (OUTPUT_444) {
+                      uint16_t dst444 = cPtr444.peek();
+                      cPtr444.push444(blend8p24To444(dst444, c));
+                    } else {
+                      uint16_t dst565 = *ptr565;
+                      *(ptr565++) = blend8p24To565(dst565, c);
+                    }
                   }
                   zPtr[x] = z;
                   written = true;
                 }
               } else {
-                if (FORMAT_444) {
+                if (OUTPUT_444) {
                   cPtr444.push444(c.to444());
                 } else {
                   *(ptr565++) = c.to565();
@@ -321,36 +341,34 @@ class Graphics3DClass {
                 zPtr[x] = z;
               }
             } else {
-              uint16_t c = accumH.c.to4444();
+              uint16_t c;
               if (COLOR_TEXTURE) {
                 uint32_t u = accumH.u.floorToInt() & tex.uMask;
                 uint32_t v = accumH.v.floorToInt() & tex.vMask;
                 c = texData[v * tex.stride + u];
-              }
-              if (ALPHA_BLEND) {
-                if (c & 0xF000) {
-                  if (FORMAT_444) {
-                    cPtr444.push4444(c);
-                  } else {
-                    uint16_t dst565 = *ptr565;
-                    *(ptr565++) = blend4444To565(dst565, c);
-                  }
-                  zPtr[x] = z;
-                  written = true;
+                if (!TEXTURE_4444 && OUTPUT_444) {
+                  c = convert565To444(c);
+                } else if (TEXTURE_4444 && !OUTPUT_444) {
+                  c = convert444To565(c);
                 }
               } else {
-                if (FORMAT_444) {
-                  cPtr444.push444(c);
+                if (OUTPUT_444) {
+                  c = accumH.c.to444();
                 } else {
-                  *(ptr565++) = convert444To565(c);
+                  c = accumH.c.to565();
                 }
-                written = true;
-                zPtr[x] = z;
               }
+              if (OUTPUT_444) {
+                cPtr444.push444(c);
+              } else {
+                *(ptr565++) = c;
+              }
+              written = true;
+              zPtr[x] = z;
             }
           }
           if (!written) {
-            if (FORMAT_444) {
+            if (OUTPUT_444) {
               cPtr444.skip();
             } else {
               ptr565++;
@@ -483,18 +501,22 @@ class Graphics3DClass {
       std::swap(cornerL, cornerR);
     }
 
-    TriangleRenderFlags trf = TriangleRenderFlags::NONE;
+    TrapezoidFlags trf = TrapezoidFlags::NONE;
     if (target->format == PixelFormat::RGB444) {
-      trf |= TriangleRenderFlags::FORMAT444;
+      trf |= TrapezoidFlags::OUTPUT_444;
     }
     if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
-      trf |= TriangleRenderFlags::GOURAUD_SHADING;
+      trf |= TrapezoidFlags::GOURAUD_SHADING;
     }
     if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
-      trf |= TriangleRenderFlags::COLOR_TEXTURE;
+      if (mat->colorTexture->format == PixelFormat::RGB565) {
+        trf |= TrapezoidFlags::COLOR_TEXTURE;
+      } else if (mat->colorTexture->format == PixelFormat::ARGB4444) {
+        trf |= TrapezoidFlags::COLOR_TEXTURE | TrapezoidFlags::TEXTURE_4444;
+      }
     }
-    if (hasFlag(flags, RenderFlags3D::ALPHA_BLEND)) {
-      trf |= TriangleRenderFlags::ALPHA_BLEND;
+    if (blendMode != BlendMode::OVERWRITE) {
+      trf |= TrapezoidFlags::BLEND;
     }
 
     // rasterize the triangle using a scanline algorithm
@@ -526,31 +548,47 @@ class Graphics3DClass {
         yEnd = (int)fminf(iy2, iyMax);
       }
 
-#define XMC_GFX3D_HALF_TRIANGLE(aBlend, colorTex, vertShade, format444) \
-  renderHalfTriangle<aBlend, colorTex, vertShade, format444>(           \
+#define XMC_TRAPEZOID(aBlend, tex4444, colorTex, gouraud, out444) \
+  renderTrapezoid<aBlend, tex4444, colorTex, gouraud, out444>(    \
       accumVL, accumVR, stepVL, stepVR, yStart, yEnd, tex)
 
       switch ((uint32_t)trf) {
-        case 0: XMC_GFX3D_HALF_TRIANGLE(false, false, false, false); break;
-        case 1: XMC_GFX3D_HALF_TRIANGLE(false, false, false, true); break;
-        case 2: XMC_GFX3D_HALF_TRIANGLE(false, false, true, false); break;
-        case 3: XMC_GFX3D_HALF_TRIANGLE(false, false, true, true); break;
-        case 4: XMC_GFX3D_HALF_TRIANGLE(false, true, false, false); break;
-        case 5: XMC_GFX3D_HALF_TRIANGLE(false, true, false, true); break;
-        case 6: XMC_GFX3D_HALF_TRIANGLE(false, true, true, false); break;
-        case 7: XMC_GFX3D_HALF_TRIANGLE(false, true, true, true); break;
-        case 8: XMC_GFX3D_HALF_TRIANGLE(true, false, false, false); break;
-        case 9: XMC_GFX3D_HALF_TRIANGLE(true, false, false, true); break;
-        case 10: XMC_GFX3D_HALF_TRIANGLE(true, false, true, false); break;
-        case 11: XMC_GFX3D_HALF_TRIANGLE(true, false, true, true); break;
-        case 12: XMC_GFX3D_HALF_TRIANGLE(true, true, false, false); break;
-        case 13: XMC_GFX3D_HALF_TRIANGLE(true, true, false, true); break;
-        case 14: XMC_GFX3D_HALF_TRIANGLE(true, true, true, false); break;
-        case 15: XMC_GFX3D_HALF_TRIANGLE(true, true, true, true); break;
+        case 0: XMC_TRAPEZOID(false, false, false, false, false); break;
+        case 1: XMC_TRAPEZOID(false, false, false, false, true); break;
+        case 2: XMC_TRAPEZOID(false, false, false, true, false); break;
+        case 3: XMC_TRAPEZOID(false, false, false, true, true); break;
+        case 4: XMC_TRAPEZOID(false, false, true, false, false); break;
+        case 5: XMC_TRAPEZOID(false, false, true, false, true); break;
+        case 6: XMC_TRAPEZOID(false, false, true, true, false); break;
+        case 7: XMC_TRAPEZOID(false, false, true, true, true); break;
+        case 8: XMC_TRAPEZOID(false, false, false, false, false); break;
+        case 9: XMC_TRAPEZOID(false, false, false, false, true); break;
+        case 10: XMC_TRAPEZOID(false, false, false, true, false); break;
+        case 11: XMC_TRAPEZOID(false, false, false, true, true); break;
+        case 12: XMC_TRAPEZOID(false, true, true, false, false); break;
+        case 13: XMC_TRAPEZOID(false, true, true, false, true); break;
+        case 14: XMC_TRAPEZOID(false, true, true, true, false); break;
+        case 15: XMC_TRAPEZOID(false, true, true, true, true); break;
+        case 16: XMC_TRAPEZOID(true, false, false, true, false); break;
+        case 17: XMC_TRAPEZOID(true, false, false, true, true); break;
+        case 18: XMC_TRAPEZOID(true, false, false, true, false); break;
+        case 19: XMC_TRAPEZOID(true, false, false, true, true); break;
+        case 20: XMC_TRAPEZOID(true, false, true, true, false); break;
+        case 21: XMC_TRAPEZOID(true, false, true, true, true); break;
+        case 22: XMC_TRAPEZOID(true, false, true, true, false); break;
+        case 23: XMC_TRAPEZOID(true, false, true, true, true); break;
+        case 24: XMC_TRAPEZOID(true, false, false, true, false); break;
+        case 25: XMC_TRAPEZOID(true, false, false, true, true); break;
+        case 26: XMC_TRAPEZOID(true, false, false, true, false); break;
+        case 27: XMC_TRAPEZOID(true, false, false, true, true); break;
+        case 28: XMC_TRAPEZOID(true, true, true, true, false); break;
+        case 29: XMC_TRAPEZOID(true, true, true, true, true); break;
+        case 30: XMC_TRAPEZOID(true, true, true, true, false); break;
+        case 31: XMC_TRAPEZOID(true, true, true, true, true); break;
         default: break;
       }
 
-#undef XMC_GFX3D_HALF_TRIANGLE
+#undef XMC_TRAPEZOID
     }
   }
 
@@ -606,47 +644,67 @@ class Graphics3DClass {
       cornerR.v = fixed12p20::fromFloat(uv0.y * texH);
     }
 
-    TriangleRenderFlags trf = TriangleRenderFlags::NONE;
+    TrapezoidFlags trf = TrapezoidFlags::NONE;
     if (target->format == PixelFormat::RGB444) {
-      trf |= TriangleRenderFlags::FORMAT444;
+      trf |= TrapezoidFlags::OUTPUT_444;
     }
     if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
-      trf |= TriangleRenderFlags::GOURAUD_SHADING;
+      trf |= TrapezoidFlags::GOURAUD_SHADING;
     }
     if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
-      trf |= TriangleRenderFlags::COLOR_TEXTURE;
+      if (mat->colorTexture->format == PixelFormat::RGB565) {
+        trf |= TrapezoidFlags::COLOR_TEXTURE;
+      } else if (mat->colorTexture->format == PixelFormat::ARGB4444) {
+        trf |= TrapezoidFlags::COLOR_TEXTURE | TrapezoidFlags::TEXTURE_4444;
+      }
     }
-    if (hasFlag(flags, RenderFlags3D::ALPHA_BLEND)) {
-      trf |= TriangleRenderFlags::ALPHA_BLEND;
+    if (blendMode != BlendMode::OVERWRITE) {
+      trf |= TrapezoidFlags::BLEND;
     }
 
     ScanLineCounter dummyStep;
 
-#define XMC_GFX3D_HALF_TRIANGLE(aBlend, colorTex, vertShade, format444) \
-  renderHalfTriangle<aBlend, colorTex, vertShade, format444>(           \
+#define XMC_TRAPEZOID(aBlend, tex4444, colorTex, gouraud, out444) \
+  renderTrapezoid<aBlend, tex4444, colorTex, gouraud, out444>(    \
       cornerL, cornerR, dummyStep, dummyStep, iy0, iy0, tex)
 
     switch ((uint32_t)trf) {
-      case 0: XMC_GFX3D_HALF_TRIANGLE(false, false, false, false); break;
-      case 1: XMC_GFX3D_HALF_TRIANGLE(false, false, false, true); break;
-      case 2: XMC_GFX3D_HALF_TRIANGLE(false, false, true, false); break;
-      case 3: XMC_GFX3D_HALF_TRIANGLE(false, false, true, true); break;
-      case 4: XMC_GFX3D_HALF_TRIANGLE(false, true, false, false); break;
-      case 5: XMC_GFX3D_HALF_TRIANGLE(false, true, false, true); break;
-      case 6: XMC_GFX3D_HALF_TRIANGLE(false, true, true, false); break;
-      case 7: XMC_GFX3D_HALF_TRIANGLE(false, true, true, true); break;
-      case 8: XMC_GFX3D_HALF_TRIANGLE(true, false, false, false); break;
-      case 9: XMC_GFX3D_HALF_TRIANGLE(true, false, false, true); break;
-      case 10: XMC_GFX3D_HALF_TRIANGLE(true, false, true, false); break;
-      case 11: XMC_GFX3D_HALF_TRIANGLE(true, false, true, true); break;
-      case 12: XMC_GFX3D_HALF_TRIANGLE(true, true, false, false); break;
-      case 13: XMC_GFX3D_HALF_TRIANGLE(true, true, false, true); break;
-      case 14: XMC_GFX3D_HALF_TRIANGLE(true, true, true, false); break;
-      case 15: XMC_GFX3D_HALF_TRIANGLE(true, true, true, true); break;
+      case 0: XMC_TRAPEZOID(false, false, false, false, false); break;
+      case 1: XMC_TRAPEZOID(false, false, false, false, true); break;
+      case 2: XMC_TRAPEZOID(false, false, false, true, false); break;
+      case 3: XMC_TRAPEZOID(false, false, false, true, true); break;
+      case 4: XMC_TRAPEZOID(false, false, true, false, false); break;
+      case 5: XMC_TRAPEZOID(false, false, true, false, true); break;
+      case 6: XMC_TRAPEZOID(false, false, true, true, false); break;
+      case 7: XMC_TRAPEZOID(false, false, true, true, true); break;
+      case 8: XMC_TRAPEZOID(false, false, false, false, false); break;
+      case 9: XMC_TRAPEZOID(false, false, false, false, true); break;
+      case 10: XMC_TRAPEZOID(false, false, false, true, false); break;
+      case 11: XMC_TRAPEZOID(false, false, false, true, true); break;
+      case 12: XMC_TRAPEZOID(false, true, true, false, false); break;
+      case 13: XMC_TRAPEZOID(false, true, true, false, true); break;
+      case 14: XMC_TRAPEZOID(false, true, true, true, false); break;
+      case 15: XMC_TRAPEZOID(false, true, true, true, true); break;
+      case 16: XMC_TRAPEZOID(true, false, false, true, false); break;
+      case 17: XMC_TRAPEZOID(true, false, false, true, true); break;
+      case 18: XMC_TRAPEZOID(true, false, false, true, false); break;
+      case 19: XMC_TRAPEZOID(true, false, false, true, true); break;
+      case 20: XMC_TRAPEZOID(true, false, true, true, false); break;
+      case 21: XMC_TRAPEZOID(true, false, true, true, true); break;
+      case 22: XMC_TRAPEZOID(true, false, true, true, false); break;
+      case 23: XMC_TRAPEZOID(true, false, true, true, true); break;
+      case 24: XMC_TRAPEZOID(true, false, false, true, false); break;
+      case 25: XMC_TRAPEZOID(true, false, false, true, true); break;
+      case 26: XMC_TRAPEZOID(true, false, false, true, false); break;
+      case 27: XMC_TRAPEZOID(true, false, false, true, true); break;
+      case 28: XMC_TRAPEZOID(true, true, true, true, false); break;
+      case 29: XMC_TRAPEZOID(true, true, true, true, true); break;
+      case 30: XMC_TRAPEZOID(true, true, true, true, false); break;
+      case 31: XMC_TRAPEZOID(true, true, true, true, true); break;
       default: break;
     }
 
-#undef XMC_GFX3D_HALF_TRIANGLE
+#undef XMC_TRAPEZOID
   }
 
  private:
