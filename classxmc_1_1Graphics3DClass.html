@@ -121,6 +121,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>enableFlags</b> (Rend
 <tr class="memitem:a673faced020240bab3632c1ce45e2dad"><td class="memItemLeft" align="right" valign="top"><a id="a673faced020240bab3632c1ce45e2dad" name="a673faced020240bab3632c1ce45e2dad"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>disableFlags</b> (RenderFlags3D flags)</td></tr>
 <tr class="separator:a673faced020240bab3632c1ce45e2dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd50ecbc4d7060cf8e7ee287f5894a99"><td class="memItemLeft" align="right" valign="top"><a id="acd50ecbc4d7060cf8e7ee287f5894a99" name="acd50ecbc4d7060cf8e7ee287f5894a99"></a>
+BlendMode&#160;</td><td class="memItemRight" valign="bottom"><b>getBlendMode</b> () const</td></tr>
+<tr class="separator:acd50ecbc4d7060cf8e7ee287f5894a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d16ecd0a3fd43e7ac7ae7374f3ab845"><td class="memItemLeft" align="right" valign="top"><a id="a8d16ecd0a3fd43e7ac7ae7374f3ab845" name="a8d16ecd0a3fd43e7ac7ae7374f3ab845"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlendMode</b> (BlendMode mode)</td></tr>
+<tr class="separator:a8d16ecd0a3fd43e7ac7ae7374f3ab845"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac186f20c11a3e3e9cbb69b18bfa02f7b"><td class="memItemLeft" align="right" valign="top"><a id="ac186f20c11a3e3e9cbb69b18bfa02f7b" name="ac186f20c11a3e3e9cbb69b18bfa02f7b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setEnvironmentLight</b> (const <a class="el" href="structxmc_1_1colorf.html">colorf</a> &amp;color)</td></tr>
 <tr class="separator:ac186f20c11a3e3e9cbb69b18bfa02f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,10 +223,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>renderPrimitive</b> (
 <tr class="memitem:ae5023f266dd372be1254a91c6a152437"><td class="memItemLeft" align="right" valign="top"><a id="ae5023f266dd372be1254a91c6a152437" name="ae5023f266dd372be1254a91c6a152437"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>renderPrimitive</b> (const Primitive3D &amp;prim, const Material3D &amp;mat, void *userContext=nullptr)</td></tr>
 <tr class="separator:ae5023f266dd372be1254a91c6a152437"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a5ba3034e072d0a2eeb3ad9b133e403"><td class="memTemplParams" colspan="2"><a id="a9a5ba3034e072d0a2eeb3ad9b133e403" name="a9a5ba3034e072d0a2eeb3ad9b133e403"></a>
-template&lt;bool ALPHA_BLEND, bool COLOR_TEXTURE, bool GOURAUD_SHADING, bool FORMAT_444&gt; </td></tr>
-<tr class="memitem:a9a5ba3034e072d0a2eeb3ad9b133e403"><td class="memTemplItemLeft" align="right" valign="top">XMC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>renderHalfTriangle</b> (<a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;accumVL, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;accumVR, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;stepVL, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;stepVR, int yStart, int yEnd, const <a class="el" href="structxmc_1_1TextureArgs.html">TextureArgs</a> &amp;tex)</td></tr>
-<tr class="separator:a9a5ba3034e072d0a2eeb3ad9b133e403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4e1e52384d007a3edd3b9213661a190"><td class="memTemplParams" colspan="2"><a id="ac4e1e52384d007a3edd3b9213661a190" name="ac4e1e52384d007a3edd3b9213661a190"></a>
+template&lt;bool BLEND, bool TEXTURE_4444, bool COLOR_TEXTURE, bool GOURAUD_SHADING, bool OUTPUT_444&gt; </td></tr>
+<tr class="memitem:ac4e1e52384d007a3edd3b9213661a190"><td class="memTemplItemLeft" align="right" valign="top">XMC_INLINE void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>renderTrapezoid</b> (<a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;accumVL, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;accumVR, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;stepVL, <a class="el" href="structxmc_1_1ScanLineCounter.html">ScanLineCounter</a> &amp;stepVR, int yStart, int yEnd, const <a class="el" href="structxmc_1_1TextureArgs.html">TextureArgs</a> &amp;tex)</td></tr>
+<tr class="separator:ac4e1e52384d007a3edd3b9213661a190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac85a27cb8e852465b66a1a233d2ba87f"><td class="memItemLeft" align="right" valign="top"><a id="ac85a27cb8e852465b66a1a233d2ba87f" name="ac85a27cb8e852465b66a1a233d2ba87f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>renderTriangle</b> (const <a class="el" href="structxmc_1_1Vertex3D.html">Vertex3D</a> &amp;v0, const <a class="el" href="structxmc_1_1Vertex3D.html">Vertex3D</a> &amp;v1, const <a class="el" href="structxmc_1_1Vertex3D.html">Vertex3D</a> &amp;v2, const Material3D &amp;mat)</td></tr>
 <tr class="separator:ac85a27cb8e852465b66a1a233d2ba87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
