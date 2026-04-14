@@ -110,6 +110,7 @@ class Graphics3DClass {
 
   float zNear = 0.01f;
   float zFar = 100.0f;
+  int32_t zTestOffset = 0;
 
   colorf envLight = {0.1f, 0.1f, 0.1f, 1.0f};
 
@@ -249,6 +250,9 @@ class Graphics3DClass {
     zFar = far;
   }
 
+  inline int32_t getZTestOffset() const { return zTestOffset; }
+  inline void setZTestOffset(int32_t offset) { zTestOffset = offset; }
+
   inline void setMaterial(const Material3D &mat) { material = mat; }
 
   void clearDepth(depth_t value = MAX_DEPTH);
@@ -259,13 +263,7 @@ class Graphics3DClass {
 
   void renderMesh(const Mesh3D &mesh, void *userContext = nullptr);
 
-  inline void renderPrimitive(const Primitive3D &prim,
-                              void *userContext = nullptr) {
-    renderPrimitive(prim, material, userContext);
-  }
-
-  void renderPrimitive(const Primitive3D &prim, const Material3D &mat,
-                       void *userContext = nullptr);
+  void renderPrimitive(const Primitive3D &prim, void *userContext = nullptr);
 
   template <bool BLEND, bool TEXTURE_4444, bool COLOR_TEXTURE,
             bool GOURAUD_SHADING, bool OUTPUT_444>
@@ -274,7 +272,11 @@ class Graphics3DClass {
                                   ScanLineCounter &stepVL,
                                   ScanLineCounter &stepVR, int yStart, int yEnd,
                                   const TextureArgs &tex) {
-    for (int iy = yStart; iy <= yEnd; iy++) {
+    int32_t ztOffset = zTestOffset;
+    if (!hasFlag(renderFlags, RenderFlags3D::Z_TEST)) {
+      ztOffset = -MAX_DEPTH;
+    }
+    for (int iy = yStart; iy < yEnd; iy++) {
       int32_t ixMin = accumVL.x.roundToInt();
       int32_t ixMax = accumVR.x.roundToInt();
       int32_t hSpan = ixMax - ixMin;
@@ -297,7 +299,7 @@ class Graphics3DClass {
         for (int x = ixMin; x < ixMax; x++) {
           int32_t z = accumH.z.floorToInt();
           bool written = false;
-          if (z < zPtr[x]) {
+          if (z + ztOffset < (int32_t)zPtr[x]) {
             if (GOURAUD_SHADING || BLEND) {
               color8p24 c = accumH.c;
               if (COLOR_TEXTURE) {
@@ -666,7 +668,7 @@ class Graphics3DClass {
 
 #define XMC_TRAPEZOID(aBlend, tex4444, colorTex, gouraud, out444) \
   renderTrapezoid<aBlend, tex4444, colorTex, gouraud, out444>(    \
-      cornerL, cornerR, dummyStep, dummyStep, iy0, iy0, tex)
+      cornerL, cornerR, dummyStep, dummyStep, iy0, iy0 + 1, tex)
 
     switch ((uint32_t)trf) {
       case 0: XMC_TRAPEZOID(false, false, false, false, false); break;

@@ -96,12 +96,11 @@ void Graphics3DClass::renderNode(const Node3D &node, void *userContext) {
 
 void Graphics3DClass::renderMesh(const Mesh3D &mesh, void *userContext) {
   for (const Primitive3D &prim : mesh->primitives) {
-    renderPrimitive(prim, prim->material, userContext);
+    renderPrimitive(prim, userContext);
   }
 }
 
 void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
-                                      const Material3D &mat,
                                       void *userContext) {
   RenderFlags3D flags = renderFlags;
   const Vec3Buffer &primPos = prim->position;
@@ -109,6 +108,7 @@ void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
   const ColorBuffer &primCol = prim->color;
   const Vec2Buffer &primUv = prim->uv;
   const IndexBuffer &primIdx = prim->indexes;
+  const Material3D &mat = prim->material;
 
   MaterialFlags3D matFlags = MaterialFlags3D::NONE;
   if (mat) {

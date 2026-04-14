@@ -16,47 +16,47 @@ struct vec2 {
   float x;
   float y;
 
-  vec2() : x(0), y(0) {}
-  vec2(float x, float y) : x(x), y(y) {}
+  XMC_INLINE vec2() : x(0), y(0) {}
+  XMC_INLINE vec2(float x, float y) : x(x), y(y) {}
 
-  inline vec2 operator+(const vec2 &other) const {
+  XMC_INLINE vec2 operator+(const vec2 &other) const {
     return vec2(x + other.x, y + other.y);
   }
 
-  inline vec2 operator-(const vec2 &other) const {
+  XMC_INLINE vec2 operator-(const vec2 &other) const {
     return vec2(x - other.x, y - other.y);
   }
 
-  inline vec2 operator*(float scalar) const {
+  XMC_INLINE vec2 operator*(float scalar) const {
     return vec2(x * scalar, y * scalar);
   }
 
-  inline vec2 operator/(float scalar) const {
+  XMC_INLINE vec2 operator/(float scalar) const {
     float inv = 1.0f / scalar;
     return vec2(x * inv, y * inv);
   }
 
-  inline vec2 operator-() const { return vec2(-x, -y); }
+  XMC_INLINE vec2 operator-() const { return vec2(-x, -y); }
 
-  inline vec2 &operator+=(const vec2 &other) {
+  XMC_INLINE vec2 &operator+=(const vec2 &other) {
     x += other.x;
     y += other.y;
     return *this;
   }
 
-  inline vec2 &operator-=(const vec2 &other) {
+  XMC_INLINE vec2 &operator-=(const vec2 &other) {
     x -= other.x;
     y -= other.y;
     return *this;
   }
 
-  inline vec2 &operator*=(float scalar) {
+  XMC_INLINE vec2 &operator*=(float scalar) {
     x *= scalar;
     y *= scalar;
     return *this;
   }
 
-  inline vec2 &operator/=(float scalar) {
+  XMC_INLINE vec2 &operator/=(float scalar) {
     float inv = 1.0f / scalar;
     x *= inv;
     y *= inv;
@@ -68,7 +68,7 @@ struct vec2 {
    * @param other The other vector to dot with
    * @return The dot product (a scalar value)
    */
-  inline float dot(const vec2 &other) const {
+  XMC_INLINE float dot(const vec2 &other) const {
     return x * other.x + y * other.y;
   }
 
@@ -77,15 +77,21 @@ struct vec2 {
    * @param other The other vector to cross with
    * @return The cross product (a scalar value in 2D)
    */
-  inline float cross(const vec2 &other) const {
+  XMC_INLINE float cross(const vec2 &other) const {
     return x * other.y - y * other.x;
   }
+
+  /**
+   * @brief Calculate the squared length (magnitude) of the vector
+   * @return The squared length of the vector
+   */
+  XMC_INLINE float squaredLength() const { return x * x + y * y; }
 
   /**
    * @brief Calculate the length (magnitude) of the vector
    * @return The length of the vector
    */
-  inline float length() const { return sqrtf(x * x + y * y); }
+  inline float length() const { return sqrtf(squaredLength()); }
 
   /**
    * @brief Normalize the vector (make it unit length)

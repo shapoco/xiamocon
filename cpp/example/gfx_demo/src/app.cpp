@@ -32,6 +32,9 @@ struct Leaf {
 };
 Leaf leafArray[NUM_LEAFS];
 
+static const float CRYSTAL_SIZE[] = {2.5f, 3.0f, 2.0f, 3.5f};
+static constexpr int NUM_CRYSTALS = sizeof(CRYSTAL_SIZE) / sizeof(float);
+
 static constexpr int NUM_PARTICLES = 100;
 static constexpr float PARTICLE_SPAWN_R = 8;
 static constexpr float PARTICLE_MAX_Y = 10;
@@ -51,6 +54,22 @@ Sprite envTexture = createSprite565(256, 128, GFX2D_STRIDE_AUTO,
 Material3D envMat = createMaterial3D();
 Mesh3D cube = createCube(0.5f);
 
+static constexpr int FIRE_NUM_COLS = 16;
+static constexpr int FIRE_NUM_ROWS = 16;
+vec3 firePos[FIRE_NUM_COLS * (FIRE_NUM_ROWS + 1)];
+vec3 fireVel[FIRE_NUM_COLS * (FIRE_NUM_ROWS + 1)];
+Vec3Buffer fireBodyVerts = createVec3Buffer((FIRE_NUM_COLS + 1) * 2);
+ColorBuffer fireBodyColors = createColorBuffer((FIRE_NUM_COLS + 1) * 2);
+Vec3Buffer fireRootVerts = createVec3Buffer(FIRE_NUM_COLS + 2);
+ColorBuffer fireRootColors = createColorBuffer(FIRE_NUM_COLS + 2);
+Material3D fireMat = createMaterial3D();
+Primitive3D fireBodyPrim =
+    createPrimitive3D(PrimitiveMode::TRIANGLE_STRIP, fireBodyVerts, nullptr,
+                      fireBodyColors, nullptr, nullptr, fireMat);
+Primitive3D fireRootPrim =
+    createPrimitive3D(PrimitiveMode::TRIANGLE_FAN, fireRootVerts, nullptr,
+                      fireRootColors, nullptr, nullptr, fireMat);
+
 int modelIndex = 0;
 
 uint64_t lastUs = 0;
@@ -63,7 +82,10 @@ float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
 void updateScene();
+void updateFire(float dt);
 void renderScene();
+void renderCubes();
+void renderFire();
 
 AppConfig xmc::appGetConfig() {
   auto cfg = getDefaultAppConfig();
@@ -115,6 +137,8 @@ void xmc::appSetup() {
   envMat->flags |= MaterialFlags3D::ENVIRONMENT_MAPPED;
   envMat->colorTexture = envTexture;
   cube->setMaterial(envMat);
+
+  fireMat->flags |= MaterialFlags3D::DOUBLE_SIDED;
 }
 
 void xmc::appLoop() {
@@ -159,7 +183,7 @@ void updateScene() {
 
   // model switch
   if (wasPressed(Button::Y)) {
-    modelIndex = (modelIndex + 1) % 2;
+    modelIndex = (modelIndex + 1) % 3;
     pressed = true;
   }
 
@@ -226,11 +250,78 @@ void updateScene() {
       vel = {0, 1, 0};
     }
   }
+
+  updateFire(dt);
+}
+
+void updateFire(float dt) {
+  constexpr float ROOT_RADIUS = 0.05f;
+  constexpr float LIFT = 2.0f;
+  constexpr float ATTRACTION = 0.4f;
+  constexpr float REPULSION = 0.3f;
+
+  dt = 0.05f;
+
+  for (int row = FIRE_NUM_ROWS; row >= 1; row--) {
+    memcpy(&firePos[row * FIRE_NUM_COLS], &firePos[(row - 1) * FIRE_NUM_COLS],
+           sizeof(vec3) * FIRE_NUM_COLS);
+    memcpy(&fireVel[row * FIRE_NUM_COLS], &fireVel[(row - 1) * FIRE_NUM_COLS],
+           sizeof(vec3) * FIRE_NUM_COLS);
+  }
+  for (int col = 0; col < FIRE_NUM_COLS; col++) {
+    vec3 &pos = firePos[col];
+    vec3 &vel = fireVel[col];
+    float r = ROOT_RADIUS * (1.0f + randomF32() * 0.5f);
+    pos.x = sin(col * M_PI * 2 / FIRE_NUM_COLS) * r;
+    pos.y = 0.0f;
+    pos.z = cos(col * M_PI * 2 / FIRE_NUM_COLS) * r;
+    vel.x = sin(col * M_PI * 2 / FIRE_NUM_COLS) * 2.0f;
+    vel.y = 2.0f * (1.0f + randomF32() * 0.5f);
+    vel.z = cos(col * M_PI * 2 / FIRE_NUM_COLS) * 2.0f;
+  }
+  float friction = powf(0.1f, dt);
+  for (int row = FIRE_NUM_ROWS - 1; row >= 1; row--) {
+    for (int col = 0; col < FIRE_NUM_COLS; col++) {
+      vec3 &posL = firePos[row * FIRE_NUM_COLS +
+                           (col + FIRE_NUM_COLS - 1) % FIRE_NUM_COLS];
+      vec3 &posR = firePos[row * FIRE_NUM_COLS + (col + 1) % FIRE_NUM_COLS];
+      vec3 &posU = firePos[(row + 1) * FIRE_NUM_COLS + col];
+      vec3 &posD = firePos[(row - 1) * FIRE_NUM_COLS + col];
+      vec3 &pos = firePos[row * FIRE_NUM_COLS + col];
+      vec3 acc = {0, 0, 0};
+      float rr = sqrtf(pos.x * pos.x + pos.z * pos.z) + 1.0f;
+      acc.y += LIFT * rr;
+      vec3 vecL = posL - pos;
+      vec3 vecR = posR - pos;
+      vec3 vecU = posU - pos;
+      vec3 vecD = posD - pos;
+      float ddL = fmaxf(vecL.squaredLength(), 0.01f);
+      float ddR = fmaxf(vecR.squaredLength(), 0.01f);
+      float ddU = fmaxf(vecU.squaredLength(), 0.01f);
+      float ddD = fmaxf(vecD.squaredLength(), 0.01f);
+      float dddL = ddL * sqrtf(ddL);
+      float dddR = ddR * sqrtf(ddR);
+      float dddU = ddU * sqrtf(ddU);
+      float dddD = ddD * sqrtf(ddD);
+      acc -= vecL * (ATTRACTION / ddL) + vecR * (ATTRACTION / ddR) +
+             vecU * (ATTRACTION / ddU) + vecD * (ATTRACTION / ddD);
+      acc += vecL * (REPULSION / dddL) + vecR * (REPULSION / dddR) +
+             vecU * (REPULSION / dddU) + vecD * (REPULSION / dddD);
+      vec3 &vel = fireVel[row * FIRE_NUM_COLS + col];
+      vel += acc * dt;
+      vel *= friction;
+    }
+  }
+  for (int row = FIRE_NUM_ROWS - 1; row >= 0; row--) {
+    for (int col = 0; col < FIRE_NUM_COLS; col++) {
+      vec3 &pos = firePos[row * FIRE_NUM_COLS + col];
+      vec3 &vel = fireVel[row * FIRE_NUM_COLS + col];
+      pos += vel * dt;
+    }
+  }
 }
 
 void renderScene() {
-  uint64_t nowMs = getTimeMs();
-
   Graphics2D gfx = frameBuffer.createGraphics();
 
   // clear screen
@@ -269,79 +360,22 @@ void renderScene() {
     // flower
     g3d->disableFlags(RenderFlags3D::LIGHTING);
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-
     g3d->renderScene(tulip);
   } else if (modelIndex == 1) {
-    // mirror cubes
-    g3d->disableFlags(RenderFlags3D::LIGHTING);
-    g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-    g3d->pushMatrix();
-    float largeRot = (float)nowMs * 0.0002f;
-    g3d->rotate(largeRot * 1.1f, largeRot * 1.2f, largeRot * 1.3f);
-    g3d->translate(0, 3.3f, 0);
-    for (int iz = 0; iz < 2; iz++) {
-      for (int iy = 0; iy < 2; iy++) {
-        for (int ix = 0; ix < 2; ix++) {
-          int i = ix + iy * 2 + iz * 4;
-          float t = ((float)nowMs * 0.0002f);
-          int tInt = (int)floorf(t);
-          int axis = tInt % 3;
-          float p = (t - tInt) * 2;
-          g3d->pushMatrix();
-          if (tInt % 8 == i && p < 1.0f) {
-            if (p < 0.5f) {
-              p *= 2;
-              p *= p;
-              p /= 2;
-            } else {
-              p = (1 - p) * 2;
-              p *= p;
-              p = 1 - p / 2;
-            }
-            float rot = p * (M_PI / 2);
-            switch (axis) {
-              case 0: g3d->rotate(rot, 0, 0); break;
-              case 1: g3d->rotate(0, rot, 0); break;
-              case 2: g3d->rotate(0, 0, rot); break;
-              default: break;
-            }
-          }
-          g3d->translate((ix * 2 - 1) * 0.6f, (iy * 2 - 1) * 0.6f,
-                         (iz * 2 - 1) * 0.6f);
-          g3d->renderMesh(cube);
-          g3d->popMatrix();
-        }
-      }
-    }
-    g3d->popMatrix();
+    renderCubes();
   }
 
   // crystals
   g3d->enableFlags(RenderFlags3D::LIGHTING);
   g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->pushMatrix();
-  g3d->scale(2.5f);
-  g3d->translate(0, 0, -20);
-  g3d->renderScene(quarts_scene0);
-  g3d->popMatrix();
-  g3d->pushMatrix();
-  g3d->scale(3);
-  g3d->translate(0, 0, -20);
-  g3d->rotate(0, 90 * M_PI / 180.0f, 0);
-  g3d->renderScene(quarts_scene0);
-  g3d->popMatrix();
-  g3d->pushMatrix();
-  g3d->scale(2);
-  g3d->translate(0, 0, -20);
-  g3d->rotate(0, 180 * M_PI / 180.0f, 0);
-  g3d->renderScene(quarts_scene0);
-  g3d->popMatrix();
-  g3d->pushMatrix();
-  g3d->scale(3.5f);
-  g3d->translate(0, 0, -20);
-  g3d->rotate(0, 270 * M_PI / 180.0f, 0);
-  g3d->renderScene(quarts_scene0);
-  g3d->popMatrix();
+  for (int i = 0; i < NUM_CRYSTALS; i++) {
+    g3d->pushMatrix();
+    g3d->scale(CRYSTAL_SIZE[i]);
+    g3d->translate(0, 0, -20);
+    g3d->rotate(0, i * 90 * M_PI / 180.0f, 0);
+    g3d->renderScene(quarts_scene0);
+    g3d->popMatrix();
+  }
 
   // leafs
   g3d->disableFlags(RenderFlags3D::LIGHTING);
@@ -365,9 +399,95 @@ void renderScene() {
   g3d->setBlendMode(BlendMode::OVERWRITE);
   g3d->popMatrix();
 
+  if (modelIndex == 2) {
+    renderFire();
+  }
+
   // particles
   g3d->disableFlags(RenderFlags3D::LIGHTING);
   g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->renderMesh(particleMesh);
   g3d->popMatrix();
+}
+
+void renderCubes() {
+  uint64_t nowMs = getTimeMs();
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
+  g3d->pushMatrix();
+  float largeRot = (float)nowMs * 0.0002f;
+  g3d->rotate(largeRot * 1.1f, largeRot * 1.2f, largeRot * 1.3f);
+  g3d->translate(0, 3.3f, 0);
+  for (int iz = 0; iz < 2; iz++) {
+    for (int iy = 0; iy < 2; iy++) {
+      for (int ix = 0; ix < 2; ix++) {
+        int i = ix + iy * 2 + iz * 4;
+        float t = ((float)nowMs * 0.0002f);
+        int tInt = (int)floorf(t);
+        int axis = tInt % 3;
+        float p = (t - tInt) * 2;
+        g3d->pushMatrix();
+        if (tInt % 8 == i && p < 1.0f) {
+          if (p < 0.5f) {
+            p *= 2;
+            p *= p;
+            p /= 2;
+          } else {
+            p = (1 - p) * 2;
+            p *= p;
+            p = 1 - p / 2;
+          }
+          float rot = p * (M_PI / 2);
+          switch (axis) {
+            case 0: g3d->rotate(rot, 0, 0); break;
+            case 1: g3d->rotate(0, rot, 0); break;
+            case 2: g3d->rotate(0, 0, rot); break;
+            default: break;
+          }
+        }
+        g3d->translate((ix * 2 - 1) * 0.6f, (iy * 2 - 1) * 0.6f,
+                       (iz * 2 - 1) * 0.6f);
+        g3d->renderMesh(cube);
+        g3d->popMatrix();
+      }
+    }
+  }
+  g3d->popMatrix();
+}
+
+void renderFire() {
+  g3d->disableFlags(RenderFlags3D::LIGHTING);
+  g3d->enableFlags(RenderFlags3D::GOURAUD_SHADING);
+  g3d->setBlendMode(BlendMode::ADD);
+  g3d->setZTestOffset(-100);
+  g3d->pushMatrix();
+  g3d->scale(1.5f);
+  g3d->translate(0, 2.5f, 0);
+  colorf colorH = {0.5f, 0, 1.0f, 1};
+  fireRootVerts->data[0] = {0, 0, 0};
+  fireRootColors->data[0] = {0, 0, 0, 1};
+  for (int col = 0; col < FIRE_NUM_COLS + 1; col++) {
+    fireRootVerts->data[col + 1] = firePos[col % FIRE_NUM_COLS];
+    fireRootColors->data[col + 1] = colorH;
+  }
+  g3d->renderPrimitive(fireRootPrim);
+  for (int row = 0; row < FIRE_NUM_ROWS - 1; row++) {
+    colorf colorL = colorH;
+    float alpha = (float)(FIRE_NUM_ROWS - row) / FIRE_NUM_ROWS;
+    colorH.r = alpha * 0.1f + alpha * 1.5f;
+    colorH.g = alpha * 0.1f + fmaxf(0, alpha * 0.5f - 0.2f);
+    colorH.b = alpha * 0.1f;
+    colorH.a = 1;
+    for (int col = 0; col < FIRE_NUM_COLS + 1; col++) {
+      int i = row * FIRE_NUM_COLS + col % FIRE_NUM_COLS;
+      fireBodyVerts->data[col * 2] = firePos[i];
+      fireBodyVerts->data[col * 2 + 1] = firePos[FIRE_NUM_COLS + i];
+      fireBodyColors->data[col * 2] = colorL;
+      fireBodyColors->data[col * 2 + 1] = colorH;
+    }
+    g3d->renderPrimitive(fireBodyPrim);
+  }
+  g3d->popMatrix();
+  g3d->setZTestOffset(0);
+  g3d->setBlendMode(BlendMode::OVERWRITE);
 }
