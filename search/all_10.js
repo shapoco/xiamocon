@@ -36,11 +36,12 @@ var searchData=
   ['sprite565class_33',['Sprite565Class',['../classxmc_1_1Sprite565Class.html',1,'xmc']]],
   ['spriteclass_34',['SpriteClass',['../classxmc_1_1SpriteClass.html',1,'xmc']]],
   ['square_35',['SQUARE',['../tone_8hpp.html#a2088bdad36b783e047fc138922fc946fa12dec4e1f7ec620651b2b95c440ffac0',1,'xmc::audio']]],
-  ['start_36',['start',['../classxmc_1_1audio_1_1StreamingDac.html#a4e6a1c016668045a005c2b7126d52c7f',1,'xmc::audio::StreamingDac::start()'],['../classxmc_1_1pwm_1_1Driver.html#aecde815b22e011d78a84ca13fcf5a26d',1,'xmc::pwm::Driver::start()']]],
-  ['startms_37',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
-  ['stop_38',['stop',['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()'],['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()']]],
-  ['streamformat_39',['StreamFormat',['../structxmc_1_1audio_1_1StreamFormat.html',1,'xmc::audio']]],
-  ['streamingdac_40',['StreamingDac',['../classxmc_1_1audio_1_1StreamingDac.html',1,'xmc::audio']]],
-  ['stride444_41',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]],
-  ['sustain_42',['SUSTAIN',['../tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70a76f908385924681f5c38b86f4c41b759',1,'xmc::audio']]]
+  ['squaredlength_36',['squaredLength',['../structxmc_1_1vec3.html#a16c143ca2c5e065f3609d6ee03e5f548',1,'xmc::vec3::squaredLength()'],['../structxmc_1_1vec2.html#a0d3baec23dc751052cc142f841b798d0',1,'xmc::vec2::squaredLength()']]],
+  ['start_37',['start',['../classxmc_1_1audio_1_1StreamingDac.html#a4e6a1c016668045a005c2b7126d52c7f',1,'xmc::audio::StreamingDac::start()'],['../classxmc_1_1pwm_1_1Driver.html#aecde815b22e011d78a84ca13fcf5a26d',1,'xmc::pwm::Driver::start()']]],
+  ['startms_38',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
+  ['stop_39',['stop',['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()'],['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()']]],
+  ['streamformat_40',['StreamFormat',['../structxmc_1_1audio_1_1StreamFormat.html',1,'xmc::audio']]],
+  ['streamingdac_41',['StreamingDac',['../classxmc_1_1audio_1_1StreamingDac.html',1,'xmc::audio']]],
+  ['stride444_42',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]],
+  ['sustain_43',['SUSTAIN',['../tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70a76f908385924681f5c38b86f4c41b759',1,'xmc::audio']]]
 ];

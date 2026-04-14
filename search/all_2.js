@@ -10,5 +10,5 @@ var searchData=
   ['conjugate_7',['conjugate',['../structxmc_1_1quat.html#aced56cd1f42a10cef5b48806c4919bea',1,'xmc::quat']]],
   ['contains_8',['contains',['../structxmc_1_1Rect.html#a27d66953daf14f26ec2e4ecbc33c696c',1,'xmc::Rect']]],
   ['creategraphics_9',['createGraphics',['../classxmc_1_1FrameBuffer.html#a953ea36cd96b99a78d90454f9f99b001',1,'xmc::FrameBuffer']]],
-  ['cross_10',['cross',['../structxmc_1_1vec2.html#a5e1261a51467c69e3001250876032c5e',1,'xmc::vec2::cross()'],['../structxmc_1_1vec3.html#ad8f508d0cce888aa961f6df7a6dbdc8e',1,'xmc::vec3::cross()']]]
+  ['cross_10',['cross',['../structxmc_1_1vec2.html#a30a4f2c345f892a9eacd4fd4a40260b5',1,'xmc::vec2::cross()'],['../structxmc_1_1vec3.html#a67aeb9abd085a98681e1bd52be2a3120',1,'xmc::vec3::cross()']]]
 ];

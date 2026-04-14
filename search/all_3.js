@@ -6,7 +6,7 @@ var searchData=
   ['disableflag_3',['disableFlag',['../classxmc_1_1FrameBuffer.html#a367fb1e93ad3527ea18a79a97afbee57',1,'xmc::FrameBuffer']]],
   ['display_5freset_4',['DISPLAY_RESET',['../ioex_8hpp.html#a55204b18c267153ace68e07e26b530e6abaf0932baf96eff1d972d60c4d231083',1,'xmc::ioex']]],
   ['dma_2ehpp_5',['dma.hpp',['../dma_8hpp.html',1,'']]],
-  ['dot_6',['dot',['../structxmc_1_1vec2.html#aaac3d240a52024ddf2f94eadd2a212af',1,'xmc::vec2::dot()'],['../structxmc_1_1vec3.html#a01990eaf4a70fba721996c1cfb765056',1,'xmc::vec3::dot()']]],
+  ['dot_6',['dot',['../structxmc_1_1vec2.html#a89ed410f3cf07dcafacfab45130154ba',1,'xmc::vec2::dot()'],['../structxmc_1_1vec3.html#a70534e89d8ad825ac89997511a22899a',1,'xmc::vec3::dot()']]],
   ['down_7',['DOWN',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934ac4e0e4e3118472beeb2ae75827450f1f',1,'xmc::input']]],
   ['driver_8',['Driver',['../classxmc_1_1pwm_1_1Driver.html',1,'xmc::pwm']]]
 ];
