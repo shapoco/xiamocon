@@ -328,12 +328,14 @@ void updateFire() {
   for (int col = 0; col < FIRE_NUM_COLS; col++) {
     float a = col * M_PI * 2 / FIRE_NUM_COLS;
     float noise = 1.0f + randomF32() * 0.5f;
-    firePos[col].x = cos(a) * ROOT_RADIUS * noise;
+    float cs = cosf(a);
+    float sn = sinf(a);
+    firePos[col].x = cs * ROOT_RADIUS * noise;
     firePos[col].y = 0;
-    firePos[col].z = sin(a) * ROOT_RADIUS * noise;
-    fireVel[col].x = cos(a) * ROOT_VELOCITY * noise;
+    firePos[col].z = sn * ROOT_RADIUS * noise;
+    fireVel[col].x = cs * ROOT_VELOCITY * noise;
     fireVel[col].y = 2.0f * noise;
-    fireVel[col].z = sin(a) * ROOT_VELOCITY * noise;
+    fireVel[col].z = sn * ROOT_VELOCITY * noise;
   }
 
   // 加速
@@ -344,7 +346,7 @@ void updateFire() {
       vec3 acc = {0, 0, 0};
 
       // 上昇気流 (外側ほど強い)
-      acc.y += sqrt(pos.x * pos.x + pos.z * pos.z) * fireBuoyancy;
+      acc.y += sqrtf(pos.x * pos.x + pos.z * pos.z) * fireBuoyancy;
 
       // 上下左右の隣接する頂点との相互作用
       vec3 *neighbours[NUM_NEIGHBOURS];
@@ -354,11 +356,12 @@ void updateFire() {
       neighbours[2] = &firePos[(row + 1) * FIRE_NUM_COLS + col];
       neighbours[3] = &firePos[(row - 1) * FIRE_NUM_COLS + col];
       for (int j = 0; j < NUM_NEIGHBOURS; j++) {
-        vec3 diff = *neighbours[j] - pos;
-        float dd = fmaxf(diff.squaredLength(), 0.01f);
+        vec3 dir = *neighbours[j] - pos;
+        float dd = fmaxf(dir.squaredLength(), 0.01f);
         float d = sqrtf(dd);
         float ddd = dd * d;
-        acc += diff.normalized() * (fireAttraction / dd - fireRepulsion / ddd);
+        dir *= 1.0f / d;
+        acc += dir * (fireAttraction / dd - fireRepulsion / ddd);
       }
 
       vel *= friction;
