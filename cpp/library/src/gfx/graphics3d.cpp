@@ -5,16 +5,19 @@
 
 namespace xmc {
 
-void Graphics3DClass::clearDepth(depth_t value) {
-  int pixelCount = width * height;
-  if (value == 0) {
-    memset(depthBuff, 0x00, sizeof(depth_t) * pixelCount);
-  } else if (value == MAX_DEPTH) {
-    memset(depthBuff, 0xFF, sizeof(depth_t) * pixelCount);
-  } else {
-    for (int i = 0; i < pixelCount; i++) {
-      depthBuff[i] = value;
-    }
+void Graphics3DClass::beginRender(ClearTarget target) {
+  if (hasFlag(target, ClearTarget::STACK)) {
+    stateStackTop = 0;
+    stateStack[0] = State3D();
+  }
+  if (hasFlag(target, ClearTarget::DEPTH)) {
+    memset(depthBuff, 0xFF, sizeof(Depth3D) * width * height);
+  }
+}
+
+void Graphics3DClass::endRender() {
+  if (stateStackTop) {
+    XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
   }
 }
 
@@ -33,23 +36,22 @@ void Graphics3DClass::setTarget(Sprite target, Rect viewport) {
 void Graphics3DClass::validateMatrix(bool force) {
   if (mvpDirty || force) {
     // Recalculate model matrix
-    int dirtyIndex = modelMatrixStackPtr + 1;
+    int dirtyIndex = stateStackTop + 1;
     if (force) {
       dirtyIndex = 0;
     } else {
-      while (dirtyIndex > 0 && !modelMatrixStack[dirtyIndex - 1].dirty) {
+      while (dirtyIndex > 0 && !stateStack[dirtyIndex - 1].dirty) {
         dirtyIndex--;
       }
     }
-    while (dirtyIndex <= modelMatrixStackPtr) {
+    while (dirtyIndex <= stateStackTop) {
       if (dirtyIndex == 0) {
-        modelMatrixStack[dirtyIndex].world = modelMatrixStack[dirtyIndex].local;
+        stateStack[dirtyIndex].world = stateStack[dirtyIndex].local;
       } else {
-        modelMatrixStack[dirtyIndex].world =
-            modelMatrixStack[dirtyIndex - 1].world *
-            modelMatrixStack[dirtyIndex].local;
+        stateStack[dirtyIndex].world =
+            stateStack[dirtyIndex - 1].world * stateStack[dirtyIndex].local;
       }
-      modelMatrixStack[dirtyIndex].dirty = false;
+      stateStack[dirtyIndex].dirty = false;
       dirtyIndex++;
     }
 
@@ -60,15 +62,14 @@ void Graphics3DClass::validateMatrix(bool force) {
     }
 
     // Recalculate MVP matrix
-    mvpMatrix =
-        viewProjectionMatrix * modelMatrixStack[modelMatrixStackPtr].world;
+    mvpMatrix = viewProjectionMatrix * stateStack[stateStackTop].world;
     mvpDirty = false;
   }
 }
 
 void Graphics3DClass::getModelMatrix(mat4 &out) {
   validateMatrix();
-  out = modelMatrixStack[modelMatrixStackPtr].world;
+  out = stateStack[stateStackTop].world;
 }
 
 void Graphics3DClass::getMvpMatrix(mat4 &out) {
@@ -76,33 +77,34 @@ void Graphics3DClass::getMvpMatrix(mat4 &out) {
   out = mvpMatrix;
 }
 
-void Graphics3DClass::renderScene(const Scene3D &scene, void *userContext) {
+void Graphics3DClass::render(const Scene3D &scene) {
   for (const Node3D &node : scene->rootNodes) {
-    renderNode(node, userContext);
+    render(node);
   }
 }
 
-void Graphics3DClass::renderNode(const Node3D &node, void *userContext) {
-  pushMatrix();
+void Graphics3DClass::render(const Node3D &node) {
+  pushState();
   loadMatrix(node->transform);
   if (node->mesh) {
-    renderMesh(node->mesh, userContext);
+    render(node->mesh);
   }
   for (const Node3D &child : node->children) {
-    renderNode(child, userContext);
+    render(child);
   }
-  popMatrix();
+  popState();
 }
 
-void Graphics3DClass::renderMesh(const Mesh3D &mesh, void *userContext) {
+void Graphics3DClass::render(const Mesh3D &mesh) {
   for (const Primitive3D &prim : mesh->primitives) {
-    renderPrimitive(prim, userContext);
+    render(prim);
   }
 }
 
-void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
-                                      void *userContext) {
-  RenderFlags3D flags = renderFlags;
+void Graphics3DClass::render(const Primitive3D &prim) {
+  const State3D &state = stackTop();
+  RenderFlags3D flags = state.flags;
+
   const Vec3Buffer &primPos = prim->position;
   const Vec3Buffer &primNorm = prim->normal;
   const ColorBuffer &primCol = prim->color;
@@ -134,7 +136,7 @@ void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
     flags &= ~RenderFlags3D::CUSTOM_VERTEX_SHADER;
   }
 
-  mat4 &modelMatrix = modelMatrixStack[modelMatrixStackPtr].world;
+  mat4 &modelMatrix = stateStack[stateStackTop].world;
   if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
     VertexShaderArgs shaderArgs(flags, modelMatrix, viewProjectionMatrix, prim,
                                 mat);
@@ -276,9 +278,9 @@ void Graphics3DClass::renderPrimitive(const Primitive3D &prim,
           }
           if (hasFlag(flags, RenderFlags3D::LIGHTING)) {
             colorf light;
-            light += envLight;
-            float ndotl = fmaxf(0, out.normal.dot(parallelLightDir));
-            colorf p = parallelLightColor;
+            light += state.envLight;
+            float ndotl = fmaxf(0, out.normal.dot(state.parallelLightDir));
+            colorf p = state.parallelLightColor;
             p.a = 1;
             p.r *= ndotl;
             p.g *= ndotl;

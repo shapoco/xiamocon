@@ -9,8 +9,8 @@
 
 namespace xmc {
 
-using depth_t = uint16_t;
-static constexpr depth_t MAX_DEPTH = (1 << (sizeof(depth_t) * 8)) - 1;
+using Depth3D = uint16_t;
+static constexpr Depth3D MAX_DEPTH = (1 << (sizeof(Depth3D) * 8)) - 1;
 
 enum class TrapezoidFlags : uint8_t {
   NONE = 0,
@@ -21,6 +21,13 @@ enum class TrapezoidFlags : uint8_t {
   BLEND = 1 << 4,
 };
 XMC_ENUM_FLAGS(TrapezoidFlags, uint8_t);
+
+enum class ClearTarget : uint8_t {
+  STACK = 1 << 0,
+  DEPTH = 1 << 1,
+  ALL = 0xFF,
+};
+XMC_ENUM_FLAGS(ClearTarget, uint8_t);
 
 struct TextureArgs {
   const uint16_t *data = nullptr;
@@ -38,32 +45,40 @@ struct ScanLineCounter {
 
   static XMC_INLINE ScanLineCounter subDiv(const ScanLineCounter &start,
                                            const ScanLineCounter &end,
-                                           int32_t span) {
+                                           int32_t span, bool gouraudShading,
+                                           bool textureMapping) {
     if (span <= 0) span = 1;
     return ScanLineCounter{
-        // fixed16p16::subDiv(end.x, start.x, span),
         (end.x - start.x) / span,
-        // fixed20p12::subDiv(end.z, start.z, span),
         (end.z - start.z) / span,
-        (end.c - start.c) / span,
-        (end.u - start.u) / span,
-        (end.v - start.v) / span,
+        gouraudShading ? (end.c - start.c) / span : color8p24(0, 0, 0, 0),
+        textureMapping ? (end.u - start.u) / span : fixed12p20(0),
+        textureMapping ? (end.v - start.v) / span : fixed12p20(0),
     };
   }
 
-  XMC_INLINE void step(const ScanLineCounter &step, int n = 1) {
+  XMC_INLINE void step(const ScanLineCounter &step, int n, bool gouraudShading,
+                       bool textureMapping) {
     if (n == 1) {
       x += step.x;
       z += step.z;
-      c += step.c;
-      u += step.u;
-      v += step.v;
+      if (gouraudShading) {
+        c += step.c;
+      }
+      if (textureMapping) {
+        u += step.u;
+        v += step.v;
+      }
     } else {
       x += step.x * n;
       z += step.z * n;
-      c += step.c * n;
-      u += step.u * n;
-      v += step.v * n;
+      if (gouraudShading) {
+        c += step.c * n;
+      }
+      if (textureMapping) {
+        u += step.u * n;
+        v += step.v * n;
+      }
     }
   }
 };
@@ -76,7 +91,15 @@ static inline Graphics3D createGraphics3D(int width, int height,
   return std::make_shared<Graphics3DClass>(width, height, stackSize);
 }
 
-struct MatrixStackEntry {
+struct State3D {
+  RenderFlags3D flags = RenderFlags3D::DEFAULT;
+  BlendMode blendMode = BlendMode::OVERWRITE;
+  float zNear = 0.01f;
+  float zFar = 100.0f;
+  int32_t zTestOffset = 0;
+  colorf envLight = {0.1f, 0.1f, 0.1f, 1.0f};
+  vec3 parallelLightDir = vec3(0.5f, 0.5f, 1.0f).normalized();
+  colorf parallelLightColor = {1, 1, 1, 1};
   mat4 local = mat4::identity();
   mat4 world = mat4::identity();
   bool dirty = true;
@@ -88,7 +111,7 @@ class Graphics3DClass {
   const int height;
   const int stackSize;
 
-  depth_t *depthBuff;
+  Depth3D *depthBuff;
 
   Sprite target;
   Rect viewport;
@@ -102,30 +125,16 @@ class Graphics3DClass {
   mat4 mvpMatrix;
   bool mvpDirty = true;
 
-  RenderFlags3D renderFlags = RenderFlags3D::DEFAULT;
-  BlendMode blendMode = BlendMode::OVERWRITE;
-
-  MatrixStackEntry *modelMatrixStack;
-  int modelMatrixStackPtr = 0;
-
-  float zNear = 0.01f;
-  float zFar = 100.0f;
-  int32_t zTestOffset = 0;
-
-  colorf envLight = {0.1f, 0.1f, 0.1f, 1.0f};
-
-  vec3 parallelLightDir = vec3(0.5f, 0.5f, 1.0f).normalized();
-  colorf parallelLightColor = {1, 1, 1, 1};
-
-  Material3D material;
+  State3D *stateStack;
+  int stateStackTop = 0;
 
  public:
   Graphics3DClass(int w, int h, uint32_t stackSize)
       : width(w), height(h), stackSize(stackSize) {
-    depthBuff = (depth_t *)xmcMalloc(sizeof(depth_t) * width * height,
+    depthBuff = (Depth3D *)xmcMalloc(sizeof(Depth3D) * width * height,
                                      XMC_RAM_CAP_SPIRAM);
-    modelMatrixStack = (MatrixStackEntry *)xmcMalloc(
-        sizeof(MatrixStackEntry) * stackSize, XMC_RAM_CAP_DMA);
+    stateStack =
+        (State3D *)xmcMalloc(sizeof(State3D) * stackSize, XMC_RAM_CAP_DMA);
     screenMatrix = mat4::identity();
     projectionMatrix = mat4::identity();
     viewMatrix = mat4::identity();
@@ -137,9 +146,9 @@ class Graphics3DClass {
       xmcFree(depthBuff);
       depthBuff = nullptr;
     }
-    if (modelMatrixStack) {
-      xmcFree(modelMatrixStack);
-      modelMatrixStack = nullptr;
+    if (stateStack) {
+      xmcFree(stateStack);
+      stateStack = nullptr;
     }
   }
 
@@ -149,19 +158,21 @@ class Graphics3DClass {
     setTarget(target, Rect{0, 0, target->width, target->height});
   }
 
-  inline RenderFlags3D getFlags() const { return renderFlags; }
-  inline void setFlags(RenderFlags3D flags) { renderFlags = flags; }
-  inline void enableFlags(RenderFlags3D flags) { renderFlags |= flags; }
-  inline void disableFlags(RenderFlags3D flags) { renderFlags &= ~flags; }
+  inline RenderFlags3D getFlags() const { return stackTop().flags; }
+  inline void setFlags(RenderFlags3D flags) { stackTop().flags = flags; }
+  inline void enableFlags(RenderFlags3D flags) { stackTop().flags |= flags; }
+  inline void disableFlags(RenderFlags3D flags) { stackTop().flags &= ~flags; }
 
-  inline BlendMode getBlendMode() const { return blendMode; }
-  inline void setBlendMode(BlendMode mode) { blendMode = mode; }
+  inline BlendMode getBlendMode() const { return stackTop().blendMode; }
+  inline void setBlendMode(BlendMode mode) { stackTop().blendMode = mode; }
 
-  inline void setEnvironmentLight(const colorf &color) { envLight = color; }
+  inline void setEnvironmentLight(const colorf &color) {
+    stackTop().envLight = color;
+  }
 
   inline void setParallelLight(const vec3 &dir, const colorf &color) {
-    parallelLightDir = dir.normalized();
-    parallelLightColor = color;
+    stackTop().parallelLightDir = dir.normalized();
+    stackTop().parallelLightColor = color;
   }
 
   inline void setScreenMatrix(const mat4 &mat) {
@@ -204,20 +215,25 @@ class Graphics3DClass {
 
   inline void loadIdentity() { loadMatrix(mat4::identity()); }
 
-  inline void pushMatrix() {
-    if (modelMatrixStackPtr < stackSize - 1) {
-      modelMatrixStackPtr++;
-      modelMatrixStack[modelMatrixStackPtr].local = mat4::identity();
-      modelMatrixStack[modelMatrixStackPtr].dirty = true;
-      mvpDirty = true;
+  inline void pushState() {
+    if (stateStackTop >= stackSize - 1) {
+      XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
+      return;
     }
+    stateStackTop++;
+    stateStack[stateStackTop] = stateStack[stateStackTop - 1];
+    stateStack[stateStackTop].local = mat4::identity();
+    stateStack[stateStackTop].dirty = true;
+    mvpDirty = true;
   }
 
-  inline void popMatrix() {
-    if (modelMatrixStackPtr > 0) {
-      modelMatrixStackPtr--;
-      mvpDirty = true;
+  inline void popState() {
+    if (stateStackTop <= 0) {
+      XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
+      return;
     }
+    stateStackTop--;
+    mvpDirty = true;
   }
 
   void getModelMatrix(mat4 &out);
@@ -246,24 +262,22 @@ class Graphics3DClass {
   inline void scale(float s) { dirtyModelMatrix().scale(s); }
 
   inline void setDepthRange(float near, float far) {
-    zNear = near;
-    zFar = far;
+    stackTop().zNear = near;
+    stackTop().zFar = far;
   }
 
-  inline int32_t getZTestOffset() const { return zTestOffset; }
-  inline void setZTestOffset(int32_t offset) { zTestOffset = offset; }
+  inline int32_t getZTestOffset() const { return stackTop().zTestOffset; }
+  inline void setZTestOffset(int32_t offset) {
+    stackTop().zTestOffset = offset;
+  }
 
-  inline void setMaterial(const Material3D &mat) { material = mat; }
+  void beginRender(ClearTarget target = ClearTarget::ALL);
+  void endRender();
 
-  void clearDepth(depth_t value = MAX_DEPTH);
-
-  void renderScene(const Scene3D &scene, void *userContext = nullptr);
-
-  void renderNode(const Node3D &node, void *userContext = nullptr);
-
-  void renderMesh(const Mesh3D &mesh, void *userContext = nullptr);
-
-  void renderPrimitive(const Primitive3D &prim, void *userContext = nullptr);
+  void render(const Scene3D &scene);
+  void render(const Node3D &node);
+  void render(const Mesh3D &mesh);
+  void render(const Primitive3D &prim);
 
   template <bool BLEND, bool TEXTURE_4444, bool COLOR_TEXTURE,
             bool GOURAUD_SHADING, bool OUTPUT_444>
@@ -272,7 +286,10 @@ class Graphics3DClass {
                                   ScanLineCounter &stepVL,
                                   ScanLineCounter &stepVR, int yStart, int yEnd,
                                   const TextureArgs &tex) {
-    int32_t ztOffset = zTestOffset;
+    const State3D &state = stackTop();
+    int32_t ztOffset = state.zTestOffset;
+    RenderFlags3D renderFlags = state.flags;
+
     if (!hasFlag(renderFlags, RenderFlags3D::Z_TEST)) {
       ztOffset = -MAX_DEPTH;
     }
@@ -286,14 +303,14 @@ class Graphics3DClass {
 
       if (ixMin < ixMax) {
         ScanLineCounter accumH = accumVL;
-        ScanLineCounter stepH =
-            ScanLineCounter::subDiv(accumVL, accumVR, hSpan);
+        ScanLineCounter stepH = ScanLineCounter::subDiv(
+            accumVL, accumVR, hSpan, GOURAUD_SHADING, COLOR_TEXTURE);
 
         int32_t xOffset = ixMin - accumVL.x.roundToInt();
-        accumH.step(stepH, xOffset);
+        accumH.step(stepH, xOffset, GOURAUD_SHADING, COLOR_TEXTURE);
 
         uint16_t *__restrict__ texData = (uint16_t *)tex.data;
-        depth_t *__restrict__ zPtr = depthBuff + iy * width;
+        Depth3D *__restrict__ zPtr = depthBuff + iy * width;
         RasterScan444 cPtr444((uint8_t *)target->linePtr(iy), ixMin);
         uint16_t *__restrict__ ptr565 = (uint16_t *)target->linePtr(iy) + ixMin;
         for (int x = ixMin; x < ixMax; x++) {
@@ -313,7 +330,7 @@ class Graphics3DClass {
               }
               if (BLEND) {
                 if (c.a.raw > 0) {
-                  if (blendMode == BlendMode::ADD) {
+                  if (state.blendMode == BlendMode::ADD) {
                     if (OUTPUT_444) {
                       uint16_t dst444 = cPtr444.peek();
                       cPtr444.push444(add8p24To444(dst444, c));
@@ -330,7 +347,9 @@ class Graphics3DClass {
                       *(ptr565++) = blend8p24To565(dst565, c);
                     }
                   }
-                  zPtr[x] = z;
+                  if (hasFlag(renderFlags, RenderFlags3D::Z_UPDATE)) {
+                    zPtr[x] = z;
+                  }
                   written = true;
                 }
               } else {
@@ -340,7 +359,9 @@ class Graphics3DClass {
                   *(ptr565++) = c.to565();
                 }
                 written = true;
-                zPtr[x] = z;
+                if (hasFlag(renderFlags, RenderFlags3D::Z_UPDATE)) {
+                  zPtr[x] = z;
+                }
               }
             } else {
               uint16_t c;
@@ -366,7 +387,9 @@ class Graphics3DClass {
                 *(ptr565++) = c;
               }
               written = true;
-              zPtr[x] = z;
+              if (hasFlag(renderFlags, RenderFlags3D::Z_UPDATE)) {
+                zPtr[x] = z;
+              }
             }
           }
           if (!written) {
@@ -376,18 +399,19 @@ class Graphics3DClass {
               ptr565++;
             }
           }
-          accumH.step(stepH);
+          accumH.step(stepH, 1, GOURAUD_SHADING, COLOR_TEXTURE);
         }
       }
 
-      accumVL.step(stepVL);
-      accumVR.step(stepVR);
+      accumVL.step(stepVL, 1, GOURAUD_SHADING, COLOR_TEXTURE);
+      accumVR.step(stepVR, 1, GOURAUD_SHADING, COLOR_TEXTURE);
     }
   }
 
   void renderTriangle(const Vertex3D &v0, const Vertex3D &v1,
                       const Vertex3D &v2, const Material3D &mat) {
-    RenderFlags3D flags = renderFlags;
+    const State3D &state = stackTop();
+    RenderFlags3D flags = state.flags;
     if (!mat || !mat->colorTexture ||
         !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
       flags &= ~RenderFlags3D::COLOR_TEXTURE;
@@ -434,9 +458,12 @@ class Graphics3DClass {
     float x1 = tri[i1]->pos.x, y1 = tri[i1]->pos.y;
     float x2 = tri[i2]->pos.x, y2 = tri[i2]->pos.y;
 
-    float z0 = (float)MAX_DEPTH * (tri[i0]->pos.z - zNear) / (zFar - zNear);
-    float z1 = (float)MAX_DEPTH * (tri[i1]->pos.z - zNear) / (zFar - zNear);
-    float z2 = (float)MAX_DEPTH * (tri[i2]->pos.z - zNear) / (zFar - zNear);
+    float z0 = (float)MAX_DEPTH * (tri[i0]->pos.z - state.zNear) /
+               (state.zFar - state.zNear);
+    float z1 = (float)MAX_DEPTH * (tri[i1]->pos.z - state.zNear) /
+               (state.zFar - state.zNear);
+    float z2 = (float)MAX_DEPTH * (tri[i2]->pos.z - state.zNear) /
+               (state.zFar - state.zNear);
     if (z0 < 0 || z1 < 0 || z2 < 0 || z0 > MAX_DEPTH || z1 > MAX_DEPTH ||
         z2 > MAX_DEPTH) {
       return;
@@ -467,15 +494,13 @@ class Graphics3DClass {
     cornerR.z = fixed20p12::fromFloat(z0 + (z2 - z0) * yT);
     cornerB.z = fixed20p12::fromFloat(z2);
 
-    if (hasFlag(flags, RenderFlags3D::GOURAUD_SHADING)) {
-      const colorf &c0 = tri[i0]->color;
-      const colorf &c1 = tri[i1]->color;
-      const colorf &c2 = tri[i2]->color;
-      cornerT.c = color8p24(c0);
-      cornerL.c = color8p24(c1);
-      cornerR.c = color8p24(c0 + (c2 - c0) * yT);
-      cornerB.c = color8p24(c2);
-    }
+    const colorf &c0 = tri[i0]->color;
+    const colorf &c1 = tri[i1]->color;
+    const colorf &c2 = tri[i2]->color;
+    cornerT.c = color8p24(c0);
+    cornerL.c = color8p24(c1);
+    cornerR.c = color8p24(c0 + (c2 - c0) * yT);
+    cornerB.c = color8p24(c2);
 
     TextureArgs tex;
     if (hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
@@ -517,7 +542,7 @@ class Graphics3DClass {
         trf |= TrapezoidFlags::COLOR_TEXTURE | TrapezoidFlags::TEXTURE_4444;
       }
     }
-    if (blendMode != BlendMode::OVERWRITE) {
+    if (state.blendMode != BlendMode::OVERWRITE) {
       trf |= TrapezoidFlags::BLEND;
     }
 
@@ -528,24 +553,30 @@ class Graphics3DClass {
       ScanLineCounter stepVL, stepVR;
       int yStart, yEnd;
 
+      bool gouraudShading = hasFlag(trf, TrapezoidFlags::GOURAUD_SHADING);
+      bool colorTexture = hasFlag(trf, TrapezoidFlags::COLOR_TEXTURE);
       if (ic == 0) {
         accumVL = cornerT;
         accumVR = cornerT;
-        stepVL = ScanLineCounter::subDiv(cornerT, cornerL, vSpanT);
-        stepVR = ScanLineCounter::subDiv(cornerT, cornerR, vSpanT);
+        stepVL = ScanLineCounter::subDiv(cornerT, cornerL, vSpanT,
+                                         gouraudShading, colorTexture);
+        stepVR = ScanLineCounter::subDiv(cornerT, cornerR, vSpanT,
+                                         gouraudShading, colorTexture);
         int yOffset = iyMin > iy0 ? iyMin - iy0 : 0;
-        accumVL.step(stepVL, yOffset);
-        accumVR.step(stepVR, yOffset);
+        accumVL.step(stepVL, yOffset, gouraudShading, colorTexture);
+        accumVR.step(stepVR, yOffset, gouraudShading, colorTexture);
         yStart = iy0 + yOffset;
         yEnd = (int)fminf(iy1, iyMax);
       } else {
         accumVL = cornerL;
         accumVR = cornerR;
-        stepVL = ScanLineCounter::subDiv(cornerL, cornerB, vSpanB);
-        stepVR = ScanLineCounter::subDiv(cornerR, cornerB, vSpanB);
+        stepVL = ScanLineCounter::subDiv(cornerL, cornerB, vSpanB,
+                                         gouraudShading, colorTexture);
+        stepVR = ScanLineCounter::subDiv(cornerR, cornerB, vSpanB,
+                                         gouraudShading, colorTexture);
         int yOffset = iyMin > iy1 ? iyMin - iy1 : 0;
-        accumVL.step(stepVL, yOffset);
-        accumVR.step(stepVR, yOffset);
+        accumVL.step(stepVL, yOffset, gouraudShading, colorTexture);
+        accumVR.step(stepVR, yOffset, gouraudShading, colorTexture);
         yStart = iy1 + yOffset;
         yEnd = (int)fminf(iy2, iyMax);
       }
@@ -595,7 +626,8 @@ class Graphics3DClass {
   }
 
   void renderPoint(const Vertex3D &v0, const Material3D &mat) {
-    RenderFlags3D flags = renderFlags;
+    const State3D &state = stackTop();
+    RenderFlags3D flags = state.flags;
     if (!mat || !mat->colorTexture ||
         !hasFlag(flags, RenderFlags3D::COLOR_TEXTURE)) {
       flags &= ~RenderFlags3D::COLOR_TEXTURE;
@@ -605,7 +637,8 @@ class Graphics3DClass {
 
     float x0 = v0.pos.x, y0 = v0.pos.y;
 
-    float z0 = (float)MAX_DEPTH * (v0.pos.z - zNear) / (zFar - zNear);
+    float z0 = (float)MAX_DEPTH * (v0.pos.z - state.zNear) /
+               (state.zFar - state.zNear);
     if (z0 < 0 || z0 > MAX_DEPTH) {
       return;
     }
@@ -660,7 +693,7 @@ class Graphics3DClass {
         trf |= TrapezoidFlags::COLOR_TEXTURE | TrapezoidFlags::TEXTURE_4444;
       }
     }
-    if (blendMode != BlendMode::OVERWRITE) {
+    if (state.blendMode != BlendMode::OVERWRITE) {
       trf |= TrapezoidFlags::BLEND;
     }
 
@@ -710,10 +743,15 @@ class Graphics3DClass {
   }
 
  private:
+  XMC_INLINE State3D &stackTop() { return stateStack[stateStackTop]; }
+  XMC_INLINE const State3D &stackTop() const {
+    return stateStack[stateStackTop];
+  }
+
   XMC_INLINE mat4 &dirtyModelMatrix() {
-    modelMatrixStack[modelMatrixStackPtr].dirty = true;
+    stackTop().dirty = true;
     mvpDirty = true;
-    return modelMatrixStack[modelMatrixStackPtr].local;
+    return stackTop().local;
   }
 
   void validateMatrix(bool force = false);

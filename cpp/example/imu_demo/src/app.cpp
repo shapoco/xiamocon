@@ -99,7 +99,8 @@ static void renderScene() {
   createProjectionMatrix(&proj, &imuPos, &eye_pos, 0.03f, 0.03f, display::WIDTH,
                          display::HEIGHT);
   g3d->setTarget(frameBuffer.getBackBuffer());
-  g3d->clearDepth();
+  g3d->beginRender();
+
   g3d->setDepthRange(-1.0f, 1.0f);
 
   vec3 light_dir = {1, 0, 1};
@@ -109,29 +110,30 @@ static void renderScene() {
 
   g3d->setScreenMatrix(mat4::identity());
   g3d->setProjection(proj);
-  g3d->loadIdentity();
   g3d->setBlendMode(BlendMode::OVERWRITE);
 
   earth->primitives[0]->material->colorTexture = surfaceTexture;
   earth->primitives[0]->material->baseColor.a = 1;
-  g3d->pushMatrix();
+  g3d->pushState();
   g3d->scale(0.01f);
   g3d->rotate(pitch, yaw, 0);
-  g3d->renderMesh(earth);
-  g3d->popMatrix();
+  g3d->render(earth);
+  g3d->popState();
 
 #if 0
   earth->primitives[0]->material->colorTexture = cloudTexture;
   earth->primitives[0]->material->baseColor.a = 0.75f;
-  g3d->pushMatrix();
+  g3d->pushState();
   g3d->scale(0.0105f);
   g3d->rotate(0, getTimeMs() * 0.0001f, 0);
   g3d->rotate(pitch, yaw, 0);
   g3d->setBlendMode(BlendMode::ALPHA_BLEND);
-  g3d->renderMesh(earth);
+  g3d->render(earth);
   g3d->setBlendMode(BlendMode::OVERWRITE);
-  g3d->popMatrix();
+  g3d->popState();
 #endif
+
+  g3d->endRender();
 }
 
 static void updateImuPosition(quat *p, float *imu_values, float dt) {
