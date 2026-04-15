@@ -52,10 +52,10 @@ MenuItem menuItems[] = {
     {"Gouraud Shading", &enableGouraudShading, true},
     {"Texture", &enableTexture, true},
     {"Depth Test", &enableDepthTest, true},
-    {"Flame Speed", &fireSpeed, false},
-    {"Flame Buoyancy", &fireBuoyancy, false},
-    {"Flame Attraction", &fireAttraction, false},
-    {"Flame Repulsion", &fireRepulsion, false},
+    {"Flame Speed", &flameSpeed, false},
+    {"Flame Buoyancy", &flameBuoyancy, false},
+    {"Flame Attraction", &flameAttraction, false},
+    {"Flame Repulsion", &flameRepulsion, false},
 };
 constexpr int NUM_MENU_ITEMS = sizeof(menuItems) / sizeof(MenuItem);
 bool menuShowing = false;
