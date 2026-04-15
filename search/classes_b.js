@@ -11,6 +11,7 @@ var searchData=
   ['sprite444class_8',['Sprite444Class',['../classxmc_1_1Sprite444Class.html',1,'xmc']]],
   ['sprite565class_9',['Sprite565Class',['../classxmc_1_1Sprite565Class.html',1,'xmc']]],
   ['spriteclass_10',['SpriteClass',['../classxmc_1_1SpriteClass.html',1,'xmc']]],
-  ['streamformat_11',['StreamFormat',['../structxmc_1_1audio_1_1StreamFormat.html',1,'xmc::audio']]],
-  ['streamingdac_12',['StreamingDac',['../classxmc_1_1audio_1_1StreamingDac.html',1,'xmc::audio']]]
+  ['state3d_11',['State3D',['../structxmc_1_1State3D.html',1,'xmc']]],
+  ['streamformat_12',['StreamFormat',['../structxmc_1_1audio_1_1StreamFormat.html',1,'xmc::audio']]],
+  ['streamingdac_13',['StreamingDac',['../classxmc_1_1audio_1_1StreamingDac.html',1,'xmc::audio']]]
 ];

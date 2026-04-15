@@ -29,7 +29,6 @@ var hierarchy =
     [ "xmc::GraphicsState2D", "structxmc_1_1GraphicsState2D.html", null ],
     [ "xmc::mat4", "structxmc_1_1mat4.html", null ],
     [ "xmc::Material3DClass", "classxmc_1_1Material3DClass.html", null ],
-    [ "xmc::MatrixStackEntry", "structxmc_1_1MatrixStackEntry.html", null ],
     [ "xmc::Mesh3DClass", "classxmc_1_1Mesh3DClass.html", null ],
     [ "xmc::audio::Mixer", "classxmc_1_1audio_1_1Mixer.html", null ],
     [ "xmc::Node3DClass", "classxmc_1_1Node3DClass.html", null ],
@@ -53,6 +52,7 @@ var hierarchy =
       [ "xmc::Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
       [ "xmc::Sprite565Class", "classxmc_1_1Sprite565Class.html", null ]
     ] ],
+    [ "xmc::State3D", "structxmc_1_1State3D.html", null ],
     [ "xmc::audio::StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
     [ "xmc::audio::StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", null ],
     [ "xmc::TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
