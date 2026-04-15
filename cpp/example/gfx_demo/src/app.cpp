@@ -81,11 +81,32 @@ float eyeYawSpeed = 0;
 float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
+float fireSpeed = 0.05f;
+float fireBuoyancy = 10.0f;    // 浮力
+float fireAttraction = 0.55f;  // 引力
+float fireRepulsion = 0.035f;  // 斥力
+
+struct MenuItem {
+  const char *name;
+  void *value;
+  bool isBoolean;
+};
+MenuItem menuItems[] = {
+    {"Fire Speed", &fireSpeed, false},
+    {"Fire Buoyancy", &fireBuoyancy, false},
+    {"Fire Attraction", &fireAttraction, false},
+    {"Fire Repulsion", &fireRepulsion, false},
+};
+constexpr int NUM_MENU_ITEMS = sizeof(menuItems) / sizeof(MenuItem);
+bool menuShowing = false;
+int selectedMenuItem = 0;
+
 void updateScene();
-void updateFire(float dt);
+void updateFire();
 void renderScene();
 void renderCubes();
 void renderFire();
+void renderMenu(Graphics2D gfx);
 
 AppConfig xmc::appGetConfig() {
   auto cfg = getDefaultAppConfig();
@@ -154,42 +175,75 @@ void updateScene() {
   float dt = (lastUs != 0) ? (nowUs - lastUs) * 1e-6f : 0.0f;
   lastUs = nowUs;
 
-  bool pressed = false;
+  bool stopAutoRotation = false;
 
-  // camera position control
-  if (isPressed(Button::LEFT)) {
-    eyeYawSpeed -= dt;
-    pressed = true;
-  } else if (isPressed(Button::RIGHT)) {
-    eyeYawSpeed += dt;
-    pressed = true;
+  // toggle menu
+  if (wasPressed(Button::X)) {
+    menuShowing = !menuShowing;
   }
-  if (isPressed(Button::UP)) {
-    eyePitchSpeed += dt;
-    pressed = true;
-  } else if (isPressed(Button::DOWN)) {
-    eyePitchSpeed -= dt;
-    pressed = true;
+
+  if (menuShowing) {
+    // menu navigation
+    if (wasPressed(Button::UP)) {
+      selectedMenuItem =
+          (selectedMenuItem - 1 + NUM_MENU_ITEMS) % NUM_MENU_ITEMS;
+    } else if (wasPressed(Button::DOWN)) {
+      selectedMenuItem = (selectedMenuItem + 1) % NUM_MENU_ITEMS;
+    }
+
+    MenuItem &item = menuItems[selectedMenuItem];
+    if (item.isBoolean) {
+      // toggle boolean value
+      if (wasPressed(Button::LEFT) || wasPressed(Button::RIGHT)) {
+        bool *value = (bool *)item.value;
+        *value = !*value;
+      }
+    } else {
+      // adjust numeric value
+      float *value = (float *)item.value;
+      if (isPressed(Button::LEFT)) {
+        *value *= 0.99f;
+      } else if (isPressed(Button::RIGHT)) {
+        *value *= 1.01f;
+      }
+    }
+    stopAutoRotation = true;
+  } else {
+    // camera position control
+    if (isPressed(Button::LEFT)) {
+      eyeYawSpeed -= dt;
+      stopAutoRotation = true;
+    } else if (isPressed(Button::RIGHT)) {
+      eyeYawSpeed += dt;
+      stopAutoRotation = true;
+    }
+    if (isPressed(Button::UP)) {
+      eyePitchSpeed += dt;
+      stopAutoRotation = true;
+    } else if (isPressed(Button::DOWN)) {
+      eyePitchSpeed -= dt;
+      stopAutoRotation = true;
+    }
   }
 
   // zoom control
   if (isPressed(Button::A)) {
     eyeDistanceSpeed -= dt * 5;
-    pressed = true;
+    stopAutoRotation = true;
   } else if (isPressed(Button::B)) {
     eyeDistanceSpeed += dt * 5;
-    pressed = true;
+    stopAutoRotation = true;
   }
 
   // model switch
   if (wasPressed(Button::Y)) {
     modelIndex = (modelIndex + 1) % 3;
-    pressed = true;
+    stopAutoRotation = true;
   }
 
   // if any control button is pressed, start auto rotation after 5 seconds of
   // inactivity
-  if (pressed) {
+  if (stopAutoRotation) {
     autoRotationStartUs = nowUs + 5 * 1000000;
   }
   if (nowUs > autoRotationStartUs) {
@@ -199,9 +253,10 @@ void updateScene() {
   }
 
   // apply damping to camera movement
-  eyeYawSpeed *= powf(0.5f, dt);
-  eyePitchSpeed *= powf(0.5f, dt);
-  eyeDistanceSpeed *= powf(0.5f, dt);
+  float damping = powf(0.5f, dt);
+  eyeYawSpeed *= damping;
+  eyePitchSpeed *= damping;
+  eyeDistanceSpeed *= damping;
 
   // update camera angles and distance
   eyeYaw += dt * eyeYawSpeed;
@@ -251,73 +306,69 @@ void updateScene() {
     }
   }
 
-  updateFire(dt);
+  updateFire();
 }
 
-void updateFire(float dt) {
+void updateFire() {
   constexpr float ROOT_RADIUS = 0.05f;
-  constexpr float LIFT = 2.0f;
-  constexpr float ATTRACTION = 0.4f;
-  constexpr float REPULSION = 0.3f;
+  constexpr float ROOT_VELOCITY = 2.0f;
+  constexpr int NUM_NEIGHBOURS = 4;
 
-  dt = 0.05f;
+  float friction = powf(0.1f, fireSpeed);
 
+  // 筒の頂点データを下から上へシフト
   for (int row = FIRE_NUM_ROWS; row >= 1; row--) {
     memcpy(&firePos[row * FIRE_NUM_COLS], &firePos[(row - 1) * FIRE_NUM_COLS],
            sizeof(vec3) * FIRE_NUM_COLS);
     memcpy(&fireVel[row * FIRE_NUM_COLS], &fireVel[(row - 1) * FIRE_NUM_COLS],
            sizeof(vec3) * FIRE_NUM_COLS);
   }
+
+  // 根元
   for (int col = 0; col < FIRE_NUM_COLS; col++) {
-    vec3 &pos = firePos[col];
-    vec3 &vel = fireVel[col];
-    float r = ROOT_RADIUS * (1.0f + randomF32() * 0.5f);
-    pos.x = sin(col * M_PI * 2 / FIRE_NUM_COLS) * r;
-    pos.y = 0.0f;
-    pos.z = cos(col * M_PI * 2 / FIRE_NUM_COLS) * r;
-    vel.x = sin(col * M_PI * 2 / FIRE_NUM_COLS) * 2.0f;
-    vel.y = 2.0f * (1.0f + randomF32() * 0.5f);
-    vel.z = cos(col * M_PI * 2 / FIRE_NUM_COLS) * 2.0f;
+    float a = col * M_PI * 2 / FIRE_NUM_COLS;
+    float noise = 1.0f + randomF32() * 0.5f;
+    firePos[col].x = cos(a) * ROOT_RADIUS * noise;
+    firePos[col].y = 0;
+    firePos[col].z = sin(a) * ROOT_RADIUS * noise;
+    fireVel[col].x = cos(a) * ROOT_VELOCITY * noise;
+    fireVel[col].y = 2.0f * noise;
+    fireVel[col].z = sin(a) * ROOT_VELOCITY * noise;
   }
-  float friction = powf(0.1f, dt);
+
+  // 加速
   for (int row = FIRE_NUM_ROWS - 1; row >= 1; row--) {
     for (int col = 0; col < FIRE_NUM_COLS; col++) {
-      vec3 &posL = firePos[row * FIRE_NUM_COLS +
-                           (col + FIRE_NUM_COLS - 1) % FIRE_NUM_COLS];
-      vec3 &posR = firePos[row * FIRE_NUM_COLS + (col + 1) % FIRE_NUM_COLS];
-      vec3 &posU = firePos[(row + 1) * FIRE_NUM_COLS + col];
-      vec3 &posD = firePos[(row - 1) * FIRE_NUM_COLS + col];
       vec3 &pos = firePos[row * FIRE_NUM_COLS + col];
-      vec3 acc = {0, 0, 0};
-      float rr = sqrtf(pos.x * pos.x + pos.z * pos.z) + 1.0f;
-      acc.y += LIFT * rr;
-      vec3 vecL = posL - pos;
-      vec3 vecR = posR - pos;
-      vec3 vecU = posU - pos;
-      vec3 vecD = posD - pos;
-      float ddL = fmaxf(vecL.squaredLength(), 0.01f);
-      float ddR = fmaxf(vecR.squaredLength(), 0.01f);
-      float ddU = fmaxf(vecU.squaredLength(), 0.01f);
-      float ddD = fmaxf(vecD.squaredLength(), 0.01f);
-      float dddL = ddL * sqrtf(ddL);
-      float dddR = ddR * sqrtf(ddR);
-      float dddU = ddU * sqrtf(ddU);
-      float dddD = ddD * sqrtf(ddD);
-      acc -= vecL * (ATTRACTION / ddL) + vecR * (ATTRACTION / ddR) +
-             vecU * (ATTRACTION / ddU) + vecD * (ATTRACTION / ddD);
-      acc += vecL * (REPULSION / dddL) + vecR * (REPULSION / dddR) +
-             vecU * (REPULSION / dddU) + vecD * (REPULSION / dddD);
       vec3 &vel = fireVel[row * FIRE_NUM_COLS + col];
-      vel += acc * dt;
+      vec3 acc = {0, 0, 0};
+
+      // 上昇気流 (外側ほど強い)
+      acc.y += sqrt(pos.x * pos.x + pos.z * pos.z) * fireBuoyancy;
+
+      // 上下左右の隣接する頂点との相互作用
+      vec3 *neighbours[NUM_NEIGHBOURS];
+      neighbours[0] = &firePos[row * FIRE_NUM_COLS +
+                               (col + FIRE_NUM_COLS - 1) % FIRE_NUM_COLS];
+      neighbours[1] = &firePos[row * FIRE_NUM_COLS + (col + 1) % FIRE_NUM_COLS];
+      neighbours[2] = &firePos[(row + 1) * FIRE_NUM_COLS + col];
+      neighbours[3] = &firePos[(row - 1) * FIRE_NUM_COLS + col];
+      for (int j = 0; j < NUM_NEIGHBOURS; j++) {
+        vec3 diff = *neighbours[j] - pos;
+        float dd = fmaxf(diff.squaredLength(), 0.01f);
+        float d = sqrtf(dd);
+        float ddd = dd * d;
+        acc += diff.normalized() * (fireAttraction / dd - fireRepulsion / ddd);
+      }
+
       vel *= friction;
+      vel += acc * fireSpeed;
     }
   }
-  for (int row = FIRE_NUM_ROWS - 1; row >= 0; row--) {
-    for (int col = 0; col < FIRE_NUM_COLS; col++) {
-      vec3 &pos = firePos[row * FIRE_NUM_COLS + col];
-      vec3 &vel = fireVel[row * FIRE_NUM_COLS + col];
-      pos += vel * dt;
-    }
+
+  // 移動
+  for (int i = 0; i < FIRE_NUM_COLS * (FIRE_NUM_ROWS + 1); i++) {
+    firePos[i] += fireVel[i] * fireSpeed;
   }
 }
 
@@ -408,6 +459,10 @@ void renderScene() {
   g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
   g3d->renderMesh(particleMesh);
   g3d->popMatrix();
+
+  if (menuShowing) {
+    renderMenu(gfx);
+  }
 }
 
 void renderCubes() {
@@ -490,4 +545,24 @@ void renderFire() {
   g3d->popMatrix();
   g3d->setZTestOffset(0);
   g3d->setBlendMode(BlendMode::OVERWRITE);
+}
+
+void renderMenu(Graphics2D gfx) {
+  gfx->setFont(&ShapoSansP_s08c07);
+  gfx->setFontSize(1);
+  char buf[64];
+  for (int i = 0; i < NUM_MENU_ITEMS; i++) {
+    MenuItem &item = menuItems[i];
+    int y = FrameBuffer::STATUS_BAR_HEIGHT + 10 + i * 15;
+    gfx->setTextColor(i == selectedMenuItem ? pack565(0, 0, 31) : 0xFFFF);
+    gfx->setCursor(10, y);
+    gfx->drawString(item.name);
+    if (item.isBoolean) {
+      snprintf(buf, sizeof(buf), "%s", *(bool *)item.value ? "ON" : "OFF");
+    } else {
+      snprintf(buf, sizeof(buf), "%.4f", *(float *)item.value);
+    }
+    gfx->setCursor(100, y);
+    gfx->drawString(buf);
+  }
 }
