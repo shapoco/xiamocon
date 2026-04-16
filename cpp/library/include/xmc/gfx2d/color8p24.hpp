@@ -15,10 +15,10 @@ struct color8p24 {
   fixed8p24 r;
   fixed8p24 a;
 
-  color8p24() : b(0), g(0), r(0), a(0) {}
-  color8p24(fixed8p24 r, fixed8p24 g, fixed8p24 b, fixed8p24 a)
+  XMC_INLINE color8p24() : b(0), g(0), r(0), a(0) {}
+  XMC_INLINE color8p24(fixed8p24 r, fixed8p24 g, fixed8p24 b, fixed8p24 a)
       : b(b), g(g), r(r), a(a) {}
-  color8p24(colorf c)
+  XMC_INLINE color8p24(colorf c)
       : b(fixed8p24::fromFloat(c.b)),
         g(fixed8p24::fromFloat(c.g)),
         r(fixed8p24::fromFloat(c.r)),
@@ -210,14 +210,14 @@ struct color8p24 {
 };
 
 static XMC_INLINE uint16_t blend8p24To565(uint16_t dest, color8p24 src) {
-  uint32_t a1 = src.a.raw;
+  int32_t a1 = src.a.raw;
   if (a1 <= 0) {
     return dest;
   } else if (a1 >= color8p24::ONE) {
     return src.to565();
   } else {
     a1 = color8p24::shiftCh(a1, 5);
-    uint32_t a2 = 32 - a1;
+    int32_t a2 = 32 - a1;
     uint32_t c2 = ((dest << 8) & 0xFF00) | ((dest >> 8) & 0x00FF);
     c2 = ((c2 << 10) & 0x7C00000) | ((c2 << 5) & 0xFC00) | (c2 & 0x1F);
     uint32_t c1r = XMC_CLIP(0, color8p24::ONE - 1, src.r.raw);
@@ -233,14 +233,14 @@ static XMC_INLINE uint16_t blend8p24To565(uint16_t dest, color8p24 src) {
 }
 
 static XMC_INLINE uint16_t blend8p24To444(uint16_t dest, color8p24 src) {
-  uint32_t a1 = src.a.raw;
+  int32_t a1 = src.a.raw;
   if (a1 <= 0) {
     return dest;
   } else if (a1 >= color8p24::ONE) {
     return src.to444();
   } else {
     a1 = color8p24::shiftCh(a1, 4);
-    uint32_t a2 = 16 - a1;
+    int32_t a2 = 16 - a1;
     uint32_t c2 =
         ((dest & 0xF00) << 8) | ((dest & 0x0F0) << 4) | (dest & 0x00F);
     uint32_t c1r = XMC_CLIP(0, color8p24::ONE - 1, src.r.raw);
@@ -255,13 +255,13 @@ static XMC_INLINE uint16_t blend8p24To444(uint16_t dest, color8p24 src) {
 }
 
 static XMC_INLINE uint16_t add8p24To565(uint16_t dest, color8p24 src) {
-  uint32_t a1 = src.a.raw;
+  int32_t a1 = src.a.raw;
   if (a1 <= 0) {
     return dest;
   } else {
-    int r1 = src.r.raw / (color8p24::ONE / 32);
-    int g1 = src.g.raw / (color8p24::ONE / 64);
-    int b1 = src.b.raw / (color8p24::ONE / 32);
+    int32_t r1 = src.r.raw / (color8p24::ONE / 32);
+    int32_t g1 = src.g.raw / (color8p24::ONE / 64);
+    int32_t b1 = src.b.raw / (color8p24::ONE / 32);
     if (a1 < color8p24::ONE) {
       a1 = color8p24::shiftCh(a1, 6);
       r1 = r1 * a1 / 64;
@@ -275,13 +275,13 @@ static XMC_INLINE uint16_t add8p24To565(uint16_t dest, color8p24 src) {
 }
 
 static XMC_INLINE uint16_t add8p24To444(uint16_t dest, color8p24 src) {
-  uint32_t a1 = src.a.raw;
+  int32_t a1 = src.a.raw;
   if (a1 <= 0) {
     return dest;
   } else {
-    int r1 = src.r.raw / (color8p24::ONE / 16);
-    int g1 = src.g.raw / (color8p24::ONE / 16);
-    int b1 = src.b.raw / (color8p24::ONE / 16);
+    int32_t r1 = src.r.raw / (color8p24::ONE / 16);
+    int32_t g1 = src.g.raw / (color8p24::ONE / 16);
+    int32_t b1 = src.b.raw / (color8p24::ONE / 16);
     if (a1 < color8p24::ONE) {
       a1 = color8p24::shiftCh(a1, 4);
       r1 = r1 * a1 / 16;

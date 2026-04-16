@@ -16,8 +16,8 @@ struct apFixed {
   static constexpr TRaw RAW_MAX = std::numeric_limits<TRaw>::max();
   static constexpr TRaw RAW_MIN = std::numeric_limits<TRaw>::min();
   TRaw raw;
-  apFixed(TRaw raw) : raw(raw) {}
-  apFixed() : raw(0) {}
+  XMC_INLINE constexpr apFixed(TRaw raw) : raw(raw) {}
+  XMC_INLINE constexpr apFixed() : raw(0) {}
 
   XMC_INLINE static constexpr apFixed fromFloat(float f) {
     TDouble value = (TDouble)(f * (1 << PREC));
@@ -52,7 +52,11 @@ struct apFixed {
     return apFixed((TDouble)raw * (TDouble)other.raw / (1 << PREC));
   }
 
-  XMC_INLINE constexpr apFixed operator*(int32_t scalar) const {
+  XMC_INLINE constexpr apFixed operator*(int scalar) const {
+    return apFixed(raw * scalar);
+  }
+
+  XMC_INLINE constexpr apFixed operator*(float scalar) const {
     return apFixed(raw * scalar);
   }
 
@@ -60,7 +64,7 @@ struct apFixed {
     return apFixed((TDouble)raw * (1 << PREC) / (TDouble)other.raw);
   }
 
-  XMC_INLINE constexpr apFixed operator/(int32_t scalar) const {
+  XMC_INLINE constexpr apFixed operator/(int scalar) const {
     return apFixed(raw / scalar);
   }
 

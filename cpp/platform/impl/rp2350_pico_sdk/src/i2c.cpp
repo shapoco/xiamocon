@@ -108,7 +108,7 @@ XmcStatus resetBus() {
     }
   }
   if (numRetriesLeft < 0) {
-    sts = XNC_ERR_I2C_BUS_RESET_FAILED;
+    sts = XMC_ERR_I2C_BUS_RESET_FAILED;
   }
 
   if (reInit) {

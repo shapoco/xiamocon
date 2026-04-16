@@ -103,7 +103,7 @@ struct vec3 {
    */
   inline vec3 normalized() const {
     float len = length();
-    if (len < 1e-8f) return vec3(0, 0, 0);
+    if (len < 1e-8f) return vec3(0, 1, 0);
     float inv = 1.0f / len;
     return vec3(x * inv, y * inv, z * inv);
   }

@@ -73,6 +73,8 @@ constexpr int NUM_MENU_ITEMS = sizeof(menuItems) / sizeof(MenuItem);
 bool menuShowing = false;
 int selectedMenuItem = 0;
 
+bool core1Loop();
+
 void updateScene();
 void updateCamera(float dt);
 
@@ -91,6 +93,7 @@ void xmc::appSetup() {
   setupFlame();
   setupParticles();
   setupCubes();
+  startCore1(core1Loop);
 }
 
 void xmc::appLoop() {
@@ -99,6 +102,10 @@ void xmc::appLoop() {
   frameBuffer.beginRender();
   renderScene();
   frameBuffer.endRender();
+}
+
+bool core1Loop() {
+  return true;
 }
 
 void updateScene() {

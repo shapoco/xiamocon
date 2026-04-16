@@ -7,6 +7,7 @@
 #define XMC_HW_GPIO_HPP
 
 #include "xmc/hw/hw_common.hpp"
+#include "xmc/hw/pins.hpp"
 
 #include <stdint.h>
 
