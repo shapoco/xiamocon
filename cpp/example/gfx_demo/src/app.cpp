@@ -37,6 +37,12 @@ float eyeYawSpeed = 0;
 float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
+bool enableTestModel = true;
+bool enableGrass = true;
+bool enableCrystals = true;
+bool enableCaveHole = true;
+bool enableCaveLight = true;
+bool enableParticles = true;
 bool enableLighting = false;
 bool enableTexture = true;
 bool enableDepthTest = true;
@@ -48,6 +54,12 @@ struct MenuItem {
   bool isBoolean;
 };
 MenuItem menuItems[] = {
+    {"Test Model", &enableTestModel, true},
+    {"Grass", &enableGrass, true},
+    {"Crystals", &enableCrystals, true},
+    {"Cave Hole", &enableCaveHole, true},
+    {"Cave Light", &enableCaveLight, true},
+    {"Particles", &enableParticles, true},
     {"Lighting", &enableLighting, true},
     {"Gouraud Shading", &enableGouraudShading, true},
     {"Texture", &enableTexture, true},
@@ -260,7 +272,7 @@ void renderScene() {
   g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
   g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
 
-  if (modelIndex == 0) {
+  if (enableTestModel && modelIndex == 0) {
     // flower
     g3d->pushState();
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
@@ -268,44 +280,55 @@ void renderScene() {
     g3d->popState();
   }
 
-  if (modelIndex == 1) {
+  if (enableTestModel && modelIndex == 1) {
     // metalic cubes
     renderCubes(g3d);
   }
 
   // crystals
-  for (int i = 0; i < NUM_CRYSTALS; i++) {
+  if (enableCrystals) {
+    for (int i = 0; i < NUM_CRYSTALS; i++) {
+      g3d->pushState();
+      g3d->scale(CRYSTAL_SIZE[i]);
+      g3d->translate(0, 0, -20);
+      g3d->rotate(0, i * 90 * M_PI / 180.0f, 0);
+      g3d->render(quarts_scene0);
+      g3d->popState();
+    }
+  }
+
+  // grass
+  if (enableGrass) {
+    renderGrass(g3d);
+  }
+
+  // cave hole
+  if (enableCaveHole) {
     g3d->pushState();
-    g3d->scale(CRYSTAL_SIZE[i]);
-    g3d->translate(0, 0, -20);
-    g3d->rotate(0, i * 90 * M_PI / 180.0f, 0);
-    g3d->render(quarts_scene0);
+    g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
+    g3d->scale(4);
+    g3d->render(cave_hole);
     g3d->popState();
   }
 
-  // leafs
-  renderGrass(g3d);
-
-  // cave hole
-  g3d->pushState();
-  g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
-  g3d->scale(4);
-  g3d->render(cave_hole);
-  g3d->popState();
-
   // light from hole
-  g3d->pushState();
-  g3d->setBlendMode(BlendMode::ADD);
-  g3d->scale(4);
-  g3d->render(cave_light);
-  g3d->popState();
+  if (enableCaveLight) {
+    g3d->pushState();
+    g3d->setBlendMode(BlendMode::ADD);
+    g3d->scale(4);
+    g3d->render(cave_light);
+    g3d->popState();
+  }
 
-  if (modelIndex == 2) {
+  // flame
+  if (enableTestModel && modelIndex == 2) {
     renderFlame(g3d);
   }
 
   // particles
-  renderParticles(g3d);
+  if (enableParticles) {
+    renderParticles(g3d);
+  }
 
   g3d->endRender();
 
@@ -320,7 +343,7 @@ void renderMenu(Graphics2D gfx) {
   char buf[64];
   for (int i = 0; i < NUM_MENU_ITEMS; i++) {
     MenuItem &item = menuItems[i];
-    int y = FrameBuffer::STATUS_BAR_HEIGHT + 10 + i * 15;
+    int y = FrameBuffer::STATUS_BAR_HEIGHT + 10 + i * 13;
     gfx->setTextColor(i == selectedMenuItem ? pack565(31, 63, 0) : 0xFFFF);
     gfx->setCursor(10, y);
     gfx->drawString(item.name);
