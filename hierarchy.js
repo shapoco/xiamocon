@@ -14,6 +14,7 @@ var hierarchy =
     [ "xmc::dma::Config", "structxmc_1_1dma_1_1Config.html", null ],
     [ "xmc::pwm::Config", "structxmc_1_1pwm_1_1Config.html", null ],
     [ "xmc::pwm::Driver", "classxmc_1_1pwm_1_1Driver.html", null ],
+    [ "xmc::EdgeScanVars", "structxmc_1_1EdgeScanVars.html", null ],
     [ "xmc::fs::File", "classxmc_1_1fs_1_1File.html", null ],
     [ "xmc::fs::FileInfo", "structxmc_1_1fs_1_1FileInfo.html", null ],
     [ "xmc::FpsKeeper", "classxmc_1_1FpsKeeper.html", null ],
@@ -40,7 +41,6 @@ var hierarchy =
     [ "xmc::RasterScanGray1", "classxmc_1_1RasterScanGray1.html", null ],
     [ "xmc::Rect", "structxmc_1_1Rect.html", null ],
     [ "xmc::RepeatingTimer", "classxmc_1_1RepeatingTimer.html", null ],
-    [ "xmc::ScanLineCounter", "structxmc_1_1ScanLineCounter.html", null ],
     [ "xmc::Scanner444", "structxmc_1_1Scanner444.html", null ],
     [ "xmc::Scene3DClass", "classxmc_1_1Scene3DClass.html", null ],
     [ "xmc::audio::SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
@@ -56,13 +56,15 @@ var hierarchy =
     [ "xmc::audio::StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
     [ "xmc::audio::StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", null ],
     [ "xmc::TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
-    [ "xmc::TextureArgs", "structxmc_1_1TextureArgs.html", null ],
     [ "xmc::audio::Tone", "classxmc_1_1audio_1_1Tone.html", null ],
+    [ "xmc::Trapezoid3D", "structxmc_1_1Trapezoid3D.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],
     [ "xmc::vec3", "structxmc_1_1vec3.html", null ],
     [ "xmc::Vertex3D", "structxmc_1_1Vertex3D.html", null ],
     [ "xmc::VertexShader", "classxmc_1_1VertexShader.html", [
       [ "xmc::EnvironmentMapShader", "classxmc_1_1EnvironmentMapShader.html", null ]
     ] ],
-    [ "xmc::VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ]
+    [ "xmc::VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ],
+    [ "xmc::Worker3D", "classxmc_1_1Worker3D.html", null ],
+    [ "xmc::WorkerArgs3D", "structxmc_1_1WorkerArgs3D.html", null ]
 ];

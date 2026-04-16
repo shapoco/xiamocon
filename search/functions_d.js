@@ -2,13 +2,13 @@ var searchData=
 [
   ['seek_0',['seek',['../classxmc_1_1fs_1_1File.html#a98c35d2ee337116c970f5939ed64a0fb',1,'xmc::fs::File']]],
   ['service_1',['service',['../classxmc_1_1audio_1_1StreamingDac.html#ae017097d46db3ff0f5bc289ce3dd2fcd',1,'xmc::audio::StreamingDac::service()'],['../speaker_8hpp.html#a950a5ba94b477ea254e848f63aa37b0e',1,'xmc::speaker::service()'],['../input_8hpp.html#a5511fee4015fdb8eb96f61df0d05c76d',1,'xmc::input::service()'],['../power_8hpp.html#a623f74ada510be45555e240ddbddc901',1,'xmc::power::service()']]],
-  ['setdir_2',['setDir',['../ioex_8hpp.html#abcd6af06b7122fb2f8c3fa82033a1f7c',1,'xmc::ioex::setDir()'],['../gpio_8hpp.html#af8a1b4a85ccec4c7cf945f60a7fcb7d4',1,'xmc::gpio::setDir()']]],
+  ['setdir_2',['setDir',['../gpio_8hpp.html#af8a1b4a85ccec4c7cf945f60a7fcb7d4',1,'xmc::gpio::setDir()'],['../ioex_8hpp.html#abcd6af06b7122fb2f8c3fa82033a1f7c',1,'xmc::ioex::setDir(Pin pin, bool output)']]],
   ['setdirmasked_3',['setDirMasked',['../ioex_8hpp.html#a9c73eef4aeee9c10c5ce9ebbb9a0af49',1,'xmc::ioex']]],
   ['setdutycycle_4',['setDutyCycle',['../classxmc_1_1pwm_1_1Driver.html#aea0fa36bb0207d88555d9d3377ba4dbf',1,'xmc::pwm::Driver']]],
   ['setenvelope_5',['setEnvelope',['../classxmc_1_1audio_1_1Tone.html#ad7a299883c1e43d72a69fc905a96b19b',1,'xmc::audio::Tone']]],
   ['setmuted_6',['setMuted',['../speaker_8hpp.html#af3cb568359d4d57efd1b1cb1de37ab05',1,'xmc::speaker']]],
   ['setpullup_7',['setPullup',['../gpio_8hpp.html#a8195f908cc85ec20b8f55cf781360547',1,'xmc::gpio']]],
-  ['setsource_8',['setSource',['../classxmc_1_1audio_1_1StreamingDac.html#a286c1ceacc1d1f622311b101348a4bdc',1,'xmc::audio::StreamingDac::setSource()'],['../classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595',1,'xmc::audio::Mixer::setSource()']]],
+  ['setsource_8',['setSource',['../classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595',1,'xmc::audio::Mixer::setSource()'],['../classxmc_1_1audio_1_1StreamingDac.html#a286c1ceacc1d1f622311b101348a4bdc',1,'xmc::audio::StreamingDac::setSource()']]],
   ['setsourceport_9',['setSourcePort',['../speaker_8hpp.html#ababef22fe51309493e11986c1157ef2f',1,'xmc::speaker']]],
   ['setsweep_10',['setSweep',['../classxmc_1_1audio_1_1Tone.html#a8ac9a4dc5bdad021a0f2e0f4145ac82f',1,'xmc::audio::Tone']]],
   ['settargetfps_11',['setTargetFps',['../classxmc_1_1FpsKeeper.html#ac2ae90abe12de27670a12e1aff4952b4',1,'xmc::FpsKeeper']]],
@@ -18,7 +18,9 @@ var searchData=
   ['sleepus_15',['sleepUs',['../timer_8hpp.html#ab237f8ae51a29255274aaf7bbab7cc86',1,'xmc']]],
   ['squaredlength_16',['squaredLength',['../structxmc_1_1vec3.html#a16c143ca2c5e065f3609d6ee03e5f548',1,'xmc::vec3::squaredLength()'],['../structxmc_1_1vec2.html#a0d3baec23dc751052cc142f841b798d0',1,'xmc::vec2::squaredLength()']]],
   ['start_17',['start',['../classxmc_1_1audio_1_1StreamingDac.html#a4e6a1c016668045a005c2b7126d52c7f',1,'xmc::audio::StreamingDac::start()'],['../classxmc_1_1pwm_1_1Driver.html#aecde815b22e011d78a84ca13fcf5a26d',1,'xmc::pwm::Driver::start()']]],
-  ['startms_18',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
-  ['stop_19',['stop',['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()'],['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()']]],
-  ['stride444_20',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]]
+  ['startcore1_18',['startCore1',['../multicore_8hpp.html#af183a9ca3dcea3e1e81981ac998e591b',1,'xmc']]],
+  ['startms_19',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
+  ['stop_20',['stop',['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()'],['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()']]],
+  ['stopcore1_21',['stopCore1',['../multicore_8hpp.html#aa4fd59c19b2a5e1ca4575c604485aa68',1,'xmc']]],
+  ['stride444_22',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]]
 ];

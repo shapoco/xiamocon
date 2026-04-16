@@ -29,6 +29,7 @@ var annotated_dup =
       [ "color4444", "unionxmc_1_1color4444.html", null ],
       [ "color8p24", "structxmc_1_1color8p24.html", null ],
       [ "colorf", "structxmc_1_1colorf.html", null ],
+      [ "EdgeScanVars", "structxmc_1_1EdgeScanVars.html", null ],
       [ "EnvironmentMapShader", "classxmc_1_1EnvironmentMapShader.html", null ],
       [ "FpsKeeper", "classxmc_1_1FpsKeeper.html", "classxmc_1_1FpsKeeper" ],
       [ "FrameBuffer", "classxmc_1_1FrameBuffer.html", "classxmc_1_1FrameBuffer" ],
@@ -50,7 +51,6 @@ var annotated_dup =
       [ "RasterScanGray1", "classxmc_1_1RasterScanGray1.html", null ],
       [ "Rect", "structxmc_1_1Rect.html", "structxmc_1_1Rect" ],
       [ "RepeatingTimer", "classxmc_1_1RepeatingTimer.html", "classxmc_1_1RepeatingTimer" ],
-      [ "ScanLineCounter", "structxmc_1_1ScanLineCounter.html", null ],
       [ "Scanner444", "structxmc_1_1Scanner444.html", null ],
       [ "Scene3DClass", "classxmc_1_1Scene3DClass.html", null ],
       [ "Semaphore", "classxmc_1_1Semaphore.html", null ],
@@ -61,12 +61,14 @@ var annotated_dup =
       [ "SpriteClass", "classxmc_1_1SpriteClass.html", null ],
       [ "State3D", "structxmc_1_1State3D.html", null ],
       [ "TextRenderArgs", "structxmc_1_1TextRenderArgs.html", null ],
-      [ "TextureArgs", "structxmc_1_1TextureArgs.html", null ],
+      [ "Trapezoid3D", "structxmc_1_1Trapezoid3D.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ],
       [ "Vertex3D", "structxmc_1_1Vertex3D.html", null ],
       [ "VertexShader", "classxmc_1_1VertexShader.html", null ],
-      [ "VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ]
+      [ "VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ],
+      [ "Worker3D", "classxmc_1_1Worker3D.html", null ],
+      [ "WorkerArgs3D", "structxmc_1_1WorkerArgs3D.html", null ]
     ] ],
     [ "GFXfont", "structGFXfont.html", "structGFXfont" ],
     [ "GFXglyph", "structGFXglyph.html", "structGFXglyph" ]
