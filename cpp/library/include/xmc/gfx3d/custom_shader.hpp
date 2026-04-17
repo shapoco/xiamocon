@@ -26,7 +26,7 @@ struct VertexShaderArgs {
 class VertexShader {
  public:
   virtual void beginPrimitive(VertexShaderArgs args) {}
-  virtual void process(Vertex3D *vert) = 0;
+  virtual void process(VertexCache3D *vert) = 0;
   virtual void endPrimitive() {}
 };
 
@@ -41,7 +41,7 @@ class EnvironmentMapShader : public VertexShader {
   }
   inline void setEyePosition(const vec3 &eye) { this->eye = eye; }
 
-  void process(Vertex3D *vert) override;
+  void process(VertexCache3D *vert) override;
 };
 
 }  // namespace xmc

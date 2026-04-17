@@ -48,8 +48,9 @@ class Graphics3DClass {
   State3D *stateStack;
   int stateStackTop = 0;
 
+  VertexCache3D vertCacheTable[3];
+
   WorkerArgs3D workerArgs;
-  Vertex3D bakedVerts[3];
   EdgeScanVars esvL, esvR, esvB;
   Trapezoid3D trapU, trapL;
 
@@ -211,10 +212,10 @@ class Graphics3DClass {
   void render(const Primitive3D &prim);
 
  private:
-  void renderTriangle(WorkerArgs3D &workerArgs, const Vertex3D &v0,
-                      const Vertex3D &v1, const Vertex3D &v2,
+  void renderTriangle(WorkerArgs3D &workerArgs, const VertexCache3D &v0,
+                      const VertexCache3D &v1, const VertexCache3D &v2,
                       const Material3D &mat);
-  void renderPoint(WorkerArgs3D &workerArgs, const Vertex3D &v0,
+  void renderPoint(WorkerArgs3D &workerArgs, const VertexCache3D &v0,
                    const Material3D &mat);
 
   XMC_INLINE State3D &stackTop() { return stateStack[stateStackTop]; }

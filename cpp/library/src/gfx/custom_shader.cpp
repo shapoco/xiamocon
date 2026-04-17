@@ -2,7 +2,7 @@
 
 namespace xmc {
 
-void EnvironmentMapShader::process(Vertex3D *vert) {
+void EnvironmentMapShader::process(VertexCache3D *vert) {
   vert->pos = modelMatrix->transform(vert->pos);
   vert->normal = modelMatrix->transformNormal(vert->normal);
   vec3 viewDir = (eye - vert->pos).normalized();

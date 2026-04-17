@@ -16,7 +16,7 @@
 namespace xmc {
 
 struct mat4 {
-  float m[16] = {0};
+  float m[16];
 
   /**
    * @return an identity matrix
@@ -24,20 +24,33 @@ struct mat4 {
   static XMC_INLINE mat4 identity() {
     mat4 result;
     result.m[0] = 1;
+    result.m[1] = 0;
+    result.m[2] = 0;
+    result.m[3] = 0;
+    result.m[4] = 0;
     result.m[5] = 1;
+    result.m[6] = 0;
+    result.m[7] = 0;
+    result.m[8] = 0;
+    result.m[9] = 0;
     result.m[10] = 1;
+    result.m[11] = 0;
+    result.m[12] = 0;
+    result.m[13] = 0;
+    result.m[14] = 0;
     result.m[15] = 1;
     return result;
   }
 
   XMC_INLINE mat4 operator*(const mat4 &other) const {
-    mat4 result = identity();
-    for (int col = 0; col < 4; col++) {
+    mat4 result;
+    float *mp = result.m;
+    for (int col = 0; col < 16; col += 4) {
       for (int row = 0; row < 4; row++) {
-        result.m[col * 4 + row] = m[0 * 4 + row] * other.m[col * 4 + 0] +
-                                  m[1 * 4 + row] * other.m[col * 4 + 1] +
-                                  m[2 * 4 + row] * other.m[col * 4 + 2] +
-                                  m[3 * 4 + row] * other.m[col * 4 + 3];
+        *(mp++) = m[0 * 4 + row] * other.m[col + 0] +
+                  m[1 * 4 + row] * other.m[col + 1] +
+                  m[2 * 4 + row] * other.m[col + 2] +
+                  m[3 * 4 + row] * other.m[col + 3];
       }
     }
     return result;
@@ -151,23 +164,59 @@ struct mat4 {
    * (0, 0, 0) to avoid division by zero
    */
   XMC_INLINE vec3 transform(const vec3 &v) const {
-    float x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
-    float y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
-    float z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
+    vec3 result;
+#if 1
+    const float *mp = m;
+    result.x = *(mp++) * v.x;
+    result.y = *(mp++) * v.x;
+    result.z = *(mp++) * v.x;
+    float w = *(mp++) * v.x;
+    result.x += *(mp++) * v.y;
+    result.y += *(mp++) * v.y;
+    result.z += *(mp++) * v.y;
+    w += *(mp++) * v.y;
+    result.x += *(mp++) * v.z;
+    result.y += *(mp++) * v.z;
+    result.z += *(mp++) * v.z;
+    w += *(mp++) * v.z;
+    result.x += *(mp++);
+    result.y += *(mp++);
+    result.z += *(mp++);
+    w += *(mp++);
+#else
+    result.x = m[0] * v.x + m[4] * v.y + m[8] * v.z + m[12];
+    result.y = m[1] * v.x + m[5] * v.y + m[9] * v.z + m[13];
+    result.z = m[2] * v.x + m[6] * v.y + m[10] * v.z + m[14];
     float w = m[3] * v.x + m[7] * v.y + m[11] * v.z + m[15];
+#endif
     float abs_w = fabsf(w);
     if (abs_w < 1e-8f) {
       return vec3(0, 0, 0);
     }
-    float inv_w = 1.0f / abs_w;
-    return vec3(x * inv_w, y * inv_w, z * inv_w);
+    return result * (1.0f / abs_w);
   }
 
   XMC_INLINE vec3 transformNormal(const vec3 &v) const {
-    float nx = m[0] * v.x + m[4] * v.y + m[8] * v.z;
-    float ny = m[1] * v.x + m[5] * v.y + m[9] * v.z;
-    float nz = m[2] * v.x + m[6] * v.y + m[10] * v.z;
-    return vec3(nx, ny, nz).normalized();
+    vec3 result;
+#if 1
+    const float *mp = m;
+    result.x = *(mp++) * v.x;
+    result.y = *(mp++) * v.x;
+    result.z = *(mp++) * v.x;
+    mp++;
+    result.x += *(mp++) * v.y;
+    result.y += *(mp++) * v.y;
+    result.z += *(mp++) * v.y;
+    mp++;
+    result.x += *(mp++) * v.z;
+    result.y += *(mp++) * v.z;
+    result.z += *(mp++) * v.z;
+#else
+    result.x = m[0] * v.x + m[4] * v.y + m[8] * v.z;
+    result.y = m[1] * v.x + m[5] * v.y + m[9] * v.z;
+    result.z = m[2] * v.x + m[6] * v.y + m[10] * v.z;
+#endif
+    return result.normalized();
   }
 
   XMC_INLINE void translate(const vec3 &t) {

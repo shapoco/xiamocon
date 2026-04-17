@@ -40,7 +40,7 @@ struct State3D {
   bool dirty = true;
 };
 
-struct Vertex3D {
+struct VertexCache3D {
   vec3 pos;
   vec3 normal;
   colorf color;

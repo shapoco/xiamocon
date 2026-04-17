@@ -125,9 +125,6 @@ void Graphics3DClass::render(const Primitive3D &prim) {
 
   if (!primPos) return;
 
-  int idxOffset[3];
-  int idxData[3];
-
   validateMatrix(false);
 
   if (!primNorm) {
@@ -179,54 +176,61 @@ void Graphics3DClass::render(const Primitive3D &prim) {
     subWorker.beginPrimitive(workerArgs);
   }
 
+  VertexCache3D *vertCache[3] = {
+      &vertCacheTable[0],
+      &vertCacheTable[1],
+      &vertCacheTable[2],
+  };
+  int vertFetchFlags = 0;
+
+  int idxOffset[3];
+
   int numVertices = prim->numVertices();
   int numElems = prim->numElements();
 
   for (int i = 0; i < numElems; i++) {
     bool reverse = false;
-    uint32_t shiftFlags = 0;
-    uint32_t fetchFlags = 0;
     switch (prim->mode) {
       case PrimitiveMode::POINTS:
         idxOffset[0] = i;
-        shiftFlags = 0b000;
-        fetchFlags = 0b001;
+        vertFetchFlags = 0b001;
         break;
       case PrimitiveMode::LINES:
         idxOffset[0] = i * 2 + 0;
         idxOffset[1] = i * 2 + 1;
-        shiftFlags = 0b000;
-        fetchFlags = 0b011;
+        vertFetchFlags = 0b011;
         break;
       case PrimitiveMode::LINE_LOOP:
       case PrimitiveMode::LINE_STRIP:
         idxOffset[0] = i;
         idxOffset[1] = (i + 1) % numVertices;
         if (i == 0) {
-          shiftFlags = 0b000;
-          fetchFlags = 0b011;
+          vertFetchFlags = 0b011;
         } else {
-          shiftFlags = 0b001;
-          fetchFlags = 0b010;
+          VertexCache3D *tmp = vertCache[0];
+          vertCache[0] = vertCache[1];
+          vertCache[1] = tmp;
+          vertFetchFlags = 0b010;
         }
         break;
       case PrimitiveMode::TRIANGLES:
         idxOffset[0] = i * 3 + 0;
         idxOffset[1] = i * 3 + 1;
         idxOffset[2] = i * 3 + 2;
-        shiftFlags = 0b000;
-        fetchFlags = 0b111;
+        vertFetchFlags = 0b111;
         break;
       case PrimitiveMode::TRIANGLE_STRIP:
         idxOffset[0] = i + 0;
         idxOffset[1] = i + 1;
         idxOffset[2] = i + 2;
         if (i == 0) {
-          shiftFlags = 0b000;
-          fetchFlags = 0b111;
+          vertFetchFlags = 0b111;
         } else {
-          shiftFlags = 0b011;
-          fetchFlags = 0b100;
+          VertexCache3D *tmp = vertCache[0];
+          vertCache[0] = vertCache[1];
+          vertCache[1] = vertCache[2];
+          vertCache[2] = tmp;
+          vertFetchFlags = 0b100;
         }
         reverse = (i % 2 == 1);
         break;
@@ -235,16 +239,18 @@ void Graphics3DClass::render(const Primitive3D &prim) {
         idxOffset[1] = i + 1;
         idxOffset[2] = i + 2;
         if (i == 0) {
-          shiftFlags = 0b000;
-          fetchFlags = 0b111;
+          vertFetchFlags = 0b111;
         } else {
-          shiftFlags = 0b010;
-          fetchFlags = 0b100;
+          VertexCache3D *tmp = vertCache[1];
+          vertCache[1] = vertCache[2];
+          vertCache[2] = tmp;
+          vertFetchFlags = 0b100;
         }
         break;
       default: return;
     }
 
+    int idxData[3];
     if (primIdx) {
       idxData[0] = primIdx[idxOffset[0]];
       idxData[1] = primIdx[idxOffset[1]];
@@ -255,82 +261,76 @@ void Graphics3DClass::render(const Primitive3D &prim) {
       idxData[2] = idxOffset[2];
     }
 
-    for (int j = 0; j < 2; j++) {
-      if (shiftFlags & (1 << j)) {
-        bakedVerts[j] = bakedVerts[j + 1];
-      }
-    }
-
     for (int j = 0; j < 3; j++) {
-      if (fetchFlags & (1 << j)) {
-        Vertex3D &out = bakedVerts[j];
+      if (!(vertFetchFlags & (1 << j))) continue;
 
-        // model transform
-        out.pos = primPos[idxData[j]];
-        if (hasFlag(flags, RenderFlags3D::VERTEX_NORMAL)) {
-          out.normal = primNorm[idxData[j]];
-        } else {
-          out.normal = vec3(0, 0, 1);
+      VertexCache3D &out = *vertCache[j];
+
+      out.pos = primPos[idxData[j]];
+
+      if (hasFlag(flags, RenderFlags3D::VERTEX_NORMAL)) {
+        out.normal = primNorm[idxData[j]];
+      } else {
+        out.normal = {0, 0, 1};
+      }
+
+      // vertex color
+      if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
+        out.color = primCol[idxData[j]];
+      } else {
+        out.color = colorf(1.0f, 1.0f, 1.0f, 1.0f);
+      }
+
+      // uv
+      if (primUv) {
+        out.uv = primUv[idxData[j]];
+      } else {
+        out.uv = {0, 0};
+      }
+
+      // vertex shading
+      if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
+        mat->vertexShader->process(&out);
+        out.pos = viewProjectionMatrix.transform(out.pos);
+      } else {
+        if (hasFlag(flags, RenderFlags3D::LIGHTING) |
+            hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
+          out.normal = modelMatrix.transformNormal(out.normal);
         }
-
-        // vertex color
-        if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
-          out.color = primCol[idxData[j]];
-        } else {
-          out.color = colorf(1.0f, 1.0f, 1.0f, 1.0f);
+        if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
+          vec3 worldPos = modelMatrix.transform(out.pos);
+          vec3 viewDir = (eyePosition - worldPos).normalized();
+          vec3 refDir = (out.normal * (out.normal.dot(viewDir) * 2) - viewDir)
+                            .normalized();
+          out.uv.x = 0.5f + atan2f(refDir.z, refDir.x) / (2 * M_PI);
+          out.uv.y = 0.5f - asinf(refDir.y) / M_PI;
         }
-
-        // uv
-        if (primUv) {
-          out.uv = primUv[idxData[j]];
-        } else {
-          out.uv = vec2(0, 0);
+        out.pos = mvpMatrix.transform(out.pos);
+        if (mat && hasFlag(mat->flags, MaterialFlags3D::HAS_BASE_COLOR)) {
+          if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
+            out.color *= mat->baseColor;
+          } else {
+            out.color = mat->baseColor;
+          }
         }
-
-        // vertex shading
-        if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
-          mat->vertexShader->process(&out);
-          out.pos = viewProjectionMatrix.transform(out.pos);
-        } else {
-          if (hasFlag(flags, RenderFlags3D::LIGHTING) |
-              hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
-            out.normal = modelMatrix.transformNormal(out.normal);
-          }
-          if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
-            vec3 worldPos = modelMatrix.transform(out.pos);
-            vec3 viewDir = (eyePosition - worldPos).normalized();
-            vec3 refDir = (out.normal * (out.normal.dot(viewDir) * 2) - viewDir)
-                              .normalized();
-            out.uv.x = 0.5f + atan2f(refDir.z, refDir.x) / (2 * M_PI);
-            out.uv.y = 0.5f - asinf(refDir.y) / M_PI;
-          }
-          out.pos = mvpMatrix.transform(out.pos);
-          if (mat && hasFlag(mat->flags, MaterialFlags3D::HAS_BASE_COLOR)) {
-            if (hasFlag(flags, RenderFlags3D::VERTEX_COLOR)) {
-              out.color *= mat->baseColor;
-            } else {
-              out.color = mat->baseColor;
-            }
-          }
-          if (hasFlag(flags, RenderFlags3D::LIGHTING)) {
-            colorf light;
-            light += state.envLight;
-            float ndotl = fmaxf(0, out.normal.dot(state.parallelLightDir));
-            colorf p = state.parallelLightColor;
-            p.a = 1;
-            p.r *= ndotl;
-            p.g *= ndotl;
-            p.b *= ndotl;
-            light += p;
-            out.color *= light;
-          }
+        if (hasFlag(flags, RenderFlags3D::LIGHTING)) {
+          colorf light;
+          light += state.envLight;
+          float ndotl = fmaxf(0, out.normal.dot(state.parallelLightDir));
+          colorf p = state.parallelLightColor;
+          p.a = 1;
+          p.r *= ndotl;
+          p.g *= ndotl;
+          p.b *= ndotl;
+          light += p;
+          out.color *= light;
         }
       }
     }
 
     switch (prim->mode) {
       case PrimitiveMode::POINTS:
-        renderPoint(workerArgs, bakedVerts[0], mat);
+        renderPoint(workerArgs, *vertCache[0], mat);
         break;
       case PrimitiveMode::LINES:
       case PrimitiveMode::LINE_LOOP:
@@ -340,40 +340,42 @@ void Graphics3DClass::render(const Primitive3D &prim) {
       case PrimitiveMode::TRIANGLES:
       case PrimitiveMode::TRIANGLE_STRIP:
       case PrimitiveMode::TRIANGLE_FAN:
+        VertexCache3D &vc0 = *vertCache[0];
+        VertexCache3D &vc1 = *vertCache[1];
+        VertexCache3D &vc2 = *vertCache[2];
+        
         if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
           // fix uv seam for environment mapping
-          float dx01 = bakedVerts[1].uv.x - bakedVerts[0].uv.x;
-          float dx02 = bakedVerts[2].uv.x - bakedVerts[0].uv.x;
+          float dx01 = vc1.uv.x - vc0.uv.x;
+          float dx02 = vc2.uv.x - vc0.uv.x;
           if (dx01 > 0.5f) {
-            bakedVerts[1].uv.x -= 1.0f;
+            vc1.uv.x -= 1.0f;
           } else if (dx01 < -0.5f) {
-            bakedVerts[1].uv.x += 1.0f;
+            vc1.uv.x += 1.0f;
           }
           if (dx02 > 0.5f) {
-            bakedVerts[2].uv.x -= 1.0f;
+            vc2.uv.x -= 1.0f;
           } else if (dx02 < -0.5f) {
-            bakedVerts[2].uv.x += 1.0f;
+            vc2.uv.x += 1.0f;
           }
-          float dy01 = bakedVerts[1].uv.y - bakedVerts[0].uv.y;
-          float dy02 = bakedVerts[2].uv.y - bakedVerts[0].uv.y;
+          float dy01 = vc1.uv.y - vc0.uv.y;
+          float dy02 = vc2.uv.y - vc0.uv.y;
           if (dy01 > 0.5f) {
-            bakedVerts[1].uv.y -= 1.0f;
+            vc1.uv.y -= 1.0f;
           } else if (dy01 < -0.5f) {
-            bakedVerts[1].uv.y += 1.0f;
+            vc1.uv.y += 1.0f;
           }
           if (dy02 > 0.5f) {
-            bakedVerts[2].uv.y -= 1.0f;
+            vc2.uv.y -= 1.0f;
           } else if (dy02 < -0.5f) {
-            bakedVerts[2].uv.y += 1.0f;
+            vc2.uv.y += 1.0f;
           }
         }
 
         if (reverse) {
-          renderTriangle(workerArgs, bakedVerts[0], bakedVerts[2],
-                         bakedVerts[1], mat);
+          renderTriangle(workerArgs, vc0, vc2, vc1, mat);
         } else {
-          renderTriangle(workerArgs, bakedVerts[0], bakedVerts[1],
-                         bakedVerts[2], mat);
+          renderTriangle(workerArgs, vc0, vc1, vc2, mat);
         }
         break;
     }
@@ -389,8 +391,9 @@ void Graphics3DClass::render(const Primitive3D &prim) {
 }
 
 void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
-                                     const Vertex3D &v0, const Vertex3D &v1,
-                                     const Vertex3D &v2,
+                                     const VertexCache3D &v0,
+                                     const VertexCache3D &v1,
+                                     const VertexCache3D &v2,
                                      const Material3D &mat) {
   const State3D &state = stackTop();
   RenderFlags3D flags = state.flags;
@@ -413,7 +416,7 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
     if (ax * by - ay * bx >= 0) return;
   }
 
-  const Vertex3D *tri[] = {&v0, &v1, &v2};
+  const VertexCache3D *tri[] = {&v0, &v1, &v2};
 
   int i0 = 0;
   int i1 = 1;
@@ -589,7 +592,8 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
   }
 }
 
-void Graphics3DClass::renderPoint(WorkerArgs3D &workerArgs, const Vertex3D &v0,
+void Graphics3DClass::renderPoint(WorkerArgs3D &workerArgs,
+                                  const VertexCache3D &v0,
                                   const Material3D &mat) {
   const State3D &state = stackTop();
   RenderFlags3D flags = state.flags;
