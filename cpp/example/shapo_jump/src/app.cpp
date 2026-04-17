@@ -1,4 +1,4 @@
-#include "xiamocon.hpp"
+#include <xiamocon.hpp>
 
 #include "bmp_back_data.h"
 #include "bmp_chara_data.h"
@@ -73,9 +73,9 @@ static constexpr int NUM_TONES = (int)Sound::NUM_SOUNDS;
 FrameBuffer frameBuffer(PixelFormat::RGB444, true);
 FpsKeeper fpsKeeper(60);
 
-Sprite bmpChara = createSprite4444(256, 256, 0, (void *)bmp_chara_data);
-Sprite bmpBack = createSprite4444(256, 256, 0, (void *)bmp_back_data);
-Sprite bmpShapo = createSprite4444(256, 256, 0, (void *)bmp_shapo_data);
+Sprite bmpChara = createSprite4444(256, 256, (void *)bmp_chara_data);
+Sprite bmpBack = createSprite4444(256, 256, (void *)bmp_back_data);
+Sprite bmpShapo = createSprite4444(256, 256, (void *)bmp_shapo_data);
 uint64_t nextVsyncTimeUs = 0;
 
 uint64_t lastMs = 0;
@@ -226,8 +226,8 @@ void xmc::appLoop() {
     renderScene(gfx);
 
     // render status bar
-    appDrawStatusBar(gfx);
-    appDrawDebugInfo(gfx);
+    frameBuffer.renderStatusBar(gfx);
+    frameBuffer.renderDebugBar(gfx);
     frameBuffer.endRender();
   }
 }

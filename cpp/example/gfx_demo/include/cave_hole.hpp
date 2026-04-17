@@ -2066,8 +2066,8 @@ const uint16_t cave_hole_mat1_colorTextureData[] = {
 };
 
 const xmc::Sprite cave_hole_mat1_colorTexture = xmc::createSprite565(
-    128, 128, 0,
-    (uint16_t *)cave_hole_mat1_colorTextureData, false
+    128, 128,
+    (uint16_t *)cave_hole_mat1_colorTextureData
 );
 
 

@@ -291,8 +291,8 @@ void drawScene() {
                   COLOR_GAME_OVER);
   }
 
-  appDrawDebugInfo(gfx);
-  appDrawStatusBar(gfx);
+  frameBuffer.renderStatusBar(gfx);
+  frameBuffer.renderDebugBar(gfx);
 }
 
 }  // namespace

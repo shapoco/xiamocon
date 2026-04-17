@@ -4106,9 +4106,7 @@ static inline xmc::Sprite createEarthCloudSprite() {
   return xmc::createSprite4444(
     256,
     128,
-    512,
-    (void *)earthCloudData,
-    false
+    (void *)earthCloudData
   );
 }
 

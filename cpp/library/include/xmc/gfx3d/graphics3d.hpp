@@ -3,7 +3,7 @@
 
 #include "xmc/gfx2d/color8p24.hpp"
 #include "xmc/gfx2d/raster_scan.hpp"
-#include "xmc/gfx2d/sprite444.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 #include "xmc/gfx3d/gfx3d_common.hpp"
 #include "xmc/gfx3d/scene3d.hpp"
 #include "xmc/gfx3d/worker3d.hpp"

@@ -18,9 +18,8 @@ FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 
 static Mesh3D earth = createSphere(1.0f, 18, 9);
 static Sprite surfaceTexture =
-    createSprite565(256, 128, GFX2D_STRIDE_AUTO, (void *)earthSurfaceData);
-static Sprite cloudTexture =
-    createSprite4444(256, 128, GFX2D_STRIDE_AUTO, (void *)earthCloudData);
+    createSprite565(256, 128, (void *)earthSurfaceData);
+static Sprite cloudTexture = createSprite4444(256, 128, (void *)earthCloudData);
 static Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
 
 static uint64_t lastImuUpdateUs = 0;

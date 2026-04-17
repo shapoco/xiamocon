@@ -4106,9 +4106,7 @@ static inline xmc::Sprite createEarthSurfaceSprite() {
   return xmc::createSprite565(
     256,
     128,
-    512,
-    (void *)earthSurfaceData,
-    false
+    (void *)earthSurfaceData
   );
 }
 

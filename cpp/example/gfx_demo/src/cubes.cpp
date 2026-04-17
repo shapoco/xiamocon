@@ -4,8 +4,7 @@
 
 using namespace xmc;
 
-Sprite envTexture = createSprite565(256, 128, GFX2D_STRIDE_AUTO,
-                                    (void *)caveEnvTextureData, false);
+Sprite envTexture = createSprite565(256, 128, (void *)caveEnvTextureData);
 Material3D envMat = createMaterial3D();
 Mesh3D cube = createCube(0.5f);
 

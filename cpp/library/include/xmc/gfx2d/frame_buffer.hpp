@@ -7,8 +7,7 @@
 #define XMC_GFX_FRAME_BUFFER_HPP
 
 #include "xmc/gfx2d/graphics2d.hpp"
-#include "xmc/gfx2d/sprite444.hpp"
-#include "xmc/gfx2d/sprite565.hpp"
+#include "xmc/gfx2d/sprite.hpp"
 
 #include <memory>
 

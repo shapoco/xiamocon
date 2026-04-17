@@ -42,9 +42,7 @@ static inline xmc::Sprite createIcon16FolderSprite() {
   return xmc::createSprite4444(
     16,
     16,
-    32,
-    (void *)icon16FolderData,
-    false
+    (void *)icon16FolderData
   );
 }
 

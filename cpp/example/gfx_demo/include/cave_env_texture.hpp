@@ -4106,9 +4106,7 @@ static inline xmc::Sprite createCaveEnvTextureSprite() {
   return xmc::createSprite565(
     256,
     128,
-    512,
-    (void *)caveEnvTextureData,
-    false
+    (void *)caveEnvTextureData
   );
 }
 

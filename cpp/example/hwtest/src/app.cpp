@@ -1,6 +1,4 @@
-#include "xiamocon.hpp"
-
-#include "xmc/font/ShapoSansP_s08c07.h"
+#include <xiamocon.hpp>
 
 #include <stdint.h>
 #include <stdio.h>
@@ -8,28 +6,27 @@
 using namespace xmc;
 using namespace audio;
 
+static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB444;
 static constexpr uint32_t SAMPLE_RATE_HZ = 24000;
 
-int r_counter = 0, g_counter = 32767, b_counter = 65535;
+int rCounter = 0, gCounter = 32767, bCounter = 65535;
 float x = display::WIDTH / 2, y = display::HEIGHT / 2;
 float dx = 1.0f, dy = 1.11f;
 
-Sprite frame_buffer = createSprite444(display::WIDTH, display::HEIGHT);
+FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 Tone tone;
 
 Waveform waveform = Waveform::SQUARE;
 
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = PixelFormat::RGB444;
+  cfg.displayPixelFormat = DISPLAY_FORMAT;
   cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
   cfg.speakerSampleRateHz = SAMPLE_RATE_HZ;
   return cfg;
 }
 
 void xmc::appSetup() {
-  frame_buffer->clear(0);
-  sleepMs(1);
   tone.init(SAMPLE_RATE_HZ);
   speaker::setSourcePort(tone.getOutputPort());
   speaker::setMuted(false);
@@ -89,31 +86,29 @@ void xmc::appLoop() {
     y += dy;
   }
 
-  r_counter = (r_counter + 1100) % 65536;
-  g_counter = (g_counter + 1200) % 65536;
-  b_counter = (b_counter + 1300) % 65536;
-  int r = r_counter >> 11;
-  int g = g_counter >> 11;
-  int b = b_counter >> 11;
+  rCounter = (rCounter + 1100) % 65536;
+  gCounter = (gCounter + 1200) % 65536;
+  bCounter = (bCounter + 1300) % 65536;
+  int r = rCounter >> 11;
+  int g = gCounter >> 11;
+  int b = bCounter >> 11;
   if (r >= 16) r = 31 - r;
   if (g >= 16) g = 31 - g;
   if (b >= 16) b = 31 - b;
   uint32_t color = ((r << 8) | (g << 4) | b);
 
-  // complete the previous frame's transfer if it's still in progress, then fill
-  // the frame buffer with the new frame's content. In this case, we just draw a
-  // moving box, but you can draw anything you want here.
-  frame_buffer->completeTransfer();
+  frameBuffer.beginRender();
+
+  Graphics2D gfx = frameBuffer.createGraphics();
+  gfx->clear(0);
 
   // fill box
-  frame_buffer->fillRect((int)x - 32, (int)y - 32, 64, 64, color);
+  gfx->fillRect((int)x - 32, (int)y - 32, 64, 64, color);
 
-  xmc::appDrawDebugInfo(frame_buffer);
-  xmc::appDrawStatusBar(frame_buffer);
+  frameBuffer.renderStatusBar(gfx);
+  frameBuffer.renderDebugBar(gfx);
 
-  // start transferring the current frame to the display. This will return
-  // immediately and the transfer will happen in the background.
-  frame_buffer->startTransferToDisplay(0, 0);
+  frameBuffer.endRender();
 
   sleepMs(10);
 }

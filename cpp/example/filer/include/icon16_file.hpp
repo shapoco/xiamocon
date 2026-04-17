@@ -42,9 +42,7 @@ static inline xmc::Sprite createIcon16FileSprite() {
   return xmc::createSprite4444(
     16,
     16,
-    32,
-    (void *)icon16FileData,
-    false
+    (void *)icon16FileData
   );
 }
 

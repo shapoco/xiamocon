@@ -321,8 +321,8 @@ def generate(gltf, gltf_dir, prefix, dither="none", texformat="rgb565"):
 
                 tex_var = f"{mn}_colorTexture"
                 w(f"const xmc::Sprite {tex_var} = {create_sprite_func}(")
-                w(f"    {tw}, {th}, 0,")
-                w(f"    (uint16_t *){dn}, false")
+                w(f"    {tw}, {th},")
+                w(f"    (uint16_t *){dn}")
                 w(");")
                 w("")
                 w("")

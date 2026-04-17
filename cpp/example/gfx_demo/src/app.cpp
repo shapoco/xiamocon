@@ -158,7 +158,6 @@ void updateScene() {
       }
     } else if (item.type == MenuItemType::ENUM) {
       // cycle through enum values
-      int max = (int)item.maxValue;
       if (wasPressed(Button::LEFT)) {
         int *value = (int *)item.value;
         *value =

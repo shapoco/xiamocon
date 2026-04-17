@@ -155,7 +155,6 @@ def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: li
     guard = f"{upper}_HPP"
     data_name = f"{camel}Data"
     func_name = f"create{pascal}Sprite"
-    stride = width * 2  # uint16_t = 2 bytes
 
     if fmt == "argb4444":
         create_func = "xmc::createSprite4444"
@@ -182,9 +181,7 @@ def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: li
     lines.append(f"  return {create_func}(")
     lines.append(f"    {width},")
     lines.append(f"    {height},")
-    lines.append(f"    {stride},")
-    lines.append(f"    (void *){data_name},")
-    lines.append(f"    false")
+    lines.append(f"    (void *){data_name}")
     lines.append(f"  );")
     lines.append("}")
     lines.append("")

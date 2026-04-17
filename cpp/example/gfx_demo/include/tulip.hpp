@@ -520,8 +520,8 @@ const uint16_t tulip_mat0_colorTextureData[] = {
 };
 
 const xmc::Sprite tulip_mat0_colorTexture = xmc::createSprite565(
-    64, 64, 0,
-    (uint16_t *)tulip_mat0_colorTextureData, false
+    64, 64,
+    (uint16_t *)tulip_mat0_colorTextureData
 );
 
 

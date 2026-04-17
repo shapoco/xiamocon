@@ -183,7 +183,7 @@ void Graphics3DClass::render(const Primitive3D &prim) {
   };
   int vertFetchFlags = 0;
 
-  int idxOffset[3];
+  int idxOffset[3] = {0, 0, 0};
 
   int numVertices = prim->numVertices();
   int numElems = prim->numElements();
@@ -343,7 +343,7 @@ void Graphics3DClass::render(const Primitive3D &prim) {
         VertexCache3D &vc0 = *vertCache[0];
         VertexCache3D &vc1 = *vertCache[1];
         VertexCache3D &vc2 = *vertCache[2];
-        
+
         if (hasFlag(matFlags, MaterialFlags3D::ENVIRONMENT_MAPPED)) {
           // fix uv seam for environment mapping
           float dx01 = vc1.uv.x - vc0.uv.x;
@@ -526,10 +526,6 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
     std::swap(trapL.topLeft, trapL.topRight);
   }
 
-  // rasterize the triangle using a scanline algorithm
-  // todo: optimize
-  bool useGouraud = hasFlag(flags, RenderFlags3D::GOURAUD_SHADING);
-  bool useTexture = hasFlag(flags, RenderFlags3D::COLOR_TEXTURE);
   int yOffset;
 
   // upper trapezoid

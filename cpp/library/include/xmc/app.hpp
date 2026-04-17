@@ -49,31 +49,6 @@ void appSetup();
  */
 void appLoop();
 
-/**
- * Draw the status bar to the given graphics context.
- */
-void appDrawStatusBar(xmc::Graphics2D &g);
-
-/**
- * Draw the status bar to the given screen.
- */
-__attribute__((deprecated))
-inline void appDrawStatusBar(Sprite &screen) {
-  Graphics2D g = createGraphics2D(screen);
-  appDrawStatusBar(g);
-}
-
-void appDrawDebugInfo(xmc::Graphics2D &g);
-
-/**
- * Draw the last error information to the given screen.
- */
-__attribute__((deprecated))
-inline void appDrawDebugInfo(Sprite &screen) {
-  Graphics2D g = createGraphics2D(screen);
-  appDrawDebugInfo(g);
-}
-
 }  // namespace xmc
 
 #endif
