@@ -37,11 +37,12 @@ float eyeYawSpeed = 0;
 float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
-int multiCoreMode = (int)MultiCoreMode3D::INTERLACE;
+int multiCoreMode = 3;
 const char **multiCoreNames = (const char *[]){
     "NONE",
     "INTERLACE",
     "PIPELINE",
+    "AUTO",
 };
 
 bool enableTestModel = true;
@@ -71,7 +72,7 @@ struct MenuItem {
 };
 
 MenuItem menuItems[] = {
-    {MenuItemType::ENUM, 0, 2, "Multi Core", &multiCoreMode, multiCoreNames},
+    {MenuItemType::ENUM, 0, 3, "Multi Core", &multiCoreMode, multiCoreNames},
     {MenuItemType::BOOL, 0, 1, "Test Model", &enableTestModel},
     {MenuItemType::BOOL, 0, 1, "Grass", &enableGrass},
     {MenuItemType::BOOL, 0, 1, "Crystals", &enableCrystals},
@@ -274,7 +275,9 @@ void renderScene() {
   g3d->setTarget(frameBuffer.getBackBuffer());
 
   // multicore rendering setup
-  g3d->setMultiCoreMode((MultiCoreMode3D)multiCoreMode);
+  if (multiCoreMode < 3) {
+    g3d->setMultiCoreMode((MultiCoreMode3D)multiCoreMode);
+  }
 
   // clear state stack and depth buffer
   g3d->beginRender();
@@ -314,6 +317,9 @@ void renderScene() {
 
   if (enableTestModel && modelIndex == 0) {
     // flower
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     g3d->pushState();
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
     g3d->render(tulip);
@@ -322,11 +328,17 @@ void renderScene() {
 
   if (enableTestModel && modelIndex == 1) {
     // metalic cubes
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     renderCubes(g3d);
   }
 
   // crystals
   if (enableCrystals) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     for (int i = 0; i < NUM_CRYSTALS; i++) {
       g3d->pushState();
       g3d->scale(CRYSTAL_SIZE[i]);
@@ -339,11 +351,17 @@ void renderScene() {
 
   // grass
   if (enableGrass) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::PIPELINE);
+    }
     renderGrass(g3d);
   }
 
   // cave hole
   if (enableCaveHole) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     g3d->pushState();
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
     g3d->scale(4);
@@ -353,6 +371,9 @@ void renderScene() {
 
   // light from hole
   if (enableCaveLight) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     g3d->pushState();
     g3d->setBlendMode(BlendMode::ADD);
     g3d->scale(4);
@@ -362,11 +383,17 @@ void renderScene() {
 
   // flame
   if (enableTestModel && modelIndex == 2) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    }
     renderFlame(g3d);
   }
 
   // particles
   if (enableParticles) {
+    if (multiCoreMode >= 3) {
+      g3d->setMultiCoreMode(MultiCoreMode3D::PIPELINE);
+    }
     renderParticles(g3d);
   }
 

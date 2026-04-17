@@ -53,7 +53,7 @@ class Graphics3DClass {
   EdgeScanVars esvL, esvR, esvB;
   Trapezoid3D trapU, trapL;
 
-  MultiCoreMode3D multicoreMode = MultiCoreMode3D::INTERLACE;
+  MultiCoreMode3D multicoreMode = MultiCoreMode3D::NONE;
   Worker3D subWorker;
 
  public:

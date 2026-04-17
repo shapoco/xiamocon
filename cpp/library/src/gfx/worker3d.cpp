@@ -135,48 +135,62 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
   }
 }
 
-void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap,
-                       uint32_t mode) {
-#define XMC_TRAPEZOID(aBlend, tex4444, colorTex, gouraud, out444) \
-  renderTrapezoid3D<aBlend, tex4444, colorTex, gouraud, out444>(args, trap)
-
-  switch (mode) {
-    case 0: XMC_TRAPEZOID(false, false, false, false, false); break;
-    case 1: XMC_TRAPEZOID(false, false, false, false, true); break;
-    case 2: XMC_TRAPEZOID(false, false, false, true, false); break;
-    case 3: XMC_TRAPEZOID(false, false, false, true, true); break;
-    case 4: XMC_TRAPEZOID(false, false, true, false, false); break;
-    case 5: XMC_TRAPEZOID(false, false, true, false, true); break;
-    case 6: XMC_TRAPEZOID(false, false, true, true, false); break;
-    case 7: XMC_TRAPEZOID(false, false, true, true, true); break;
-    case 8: XMC_TRAPEZOID(false, false, false, false, false); break;
-    case 9: XMC_TRAPEZOID(false, false, false, false, true); break;
-    case 10: XMC_TRAPEZOID(false, false, false, true, false); break;
-    case 11: XMC_TRAPEZOID(false, false, false, true, true); break;
-    case 12: XMC_TRAPEZOID(false, true, true, false, false); break;
-    case 13: XMC_TRAPEZOID(false, true, true, false, true); break;
-    case 14: XMC_TRAPEZOID(false, true, true, true, false); break;
-    case 15: XMC_TRAPEZOID(false, true, true, true, true); break;
-    case 16: XMC_TRAPEZOID(true, false, false, true, false); break;
-    case 17: XMC_TRAPEZOID(true, false, false, true, true); break;
-    case 18: XMC_TRAPEZOID(true, false, false, true, false); break;
-    case 19: XMC_TRAPEZOID(true, false, false, true, true); break;
-    case 20: XMC_TRAPEZOID(true, false, true, true, false); break;
-    case 21: XMC_TRAPEZOID(true, false, true, true, true); break;
-    case 22: XMC_TRAPEZOID(true, false, true, true, false); break;
-    case 23: XMC_TRAPEZOID(true, false, true, true, true); break;
-    case 24: XMC_TRAPEZOID(true, false, false, true, false); break;
-    case 25: XMC_TRAPEZOID(true, false, false, true, true); break;
-    case 26: XMC_TRAPEZOID(true, false, false, true, false); break;
-    case 27: XMC_TRAPEZOID(true, false, false, true, true); break;
-    case 28: XMC_TRAPEZOID(true, true, true, true, false); break;
-    case 29: XMC_TRAPEZOID(true, true, true, true, true); break;
-    case 30: XMC_TRAPEZOID(true, true, true, true, false); break;
-    case 31: XMC_TRAPEZOID(true, true, true, true, true); break;
-    default: break;
+void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
+  uint32_t mode = 0;
+  if (args.target->format == PixelFormat::RGB444) {
+    mode |= (1 << 0);
+  }
+  if (hasFlag(args.renderFlags, RenderFlags3D::GOURAUD_SHADING)) {
+    mode |= (1 << 1);
+  }
+  if (hasFlag(args.renderFlags, RenderFlags3D::COLOR_TEXTURE)) {
+    if (args.textureFormat == PixelFormat::RGB565) {
+      mode |= (1 << 2);
+    } else if (args.textureFormat == PixelFormat::ARGB4444) {
+      mode |= (1 << 2) | (1 << 3);
+    }
+  }
+  if (args.blendMode != BlendMode::OVERWRITE) {
+    mode |= (1 << 4);
   }
 
-#undef XMC_TRAPEZOID
+  switch (mode) {
+      // clang-format off
+    case 0: renderTrapezoid3D<false, false, false, false, false>(args, trap); break;
+    case 1: renderTrapezoid3D<false, false, false, false, true>(args, trap); break;
+    case 2: renderTrapezoid3D<false, false, false, true, false>(args, trap); break;
+    case 3: renderTrapezoid3D<false, false, false, true, true>(args, trap); break;
+    case 4: renderTrapezoid3D<false, false, true, false, false>(args, trap); break;
+    case 5: renderTrapezoid3D<false, false, true, false, true>(args, trap); break;
+    case 6: renderTrapezoid3D<false, false, true, true, false>(args, trap); break;
+    case 7: renderTrapezoid3D<false, false, true, true, true>(args, trap); break;
+    case 8: renderTrapezoid3D<false, false, false, false, false>(args, trap); break;
+    case 9: renderTrapezoid3D<false, false, false, false, true>(args, trap); break;
+    case 10: renderTrapezoid3D<false, false, false, true, false>(args, trap); break;
+    case 11: renderTrapezoid3D<false, false, false, true, true>(args, trap); break;
+    case 12: renderTrapezoid3D<false, true, true, false, false>(args, trap); break;
+    case 13: renderTrapezoid3D<false, true, true, false, true>(args, trap); break;
+    case 14: renderTrapezoid3D<false, true, true, true, false>(args, trap); break;
+    case 15: renderTrapezoid3D<false, true, true, true, true>(args, trap); break;
+    case 16: renderTrapezoid3D<true, false, false, true, false>(args, trap); break;
+    case 17: renderTrapezoid3D<true, false, false, true, true>(args, trap); break;
+    case 18: renderTrapezoid3D<true, false, false, true, false>(args, trap); break;
+    case 19: renderTrapezoid3D<true, false, false, true, true>(args, trap); break;
+    case 20: renderTrapezoid3D<true, false, true, true, false>(args, trap); break;
+    case 21: renderTrapezoid3D<true, false, true, true, true>(args, trap); break;
+    case 22: renderTrapezoid3D<true, false, true, true, false>(args, trap); break;
+    case 23: renderTrapezoid3D<true, false, true, true, true>(args, trap); break;
+    case 24: renderTrapezoid3D<true, false, false, true, false>(args, trap); break;
+    case 25: renderTrapezoid3D<true, false, false, true, true>(args, trap); break;
+    case 26: renderTrapezoid3D<true, false, false, true, false>(args, trap); break;
+    case 27: renderTrapezoid3D<true, false, false, true, true>(args, trap); break;
+    case 28: renderTrapezoid3D<true, true, true, true, false>(args, trap); break;
+    case 29: renderTrapezoid3D<true, true, true, true, true>(args, trap); break;
+    case 30: renderTrapezoid3D<true, true, true, true, false>(args, trap); break;
+    case 31: renderTrapezoid3D<true, true, true, true, true>(args, trap); break;
+    default: break;
+      // clang-format on
+  }
 }
 
 void Worker3D::beginPrimitive(const WorkerArgs3D &args) {
@@ -207,13 +221,11 @@ void Worker3D::service() {
     return;
   }
 
-  uint32_t mode = getTrapezoidRenderMode(this->args);
-
   int rp = fifoRdPtr;
   while (rp != fifoWrPtr || full) {
     Trapezoid3D &trap = fifo[rp];
 
-    renderTrapezoid3D(this->args, trap, mode);
+    renderTrapezoid3D(this->args, trap);
 
     rp = (rp + 1) % FIFO_DEPTH;
     full = false;

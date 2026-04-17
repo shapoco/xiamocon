@@ -549,13 +549,13 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
       trapU.yTop += 1;
       trapU.topLeft.step(stepL);
       trapU.topRight.step(stepR);
-      renderTrapezoid3D(workerArgs, trapU, getTrapezoidRenderMode(workerArgs));
+      renderTrapezoid3D(workerArgs, trapU);
     } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
       trapU.yStep = 1;
       subWorker.push(trapU);
     } else {
       trapU.yStep = 1;
-      renderTrapezoid3D(workerArgs, trapU, getTrapezoidRenderMode(workerArgs));
+      renderTrapezoid3D(workerArgs, trapU);
     }
   }
 
@@ -578,13 +578,13 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
       trapL.yTop += 1;
       trapL.topLeft.step(stepL);
       trapL.topRight.step(stepR);
-      renderTrapezoid3D(workerArgs, trapL, getTrapezoidRenderMode(workerArgs));
+      renderTrapezoid3D(workerArgs, trapL);
     } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
       trapL.yStep = 1;
       subWorker.push(trapL);
     } else {
       trapL.yStep = 1;
-      renderTrapezoid3D(workerArgs, trapL, getTrapezoidRenderMode(workerArgs));
+      renderTrapezoid3D(workerArgs, trapL);
     }
   }
 }
@@ -647,7 +647,7 @@ void Graphics3DClass::renderPoint(WorkerArgs3D &workerArgs, const Vertex3D &v0,
   if (multicoreMode != MultiCoreMode3D::NONE) {
     subWorker.push(trap);
   } else {
-    renderTrapezoid3D(workerArgs, trap, getTrapezoidRenderMode(workerArgs));
+    renderTrapezoid3D(workerArgs, trap);
   }
 }
 

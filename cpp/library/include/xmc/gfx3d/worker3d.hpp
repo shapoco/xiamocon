@@ -108,29 +108,7 @@ class Worker3D {
   void service();
 };
 
-XMC_INLINE uint32_t getTrapezoidRenderMode(const WorkerArgs3D &args) {
-  uint32_t mode = 0;
-  if (args.target->format == PixelFormat::RGB444) {
-    mode |= (1 << 0);
-  }
-  if (hasFlag(args.renderFlags, RenderFlags3D::GOURAUD_SHADING)) {
-    mode |= (1 << 1);
-  }
-  if (hasFlag(args.renderFlags, RenderFlags3D::COLOR_TEXTURE)) {
-    if (args.textureFormat == PixelFormat::RGB565) {
-      mode |= (1 << 2);
-    } else if (args.textureFormat == PixelFormat::ARGB4444) {
-      mode |= (1 << 2) | (1 << 3);
-    }
-  }
-  if (args.blendMode != BlendMode::OVERWRITE) {
-    mode |= (1 << 4);
-  }
-  return mode;
-}
-
-void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap,
-                       uint32_t mode);
+void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap);
 
 }  // namespace xmc
 
