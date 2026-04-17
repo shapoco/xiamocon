@@ -1,8 +1,0 @@
-<map id="cpp/library/include/xmc/gfx2d/sprite565.hpp" name="cpp/library/include/xmc/gfx2d/sprite565.hpp">
-<area shape="rect" id="node1" title="Sprite class for 16&#45;bit RGB565 images." alt="" coords="69,5,257,45"/>
-<area shape="rect" id="node2" href="$gfx_8hpp_source.html" title=" " alt="" coords="92,181,235,221"/>
-<area shape="rect" id="node6" href="$frame__buffer_8hpp.html" title="Frame buffer management for 2D graphics in XMC library." alt="" coords="130,93,341,133"/>
-<area shape="rect" id="node3" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="5,357,148,397"/>
-<area shape="rect" id="node4" href="$app_8hpp_source.html" title=" " alt="" coords="92,269,235,309"/>
-<area shape="rect" id="node5" href="$diagnostic_8hpp_source.html" title=" " alt="" coords="184,357,337,397"/>
-</map>

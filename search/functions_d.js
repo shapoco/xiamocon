@@ -21,6 +21,5 @@ var searchData=
   ['startcore1_18',['startCore1',['../multicore_8hpp.html#af183a9ca3dcea3e1e81981ac998e591b',1,'xmc']]],
   ['startms_19',['startMs',['../classxmc_1_1RepeatingTimer.html#a9809f7972bb37ddf3f97a6608234c12b',1,'xmc::RepeatingTimer']]],
   ['stop_20',['stop',['../classxmc_1_1pwm_1_1Driver.html#af1adadbc9e07826cae661136be7b9dc4',1,'xmc::pwm::Driver::stop()'],['../classxmc_1_1audio_1_1StreamingDac.html#aa49414b0b4c12f653c8f7a17da9ed0ff',1,'xmc::audio::StreamingDac::stop()']]],
-  ['stopcore1_21',['stopCore1',['../multicore_8hpp.html#aa4fd59c19b2a5e1ca4575c604485aa68',1,'xmc']]],
-  ['stride444_22',['stride444',['../sprite444_8hpp.html#afa6a93572d972ae5b41237e8c0fa2204',1,'xmc']]]
+  ['stopcore1_21',['stopCore1',['../multicore_8hpp.html#aa4fd59c19b2a5e1ca4575c604485aa68',1,'xmc']]]
 ];

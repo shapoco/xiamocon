@@ -41,17 +41,12 @@ var hierarchy =
     [ "xmc::RasterScanGray1", "classxmc_1_1RasterScanGray1.html", null ],
     [ "xmc::Rect", "structxmc_1_1Rect.html", null ],
     [ "xmc::RepeatingTimer", "classxmc_1_1RepeatingTimer.html", null ],
-    [ "xmc::Scanner444", "structxmc_1_1Scanner444.html", null ],
     [ "xmc::Scene3DClass", "classxmc_1_1Scene3DClass.html", null ],
     [ "xmc::audio::SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
     [ "xmc::Semaphore", "classxmc_1_1Semaphore.html", null ],
     [ "xmc::audio::SourcePort", "structxmc_1_1audio_1_1SourcePort.html", null ],
     [ "xmc::SpinLock", "classxmc_1_1SpinLock.html", null ],
-    [ "xmc::SpriteClass", "classxmc_1_1SpriteClass.html", [
-      [ "xmc::Sprite4444Class", "classxmc_1_1Sprite4444Class.html", null ],
-      [ "xmc::Sprite444Class", "classxmc_1_1Sprite444Class.html", null ],
-      [ "xmc::Sprite565Class", "classxmc_1_1Sprite565Class.html", null ]
-    ] ],
+    [ "xmc::SpriteClass", "classxmc_1_1SpriteClass.html", null ],
     [ "xmc::State3D", "structxmc_1_1State3D.html", null ],
     [ "xmc::audio::StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
     [ "xmc::audio::StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", null ],

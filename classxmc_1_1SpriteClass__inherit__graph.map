@@ -1,6 +1,0 @@
-<map id="xmc::SpriteClass" name="xmc::SpriteClass">
-<area shape="rect" id="node1" title=" " alt="" coords="204,5,335,31"/>
-<area shape="rect" id="node2" href="$classxmc_1_1Sprite4444Class.html" title=" " alt="" coords="5,79,168,104"/>
-<area shape="rect" id="node3" href="$classxmc_1_1Sprite444Class.html" title=" " alt="" coords="192,79,347,104"/>
-<area shape="rect" id="node4" href="$classxmc_1_1Sprite565Class.html" title=" " alt="" coords="371,79,525,104"/>
-</map>
