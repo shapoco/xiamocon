@@ -196,16 +196,16 @@ struct color8p24 {
     int32_t rOther = (other >> 3) & 0x1F;
     int32_t gOther = ((other << 3) & 0x38) | ((other >> 13) & 0x7);
     int32_t bOther = (other >> 8) & 0x1F;
-    r.raw = (r.raw / 256) * rOther * 132 / 16;
-    g.raw = (g.raw / 256) * gOther * 65 / 16;
-    b.raw = (b.raw / 256) * bOther * 132 / 16;
+    r.raw = ((r.raw >> 8) * rOther * 132) >> 4;
+    g.raw = ((g.raw >> 8) * gOther * 65) >> 4;
+    b.raw = ((b.raw >> 8) * bOther * 132) >> 4;
   }
 
   XMC_INLINE void multSelf4444(uint16_t other) {
-    a.raw = (a.raw / 256) * ((other >> 12) & 0xF) * 273 / 16;
-    r.raw = (r.raw / 256) * ((other >> 8) & 0xF) * 273 / 16;
-    g.raw = (g.raw / 256) * ((other >> 4) & 0xF) * 273 / 16;
-    b.raw = (b.raw / 256) * (other & 0xF) * 273 / 16;
+    a.raw = ((a.raw >> 8) * ((other >> 12) & 0xF) * 273) >> 4;
+    r.raw = ((r.raw >> 8) * ((other >> 8) & 0xF) * 273) >> 4;
+    g.raw = ((g.raw >> 8) * ((other >> 4) & 0xF) * 273) >> 4;
+    b.raw = ((b.raw >> 8) * (other & 0xF) * 273) >> 4;
   }
 };
 
@@ -259,14 +259,14 @@ static XMC_INLINE uint16_t add8p24To565(uint16_t dest, color8p24 src) {
   if (a1 <= 0) {
     return dest;
   } else {
-    int32_t r1 = src.r.raw / (color8p24::ONE / 32);
-    int32_t g1 = src.g.raw / (color8p24::ONE / 64);
-    int32_t b1 = src.b.raw / (color8p24::ONE / 32);
+    int32_t r1 = src.r.raw >> (color8p24::PRECISION - 5);
+    int32_t g1 = src.g.raw >> (color8p24::PRECISION - 6);
+    int32_t b1 = src.b.raw >> (color8p24::PRECISION - 5);
     if (a1 < color8p24::ONE) {
       a1 = color8p24::shiftCh(a1, 6);
-      r1 = r1 * a1 / 64;
-      g1 = g1 * a1 / 64;
-      b1 = b1 * a1 / 64;
+      r1 = (r1 * a1) >> 6;
+      g1 = (g1 * a1) >> 6;
+      b1 = (b1 * a1) >> 6;
     }
     int r2, g2, b2;
     unpack565(dest, &r2, &g2, &b2);
@@ -279,14 +279,14 @@ static XMC_INLINE uint16_t add8p24To444(uint16_t dest, color8p24 src) {
   if (a1 <= 0) {
     return dest;
   } else {
-    int32_t r1 = src.r.raw / (color8p24::ONE / 16);
-    int32_t g1 = src.g.raw / (color8p24::ONE / 16);
-    int32_t b1 = src.b.raw / (color8p24::ONE / 16);
+    int32_t r1 = src.r.raw >> (color8p24::PRECISION - 4);
+    int32_t g1 = src.g.raw >> (color8p24::PRECISION - 4);
+    int32_t b1 = src.b.raw >> (color8p24::PRECISION - 4);
     if (a1 < color8p24::ONE) {
       a1 = color8p24::shiftCh(a1, 4);
-      r1 = r1 * a1 / 16;
-      g1 = g1 * a1 / 16;
-      b1 = b1 * a1 / 16;
+      r1 = (r1 * a1) >> 4;
+      g1 = (g1 * a1) >> 4;
+      b1 = (b1 * a1) >> 4;
     }
     int r2, g2, b2;
     unpack444(dest, &r2, &g2, &b2);

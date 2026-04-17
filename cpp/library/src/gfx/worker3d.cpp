@@ -5,6 +5,17 @@ namespace xmc {
 template <bool BLEND, bool TEXTURE_4444, bool COLOR_TEXTURE,
           bool GOURAUD_SHADING, bool OUTPUT_444>
 void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
+  struct {
+    int32_t zTestOffset : 20;
+    bool blendAdd : 1;
+    bool zUpdate : 1;
+    bool written : 1;
+  } flags;
+  flags.zTestOffset = args.zTestOffset;
+  flags.blendAdd = (args.blendMode == BlendMode::ADD);
+  flags.zUpdate = hasFlag(args.renderFlags, RenderFlags3D::Z_UPDATE);
+  flags.written = false;
+
   EdgeScanVars accumL = trap.topLeft;
   EdgeScanVars accumR = trap.topRight;
 
@@ -12,8 +23,12 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
     int32_t xL = accumL.x.roundToInt();
     int32_t xR = accumR.x.roundToInt();
     int32_t hSpan = xR - xL;
+    int32_t xOffset = 0;
 
-    if (xL < args.xMin) xL = args.xMin;
+    if (xL < args.xMin) {
+      xOffset = args.xMin - xL;
+      xL = args.xMin;
+    }
     if (xR > args.xMax) xR = args.xMax;
 
     if (xL < xR) {
@@ -21,19 +36,20 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
       EdgeScanVars stepH = EdgeScanVars::subDiv(accumL, accumR, hSpan,
                                                 GOURAUD_SHADING, COLOR_TEXTURE);
 
-      int32_t xOffset = xL - accumL.x.roundToInt();
-      accumH.step(stepH, xOffset, GOURAUD_SHADING, COLOR_TEXTURE);
+      if (xOffset > 0) {
+        accumH.step(stepH, xOffset, GOURAUD_SHADING, COLOR_TEXTURE);
+      }
 
       uint16_t *texData = (uint16_t *)args.textureData;
       Depth3D *depth = args.depthBuff + iy * args.depthStride + xL;
       RasterScan444 cPtr444((uint8_t *)args.target->linePtr(iy), xL);
       uint16_t *out565 = (uint16_t *)args.target->linePtr(iy) + xL;
 
-      RenderFlags3D renderFlags = args.renderFlags;
       for (int i = xR - xL; i > 0; i--) {
         int32_t z = accumH.z.floorToInt();
-        int ptrStep = 1;
-        if (z + args.zTestOffset < *depth) {
+        flags.written = 1;
+        Depth3D zOrig = *depth;
+        if (z + flags.zTestOffset < zOrig) {
           if (GOURAUD_SHADING || BLEND) {
             color8p24 c = accumH.c;
             if (COLOR_TEXTURE) {
@@ -48,30 +64,32 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
             }
             if (BLEND) {
               if (c.a.raw > 0) {
-                if (args.blendMode == BlendMode::ADD) {
+                if (flags.blendAdd) {
                   if (OUTPUT_444) {
                     cPtr444.push444(add8p24To444(cPtr444.peek(), c));
                   } else {
                     uint16_t dst565 = *out565;
-                    *(out565++) = add8p24To565(dst565, c);
+                    *out565 = add8p24To565(dst565, c);
                   }
                 } else {
                   if (OUTPUT_444) {
                     cPtr444.push444(blend8p24To444(cPtr444.peek(), c));
                   } else {
                     uint16_t dst565 = *out565;
-                    *(out565++) = blend8p24To565(dst565, c);
+                    *out565 = blend8p24To565(dst565, c);
                   }
                 }
-                ptrStep = 0;
+                if (flags.zUpdate) *depth = z;
+                flags.written = 0;
               }
             } else {
               if (OUTPUT_444) {
                 cPtr444.push444(c.to444());
               } else {
-                *(out565++) = c.to565();
+                *out565 = c.to565();
               }
-              ptrStep = 0;
+              if (flags.zUpdate) *depth = z;
+              flags.written = 0;
             }
           } else {
             uint16_t c;
@@ -95,21 +113,18 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
             if (OUTPUT_444) {
               cPtr444.push444(c);
             } else {
-              *(out565++) = c;
+              *out565 = c;
             }
-            ptrStep = 0;
+            if (flags.zUpdate) *depth = z;
+            flags.written = 0;
           }
-        }
-        if (hasFlag(renderFlags, RenderFlags3D::Z_UPDATE) && ptrStep == 0) {
-          *depth = z;
         }
         depth++;
+        out565++;
         if (OUTPUT_444) {
-          if (ptrStep) {
+          if (flags.written) {
             cPtr444.skip();
           }
-        } else {
-          out565 += ptrStep;
         }
         accumH.step(stepH, 1, GOURAUD_SHADING, COLOR_TEXTURE);
       }

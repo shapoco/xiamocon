@@ -11,6 +11,7 @@ namespace xmc {
 template <typename TRaw = int32_t, int PREC = 12>
 struct apFixed {
   static constexpr int PRECISION = PREC;
+  static constexpr TRaw ONE = (TRaw)1 << PREC;
   using TDouble = typename std::conditional<(sizeof(TRaw) <= sizeof(int16_t)),
                                             int32_t, int64_t>::type;
   static constexpr TRaw RAW_MAX = std::numeric_limits<TRaw>::max();
@@ -20,7 +21,7 @@ struct apFixed {
   XMC_INLINE constexpr apFixed() : raw(0) {}
 
   XMC_INLINE static constexpr apFixed fromFloat(float f) {
-    TDouble value = (TDouble)(f * (1 << PREC));
+    TDouble value = (TDouble)(f * ONE);
     return apFixed(XMC_CLIP(RAW_MIN, RAW_MAX, value));
   }
 
@@ -29,15 +30,13 @@ struct apFixed {
     return apFixed(((TDouble)a.raw - (TDouble)b.raw) / span);
   }
 
-  XMC_INLINE constexpr float toFloat() const {
-    return (float)raw / (1 << PREC);
-  }
+  XMC_INLINE constexpr float toFloat() const { return (float)raw / ONE; }
   XMC_INLINE constexpr TRaw floorToInt() const { return raw >> PREC; }
   XMC_INLINE constexpr TRaw roundToInt() const {
-    return (raw + (1 << (PREC - 1))) >> PREC;
+    return (raw + ONE / 2) >> PREC;
   }
   XMC_INLINE constexpr TRaw ceilToInt() const {
-    return (raw + (1 << PREC) - 1) >> PREC;
+    return (raw + ONE - 1) >> PREC;
   }
 
   XMC_INLINE constexpr apFixed operator+(const apFixed &other) const {
@@ -49,7 +48,7 @@ struct apFixed {
   }
 
   XMC_INLINE constexpr apFixed operator*(const apFixed &other) const {
-    return apFixed((TDouble)raw * (TDouble)other.raw / (1 << PREC));
+    return apFixed(((TDouble)raw * (TDouble)other.raw) >> PREC);
   }
 
   XMC_INLINE constexpr apFixed operator*(int scalar) const {
@@ -61,7 +60,7 @@ struct apFixed {
   }
 
   XMC_INLINE constexpr apFixed operator/(const apFixed &other) const {
-    return apFixed((TDouble)raw * (1 << PREC) / (TDouble)other.raw);
+    return apFixed((((TDouble)raw) << PREC) / (TDouble)other.raw);
   }
 
   XMC_INLINE constexpr apFixed operator/(int scalar) const {
@@ -79,7 +78,7 @@ struct apFixed {
   }
 
   XMC_INLINE constexpr apFixed &operator*=(const apFixed &other) {
-    raw = (TDouble)raw * (TDouble)other.raw / (1 << PREC);
+    raw = ((TDouble)raw * (TDouble)other.raw) >> PREC;
     return *this;
   }
 
@@ -89,7 +88,7 @@ struct apFixed {
   }
 
   XMC_INLINE constexpr apFixed &operator/=(const apFixed &other) {
-    raw = (TDouble)raw * (1 << PREC) / (TDouble)other.raw;
+    raw = (((TDouble)raw) << PREC) / (TDouble)other.raw;
     return *this;
   }
 
