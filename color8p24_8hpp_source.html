@@ -292,16 +292,16 @@ $(document).ready(function(){initNavTree('color8p24_8hpp_source.html',''); initR
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    int32_t rOther = (other &gt;&gt; 3) &amp; 0x1F;</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    int32_t gOther = ((other &lt;&lt; 3) &amp; 0x38) | ((other &gt;&gt; 13) &amp; 0x7);</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    int32_t bOther = (other &gt;&gt; 8) &amp; 0x1F;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    r.raw = (r.raw / 256) * rOther * 132 / 16;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    g.raw = (g.raw / 256) * gOther * 65 / 16;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    b.raw = (b.raw / 256) * bOther * 132 / 16;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    r.raw = ((r.raw &gt;&gt; 8) * rOther * 132) &gt;&gt; 4;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    g.raw = ((g.raw &gt;&gt; 8) * gOther * 65) &gt;&gt; 4;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    b.raw = ((b.raw &gt;&gt; 8) * bOther * 132) &gt;&gt; 4;</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  }</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>  XMC_INLINE <span class="keywordtype">void</span> multSelf4444(uint16_t other) {</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    a.raw = (a.raw / 256) * ((other &gt;&gt; 12) &amp; 0xF) * 273 / 16;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    r.raw = (r.raw / 256) * ((other &gt;&gt; 8) &amp; 0xF) * 273 / 16;</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    g.raw = (g.raw / 256) * ((other &gt;&gt; 4) &amp; 0xF) * 273 / 16;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    b.raw = (b.raw / 256) * (other &amp; 0xF) * 273 / 16;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    a.raw = ((a.raw &gt;&gt; 8) * ((other &gt;&gt; 12) &amp; 0xF) * 273) &gt;&gt; 4;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    r.raw = ((r.raw &gt;&gt; 8) * ((other &gt;&gt; 8) &amp; 0xF) * 273) &gt;&gt; 4;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    g.raw = ((g.raw &gt;&gt; 8) * ((other &gt;&gt; 4) &amp; 0xF) * 273) &gt;&gt; 4;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    b.raw = ((b.raw &gt;&gt; 8) * (other &amp; 0xF) * 273) &gt;&gt; 4;</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  }</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>};</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
@@ -355,14 +355,14 @@ $(document).ready(function(){initNavTree('color8p24_8hpp_source.html',''); initR
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>  <span class="keywordflow">if</span> (a1 &lt;= 0) {</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    <span class="keywordflow">return</span> dest;</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    int32_t r1 = src.r.raw / (color8p24::ONE / 32);</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    int32_t g1 = src.g.raw / (color8p24::ONE / 64);</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    int32_t b1 = src.b.raw / (color8p24::ONE / 32);</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    int32_t r1 = src.r.raw &gt;&gt; (color8p24::PRECISION - 5);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    int32_t g1 = src.g.raw &gt;&gt; (color8p24::PRECISION - 6);</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    int32_t b1 = src.b.raw &gt;&gt; (color8p24::PRECISION - 5);</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keywordflow">if</span> (a1 &lt; color8p24::ONE) {</div>
 <div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>      a1 = color8p24::shiftCh(a1, 6);</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>      r1 = r1 * a1 / 64;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>      g1 = g1 * a1 / 64;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>      b1 = b1 * a1 / 64;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>      r1 = (r1 * a1) &gt;&gt; 6;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>      g1 = (g1 * a1) &gt;&gt; 6;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>      b1 = (b1 * a1) &gt;&gt; 6;</div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    }</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordtype">int</span> r2, g2, b2;</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    unpack565(dest, &amp;r2, &amp;g2, &amp;b2);</div>
@@ -375,14 +375,14 @@ $(document).ready(function(){initNavTree('color8p24_8hpp_source.html',''); initR
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>  <span class="keywordflow">if</span> (a1 &lt;= 0) {</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordflow">return</span> dest;</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    int32_t r1 = src.r.raw / (color8p24::ONE / 16);</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    int32_t g1 = src.g.raw / (color8p24::ONE / 16);</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    int32_t b1 = src.b.raw / (color8p24::ONE / 16);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    int32_t r1 = src.r.raw &gt;&gt; (color8p24::PRECISION - 4);</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    int32_t g1 = src.g.raw &gt;&gt; (color8p24::PRECISION - 4);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    int32_t b1 = src.b.raw &gt;&gt; (color8p24::PRECISION - 4);</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <span class="keywordflow">if</span> (a1 &lt; color8p24::ONE) {</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>      a1 = color8p24::shiftCh(a1, 4);</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>      r1 = r1 * a1 / 16;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>      g1 = g1 * a1 / 16;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>      b1 = b1 * a1 / 16;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>      r1 = (r1 * a1) &gt;&gt; 4;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>      g1 = (g1 * a1) &gt;&gt; 4;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>      b1 = (b1 * a1) &gt;&gt; 4;</div>
 <div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    }</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <span class="keywordtype">int</span> r2, g2, b2;</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    unpack444(dest, &amp;r2, &amp;g2, &amp;b2);</div>
