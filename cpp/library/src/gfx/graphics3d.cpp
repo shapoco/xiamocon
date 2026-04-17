@@ -111,11 +111,11 @@ void Graphics3DClass::render(const Primitive3D &prim) {
   const State3D &state = stackTop();
   RenderFlags3D flags = state.flags;
 
-  const vec3 *primPos =  prim->position ? prim->position->data : nullptr;
-  const vec3 *primNorm =  prim->normal ? prim->normal->data : nullptr;
-  const colorf *primCol =  prim->color ? prim->color->data : nullptr;
-  const vec2 *primUv =  prim->uv ? prim->uv->data : nullptr;
-  const uint16_t* primIdx = prim->indexes ? prim->indexes->data : nullptr;
+  const vec3 *primPos = prim->position ? prim->position->data : nullptr;
+  const vec3 *primNorm = prim->normal ? prim->normal->data : nullptr;
+  const colorf *primCol = prim->color ? prim->color->data : nullptr;
+  const vec2 *primUv = prim->uv ? prim->uv->data : nullptr;
+  const uint16_t *primIdx = prim->indexes ? prim->indexes->data : nullptr;
   const Material3D &mat = prim->material;
 
   MaterialFlags3D matFlags = MaterialFlags3D::NONE;
@@ -173,6 +173,10 @@ void Graphics3DClass::render(const Primitive3D &prim) {
     workerArgs.zTestOffset = state.zTestOffset;
   } else {
     workerArgs.zTestOffset = -MAX_DEPTH;
+  }
+
+  if (multicoreMode != MultiCoreMode3D::NONE) {
+    subWorker.beginPrimitive(workerArgs);
   }
 
   int numVertices = prim->numVertices();
@@ -378,6 +382,10 @@ void Graphics3DClass::render(const Primitive3D &prim) {
   if (hasFlag(flags, RenderFlags3D::CUSTOM_VERTEX_SHADER)) {
     mat->vertexShader->endPrimitive();
   }
+
+  if (multicoreMode != MultiCoreMode3D::NONE) {
+    subWorker.endPrimitive();
+  }
 }
 
 void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
@@ -526,13 +534,29 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
   trapU.yTop = iy0 + yOffset;
   trapU.yBottom = (int)fminf(iy1, iyMax);
   if (trapU.yBottom > trapU.yTop) {
-    trapU.stepLeft = EdgeScanVars::subDiv(trapU.topLeft, trapL.topLeft, vSpanT,
-                                          useGouraud, useTexture);
-    trapU.stepRight = EdgeScanVars::subDiv(trapU.topRight, trapL.topRight,
-                                           vSpanT, useGouraud, useTexture);
-    trapU.topLeft.step(trapU.stepLeft, yOffset, useGouraud, useTexture);
-    trapU.topRight.step(trapU.stepRight, yOffset, useGouraud, useTexture);
-    renderTrapezoid3D(workerArgs, trapU, getTrapezoidRenderMode(workerArgs));
+    trapU.stepLeft = EdgeScanVars::subDiv(trapU.topLeft, trapL.topLeft, vSpanT);
+    trapU.stepRight =
+        EdgeScanVars::subDiv(trapU.topRight, trapL.topRight, vSpanT);
+    trapU.topLeft.step(trapU.stepLeft, yOffset);
+    trapU.topRight.step(trapU.stepRight, yOffset);
+    if (multicoreMode == MultiCoreMode3D::INTERLACE) {
+      EdgeScanVars stepL = trapU.stepLeft;
+      EdgeScanVars stepR = trapU.stepRight;
+      trapU.yStep = 2;
+      trapU.stepLeft.step(trapU.stepLeft);
+      trapU.stepRight.step(trapU.stepRight);
+      subWorker.push(trapU);
+      trapU.yTop += 1;
+      trapU.topLeft.step(stepL);
+      trapU.topRight.step(stepR);
+      renderTrapezoid3D(workerArgs, trapU, getTrapezoidRenderMode(workerArgs));
+    } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
+      trapU.yStep = 1;
+      subWorker.push(trapU);
+    } else {
+      trapU.yStep = 1;
+      renderTrapezoid3D(workerArgs, trapU, getTrapezoidRenderMode(workerArgs));
+    }
   }
 
   // lower trapezoid
@@ -540,13 +564,28 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
   trapL.yTop = iy1 + yOffset;
   trapL.yBottom = (int)fminf(iy2, iyMax);
   if (trapL.yBottom > trapL.yTop) {
-    trapL.stepLeft = EdgeScanVars::subDiv(trapL.topLeft, esvB, vSpanB,
-                                          useGouraud, useTexture);
-    trapL.stepRight = EdgeScanVars::subDiv(trapL.topRight, esvB, vSpanB,
-                                           useGouraud, useTexture);
-    trapL.topLeft.step(trapL.stepLeft, yOffset, useGouraud, useTexture);
-    trapL.topRight.step(trapL.stepRight, yOffset, useGouraud, useTexture);
-    renderTrapezoid3D(workerArgs, trapL, getTrapezoidRenderMode(workerArgs));
+    trapL.stepLeft = EdgeScanVars::subDiv(trapL.topLeft, esvB, vSpanB);
+    trapL.stepRight = EdgeScanVars::subDiv(trapL.topRight, esvB, vSpanB);
+    trapL.topLeft.step(trapL.stepLeft, yOffset);
+    trapL.topRight.step(trapL.stepRight, yOffset);
+    if (multicoreMode == MultiCoreMode3D::INTERLACE) {
+      EdgeScanVars stepL = trapL.stepLeft;
+      EdgeScanVars stepR = trapL.stepRight;
+      trapL.yStep = 2;
+      trapL.stepLeft.step(trapL.stepLeft);
+      trapL.stepRight.step(trapL.stepRight);
+      subWorker.push(trapL);
+      trapL.yTop += 1;
+      trapL.topLeft.step(stepL);
+      trapL.topRight.step(stepR);
+      renderTrapezoid3D(workerArgs, trapL, getTrapezoidRenderMode(workerArgs));
+    } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
+      trapL.yStep = 1;
+      subWorker.push(trapL);
+    } else {
+      trapL.yStep = 1;
+      renderTrapezoid3D(workerArgs, trapL, getTrapezoidRenderMode(workerArgs));
+    }
   }
 }
 
@@ -604,8 +643,12 @@ void Graphics3DClass::renderPoint(WorkerArgs3D &workerArgs, const Vertex3D &v0,
   trap.stepRight = dummyStep;
   trap.yTop = iy0;
   trap.yBottom = iy0 + 1;
-  // mainWorker.processNow(trap);
-  renderTrapezoid3D(workerArgs, trap, getTrapezoidRenderMode(workerArgs));
+  trap.yStep = 1;
+  if (multicoreMode != MultiCoreMode3D::NONE) {
+    subWorker.push(trap);
+  } else {
+    renderTrapezoid3D(workerArgs, trap, getTrapezoidRenderMode(workerArgs));
+  }
 }
 
 }  // namespace xmc

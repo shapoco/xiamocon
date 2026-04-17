@@ -19,7 +19,7 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
   EdgeScanVars accumL = trap.topLeft;
   EdgeScanVars accumR = trap.topRight;
 
-  for (int iy = trap.yTop; iy < trap.yBottom; iy++) {
+  for (int iy = trap.yTop; iy < trap.yBottom; iy += trap.yStep) {
     int32_t xL = accumL.x.roundToInt();
     int32_t xR = accumR.x.roundToInt();
     int32_t hSpan = xR - xL;
@@ -197,12 +197,12 @@ void Worker3D::push(const Trapezoid3D &trap) {
 }
 
 void Worker3D::endPrimitive() {
-  while (full) {
+  while (full || fifoRdPtr != fifoWrPtr) {
     tightLoopContents();
   }
 }
 
-void Worker3D::process() {
+void Worker3D::service() {
   if (fifoRdPtr == fifoWrPtr && !full) {
     return;
   }
@@ -217,6 +217,7 @@ void Worker3D::process() {
 
     rp = (rp + 1) % FIFO_DEPTH;
     full = false;
+    fifoRdPtr = rp;
   }
 }
 

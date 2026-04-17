@@ -37,6 +37,13 @@ float eyeYawSpeed = 0;
 float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
+int multiCoreMode = (int)MultiCoreMode3D::INTERLACE;
+const char **multiCoreNames = (const char *[]){
+    "NONE",
+    "INTERLACE",
+    "PIPELINE",
+};
+
 bool enableTestModel = true;
 bool enableGrass = true;
 bool enableCrystals = true;
@@ -48,26 +55,37 @@ bool enableTexture = true;
 bool enableDepthTest = true;
 bool enableGouraudShading = true;
 
+enum class MenuItemType {
+  ENUM,
+  FLOAT,
+  BOOL,
+};
+
 struct MenuItem {
+  MenuItemType type;
+  float minValue;
+  float maxValue;
   const char *name;
   void *value;
-  bool isBoolean;
+  const char **enumNames = nullptr;
 };
+
 MenuItem menuItems[] = {
-    {"Test Model", &enableTestModel, true},
-    {"Grass", &enableGrass, true},
-    {"Crystals", &enableCrystals, true},
-    {"Cave Hole", &enableCaveHole, true},
-    {"Cave Light", &enableCaveLight, true},
-    {"Particles", &enableParticles, true},
-    {"Lighting", &enableLighting, true},
-    {"Gouraud Shading", &enableGouraudShading, true},
-    {"Texture", &enableTexture, true},
-    {"Depth Test", &enableDepthTest, true},
-    {"Flame Speed", &flameSpeed, false},
-    {"Flame Buoyancy", &flameBuoyancy, false},
-    {"Flame Attraction", &flameAttraction, false},
-    {"Flame Repulsion", &flameRepulsion, false},
+    {MenuItemType::ENUM, 0, 2, "Multi Core", &multiCoreMode, multiCoreNames},
+    {MenuItemType::BOOL, 0, 1, "Test Model", &enableTestModel},
+    {MenuItemType::BOOL, 0, 1, "Grass", &enableGrass},
+    {MenuItemType::BOOL, 0, 1, "Crystals", &enableCrystals},
+    {MenuItemType::BOOL, 0, 1, "Cave Hole", &enableCaveHole},
+    {MenuItemType::BOOL, 0, 1, "Cave Light", &enableCaveLight},
+    {MenuItemType::BOOL, 0, 1, "Particles", &enableParticles},
+    {MenuItemType::BOOL, 0, 1, "Lighting", &enableLighting},
+    {MenuItemType::BOOL, 0, 1, "Gouraud Shading", &enableGouraudShading},
+    {MenuItemType::BOOL, 0, 1, "Texture", &enableTexture},
+    {MenuItemType::BOOL, 0, 1, "Depth Test", &enableDepthTest},
+    //{MenuItemType::FLOAT, 0.01f, 1.0f, "Flame Speed", &flameSpeed},
+    //{MenuItemType::FLOAT, 1.0f, 100, "Flame Buoyancy", &flameBuoyancy},
+    //{MenuItemType::FLOAT, 0, 1, "Flame Attraction", &flameAttraction},
+    //{MenuItemType::FLOAT, 0, 1, "Flame Repulsion", &flameRepulsion},
 };
 constexpr int NUM_MENU_ITEMS = sizeof(menuItems) / sizeof(MenuItem);
 bool menuShowing = false;
@@ -105,6 +123,7 @@ void xmc::appLoop() {
 }
 
 bool core1Loop() {
+  g3d->serviceSubWorker();
   return true;
 }
 
@@ -130,11 +149,22 @@ void updateScene() {
     }
 
     MenuItem &item = menuItems[selectedMenuItem];
-    if (item.isBoolean) {
+    if (item.type == MenuItemType::BOOL) {
       // toggle boolean value
       if (wasPressed(Button::LEFT) || wasPressed(Button::RIGHT)) {
         bool *value = (bool *)item.value;
         *value = !*value;
+      }
+    } else if (item.type == MenuItemType::ENUM) {
+      // cycle through enum values
+      int max = (int)item.maxValue;
+      if (wasPressed(Button::LEFT)) {
+        int *value = (int *)item.value;
+        *value =
+            (*value - 1 + (int)item.maxValue + 1) % ((int)item.maxValue + 1);
+      } else if (wasPressed(Button::RIGHT)) {
+        int *value = (int *)item.value;
+        *value = (*value + 1) % ((int)item.maxValue + 1);
       }
     } else {
       // adjust numeric value
@@ -196,7 +226,7 @@ void updateCamera(float dt) {
   // auto camera rotation
   if (nowMs > autoRotationStartMs) {
     eyeYawSpeed += dt * 0.1f;
-    eyePitchSpeed += (sinf(nowMs * 2e-3f) * 0.5f - eyePitch) * dt * 0.1f;
+    eyePitchSpeed += (sinf(nowMs * 2e-4f) * 0.5f - eyePitch) * dt * 0.1f;
     eyeDistanceSpeed += (5.0f - eyeDistance) * dt * 0.1f;
   }
 
@@ -242,6 +272,9 @@ void renderScene() {
 
   // specify target frame buffer for 3D rendering
   g3d->setTarget(frameBuffer.getBackBuffer());
+
+  // multicore rendering setup
+  g3d->setMultiCoreMode((MultiCoreMode3D)multiCoreMode);
 
   // clear state stack and depth buffer
   g3d->beginRender();
@@ -354,8 +387,15 @@ void renderMenu(Graphics2D gfx) {
     gfx->setTextColor(i == selectedMenuItem ? pack565(31, 63, 0) : 0xFFFF);
     gfx->setCursor(10, y);
     gfx->drawString(item.name);
-    if (item.isBoolean) {
+    bool changing = isPressed(Button::LEFT) || isPressed(Button::RIGHT);
+    if (changing && i == selectedMenuItem) {
+      gfx->fillRect(95, y - 1, 64, 10, pack565(31, 63, 0));
+      gfx->setTextColor(0x0000);
+    }
+    if (item.type == MenuItemType::BOOL) {
       snprintf(buf, sizeof(buf), "%s", *(bool *)item.value ? "ON" : "OFF");
+    } else if (item.type == MenuItemType::ENUM) {
+      snprintf(buf, sizeof(buf), "%s", item.enumNames[*(int *)item.value]);
     } else {
       snprintf(buf, sizeof(buf), "%.4f", *(float *)item.value);
     }

@@ -5,8 +5,6 @@
 
 namespace xmc {
 
-using Core1TaskFunc = bool (*)();
-
 static volatile Core1TaskFunc core1Func = nullptr;
 static volatile bool stopRequested = false;
 

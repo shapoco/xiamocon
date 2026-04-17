@@ -53,6 +53,7 @@ class Graphics3DClass {
   EdgeScanVars esvL, esvR, esvB;
   Trapezoid3D trapU, trapL;
 
+  MultiCoreMode3D multicoreMode = MultiCoreMode3D::INTERLACE;
   Worker3D subWorker;
 
  public:
@@ -80,10 +81,13 @@ class Graphics3DClass {
   }
 
   void setTarget(Sprite target, Rect viewport);
-
   inline void setTarget(Sprite target) {
     setTarget(target, Rect{0, 0, target->width, target->height});
   }
+
+  inline void setMultiCoreMode(MultiCoreMode3D mode) { multicoreMode = mode; }
+  inline MultiCoreMode3D getMultiCoreMode() const { return multicoreMode; }
+  inline void serviceSubWorker() { subWorker.service(); }
 
   inline RenderFlags3D getFlags() const { return stackTop().flags; }
   inline void setFlags(RenderFlags3D flags) { stackTop().flags = flags; }

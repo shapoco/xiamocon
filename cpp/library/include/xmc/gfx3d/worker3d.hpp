@@ -7,6 +7,12 @@
 
 namespace xmc {
 
+enum class MultiCoreMode3D {
+  NONE,
+  INTERLACE,
+  PIPELINE,
+};
+
 struct WorkerArgs3D {
   RenderFlags3D renderFlags = RenderFlags3D::DEFAULT;
   BlendMode blendMode = BlendMode::OVERWRITE;
@@ -35,8 +41,8 @@ struct EdgeScanVars {
 
   static XMC_INLINE EdgeScanVars subDiv(const EdgeScanVars &start,
                                         const EdgeScanVars &end, int32_t span,
-                                        bool gouraudShading,
-                                        bool textureMapping) {
+                                        bool gouraudShading = true,
+                                        bool textureMapping = true) {
     if (span <= 0) span = 1;
     return EdgeScanVars{
         (end.x - start.x) / span,
@@ -47,8 +53,8 @@ struct EdgeScanVars {
     };
   }
 
-  XMC_INLINE void step(const EdgeScanVars &step, int n, bool gouraudShading,
-                       bool textureMapping) {
+  XMC_INLINE void step(const EdgeScanVars &step, int n = 1,
+                       bool gouraudShading = true, bool textureMapping = true) {
     if (n == 1) {
       x += step.x;
       z += step.z;
@@ -80,6 +86,7 @@ struct Trapezoid3D {
   EdgeScanVars stepRight;
   int yTop;
   int yBottom;
+  int yStep;
 };
 
 class Worker3D {
@@ -98,11 +105,7 @@ class Worker3D {
   void push(const Trapezoid3D &trap);
   void endPrimitive();
   inline bool isFull() const { return full; }
-  void process();
-  inline void processNow(Trapezoid3D &trap) {
-    push(trap);
-    process();
-  }
+  void service();
 };
 
 XMC_INLINE uint32_t getTrapezoidRenderMode(const WorkerArgs3D &args) {
