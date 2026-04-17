@@ -60,7 +60,7 @@ var hierarchy =
     [ "xmc::Trapezoid3D", "structxmc_1_1Trapezoid3D.html", null ],
     [ "xmc::vec2", "structxmc_1_1vec2.html", null ],
     [ "xmc::vec3", "structxmc_1_1vec3.html", null ],
-    [ "xmc::Vertex3D", "structxmc_1_1Vertex3D.html", null ],
+    [ "xmc::VertexCache3D", "structxmc_1_1VertexCache3D.html", null ],
     [ "xmc::VertexShader", "classxmc_1_1VertexShader.html", [
       [ "xmc::EnvironmentMapShader", "classxmc_1_1EnvironmentMapShader.html", null ]
     ] ],

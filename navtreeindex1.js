@@ -44,7 +44,7 @@ var NAVTREEINDEX1 =
 "structxmc_1_1State3D.html":[0,0,0,41],
 "structxmc_1_1TextRenderArgs.html":[0,0,0,42],
 "structxmc_1_1Trapezoid3D.html":[0,0,0,43],
-"structxmc_1_1Vertex3D.html":[0,0,0,46],
+"structxmc_1_1VertexCache3D.html":[0,0,0,46],
 "structxmc_1_1VertexShaderArgs.html":[0,0,0,48],
 "structxmc_1_1WorkerArgs3D.html":[0,0,0,50],
 "structxmc_1_1apFixed.html":[0,0,0,5],

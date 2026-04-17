@@ -64,7 +64,7 @@ var annotated_dup =
       [ "Trapezoid3D", "structxmc_1_1Trapezoid3D.html", null ],
       [ "vec2", "structxmc_1_1vec2.html", "structxmc_1_1vec2" ],
       [ "vec3", "structxmc_1_1vec3.html", "structxmc_1_1vec3" ],
-      [ "Vertex3D", "structxmc_1_1Vertex3D.html", null ],
+      [ "VertexCache3D", "structxmc_1_1VertexCache3D.html", null ],
       [ "VertexShader", "classxmc_1_1VertexShader.html", null ],
       [ "VertexShaderArgs", "structxmc_1_1VertexShaderArgs.html", null ],
       [ "Worker3D", "classxmc_1_1Worker3D.html", null ],
