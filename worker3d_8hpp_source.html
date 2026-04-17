@@ -204,33 +204,11 @@ $(document).ready(function(){initNavTree('worker3d_8hpp_source.html',''); initRe
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keywordtype">void</span> service();</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>};</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>XMC_INLINE uint32_t getTrapezoidRenderMode(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1WorkerArgs3D.html">WorkerArgs3D</a> &amp;args) {</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  uint32_t mode = 0;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordflow">if</span> (args.target-&gt;format == PixelFormat::RGB444) {</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    mode |= (1 &lt;&lt; 0);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  }</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  <span class="keywordflow">if</span> (hasFlag(args.renderFlags, RenderFlags3D::GOURAUD_SHADING)) {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    mode |= (1 &lt;&lt; 1);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  }</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>  <span class="keywordflow">if</span> (hasFlag(args.renderFlags, RenderFlags3D::COLOR_TEXTURE)) {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">if</span> (args.textureFormat == PixelFormat::RGB565) {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      mode |= (1 &lt;&lt; 2);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (args.textureFormat == PixelFormat::ARGB4444) {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>      mode |= (1 &lt;&lt; 2) | (1 &lt;&lt; 3);</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  <span class="keywordflow">if</span> (args.blendMode != BlendMode::OVERWRITE) {</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    mode |= (1 &lt;&lt; 4);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>  }</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>  <span class="keywordflow">return</span> mode;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>}</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="keywordtype">void</span> renderTrapezoid3D(WorkerArgs3D &amp;args, <span class="keyword">const</span> Trapezoid3D &amp;trap,</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                       uint32_t mode);</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>}  <span class="comment">// namespace xmc</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif  </span><span class="comment">// XMC_GFX_WORKER3D_HPP</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="keywordtype">void</span> renderTrapezoid3D(<a class="code hl_struct" href="structxmc_1_1WorkerArgs3D.html">WorkerArgs3D</a> &amp;args, <span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1Trapezoid3D.html">Trapezoid3D</a> &amp;trap);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}  <span class="comment">// namespace xmc</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="preprocessor">#endif  </span><span class="comment">// XMC_GFX_WORKER3D_HPP</span></div>
 <div class="ttc" id="aclassxmc_1_1Worker3D_html"><div class="ttname"><a href="classxmc_1_1Worker3D.html">xmc::Worker3D</a></div><div class="ttdef"><b>Definition:</b> worker3d.hpp:92</div></div>
 <div class="ttc" id="astructxmc_1_1EdgeScanVars_html"><div class="ttname"><a href="structxmc_1_1EdgeScanVars.html">xmc::EdgeScanVars</a></div><div class="ttdef"><b>Definition:</b> worker3d.hpp:35</div></div>
 <div class="ttc" id="astructxmc_1_1Trapezoid3D_html"><div class="ttname"><a href="structxmc_1_1Trapezoid3D.html">xmc::Trapezoid3D</a></div><div class="ttdef"><b>Definition:</b> worker3d.hpp:82</div></div>
