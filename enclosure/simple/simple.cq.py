@@ -1,8 +1,9 @@
 import cadquery as cq
+from math import sqrt
 
 # -- Parameters --
 wall_t = 2
-back_inner_h = 6
+back_inner_h = 7
 
 board_w = 100
 board_h = 50
@@ -18,9 +19,11 @@ tfc_hole_h = 2
 speaker_x = board_w / 2 - 19
 speaker_y = board_h / 2 - 14
 
-
 battery_w = 36
 battery_h = 25
+
+extport_w = 27
+extport_h = 6
 
 func_sw_x = board_w / 2 - 7.5
 power_sw_x = board_w / 2 - 30
@@ -150,7 +153,9 @@ result = result.cut(
 # Expansion port hole
 
 result = result.cut(
-    cq.Workplane("XY").box(26, 6, 99, centered=True).translate((0, board_h / 2 - 14, 0))
+    cq.Workplane("XY")
+    .box(extport_w, extport_h, 99, centered=True)
+    .translate((0, board_h / 2 - 14, 0))
 )
 
 # Power / Func switch clearance
@@ -190,7 +195,7 @@ strap_cutter = (
 
 result = result.cut(strap_cutter.translate((board_w / 2 - 15, -case_h / 2 + 2, 2)))
 
-# ---- Screw pillars ----
+# Screw pillars
 
 pillar_h = wall_t + back_inner_h
 
@@ -213,7 +218,27 @@ result = result.union(
     .translate((board_w / 2 - 1, board_h / 2 - 7, 0))
 )
 
+# Grooves to prevent warping
+
 result = result.edges("<Z").chamfer(0.5)
+
+groove_w = sqrt(wall_t)
+
+cutter = (
+    cq.Workplane("XY")
+    .box(groove_w, 99, groove_w, centered=[True, True, True])
+    .rotate((0, 0, 0), (0, 1, 0), 45)
+)
+result = result.cut(cutter.translate((20, 0, 0)))
+result = result.cut(cutter.translate((-20, 0, 0)))
+
+cutter = (
+    cq.Workplane("XY")
+    .box(groove_w, board_h - 2, groove_w, centered=[True, True, True])
+    .rotate((0, 0, 0), (0, 1, 0), 45)
+)
+result = result.cut(cutter.translate((20 + wall_t + groove_w, 0, wall_t)))
+result = result.cut(cutter.translate((-20 - wall_t - groove_w, 0, wall_t)))
 
 show_object(result, name="back_box")
 
