@@ -16,17 +16,15 @@
 using namespace xmc;
 using namespace xmc::input;
 
-static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
+constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
 FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
 
 uint64_t nextVsyncTimeUs = 0;
 
-static const float CRYSTAL_SIZE[] = {2.5f, 3.0f, 2.0f, 3.5f};
-static constexpr int NUM_CRYSTALS = sizeof(CRYSTAL_SIZE) / sizeof(float);
+const float CRYSTAL_SIZE[] = {2.5f, 3.0f, 2.0f, 3.5f};
+constexpr int NUM_CRYSTALS = sizeof(CRYSTAL_SIZE) / sizeof(float);
 
 Graphics3D g3d = createGraphics3D(display::WIDTH, display::HEIGHT);
-
-int modelIndex = 0;
 
 uint64_t lastMs = 0;
 uint64_t autoRotationStartMs = 0;
@@ -37,15 +35,30 @@ float eyeYawSpeed = 0;
 float eyePitchSpeed = 0;
 float eyeDistanceSpeed = 0;
 
-int multiCoreMode = 3;
-const char **multiCoreNames = (const char *[]){
+int parallelMode = 3;
+constexpr int PARALLEL_MODE_NONE = 0;
+constexpr int PARALLEL_MODE_INTERLACE = 1;
+constexpr int PARALLEL_MODE_PIPELINE = 2;
+constexpr int PARALLEL_MODE_AUTO = 3;
+const char **parallelNames = (const char *[]){
     "NONE",
     "INTERLACE",
     "PIPELINE",
     "AUTO",
 };
 
-bool enableTestModel = true;
+int testModel = 1;
+constexpr int TEST_MODEL_NONE = 0;
+constexpr int TEST_MODEL_FLOWER = 1;
+constexpr int TEST_MODEL_CUBES = 2;
+constexpr int TEST_MODEL_FLAME = 3;
+const char **testModelNames = (const char *[]){
+    "NONE",
+    "FLOWER",
+    "CUBES",
+    "FLAME",
+};
+
 bool enableGrass = true;
 bool enableCrystals = true;
 bool enableCaveHole = true;
@@ -55,6 +68,7 @@ bool enableLighting = false;
 bool enableTexture = true;
 bool enableDepthTest = true;
 bool enableGouraudShading = true;
+bool enableAlphaBlending = true;
 
 enum class MenuItemType {
   ENUM,
@@ -72,8 +86,8 @@ struct MenuItem {
 };
 
 MenuItem menuItems[] = {
-    {MenuItemType::ENUM, 0, 3, "Multi Core", &multiCoreMode, multiCoreNames},
-    {MenuItemType::BOOL, 0, 1, "Test Model", &enableTestModel},
+    {MenuItemType::ENUM, 0, 3, "Parallel", &parallelMode, parallelNames},
+    {MenuItemType::ENUM, 0, 3, "Test Model", &testModel, testModelNames},
     {MenuItemType::BOOL, 0, 1, "Grass", &enableGrass},
     {MenuItemType::BOOL, 0, 1, "Crystals", &enableCrystals},
     {MenuItemType::BOOL, 0, 1, "Cave Hole", &enableCaveHole},
@@ -81,6 +95,7 @@ MenuItem menuItems[] = {
     {MenuItemType::BOOL, 0, 1, "Particles", &enableParticles},
     {MenuItemType::BOOL, 0, 1, "Lighting", &enableLighting},
     {MenuItemType::BOOL, 0, 1, "Gouraud Shading", &enableGouraudShading},
+    {MenuItemType::BOOL, 0, 1, "Alpha Blending", &enableAlphaBlending},
     {MenuItemType::BOOL, 0, 1, "Texture", &enableTexture},
     {MenuItemType::BOOL, 0, 1, "Depth Test", &enableDepthTest},
     //{MenuItemType::FLOAT, 0.01f, 1.0f, "Flame Speed", &flameSpeed},
@@ -205,7 +220,7 @@ void updateScene() {
 
   // model switch
   if (wasPressed(Button::Y)) {
-    modelIndex = (modelIndex + 1) % 3;
+    testModel = (testModel + 1) % 4;
     stopAutoRotation = true;
   }
 
@@ -274,8 +289,8 @@ void renderScene() {
   g3d->setTarget(frameBuffer.getBackBuffer());
 
   // multicore rendering setup
-  if (multiCoreMode < 3) {
-    g3d->setMultiCoreMode((MultiCoreMode3D)multiCoreMode);
+  if (parallelMode < PARALLEL_MODE_AUTO) {
+    g3d->setParallelMode((ParallelMode3D)parallelMode);
   }
 
   // clear state stack and depth buffer
@@ -314,10 +329,10 @@ void renderScene() {
   g3d->setEnvironmentLight({0.6f, 0.8f, 1.0f, 1.0f});
   g3d->setParallelLight(vec3(0.2f, 1.0f, 0.2f), {1.2f, 1.0f, 0.8f, 1});
 
-  if (enableTestModel && modelIndex == 0) {
+  if (testModel == TEST_MODEL_FLOWER) {
     // flower
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
     g3d->pushState();
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
@@ -325,18 +340,18 @@ void renderScene() {
     g3d->popState();
   }
 
-  if (enableTestModel && modelIndex == 1) {
+  if (testModel == TEST_MODEL_CUBES) {
     // metalic cubes
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
     renderCubes(g3d);
   }
 
   // crystals
   if (enableCrystals) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
     for (int i = 0; i < NUM_CRYSTALS; i++) {
       g3d->pushState();
@@ -350,16 +365,16 @@ void renderScene() {
 
   // grass
   if (enableGrass) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::PIPELINE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::PIPELINE);
     }
     renderGrass(g3d);
   }
 
   // cave hole
   if (enableCaveHole) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
     g3d->pushState();
     g3d->disableFlags(RenderFlags3D::GOURAUD_SHADING);
@@ -370,28 +385,30 @@ void renderScene() {
 
   // light from hole
   if (enableCaveLight) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
     g3d->pushState();
-    g3d->setBlendMode(BlendMode::ADD);
+    if (enableAlphaBlending) {
+      g3d->setBlendMode(BlendMode::ADD);
+    }
     g3d->scale(4);
     g3d->render(cave_light);
     g3d->popState();
   }
 
   // flame
-  if (enableTestModel && modelIndex == 2) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::INTERLACE);
+  if (testModel == TEST_MODEL_FLAME) {
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::INTERLACE);
     }
-    renderFlame(g3d);
+    renderFlame(g3d, enableAlphaBlending);
   }
 
   // particles
   if (enableParticles) {
-    if (multiCoreMode >= 3) {
-      g3d->setMultiCoreMode(MultiCoreMode3D::PIPELINE);
+    if (parallelMode == PARALLEL_MODE_AUTO) {
+      g3d->setParallelMode(ParallelMode3D::PIPELINE);
     }
     renderParticles(g3d);
   }

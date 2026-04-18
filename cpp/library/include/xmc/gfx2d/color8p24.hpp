@@ -10,19 +10,19 @@ namespace xmc {
 struct color8p24 {
   static constexpr int PRECISION = 24;
   static constexpr int ONE = 1 << PRECISION;
-  fixed8p24 b;
-  fixed8p24 g;
-  fixed8p24 r;
   fixed8p24 a;
+  fixed8p24 r;
+  fixed8p24 g;
+  fixed8p24 b;
 
-  XMC_INLINE color8p24() : b(0), g(0), r(0), a(0) {}
-  XMC_INLINE color8p24(fixed8p24 r, fixed8p24 g, fixed8p24 b, fixed8p24 a)
-      : b(b), g(g), r(r), a(a) {}
+  XMC_INLINE color8p24() : a(0), r(0), g(0), b(0) {}
+  XMC_INLINE color8p24(fixed8p24 a, fixed8p24 r, fixed8p24 g, fixed8p24 b)
+      : a(a), r(r), g(g), b(b) {}
   XMC_INLINE color8p24(colorf c)
-      : b(fixed8p24::fromFloat(c.b)),
-        g(fixed8p24::fromFloat(c.g)),
+      : a(fixed8p24::fromFloat(c.a)),
         r(fixed8p24::fromFloat(c.r)),
-        a(fixed8p24::fromFloat(c.a)) {}
+        g(fixed8p24::fromFloat(c.g)),
+        b(fixed8p24::fromFloat(c.b)) {}
 
   static XMC_INLINE uint32_t shiftCh(fixed8p24 val, int outWidth) {
     if (outWidth > PRECISION) {
@@ -113,82 +113,82 @@ struct color8p24 {
   }
 
   XMC_INLINE color8p24 operator+(const color8p24 &other) const {
-    return color8p24{b + other.b, g + other.g, r + other.r, a + other.a};
+    return color8p24{a + other.a, r + other.r, g + other.g, b + other.b};
   }
 
   XMC_INLINE color8p24 operator-(const color8p24 &other) const {
-    return color8p24{b - other.b, g - other.g, r - other.r, a - other.a};
+    return color8p24{a - other.a, r - other.r, g - other.g, b - other.b};
   }
 
   XMC_INLINE color8p24 operator*(float scalar) const {
-    return color8p24{b * scalar, g * scalar, r * scalar, a * scalar};
+    return color8p24{a * scalar, r * scalar, g * scalar, b * scalar};
   }
 
   XMC_INLINE color8p24 operator*(const color8p24 &other) const {
-    return color8p24{b * other.b, g * other.g, r * other.r, a * other.a};
+    return color8p24{a * other.a, r * other.r, g * other.g, b * other.b};
   }
 
   XMC_INLINE color8p24 operator/(float scalar) const {
-    return color8p24{b / scalar, g / scalar, r / scalar, a / scalar};
+    return color8p24{a / scalar, r / scalar, g / scalar, b / scalar};
   }
 
   XMC_INLINE color8p24 operator/(int32_t scalar) const {
-    return color8p24{b / scalar, g / scalar, r / scalar, a / scalar};
+    return color8p24{a / scalar, r / scalar, g / scalar, b / scalar};
   }
 
   XMC_INLINE color8p24 &operator+=(const color8p24 &other) {
-    b += other.b;
-    g += other.g;
-    r += other.r;
     a += other.a;
+    r += other.r;
+    g += other.g;
+    b += other.b;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator-=(const color8p24 &other) {
-    b -= other.b;
-    g -= other.g;
-    r -= other.r;
     a -= other.a;
+    r -= other.r;
+    g -= other.g;
+    b -= other.b;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator*=(float scalar) {
-    b *= scalar;
-    g *= scalar;
-    r *= scalar;
     a *= scalar;
+    r *= scalar;
+    g *= scalar;
+    b *= scalar;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator*=(int32_t scalar) {
-    b *= scalar;
-    g *= scalar;
-    r *= scalar;
     a *= scalar;
+    r *= scalar;
+    g *= scalar;
+    b *= scalar;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator*=(const color8p24 &other) {
-    b *= other.b;
-    g *= other.g;
-    r *= other.r;
     a *= other.a;
+    r *= other.r;
+    g *= other.g;
+    b *= other.b;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator/=(float scalar) {
-    b /= scalar;
-    g /= scalar;
-    r /= scalar;
     a /= scalar;
+    r /= scalar;
+    g /= scalar;
+    b /= scalar;
     return *this;
   }
 
   XMC_INLINE color8p24 &operator/=(int32_t scalar) {
-    b /= scalar;
-    g /= scalar;
-    r /= scalar;
     a /= scalar;
+    r /= scalar;
+    g /= scalar;
+    b /= scalar;
     return *this;
   }
 

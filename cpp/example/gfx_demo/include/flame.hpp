@@ -10,6 +10,6 @@ extern float flameRepulsion;
 
 void setupFlame();
 void updateFlame(float dt);
-void renderFlame(xmc::Graphics3D &g3d);
+void renderFlame(xmc::Graphics3D &g3d, bool alphaBlending);
 
 #endif

@@ -34,8 +34,15 @@ struct GraphicsState2D {
   Rect clipRect;
 };
 
-/** Calculate the stride (in bytes) for a 12-bit RGB444 image */
-static inline uint32_t stride444(int width) { return (width * 12 + 7) / 8; }
+/** Calculate the stride (in bytes) for a given pixel format and width */
+static constexpr inline uint32_t calcStride(PixelFormat format, int width) {
+  switch (format) {
+    default:
+    case PixelFormat::RGB565:
+    case PixelFormat::ARGB4444: return width * 2;
+    case PixelFormat::RGB444: return (width * 3 + 1) / 2;
+  }
+}
 
 static inline Sprite createSprite565(int width, int height,
                                      XmcRamCap caps = XMC_RAM_CAP_DMA) {
@@ -101,7 +108,7 @@ class SpriteClass {
       : format(format),
         width(width),
         height(height),
-        stride(stride),
+        stride(stride <= 0 ? calcStride(format, width) : stride),
         data(data),
         autoFree(autoFree) {}
 
@@ -110,8 +117,8 @@ class SpriteClass {
       : format(format),
         width(width),
         height(height),
-        stride(stride444(width)),
-        data(xmcMalloc(stride444(width) * height, caps)),
+        stride(calcStride(format, width)),
+        data(xmcMalloc(calcStride(format, width) * height, caps)),
         autoFree(true) {}
 
   ~SpriteClass() {

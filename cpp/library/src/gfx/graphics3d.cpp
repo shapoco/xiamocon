@@ -172,7 +172,7 @@ void Graphics3DClass::render(const Primitive3D &prim) {
     workerArgs.zTestOffset = -MAX_DEPTH;
   }
 
-  if (multicoreMode != MultiCoreMode3D::NONE) {
+  if (parallelMode != ParallelMode3D::NONE) {
     subWorker.beginPrimitive(workerArgs);
   }
 
@@ -385,7 +385,7 @@ void Graphics3DClass::render(const Primitive3D &prim) {
     mat->vertexShader->endPrimitive();
   }
 
-  if (multicoreMode != MultiCoreMode3D::NONE) {
+  if (parallelMode != ParallelMode3D::NONE) {
     subWorker.endPrimitive();
   }
 }
@@ -538,7 +538,7 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
         EdgeScanVars::subDiv(trapU.topRight, trapL.topRight, vSpanT);
     trapU.topLeft.step(trapU.stepLeft, yOffset);
     trapU.topRight.step(trapU.stepRight, yOffset);
-    if (multicoreMode == MultiCoreMode3D::INTERLACE) {
+    if (parallelMode == ParallelMode3D::INTERLACE) {
       EdgeScanVars stepL = trapU.stepLeft;
       EdgeScanVars stepR = trapU.stepRight;
       trapU.yStep = 2;
@@ -549,7 +549,7 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
       trapU.topLeft.step(stepL);
       trapU.topRight.step(stepR);
       renderTrapezoid3D(workerArgs, trapU);
-    } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
+    } else if (parallelMode == ParallelMode3D::PIPELINE) {
       trapU.yStep = 1;
       subWorker.push(trapU);
     } else {
@@ -567,7 +567,7 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
     trapL.stepRight = EdgeScanVars::subDiv(trapL.topRight, esvB, vSpanB);
     trapL.topLeft.step(trapL.stepLeft, yOffset);
     trapL.topRight.step(trapL.stepRight, yOffset);
-    if (multicoreMode == MultiCoreMode3D::INTERLACE) {
+    if (parallelMode == ParallelMode3D::INTERLACE) {
       EdgeScanVars stepL = trapL.stepLeft;
       EdgeScanVars stepR = trapL.stepRight;
       trapL.yStep = 2;
@@ -578,7 +578,7 @@ void Graphics3DClass::renderTriangle(WorkerArgs3D &workerArgs,
       trapL.topLeft.step(stepL);
       trapL.topRight.step(stepR);
       renderTrapezoid3D(workerArgs, trapL);
-    } else if (multicoreMode == MultiCoreMode3D::PIPELINE) {
+    } else if (parallelMode == ParallelMode3D::PIPELINE) {
       trapL.yStep = 1;
       subWorker.push(trapL);
     } else {
@@ -644,7 +644,7 @@ void Graphics3DClass::renderPoint(WorkerArgs3D &workerArgs,
   trap.yTop = iy0;
   trap.yBottom = iy0 + 1;
   trap.yStep = 1;
-  if (multicoreMode != MultiCoreMode3D::NONE) {
+  if (parallelMode != ParallelMode3D::NONE) {
     subWorker.push(trap);
   } else {
     renderTrapezoid3D(workerArgs, trap);

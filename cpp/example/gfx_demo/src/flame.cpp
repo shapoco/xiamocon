@@ -94,10 +94,12 @@ void updateFlame(float dt) {
   }
 }
 
-void renderFlame(xmc::Graphics3D &g3d) {
+void renderFlame(xmc::Graphics3D &g3d, bool alphaBlending) {
   g3d->pushState();
   g3d->disableFlags(RenderFlags3D::Z_UPDATE);
-  g3d->setBlendMode(BlendMode::ADD);
+  if (alphaBlending) {
+    g3d->setBlendMode(BlendMode::ADD);
+  }
   g3d->scale(1.5f);
   g3d->translate(0, 2.5f, 0);
   colorf colorH = {0.5f, 0, 1.0f, 1};

@@ -7,7 +7,7 @@
 
 namespace xmc {
 
-enum class MultiCoreMode3D {
+enum class ParallelMode3D {
   NONE,
   INTERLACE,
   PIPELINE,
