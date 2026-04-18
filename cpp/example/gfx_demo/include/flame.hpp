@@ -3,7 +3,6 @@
 
 #include <xiamocon.hpp>
 
-extern float flameSpeed;
 extern float flameBuoyancy;
 extern float flameAttraction;
 extern float flameRepulsion;

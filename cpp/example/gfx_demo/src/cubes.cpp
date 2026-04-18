@@ -9,6 +9,7 @@ Material3D envMat = createMaterial3D();
 Mesh3D cube = createCube(0.5f);
 
 void setupCubes() {
+  // Set up environment mapping material for the cubes
   envMat->flags |= MaterialFlags3D::ENVIRONMENT_MAPPED;
   envMat->colorTexture = envTexture;
   cube->setMaterial(envMat);
@@ -25,12 +26,14 @@ void renderCubes(Graphics3D &g3d) {
   for (int iz = 0; iz < 2; iz++) {
     for (int iy = 0; iy < 2; iy++) {
       for (int ix = 0; ix < 2; ix++) {
+        g3d->pushState();
+
+        // rotation animation based on time and cube index
         int i = ix + iy * 2 + iz * 4;
         float t = ((float)nowMs * 0.0002f);
         int tInt = (int)floorf(t);
         int axis = tInt % 3;
         float p = (t - tInt) * 2;
-        g3d->pushState();
         if (tInt % 8 == i && p < 1.0f) {
           if (p < 0.5f) {
             p *= 2;
@@ -49,8 +52,11 @@ void renderCubes(Graphics3D &g3d) {
             default: break;
           }
         }
+
+        // position cubes in a 2x2x2 grid
         g3d->translate((ix * 2 - 1) * 0.6f, (iy * 2 - 1) * 0.6f,
                        (iz * 2 - 1) * 0.6f);
+
         g3d->render(cube);
         g3d->popState();
       }
