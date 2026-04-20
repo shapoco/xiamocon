@@ -41,6 +41,7 @@ static constexpr inline uint32_t calcStride(PixelFormat format, int width) {
     case PixelFormat::RGB565:
     case PixelFormat::ARGB4444: return width * 2;
     case PixelFormat::RGB444: return (width * 3 + 1) / 2;
+    case PixelFormat::GRAY1: return (width + 7) / 8;
   }
 }
 
@@ -81,6 +82,18 @@ static inline Sprite createSprite4444(int width, int height, void *data,
                                       bool autoFree = false) {
   return std::make_shared<SpriteClass>(PixelFormat::ARGB4444, width, height,
                                        stride, data, autoFree);
+}
+
+static inline Sprite createSpriteGray1(int width, int height,
+                                      XmcRamCap caps = XMC_RAM_CAP_DMA) {
+  return std::make_shared<SpriteClass>(PixelFormat::GRAY1, width, height, caps);
+}
+
+static inline Sprite createSpriteGray1(int width, int height, void *data,
+                                      uint32_t stride = GFX2D_STRIDE_AUTO,
+                                      bool autoFree = false) {
+  return std::make_shared<SpriteClass>(PixelFormat::GRAY1, width, height, stride,
+                                       data, autoFree);
 }
 
 /**

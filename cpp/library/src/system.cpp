@@ -2,6 +2,7 @@
 #include "xmc/battery.hpp"
 #include "xmc/display.hpp"
 #include "xmc/fs.hpp"
+#include "xmc/gfx2d/graphics2d.hpp"
 #include "xmc/hw/gpio.hpp"
 #include "xmc/hw/i2c.hpp"
 #include "xmc/hw/pins.hpp"
@@ -10,6 +11,7 @@
 #include "xmc/hw/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/ioex.hpp"
+#include "xmc/power_off_message.hpp"
 #include "xmc/speaker.hpp"
 
 namespace xmc::system {
@@ -71,6 +73,17 @@ XmcStatus service() {
 }
 
 XmcStatus requestShutdown() {
+  // show power off message
+  {
+    Graphics2D gfx = createGraphics2D();
+    gfx->clear(0);
+    Sprite msg = createPowerOffMessageSprite();
+    gfx->drawImage(msg, (display::WIDTH - msg->width) / 2,
+                   (display::HEIGHT - msg->height) / 2, msg->width, msg->height,
+                   0, 0);
+    sleepMs(3000);
+  }
+
   display::deinit();
   input::deinit();
   battery::deinit();

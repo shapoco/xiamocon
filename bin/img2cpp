@@ -173,6 +173,56 @@ def convert_rgb565(image: Image.Image, dither: str):
     raise ValueError(f"Unknown dither mode: {dither}")
 
 
+def convert_gray1(image: Image.Image, dither: str):
+    """画像を 1bit モノクロ (0=黒, 1=白, MSB first) に変換する"""
+    img = image.convert("L")
+    w, h = img.size
+    arr = np.array(img, dtype=np.float64)
+
+    if dither == "none":
+        binary = (np.array(img, dtype=np.uint8) >= 128).astype(np.uint8)
+    elif dither == "diffusion":
+        buf = arr.copy()
+        binary = np.zeros((h, w), dtype=np.uint8)
+        for y in range(h):
+            for x in range(w):
+                old = np.clip(buf[y, x], 0.0, 255.0)
+                new_val = 255.0 if old >= 128.0 else 0.0
+                binary[y, x] = 1 if new_val > 0 else 0
+                err = old - new_val
+                for dx, dy, weight in [(1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h:
+                        buf[ny, nx] += err * weight
+    elif dither == "pattern":
+        bayer = np.array([
+            [ 0,  8,  2, 10],
+            [12,  4, 14,  6],
+            [ 3, 11,  1,  9],
+            [15,  7, 13,  5],
+        ], dtype=np.float64)
+        threshold = bayer / 16.0 * 255.0
+        binary = np.zeros((h, w), dtype=np.uint8)
+        for y in range(h):
+            for x in range(w):
+                binary[y, x] = 1 if arr[y, x] > threshold[y % 4, x % 4] else 0
+    else:
+        raise ValueError(f"Unknown dither mode: {dither}")
+
+    # 8 ピクセルを 1 バイトに詰める (MSB first)
+    stride = (w + 7) // 8
+    bytes_list = []
+    for y in range(h):
+        for bx in range(stride):
+            byte = 0
+            for bit in range(8):
+                px = bx * 8 + bit
+                if px < w and binary[y, px]:
+                    byte |= (0x80 >> bit)
+            bytes_list.append(byte)
+    return w, h, bytes_list
+
+
 def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: list):
     """C++ ヘッダファイルを生成する"""
     upper, camel, pascal = file_name_to_identifiers(output_path)
@@ -183,6 +233,8 @@ def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: li
 
     if fmt == "argb4444":
         create_func = "xmc::createSprite4444"
+    elif fmt == "gray1":
+        create_func = "xmc::createSpriteGray1"
     else:
         create_func = "xmc::createSprite565"
 
@@ -192,13 +244,21 @@ def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: li
     lines.append("")
     lines.append('#include "xmc/gfx.hpp"')
     lines.append("")
-    lines.append(f"static const uint16_t {data_name}[] = {{")
 
-    cols = 8
-    for i in range(0, len(pixels), cols):
-        chunk = pixels[i:i + cols]
-        line = "    " + ", ".join(f"0x{v:04X}" for v in chunk) + ","
-        lines.append(line)
+    if fmt == "gray1":
+        lines.append(f"static const uint8_t {data_name}[] = {{")
+        cols = 16
+        for i in range(0, len(pixels), cols):
+            chunk = pixels[i:i + cols]
+            line = "    " + ", ".join(f"0x{v:02X}" for v in chunk) + ","
+            lines.append(line)
+    else:
+        lines.append(f"static const uint16_t {data_name}[] = {{")
+        cols = 8
+        for i in range(0, len(pixels), cols):
+            chunk = pixels[i:i + cols]
+            line = "    " + ", ".join(f"0x{v:04X}" for v in chunk) + ","
+            lines.append(line)
 
     lines.append("};")
     lines.append("")
@@ -218,7 +278,7 @@ def generate_cpp(output_path: str, fmt: str, width: int, height: int, pixels: li
 
 def main():
     parser = argparse.ArgumentParser(description="画像ファイルを C++ 配列コードに変換する")
-    parser.add_argument("-f", "--format", choices=["argb4444", "rgb565"], default="rgb565",
+    parser.add_argument("-f", "--format", choices=["argb4444", "rgb565", "gray1"], default="rgb565",
                         help="出力ピクセルフォーマット (デフォルト: rgb565)")
     parser.add_argument("-d", "--dither", choices=["none", "diffusion", "pattern"], default="none",
                         help="ディザリング方式 (デフォルト: none)")
@@ -232,6 +292,8 @@ def main():
 
     if args.format == "argb4444":
         w, h, pixels = convert_argb4444(image, args.dither, key_color=args.key_color)
+    elif args.format == "gray1":
+        w, h, pixels = convert_gray1(image, args.dither)
     else:
         w, h, pixels = convert_rgb565(image, args.dither)
 

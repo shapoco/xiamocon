@@ -47,9 +47,12 @@ void Graphics2DClass::fillRect(int x, int y, int w, int h, RawColor color) {
       case PixelFormat::RGB565: {
         writeSize = dstRect.width * 2;
       } break;
-        // todo: support RGB666
+      default:
+        // todo: support Gray1 and RGB666
+        return;
     }
 
+    display::writePixelsComplete();
     for (int j = 0; j < dstRect.height; j++) {
       display::setWindow(dstRect.x, dstRect.y + j, dstRect.width, 1);
       display::writePixelsStart(lineBuffer, writeSize, false);
@@ -106,6 +109,9 @@ void Graphics2DClass::fillSmokeRect(int x, int y, int w, int h, bool white) {
             ptr[i] = (ptr[i] & 0xF000) | ((ptr[i] & 0x0EEE) >> 1) | add;
           }
         } break;
+        default:
+          // todo: support RGB666
+          return;
       }
     }
   } else {
@@ -135,14 +141,8 @@ void Graphics2DClass::drawImage(const Sprite &image, int dx, int dy, int w,
                       srcRect.width, tra);
     }
   } else {
-    PixelFormat dstFmt;
-    switch (display::getPixelFormat()) {
-      case PixelFormat::RGB444: dstFmt = PixelFormat::RGB444; break;
-      case PixelFormat::RGB565: dstFmt = PixelFormat::RGB565; break;
-      default:
-        // todo: support RGB666
-        return;
-    }
+    display::writePixelsComplete();
+    PixelFormat dstFmt = display::getPixelFormat();
     for (int j = 0; j < dstRect.height; j++) {
       copyPixelString(dstFmt, lineBuffer, 0, image->format,
                       image->linePtr(srcRect.y + j), srcRect.x, srcRect.width,
@@ -234,13 +234,7 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
     dstPtr = (uint8_t *)target->linePtr(dy >= 0 ? dy : 0);
     dstStride = target->stride;
   } else {
-    switch (display::getPixelFormat()) {
-      case PixelFormat::RGB444: dstFmt = PixelFormat::RGB444; break;
-      case PixelFormat::RGB565: dstFmt = PixelFormat::RGB565; break;
-      default:
-        // todo: support RGB666
-        return 0;
-    }
+    dstFmt = display::getPixelFormat();
     dstPtr = lineBuffer;
     dstStride = 0;
   }
@@ -271,6 +265,7 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
     renderer.renderNextLine(dstFmt, dstPtr, rdx, w, sx, tra, skip);
     dstPtr += dstStride;
 
+    display::writePixelsComplete();
     if (!skip && !target) {
       display::setWindow(dx, dy, w, 1);
       display::writePixelsStart(lineBuffer, w * 2);
