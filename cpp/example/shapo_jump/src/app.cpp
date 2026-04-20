@@ -1,8 +1,8 @@
 #include <xiamocon.hpp>
 
-#include "bmp_back_data.h"
-#include "bmp_chara_data.h"
-#include "bmp_shapo_data.h"
+#include "bmp_bg.hpp"
+#include "bmp_chara.hpp"
+#include "bmp_shapo.hpp"
 
 #include <math.h>
 #include <stdint.h>
@@ -73,9 +73,9 @@ static constexpr int NUM_TONES = (int)Sound::NUM_SOUNDS;
 FrameBuffer frameBuffer(PixelFormat::RGB444, true);
 FpsKeeper fpsKeeper(60);
 
-Sprite bmpChara = createSprite4444(256, 256, (void *)bmp_chara_data);
-Sprite bmpBack = createSprite4444(256, 256, (void *)bmp_back_data);
-Sprite bmpShapo = createSprite4444(256, 256, (void *)bmp_shapo_data);
+Sprite bmpChara = createBmpCharaSprite();
+Sprite bmpBg = createBmpBgSprite();
+Sprite bmpShapo = createBmpShapoSprite();
 uint64_t nextVsyncTimeUs = 0;
 
 uint64_t lastMs = 0;
@@ -161,6 +161,8 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
+  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i].init(audio::getPreferredSamplingRate());
     mixer.setSource(i, tones[i].getOutputPort());
@@ -226,8 +228,6 @@ void xmc::appLoop() {
     renderScene(gfx);
 
     // render status bar
-    frameBuffer.renderStatusBar(gfx);
-    frameBuffer.renderDebugBar(gfx);
     frameBuffer.endRender();
   }
 }
@@ -561,7 +561,7 @@ static void renderCloud(Graphics2D &gfx) {
       x += dx;
       int sx = sprite.patternIndex * 32;
       int sy = 32;
-      gfx->drawImage(bmpBack, x - 16, sprite.y - 16, 32, 32, sx, sy);
+      gfx->drawImage(bmpBg, x - 16, sprite.y - 16, 32, 32, sx, sy);
       i0 = i1;
     }
   }
@@ -575,7 +575,7 @@ static void renderWeeds(Graphics2D &gfx, const WeedArray &weedArray, int sx,
     if (x < -WEED_PATTERN_SIZE) {
       x += WEED_PATTERN_SIZE * WEED_ARRAY_LENGTH;
     }
-    gfx->drawImage(bmpBack, x, groundY - WEED_PATTERN_SIZE, WEED_PATTERN_SIZE,
+    gfx->drawImage(bmpBg, x, groundY - WEED_PATTERN_SIZE, WEED_PATTERN_SIZE,
                    WEED_PATTERN_SIZE, sx + sxOffset, sy);
   }
 }
@@ -593,7 +593,7 @@ static void renderStatus(Graphics2D &gfx) {
   if (shapoState == ShapoState::GAME_OVER) {
     int w = 128;
     int h = 16;
-    gfx->drawImage(bmpBack, (display::WIDTH - w) / 2, (display::HEIGHT - h) / 2,
+    gfx->drawImage(bmpBg, (display::WIDTH - w) / 2, (display::HEIGHT - h) / 2,
                    w, h, 0, 64);
   }
 }

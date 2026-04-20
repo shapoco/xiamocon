@@ -36,6 +36,8 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
+  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i].init(SAMPLE_RATE_HZ);
     mixer.setSource(i, tones[i].getOutputPort());

@@ -40,6 +40,7 @@ AppConfig appGetConfig() {
 }
 
 void appSetup() {
+  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   imu.init();
   imuPos = {1, 0, 0, 0};
   Material3D earthMaterial = createMaterial3D();

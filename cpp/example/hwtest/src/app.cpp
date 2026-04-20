@@ -27,6 +27,7 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
+  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   tone.init(SAMPLE_RATE_HZ);
   speaker::setSourcePort(tone.getOutputPort());
   speaker::setMuted(false);
@@ -104,9 +105,6 @@ void xmc::appLoop() {
 
   // fill box
   gfx->fillRect((int)x - 32, (int)y - 32, 64, 64, color);
-
-  frameBuffer.renderStatusBar(gfx);
-  frameBuffer.renderDebugBar(gfx);
 
   frameBuffer.endRender();
 
