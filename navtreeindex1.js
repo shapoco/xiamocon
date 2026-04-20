@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"speaker_8hpp_source.html":[1,0,0,0,0,0,20],
 "spi_8hpp_source.html":[1,0,0,1,0,0,0,0,9],
 "spinlock_8hpp_source.html":[1,0,0,1,0,0,0,0,10],
 "sprite_8hpp_source.html":[1,0,0,0,0,0,3,9],
@@ -77,7 +78,7 @@ var NAVTREEINDEX1 =
 "structxmc_1_1vec3.html#a5f53e4a10ad93507f94fd79b55d6bf57":[0,0,0,41,3],
 "structxmc_1_1vec3.html#a67aeb9abd085a98681e1bd52be2a3120":[0,0,0,41,0],
 "structxmc_1_1vec3.html#a70534e89d8ad825ac89997511a22899a":[0,0,0,41,1],
-"system_8hpp_source.html":[1,0,0,0,0,0,20],
+"system_8hpp_source.html":[1,0,0,0,0,0,21],
 "timer_8hpp.html":[1,0,0,1,0,0,0,0,12],
 "timer_8hpp.html#a0b9d342b2c8dfdce5ded686858fb6463":[1,0,0,1,0,0,0,0,12,2],
 "timer_8hpp.html#a819a3a9265ca42d5e9c4fc1f40822ab1":[1,0,0,1,0,0,0,0,12,1],

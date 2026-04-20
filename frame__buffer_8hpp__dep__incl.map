@@ -1,7 +1,8 @@
 <map id="cpp/library/include/xmc/gfx2d/frame_buffer.hpp" name="cpp/library/include/xmc/gfx2d/frame_buffer.hpp">
-<area shape="rect" id="node1" title="Frame buffer management for 2D graphics in XMC library." alt="" coords="58,5,269,45"/>
-<area shape="rect" id="node2" href="$gfx_8hpp_source.html" title=" " alt="" coords="92,93,235,133"/>
+<area shape="rect" id="node1" title="Frame buffer management for 2D graphics in XMC library." alt="" coords="113,5,323,45"/>
+<area shape="rect" id="node2" href="$gfx_8hpp_source.html" title=" " alt="" coords="147,93,289,133"/>
 <area shape="rect" id="node3" href="$xiamocon_8hpp_source.html" title=" " alt="" coords="5,269,148,309"/>
 <area shape="rect" id="node4" href="$app_8hpp_source.html" title=" " alt="" coords="92,181,235,221"/>
 <area shape="rect" id="node5" href="$diagnostic_8hpp_source.html" title=" " alt="" coords="184,269,337,309"/>
+<area shape="rect" id="node6" href="$power__off__message_8hpp_source.html" title=" " alt="" coords="310,181,526,221"/>
 </map>
