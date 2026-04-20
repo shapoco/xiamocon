@@ -4,8 +4,21 @@ import argparse
 import os
 import re
 import sys
-from PIL import Image
+from PIL import Image, ImageColor
 import numpy as np
+
+
+def parse_key_color(s: str):
+    """Web カラー文字列を (R, G, B) タプルに変換する。# は省略可能。"""
+    try:
+        return ImageColor.getrgb(s)
+    except ValueError:
+        pass
+    # # なしの hex を試す
+    try:
+        return ImageColor.getrgb("#" + s)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"無効なキーカラー: {s}")
 
 
 def file_name_to_identifiers(output_path: str):
@@ -30,8 +43,20 @@ def file_name_to_identifiers(output_path: str):
     return upper, camel, pascal
 
 
-def convert_argb4444(image: Image.Image, dither: str):
+def apply_key_color(image: Image.Image, key_color) -> Image.Image:
+    """key_color に一致するピクセルのアルファを 0 にする"""
+    img = image.convert("RGBA")
+    arr = np.array(img)
+    kr, kg, kb = key_color[:3]
+    mask = (arr[:, :, 0] == kr) & (arr[:, :, 1] == kg) & (arr[:, :, 2] == kb)
+    arr[mask, 3] = 0
+    return Image.fromarray(arr, "RGBA")
+
+
+def convert_argb4444(image: Image.Image, dither: str, key_color=None):
     """画像を ARGB4444 に変換する"""
+    if key_color is not None:
+        image = apply_key_color(image, key_color)
     img = image.convert("RGBA")
     w, h = img.size
     arr = np.array(img, dtype=np.float64)  # (h, w, 4)
@@ -197,6 +222,8 @@ def main():
                         help="出力ピクセルフォーマット (デフォルト: rgb565)")
     parser.add_argument("-d", "--dither", choices=["none", "diffusion", "pattern"], default="none",
                         help="ディザリング方式 (デフォルト: none)")
+    parser.add_argument("-k", "--key-color", type=parse_key_color, default=None,
+                        help="ARGB4444 変換時に透明にするキーカラー (例: #FF8000, orange, F80)")
     parser.add_argument("input", help="入力画像ファイルのパス")
     parser.add_argument("output", help="出力 C++ ヘッダ (*.hpp) のパス")
     args = parser.parse_args()
@@ -204,7 +231,7 @@ def main():
     image = Image.open(args.input)
 
     if args.format == "argb4444":
-        w, h, pixels = convert_argb4444(image, args.dither)
+        w, h, pixels = convert_argb4444(image, args.dither, key_color=args.key_color)
     else:
         w, h, pixels = convert_rgb565(image, args.dither)
 

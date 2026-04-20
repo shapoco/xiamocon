@@ -7,8 +7,20 @@ import struct
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageColor
 import pygltflib
+
+
+def parse_key_color(s: str):
+    """Web カラー文字列を (R, G, B) タプルに変換する。# は省略可能。"""
+    try:
+        return ImageColor.getrgb(s)
+    except ValueError:
+        pass
+    try:
+        return ImageColor.getrgb("#" + s)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"無効なキーカラー: {s}")
 
 
 GLTF_PRIMITIVE_MODES = {
@@ -101,8 +113,24 @@ def load_image(gltf, texture_index, gltf_dir):
     raise RuntimeError(f"Cannot load texture {texture_index}")
 
 
-def to_argb4444(image, dither="none"):
+def apply_key_color(image, key_color):
+    """key_color に一致するピクセルのアルファを 0 にする"""
+    image = image.convert("RGBA")
+    pixels = image.load()
+    kr, kg, kb = key_color[:3]
+    w, h = image.size
+    for y in range(h):
+        for x in range(w):
+            r, g, b, a = pixels[x, y]
+            if r == kr and g == kg and b == kb:
+                pixels[x, y] = (r, g, b, 0)
+    return image
+
+
+def to_argb4444(image, dither="none", key_color=None):
     """Convert PIL Image to ARGB4444 pixel array (list of uint16)."""
+    if key_color is not None:
+        image = apply_key_color(image, key_color)
     image = image.convert("RGBA")
     w, h = image.size
     raw = image.tobytes()
@@ -277,7 +305,7 @@ def sanitize_id(name):
     return result
 
 
-def generate(gltf, gltf_dir, prefix, dither="none", texformat="rgb565"):
+def generate(gltf, gltf_dir, prefix, dither="none", texformat="rgb565", key_color=None):
     """Generate C++ header content from glTF data."""
     out = []
     w = out.append
@@ -305,7 +333,7 @@ def generate(gltf, gltf_dir, prefix, dither="none", texformat="rgb565"):
             try:
                 img = load_image(gltf, pbr.baseColorTexture.index, gltf_dir)
                 if texformat == "argb4444":
-                    tw, th, pixels = to_argb4444(img, dither=dither)
+                    tw, th, pixels = to_argb4444(img, dither=dither, key_color=key_color)
                     create_sprite_func = "xmc::createSprite4444"
                 else:
                     tw, th, pixels = to_rgb565(img, dither=dither)
@@ -671,6 +699,13 @@ def main():
         default="rgb565",
         help="Texture pixel format (default: rgb565)",
     )
+    parser.add_argument(
+        "--key-color",
+        "-k",
+        type=parse_key_color,
+        default=None,
+        help="Key color to make transparent in ARGB4444 (e.g. #FF8000, orange, F80)",
+    )
     args = parser.parse_args()
 
     input_path = os.path.abspath(args.input)
@@ -683,7 +718,7 @@ def main():
     if gltf.binary_blob() is None:
         gltf.convert_buffers(pygltflib.BufferFormat.BINARYBLOB)
 
-    content = generate(gltf, gltf_dir, prefix, dither=args.dither, texformat=args.texformat)
+    content = generate(gltf, gltf_dir, prefix, dither=args.dither, texformat=args.texformat, key_color=args.key_color)
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, "w") as f:
