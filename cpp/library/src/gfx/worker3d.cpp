@@ -99,9 +99,9 @@ void renderTrapezoid3D(WorkerArgs3D &args, const Trapezoid3D &trap) {
               uv += accumH.u.floorToInt() & args.uMask;
               c = texData[uv];
               if (!TEXTURE_4444 && OUTPUT_444) {
-                c = convert565To444(c);
+                c = color565To444(c);
               } else if (TEXTURE_4444 && !OUTPUT_444) {
-                c = convert444To565(c);
+                c = color444To565(c);
               }
             } else {
               if (OUTPUT_444) {

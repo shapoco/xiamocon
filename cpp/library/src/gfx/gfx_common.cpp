@@ -1,4 +1,4 @@
-#include "xmc/gfx2d/gfx_common.hpp"
+#include "xmc/gfx2d/gfx2d_common.hpp"
 #include "xmc/gfx2d/raster_scan.hpp"
 
 #include <string.h>

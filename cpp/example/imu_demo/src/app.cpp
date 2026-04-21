@@ -14,7 +14,7 @@ static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
 static lsm6dsv16x::SensorI2C imu;
 static quat imuPos;
 
-FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
+FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
 
 static Mesh3D earth = createSphere(1.0f, 18, 9);
 static Sprite surfaceTexture =
@@ -40,7 +40,7 @@ AppConfig appGetConfig() {
 }
 
 void appSetup() {
-  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   imu.init();
   imuPos = {1, 0, 0, 0};
   Material3D earthMaterial = createMaterial3D();
@@ -51,9 +51,9 @@ void appSetup() {
 void appLoop() {
   updateScene();
 
-  frameBuffer.beginRender();
+  frameBuffer->beginRender();
   renderScene();
-  frameBuffer.endRender();
+  frameBuffer->endRender();
 }
 
 static void updateScene() {
@@ -90,7 +90,7 @@ static void updateScene() {
 }
 
 static void renderScene() {
-  Graphics2D gfx = frameBuffer.createGraphics();
+  Graphics2D gfx = frameBuffer->createGraphics();
 
   gfx->clear(0);
 
@@ -98,7 +98,7 @@ static void renderScene() {
   vec3 eye_pos = {0, 0.1f, 0.15f};
   createProjectionMatrix(&proj, &imuPos, &eye_pos, 0.03f, 0.03f, display::WIDTH,
                          display::HEIGHT);
-  g3d->setTarget(frameBuffer.getBackBuffer());
+  g3d->setTarget(frameBuffer->getBackBuffer());
   g3d->beginRender();
 
   g3d->setDepthRange(-1.0f, 1.0f);

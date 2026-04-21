@@ -13,6 +13,8 @@
 
 namespace xmc {
 
+static constexpr int STATUS_BAR_HEIGHT = 10;
+
 enum class FrameBufferFlags : uint32_t {
   SHOW_STATUS_BAR = 1 << 1,
   SHOW_BATTERY_LEVEL = 1 << 2,
@@ -22,10 +24,7 @@ enum class FrameBufferFlags : uint32_t {
 };
 XMC_ENUM_FLAGS(FrameBufferFlags, uint32_t)
 
-class FrameBuffer {
- public:
-  static constexpr int STATUS_BAR_HEIGHT = 10;
-
+class FrameBufferClass {
  private:
   const int numBuffers;
   FrameBufferFlags flags = FrameBufferFlags::DEFAULT;
@@ -41,8 +40,7 @@ class FrameBuffer {
   char batString[16] = {0};
 
  public:
-  FrameBuffer(PixelFormat fmt, bool doubleBuffered = false,
-              int width = display::WIDTH, int height = display::HEIGHT);
+  FrameBufferClass(PixelFormat fmt, bool doubleBuffered, int width, int height);
 
   /**
    * @brief Check if the frame buffer is double buffered
@@ -146,6 +144,15 @@ class FrameBuffer {
    */
   XmcStatus renderDebugBar(Graphics2D &gfx);
 };
+
+using FrameBuffer = std::shared_ptr<FrameBufferClass>;
+
+static inline FrameBuffer createFrameBuffer(PixelFormat fmt,
+                                            bool doubleBuffered = false,
+                                            int width = display::WIDTH,
+                                            int height = display::HEIGHT) {
+  return std::make_shared<FrameBufferClass>(fmt, doubleBuffered, width, height);
+}
 
 }  // namespace xmc
 

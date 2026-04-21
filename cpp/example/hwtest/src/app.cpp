@@ -13,7 +13,7 @@ int rCounter = 0, gCounter = 32767, bCounter = 65535;
 float x = display::WIDTH / 2, y = display::HEIGHT / 2;
 float dx = 1.0f, dy = 1.11f;
 
-FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
+FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
 Tone tone;
 
 Waveform waveform = Waveform::SQUARE;
@@ -27,7 +27,7 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
-  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   tone.init(SAMPLE_RATE_HZ);
   speaker::setSourcePort(tone.getOutputPort());
   speaker::setMuted(false);
@@ -98,15 +98,15 @@ void xmc::appLoop() {
   if (b >= 16) b = 31 - b;
   uint32_t color = ((r << 8) | (g << 4) | b);
 
-  frameBuffer.beginRender();
+  frameBuffer->beginRender();
 
-  Graphics2D gfx = frameBuffer.createGraphics();
+  Graphics2D gfx = frameBuffer->createGraphics();
   gfx->clear(0);
 
   // fill box
   gfx->fillRect((int)x - 32, (int)y - 32, 64, 64, color);
 
-  frameBuffer.endRender();
+  frameBuffer->endRender();
 
   sleepMs(10);
 }

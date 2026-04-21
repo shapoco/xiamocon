@@ -3,10 +3,10 @@
 
 namespace xmc {
 
-uint8_t lineBuffer[display::WIDTH * sizeof(RawColor)];
+uint8_t lineBuffer[display::WIDTH * 3];
 
 static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
-                              uint32_t stride, RawColor color);
+                              uint32_t stride, DevColor color);
 
 void Graphics2DClass::setTarget(Sprite &s) {
   target = s;
@@ -27,7 +27,7 @@ Rect Graphics2DClass::getBounds() {
   }
 }
 
-void Graphics2DClass::fillRect(int x, int y, int w, int h, RawColor color) {
+void Graphics2DClass::fillRect(int x, int y, int w, int h, DevColor color) {
   Rect dstRect = {x, y, w, h};
   dstRect = dstRect.intersect(state.clipRect);
 
@@ -61,7 +61,7 @@ void Graphics2DClass::fillRect(int x, int y, int w, int h, RawColor color) {
   }
 }
 
-void Graphics2DClass::drawRect(int x, int y, int w, int h, RawColor color) {
+void Graphics2DClass::drawRect(int x, int y, int w, int h, DevColor color) {
   if (w < 0) {
     x += w;
     w = -w;
@@ -143,12 +143,13 @@ void Graphics2DClass::drawImage(const Sprite &image, int dx, int dy, int w,
   } else {
     display::writePixelsComplete();
     PixelFormat dstFmt = display::getPixelFormat();
+    uint32_t txSize = calcStride(dstFmt, dstRect.width);
     for (int j = 0; j < dstRect.height; j++) {
       copyPixelString(dstFmt, lineBuffer, 0, image->format,
                       image->linePtr(srcRect.y + j), srcRect.x, srcRect.width,
                       tra);
       display::setWindow(dstRect.x, dstRect.y + j, dstRect.width, 1);
-      display::writePixelsStart(lineBuffer, dstRect.width * 2, false);
+      display::writePixelsStart(lineBuffer, txSize, false);
       display::writePixelsComplete();
     }
   }
@@ -180,12 +181,12 @@ void Graphics2DClass::setCursor(int x, int y) {
   state.cursorY = y;
 }
 
-void Graphics2DClass::setTextColor(RawColor fg) {
+void Graphics2DClass::setTextColor(DevColor fg) {
   state.textColor = fg;
   state.textFlags = TextRenderFlags::DRAW_FORE;
 }
 
-void Graphics2DClass::setTextColor(RawColor fg, RawColor bg) {
+void Graphics2DClass::setTextColor(DevColor fg, DevColor bg) {
   state.textColor = fg;
   state.backColor = bg;
   state.textFlags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
@@ -266,9 +267,10 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
     dstPtr += dstStride;
 
     display::writePixelsComplete();
+    uint32_t txSize = calcStride(dstFmt, w);
     if (!skip && !target) {
       display::setWindow(dx, dy, w, 1);
-      display::writePixelsStart(lineBuffer, w * 2);
+      display::writePixelsStart(lineBuffer, txSize, false);
       display::writePixelsComplete();
     }
   }
@@ -276,16 +278,15 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
 }
 
 static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
-                              uint32_t stride, RawColor color) {
+                              uint32_t stride, DevColor color) {
   switch (fmt) {
     case PixelFormat::GRAY1: {
       TextRenderArgs tra;
       tra.foreColor = color;
       tra.backColor = 0;
       tra.flags = TextRenderFlags::DRAW_FORE;
-      uint8_t c = color ? 1 : 0;
       for (int j = 0; j < h; j++) {
-        RasterScanGray1 scan((uint8_t *)(ptr + j * stride), x);
+        RasterScanGray1 scan(((uint8_t *)ptr + j * stride), x);
         for (int i = 0; i < w; i++) {
           scan.pushGray1(1, tra);
         }
@@ -295,7 +296,7 @@ static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
     case PixelFormat::RGB444: {
       uint16_t c = color;
       for (int j = 0; j < h; j++) {
-        RasterScan444 scan((uint8_t *)(ptr + j * stride), x);
+        RasterScan444 scan(((uint8_t *)ptr + j * stride), x);
         for (int i = 0; i < w; i++) {
           scan.push444(c);
         }
@@ -305,7 +306,7 @@ static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
     case PixelFormat::RGB565: {
       uint16_t c = color;
       for (int j = 0; j < h; j++) {
-        RasterScan565 scan((uint16_t *)(ptr + j * stride), x);
+        RasterScan565 scan((uint16_t *)((uint8_t *)ptr + j * stride), x);
         for (int i = 0; i < w; i++) {
           scan.push565(c);
         }
@@ -315,7 +316,7 @@ static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
     case PixelFormat::ARGB4444: {
       uint16_t c = color;
       for (int j = 0; j < h; j++) {
-        RasterScan4444 scan((uint16_t *)(ptr + j * stride), x);
+        RasterScan4444 scan((uint16_t *)((uint8_t *)ptr + j * stride), x);
         for (int i = 0; i < w; i++) {
           scan.push4444(c);
         }

@@ -3,7 +3,7 @@
 
 #include "xmc/ap_fixed.hpp"
 #include "xmc/gfx2d/colorf.hpp"
-#include "xmc/gfx2d/gfx_common.hpp"
+#include "xmc/gfx2d/gfx2d_common.hpp"
 
 namespace xmc {
 

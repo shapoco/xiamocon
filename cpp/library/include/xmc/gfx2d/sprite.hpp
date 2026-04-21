@@ -5,7 +5,7 @@
 #include "xmc/battery.hpp"
 #include "xmc/display.hpp"
 #include "xmc/geo.hpp"
-#include "xmc/gfx2d/gfx_common.hpp"
+#include "xmc/gfx2d/gfx2d_common.hpp"
 #include "xmc/hw/ram.hpp"
 
 #include <memory>
@@ -26,8 +26,8 @@ struct GraphicsState2D {
   int fontSize = 1;
   int fontOffsetY = 0;
   int fontHeight = 0;
-  RawColor textColor = 0;
-  RawColor backColor = 0;
+  DevColor textColor = 0;
+  DevColor backColor = 0;
   TextRenderFlags textFlags = TextRenderFlags::DRAW_FORE;
   int cursorX = 0;
   int cursorY = 0;

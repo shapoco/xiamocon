@@ -8,11 +8,11 @@ using namespace xmc::input;
 
 static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
 static constexpr int MAX_NUM_ITEMS = 128;
-static constexpr int ADDR_BAR_TOP = FrameBuffer::STATUS_BAR_HEIGHT;
+static constexpr int ADDR_BAR_TOP = STATUS_BAR_HEIGHT;
 static constexpr int ADDR_BAR_HEIGHT = 16;
 static constexpr int TEXT_Y_OFFSET = 3;
 
-FrameBuffer frameBuffer(DISPLAY_FORMAT, false);
+FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, false);
 bool renderRequested = false;
 uint64_t lastRenderUs = 0;
 
@@ -186,7 +186,7 @@ void xmc::appSetup() {
   fs::mount();
   fileList.requestUpdate();
   requestRenderAll();
-  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 }
 
 void xmc::appLoop() {
@@ -208,15 +208,15 @@ void xmc::appLoop() {
 
 XmcStatus render() {
   renderRequested = false;
-  frameBuffer.beginRender();
+  frameBuffer->beginRender();
 
-  Graphics2D gfx = frameBuffer.createGraphics();
+  Graphics2D gfx = frameBuffer->createGraphics();
   gfx->clear(0x0000);
 
   renderAddressBar(gfx);
   fileList.render(gfx);
 
-  frameBuffer.endRender();
+  frameBuffer->endRender();
   return XMC_OK;
 }
 

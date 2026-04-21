@@ -1,7 +1,7 @@
 #ifndef XMC_GFX_COLORF_HPP
 #define XMC_GFX_COLORF_HPP
 
-#include "xmc/gfx2d/gfx_common.hpp"
+#include "xmc/gfx2d/gfx2d_common.hpp"
 
 namespace xmc {
 

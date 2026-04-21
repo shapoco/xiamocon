@@ -70,7 +70,7 @@ enum class Sound {
 };
 static constexpr int NUM_TONES = (int)Sound::NUM_SOUNDS;
 
-FrameBuffer frameBuffer(PixelFormat::RGB444, true);
+FrameBuffer frameBuffer = createFrameBuffer(PixelFormat::RGB444, true);
 FpsKeeper fpsKeeper(60);
 
 Sprite bmpChara = createBmpCharaSprite();
@@ -161,7 +161,7 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
-  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i].init(audio::getPreferredSamplingRate());
@@ -223,12 +223,12 @@ void xmc::appLoop() {
 
   fpsKeeper.waitVsync();
   if (!fpsKeeper.isFrameSkipping()) {
-    frameBuffer.beginRender();
-    Graphics2D gfx = frameBuffer.createGraphics();
+    frameBuffer->beginRender();
+    Graphics2D gfx = frameBuffer->createGraphics();
     renderScene(gfx);
 
     // render status bar
-    frameBuffer.endRender();
+    frameBuffer->endRender();
   }
 }
 

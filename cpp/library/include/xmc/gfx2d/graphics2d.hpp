@@ -23,6 +23,36 @@ class Graphics2DClass {
     state.clipRect = {0, 0, target->width, target->height};
   }
 
+  inline PixelFormat getPixelFormat() const {
+    return target ? target->format : display::getPixelFormat();
+  }
+
+  inline DevColor devColor(int r, int g, int b, int a = 255) {
+    r = XMC_CLIP(0, 255, r);
+    g = XMC_CLIP(0, 255, g);
+    b = XMC_CLIP(0, 255, b);
+    switch (getPixelFormat()) {
+      case PixelFormat::GRAY1: return color888ToGray1((r << 16) | (g << 8) | b);
+      case PixelFormat::RGB444: return pack444(r >> 4, g >> 4, b >> 4);
+      case PixelFormat::ARGB4444:
+        return pack4444(a >> 4, r >> 4, g >> 4, b >> 4);
+      case PixelFormat::RGB565: return pack565(r >> 3, g >> 2, b >> 3);
+      default:
+        // todo: support RGB666
+        return 0;
+    }
+  }
+
+  inline DevColor devColor(Colors color) {
+    switch (getPixelFormat()) {
+      case PixelFormat::GRAY1: return color888ToGray1((uint32_t)color);
+      case PixelFormat::RGB444: return color888To444((uint32_t)color);
+      case PixelFormat::ARGB4444: return color8888To4444((uint32_t)color);
+      case PixelFormat::RGB565: return color888To565((uint32_t)color);
+      default: return 0;
+    }
+  }
+
   void setTarget(Sprite &s);
   inline Sprite getTarget() const { return target; }
   void setClipRect(const Rect &rect);
@@ -34,12 +64,12 @@ class Graphics2DClass {
   GraphicsState2D getState() { return state; }
   void setState(const GraphicsState2D &s) { state = s; }
 
-  inline void clear(RawColor color) {
+  inline void clear(DevColor color) {
     fillRect(state.clipRect.x, state.clipRect.y, state.clipRect.width,
              state.clipRect.height, color);
   }
-  void fillRect(int x, int y, int w, int h, RawColor color);
-  void drawRect(int x, int y, int w, int h, RawColor color);
+  void fillRect(int x, int y, int w, int h, DevColor color);
+  void drawRect(int x, int y, int w, int h, DevColor color);
   void fillSmokeRect(int x, int y, int w, int h, bool white = false);
 
   void drawImage(const Sprite &image, int dx, int dy, int w, int h, int sx,
@@ -52,6 +82,13 @@ class Graphics2DClass {
     tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
     drawImage(image, dx, dy, w, h, sx, sy, tra);
   }
+  inline void drawImage(const Sprite &image, int dx, int dy) {
+    TextRenderArgs tra;
+    tra.foreColor = 0xFFFF;
+    tra.backColor = 0x0000;
+    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;
+    drawImage(image, dx, dy, image->width, image->height, 0, 0, tra);
+  }
 
   inline void setFont(const GFXfont *font, int size) {
     setFont(font);
@@ -60,8 +97,8 @@ class Graphics2DClass {
   void setFont(const GFXfont *font);
   void setFontSize(int size);
   void setCursor(int x, int y);
-  void setTextColor(RawColor fg);
-  void setTextColor(RawColor fg, RawColor bg);
+  void setTextColor(DevColor fg);
+  void setTextColor(DevColor fg, DevColor bg);
   void drawString(const char *str);
   int drawChar(GlyphRenderer &renderer, int x, int y, int code);
 };

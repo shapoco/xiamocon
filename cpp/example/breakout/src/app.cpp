@@ -50,7 +50,7 @@ enum class GameState {
   GameOver,
 };
 
-FrameBuffer frameBuffer(PixelFormat::RGB444, true);
+FrameBuffer frameBuffer = createFrameBuffer(PixelFormat::RGB444, true);
 FpsKeeper fpsKeeper(60.0f);
 
 Brick bricks[BRICK_ROWS][BRICK_COLS];
@@ -263,7 +263,7 @@ void updateBall() {
 }
 
 void drawScene() {
-  Graphics2D gfx = frameBuffer.createGraphics();
+  Graphics2D gfx = frameBuffer->createGraphics();
   gfx->clear(COLOR_BG);
 
   gfx->fillRect(0, 0, SCREEN_W, 2, COLOR_WALL);
@@ -291,8 +291,8 @@ void drawScene() {
                   COLOR_GAME_OVER);
   }
 
-  frameBuffer.renderStatusBar(gfx);
-  frameBuffer.renderDebugBar(gfx);
+  frameBuffer->renderStatusBar(gfx);
+  frameBuffer->renderDebugBar(gfx);
 }
 
 }  // namespace
@@ -339,8 +339,8 @@ void xmc::appLoop() {
 
   fpsKeeper.waitVsync();
   if (!fpsKeeper.isFrameSkipping()) {
-    frameBuffer.beginRender();
+    frameBuffer->beginRender();
     drawScene();
-    frameBuffer.endRender();
+    frameBuffer->endRender();
   }
 }

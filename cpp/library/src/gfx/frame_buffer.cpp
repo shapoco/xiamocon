@@ -5,7 +5,7 @@
 
 namespace xmc {
 
-FrameBuffer::FrameBuffer(PixelFormat fmt, bool doubleBuffered, int width,
+FrameBufferClass::FrameBufferClass(PixelFormat fmt, bool doubleBuffered, int width,
                          int height)
     : numBuffers(doubleBuffered ? 2 : 1) {
   {
@@ -19,7 +19,7 @@ FrameBuffer::FrameBuffer(PixelFormat fmt, bool doubleBuffered, int width,
   }
 }
 
-XmcStatus FrameBuffer::beginRender() {
+XmcStatus FrameBufferClass::beginRender() {
   if (numBuffers < 2 && transferInProgress) {
     XMC_ERR_RET(completeTransferToDisplay());
     transferInProgress = false;
@@ -27,7 +27,7 @@ XmcStatus FrameBuffer::beginRender() {
   return XMC_OK;
 }
 
-XmcStatus FrameBuffer::endRender(bool transferToDisplay) {
+XmcStatus FrameBufferClass::endRender(bool transferToDisplay) {
   if (!transferToDisplay) return XMC_OK;
 
   uint64_t nowUs = getTimeUs();
@@ -57,7 +57,7 @@ XmcStatus FrameBuffer::endRender(bool transferToDisplay) {
   return XMC_OK;
 }
 
-XmcStatus FrameBuffer::renderStatusBar(Graphics2D &gfx) {
+XmcStatus FrameBufferClass::renderStatusBar(Graphics2D &gfx) {
   int w = gfx->getBounds().width;
   int h = STATUS_BAR_HEIGHT;
   int baseLine = 1;
@@ -100,7 +100,7 @@ XmcStatus FrameBuffer::renderStatusBar(Graphics2D &gfx) {
   return XMC_OK;
 }
 
-XmcStatus FrameBuffer::renderDebugBar(Graphics2D &gfx) {
+XmcStatus FrameBufferClass::renderDebugBar(Graphics2D &gfx) {
   XmcStatus err;
   const char *file;
   int line;

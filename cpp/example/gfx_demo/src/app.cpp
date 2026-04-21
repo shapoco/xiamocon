@@ -16,8 +16,8 @@
 using namespace xmc;
 using namespace xmc::input;
 
-constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
-FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
+PixelFormat displayFormat = PixelFormat::RGB565;
+FrameBuffer frameBuffer;
 
 uint64_t nextVsyncTimeUs = 0;
 
@@ -116,13 +116,18 @@ void renderScene();
 void renderMenu(Graphics2D gfx);
 
 AppConfig xmc::appGetConfig() {
+  if (isPressed(Button::X)) {
+    displayFormat = PixelFormat::RGB444;
+  }
+
   auto cfg = getDefaultAppConfig();
-  cfg.displayPixelFormat = DISPLAY_FORMAT;
+  cfg.displayPixelFormat = displayFormat;
   cfg.speakerEnabled = false;
   return cfg;
 }
 
 void xmc::appSetup() {
+  frameBuffer = createFrameBuffer(displayFormat, true);
   setupGrass();
   setupFlame();
   setupParticles();
@@ -133,9 +138,9 @@ void xmc::appSetup() {
 void xmc::appLoop() {
   updateScene();
 
-  frameBuffer.beginRender();
+  frameBuffer->beginRender();
   renderScene();
-  frameBuffer.endRender();
+  frameBuffer->endRender();
 }
 
 bool core1Loop() {
@@ -280,13 +285,13 @@ void updateCamera(float dt) {
 }
 
 void renderScene() {
-  Graphics2D gfx = frameBuffer.createGraphics();
+  Graphics2D gfx = frameBuffer->createGraphics();
 
   // clear screen
   gfx->clear(0x0000);
 
   // specify target frame buffer for 3D rendering
-  g3d->setTarget(frameBuffer.getBackBuffer());
+  g3d->setTarget(frameBuffer->getBackBuffer());
 
   // multicore rendering setup
   if (parallelMode < PARALLEL_MODE_AUTO) {
@@ -313,8 +318,8 @@ void renderScene() {
   // setup camera
   g3d->setDepthRange(0.1f, 10.0f);
   g3d->setPerspectiveProjection(
-      M_PI / 4, (float)frameBuffer.getWidth() / frameBuffer.getHeight(), 0.01f,
-      100.0f);
+      M_PI / 4, (float)frameBuffer->getWidth() / frameBuffer->getHeight(),
+      0.01f, 100.0f);
   vec3 focus = vec3(0, 3.3f, 0);
   vec3 eye = focus + vec3(eyeDistance * sinf(eyeYaw) * cosf(eyePitch),
                           eyeDistance * sinf(eyePitch),
@@ -421,18 +426,20 @@ void renderScene() {
 }
 
 void renderMenu(Graphics2D gfx) {
+  DevColor white = gfx->devColor(Colors::WHITE);
+  DevColor yellow = gfx->devColor(Colors::YELLOW);
   gfx->setFont(&ShapoSansP_s08c07);
   gfx->setFontSize(1);
   char buf[64];
   for (int i = 0; i < NUM_MENU_ITEMS; i++) {
     MenuItem &item = menuItems[i];
-    int y = FrameBuffer::STATUS_BAR_HEIGHT + 10 + i * 13;
-    gfx->setTextColor(i == selectedMenuItem ? pack565(31, 63, 0) : 0xFFFF);
+    int y = STATUS_BAR_HEIGHT + 10 + i * 13;
+    gfx->setTextColor(i == selectedMenuItem ? yellow : white);
     gfx->setCursor(10, y);
     gfx->drawString(item.name);
     bool changing = isPressed(Button::LEFT) || isPressed(Button::RIGHT);
     if (changing && i == selectedMenuItem) {
-      gfx->fillRect(95, y - 1, 64, 10, pack565(31, 63, 0));
+      gfx->fillRect(95, y - 1, 64, 10, yellow);
       gfx->setTextColor(0x0000);
     }
     if (item.type == MenuItemType::BOOL) {

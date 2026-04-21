@@ -9,7 +9,7 @@ static constexpr int NUM_KEYS = 8;
 static constexpr uint32_t SAMPLE_RATE_HZ = 44100;
 
 static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB444;
-FrameBuffer frameBuffer(DISPLAY_FORMAT, true);
+FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
 
 static Mixer mixer(NUM_TONES);
 static Tone tones[NUM_TONES];
@@ -36,7 +36,7 @@ AppConfig xmc::appGetConfig() {
 }
 
 void xmc::appSetup() {
-  frameBuffer.enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
+  frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i].init(SAMPLE_RATE_HZ);
@@ -88,9 +88,9 @@ void xmc::appLoop() {
   if (dispUpdate) {
     dispUpdate = false;
 
-    frameBuffer.beginRender();
+    frameBuffer->beginRender();
 
-    Graphics2D gfx = frameBuffer.createGraphics();
+    Graphics2D gfx = frameBuffer->createGraphics();
 
     gfx->clear(0);
     for (int i = 0; i < NUM_KEYS; i++) {
@@ -120,6 +120,6 @@ void xmc::appLoop() {
       gfx->fillRect(x, y, w, h, 0x000);
     }
 
-    frameBuffer.endRender();
+    frameBuffer->endRender();
   }
 }

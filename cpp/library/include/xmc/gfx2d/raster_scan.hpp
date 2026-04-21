@@ -2,7 +2,7 @@
 #define XMC_GFX_RASTER_SCANNER_HPP
 
 #include "xmc/gfx2d/color8p24.hpp"
-#include "xmc/gfx2d/gfx_common.hpp"
+#include "xmc/gfx2d/gfx2d_common.hpp"
 
 namespace xmc {
 
@@ -46,7 +46,7 @@ class RasterScanGray1 {
     skip();
   }
   XMC_INLINE void push444(uint16_t color) {
-    if (convert444ToGray1(color)) {
+    if (color444ToGray1(color)) {
       temp |= mask;
     } else {
       temp &= ~mask;
@@ -54,7 +54,7 @@ class RasterScanGray1 {
     skip();
   }
   XMC_INLINE void push565(uint16_t color) {
-    if (convert565ToGray1(color)) {
+    if (color565ToGray1(color)) {
       temp |= mask;
     } else {
       temp &= ~mask;
@@ -131,7 +131,7 @@ class RasterScan444 {
       *(ptr++) = color & 0xFF;
     }
   }
-  XMC_INLINE void push565(uint16_t color) { push444(convert565To444(color)); }
+  XMC_INLINE void push565(uint16_t color) { push444(color565To444(color)); }
   XMC_INLINE void push4444(uint16_t color) {
     uint16_t a1 = color & 0xF000;
     if (a1 == 0xF000) {
@@ -163,7 +163,7 @@ class RasterScan565 {
       ptr++;
     }
   }
-  XMC_INLINE void push444(uint16_t color) { push565(convert444To565(color)); }
+  XMC_INLINE void push444(uint16_t color) { push565(color444To565(color)); }
   XMC_INLINE void push565(uint16_t color) { *ptr++ = color; }
   XMC_INLINE void push4444(uint16_t color) {
     uint16_t a1 = color & 0xF000;
@@ -207,7 +207,7 @@ class RasterScan4444 {
   }
   XMC_INLINE void push444(uint16_t color) { *(ptr++) = color | 0xF000; }
   XMC_INLINE void push565(uint16_t color) {
-    *(ptr++) = convert565To444(color) | 0xF000;
+    *(ptr++) = color565To444(color) | 0xF000;
   }
   XMC_INLINE void push4444(uint16_t color) {
     uint32_t a1 = color & 0xF000;

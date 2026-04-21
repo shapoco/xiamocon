@@ -79,8 +79,7 @@ XmcStatus requestShutdown() {
     gfx->clear(0);
     Sprite msg = createPowerOffMessageSprite();
     gfx->drawImage(msg, (display::WIDTH - msg->width) / 2,
-                   (display::HEIGHT - msg->height) / 2, msg->width, msg->height,
-                   0, 0);
+                   (display::HEIGHT - msg->height) / 2);
     sleepMs(3000);
   }
 
