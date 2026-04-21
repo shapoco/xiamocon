@@ -106,8 +106,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac479b5935abf8318ff9743173ad69c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14af8032a37e161ac23f0c12b4a6b78f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#a14af8032a37e161ac23f0c12b4a6b78f">setWaveform</a> (<a class="el" href="tone_8hpp.html#a2088bdad36b783e047fc138922fc946f">Waveform</a> wf)</td></tr>
 <tr class="separator:a14af8032a37e161ac23f0c12b4a6b78f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76c55c8062deb3ef470bff705923bca5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="tone_8hpp.html#a2088bdad36b783e047fc138922fc946f">Waveform</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#a76c55c8062deb3ef470bff705923bca5">getWaveform</a> () const</td></tr>
+<tr class="separator:a76c55c8062deb3ef470bff705923bca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add98dc1b1428d2246b1c67b849962155"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#add98dc1b1428d2246b1c67b849962155">setVelocity</a> (uint8_t velo)</td></tr>
 <tr class="separator:add98dc1b1428d2246b1c67b849962155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec4aa0e8225374a53421b0acdbd4ea9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#abec4aa0e8225374a53421b0acdbd4ea9">getVelocity</a> () const</td></tr>
+<tr class="separator:abec4aa0e8225374a53421b0acdbd4ea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a458a5858f2feddebc606a23b743a1aa8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#a458a5858f2feddebc606a23b743a1aa8">setEnvelope</a> (uint16_t attackMs, uint16_t decayMs, uint16_t sustainLevel, uint16_t releaseMs)</td></tr>
 <tr class="separator:a458a5858f2feddebc606a23b743a1aa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a8931a5dfe75827a16ac937bffcfb9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1ToneClass.html#a1a8931a5dfe75827a16ac937bffcfb9c">setSweep</a> (int32_t delta, uint32_t period_ms)</td></tr>
@@ -151,6 +155,58 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns a pointer to the output port of the tone. The output port can be connected to the speaker or to a mixer for further processing. </p><dl class="section return"><dt>Returns</dt><dd>A pointer to the output port of the tone. </dd></dl>
+
+</div>
+</div>
+<a id="abec4aa0e8225374a53421b0acdbd4ea9" name="abec4aa0e8225374a53421b0acdbd4ea9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec4aa0e8225374a53421b0acdbd4ea9">&#9670;&#160;</a></span>getVelocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t xmc::audio::ToneClass::getVelocity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets the current velocity (volume) of the tone. </p><dl class="section return"><dt>Returns</dt><dd>The current velocity of the tone. </dd></dl>
+
+</div>
+</div>
+<a id="a76c55c8062deb3ef470bff705923bca5" name="a76c55c8062deb3ef470bff705923bca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76c55c8062deb3ef470bff705923bca5">&#9670;&#160;</a></span>getWaveform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="tone_8hpp.html#a2088bdad36b783e047fc138922fc946f">Waveform</a> xmc::audio::ToneClass::getWaveform </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Gets the current waveform of the tone. </p><dl class="section return"><dt>Returns</dt><dd>The current waveform of the tone. </dd></dl>
 
 </div>
 </div>

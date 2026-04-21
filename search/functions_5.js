@@ -9,5 +9,7 @@ var searchData=
   ['getstreamformat_6',['getStreamFormat',['../classxmc_1_1audio_1_1StreamingDac.html#aeacb0685b1c4f1deb248b6ed028ab883',1,'xmc::audio::StreamingDac::getStreamFormat()'],['../speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e',1,'xmc::speaker::getStreamFormat()']]],
   ['gettimems_7',['getTimeMs',['../timer_8hpp.html#a0b9d342b2c8dfdce5ded686858fb6463',1,'xmc']]],
   ['gettimeus_8',['getTimeUs',['../timer_8hpp.html#aa3d0e79285a00f1939fbc5b1760f80ed',1,'xmc']]],
-  ['getwidth_9',['getWidth',['../classxmc_1_1FrameBufferClass.html#ad1ab7b93f99fac4b4d0e6c48d060b11e',1,'xmc::FrameBufferClass']]]
+  ['getvelocity_9',['getVelocity',['../classxmc_1_1audio_1_1ToneClass.html#abec4aa0e8225374a53421b0acdbd4ea9',1,'xmc::audio::ToneClass']]],
+  ['getwaveform_10',['getWaveform',['../classxmc_1_1audio_1_1ToneClass.html#a76c55c8062deb3ef470bff705923bca5',1,'xmc::audio::ToneClass']]],
+  ['getwidth_11',['getWidth',['../classxmc_1_1FrameBufferClass.html#ad1ab7b93f99fac4b4d0e6c48d060b11e',1,'xmc::FrameBufferClass']]]
 ];

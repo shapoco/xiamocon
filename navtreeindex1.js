@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"speaker_8hpp.html#aeeca184ff0b79137f8c72c33e3ac75e5":[1,0,0,0,0,0,20,0],
+"speaker_8hpp.html#af3cb568359d4d57efd1b1cb1de37ab05":[1,0,0,0,0,0,20,4],
 "speaker_8hpp_source.html":[1,0,0,0,0,0,20],
 "spi_8hpp_source.html":[1,0,0,1,0,0,0,0,9],
 "spinlock_8hpp_source.html":[1,0,0,1,0,0,0,0,10],

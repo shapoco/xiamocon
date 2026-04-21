@@ -1,8 +1,9 @@
 <map id="cpp/library/include/xmc/audio/tone.hpp" name="cpp/library/include/xmc/audio/tone.hpp">
-<area shape="rect" id="node1" title=" " alt="" coords="256,5,411,45"/>
+<area shape="rect" id="node1" title=" " alt="" coords="292,5,447,45"/>
 <area shape="rect" id="node2" href="$audio__common_8hpp_source.html" title=" " alt="" coords="113,93,295,119"/>
 <area shape="rect" id="node6" title=" " alt="" coords="291,240,362,265"/>
 <area shape="rect" id="node7" title=" " alt="" coords="371,93,439,119"/>
+<area shape="rect" id="node8" title=" " alt="" coords="464,93,541,119"/>
 <area shape="rect" id="node3" href="$xmc__common_8hpp_source.html" title=" " alt="" coords="118,167,293,192"/>
 <area shape="rect" id="node4" href="$xmc__status_8h_source.html" title=" " alt="" coords="5,240,147,265"/>
 <area shape="rect" id="node5" title=" " alt="" coords="171,240,253,265"/>
