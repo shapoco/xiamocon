@@ -110,9 +110,9 @@ static bool inTransaction = false;
 // max 3 bytes per pixel for RGB666
 static uint8_t lineBuffer[WIDTH * 3];
 
-static XmcStatus begin_command(uint8_t cmd);
-static void end_command();
-static XmcStatus write_data(const uint8_t *data, uint32_t size);
+static XmcStatus beginCommand(uint8_t cmd);
+static void endCommand();
+static XmcStatus writeData(const uint8_t *data, uint32_t size);
 
 XmcStatus init(PixelFormat format, int rotation) {
   currentFormat = format;
@@ -258,7 +258,7 @@ XmcStatus setWindow(int x, int y, int width, int height) {
 
 XmcStatus writePixelsStart(const void *data, uint32_t num_bytes,
                            bool repeated) {
-  XMC_ERR_RET(begin_command(XMC_ST7789_MEMORY_WRITE));
+  XMC_ERR_RET(beginCommand(XMC_ST7789_MEMORY_WRITE));
   gpio::write(XMC_PIN_DISPLAY_DC, 1);
   dma::Config cfg = {
       .ptr = (void *)data,
@@ -267,29 +267,29 @@ XmcStatus writePixelsStart(const void *data, uint32_t num_bytes,
   };
   XmcStatus sts = spi::dmaWriteStart(&cfg, XMC_PIN_DISPLAY_CS);
   if (sts != XMC_OK) {
-    end_command();
+    endCommand();
   }
   return sts;
 }
 
 XmcStatus writePixelsComplete() {
   XmcStatus sts = spi::dmaComplete();
-  end_command();
+  endCommand();
   return sts;
 }
 
 XmcStatus writeCommand(const uint8_t cmd, const uint8_t *params,
                        uint32_t numParams) {
-  XMC_ERR_RET(begin_command(cmd));
+  XMC_ERR_RET(beginCommand(cmd));
   XmcStatus sts = XMC_OK;
   if (numParams > 0) {
-    sts = write_data(params, numParams);
+    sts = writeData(params, numParams);
   }
-  end_command();
+  endCommand();
   return sts;
 }
 
-static XmcStatus begin_command(uint8_t cmd) {
+static XmcStatus beginCommand(uint8_t cmd) {
   XMC_ERR_RET(spi::lock());
   inTransaction = true;
   spi::setBaudrate(spi::getPreferredFrequency(Chipset::DISPLAY));
@@ -300,12 +300,12 @@ static XmcStatus begin_command(uint8_t cmd) {
     XMC_ERR_BRK(sts, spi::writeBlocking(&cmd, 1));
   } while (0);
   if (sts != XMC_OK) {
-    end_command();
+    endCommand();
   }
   return sts;
 }
 
-static void end_command() {
+static void endCommand() {
   if (!inTransaction) return;
   inTransaction = false;
   gpio::write(XMC_PIN_DISPLAY_CS, 1);
@@ -313,7 +313,7 @@ static void end_command() {
   spi::unlock();
 }
 
-static XmcStatus write_data(const uint8_t *data, uint32_t size) {
+static XmcStatus writeData(const uint8_t *data, uint32_t size) {
   gpio::write(XMC_PIN_DISPLAY_DC, 1);
   return spi::writeBlocking(data, size);
 }

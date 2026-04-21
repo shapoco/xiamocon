@@ -13,17 +13,75 @@ FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
 Mixer mixer = createMixer(NUM_TONES);
 Tone tones[NUM_TONES];
 
-Waveform waveform = Waveform::SQUARE;
+uint64_t lastLoopTime = 0;
+int keyboardMode = true;
 
 int nextToneIndex = 0;
 Button keys[] = {
     Button::DOWN, Button::LEFT, Button::UP, Button::RIGHT,
-    Button::X,    Button::Y,    Button::A,  Button::B,
+    Button::Y,    Button::X,    Button::A,  Button::B,
 };
 int keyToTone[] = {-1, -1, -1, -1, -1, -1, -1, -1};
 int keyToNote[] = {-5, -3, -1, 0, 2, 4, 5, 7};
 
-bool dispUpdate = false;
+enum class ToneParamType {
+  ENUM,
+  INT32,
+};
+
+struct ParamEntry {
+  ToneParamType type;
+  const char *name;
+  const void *unit;
+  int min;
+  int max;
+  void *value;
+};
+
+const char *waveformNames[] = {
+    "Square", "Sine", "Triangle", "Sawtooth", "Noise",
+};
+
+struct ToneParams {
+  int waveform = (int)Waveform::SQUARE;
+  int velocity = 64;
+  int attackMs = 0;
+  int decayMs = 1000;
+  int sustainLevel = 192;
+  int releaseMs = 500;
+  int sweepDelta = 0;
+  int sweepPeriodMs = 0;
+  int keyShift = 64;
+};
+
+ToneParams params;
+
+ParamEntry paramItems[] = {
+    {ToneParamType::ENUM, "Waveform", waveformNames, 0,
+     (int)Waveform::NUM_WAVEFORMS - 1, &params.waveform},
+    {ToneParamType::INT32, "Velocity", "/ 127", 0, 127, &params.velocity},
+    {ToneParamType::INT32, "Attack Time", "ms", 0, 1000, &params.attackMs},
+    {ToneParamType::INT32, "Decay Time", "ms", 0, 1000, &params.decayMs},
+    {ToneParamType::INT32, "Sustain Level", "/ 256", 0, 256,
+     &params.sustainLevel},
+    {ToneParamType::INT32, "Release Time", "ms", 0, 1000, &params.releaseMs},
+    {ToneParamType::INT32, "Sweep Delta", "/ 65536", -32768, 65536,
+     &params.sweepDelta},
+    {ToneParamType::INT32, "Sweep Period", "ms", 0, 1000,
+     &params.sweepPeriodMs},
+    {ToneParamType::INT32, "Key Shift", "/ 127", 0, 127, &params.keyShift},
+};
+
+constexpr int NUM_TONE_PARAMS = sizeof(paramItems) / sizeof(paramItems[0]);
+int selectedParamIndex = 0;
+uint64_t paramAdjustStartMs = 0;
+float paramAdjustAccum = 1.0f;
+
+bool displayUpdateRequested = false;
+
+void acceptKeyInput(uint64_t nowMs, float dt);
+void keyboardStateChanged(int ikey, bool pressed);
+void updateDisplay();
 
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
@@ -35,6 +93,9 @@ AppConfig xmc::appGetConfig() {
 void xmc::appSetup() {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 
+  // Display updates are event-driven, FPS is not needed
+  frameBuffer->disableFlag(FrameBufferFlags::SHOW_FPS);
+
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i] = createTone();
     tones[i]->init();
@@ -45,79 +106,230 @@ void xmc::appSetup() {
   }
 
   speaker::setSourcePort(mixer->getOutputPort());
-  gpio::setDir(XMC_PIN_GPIO_0, true);
   speaker::setMuted(false);
 
-  dispUpdate = true;
+  displayUpdateRequested = true;
 }
 
 void xmc::appLoop() {
+  uint64_t nowMs = getTimeMs();
+  float dt = (nowMs - lastLoopTime) / 1000.0f;
+  lastLoopTime = nowMs;
+
+  acceptKeyInput(nowMs, dt);
+  updateDisplay();
+}
+
+void acceptKeyInput(uint64_t nowMs, float dt) {
   if (input::wasPressed(input::Button::FUNC)) {
-    int n = static_cast<int>(Waveform::NUM_WAVEFORMS);
-    waveform = static_cast<Waveform>((static_cast<int>(waveform) + 1) % n);
-  }
+    keyboardMode = !keyboardMode;
 
-  for (int ikey = 0; ikey < NUM_KEYS; ikey++) {
-    if (input::wasPressed(keys[ikey])) {
-      if (keyToTone[ikey] >= 0) {
-        // this key is already playing a tone, so stop it first
-        tones[keyToTone[ikey]]->noteOff();
-      }
-
-      keyToTone[ikey] = nextToneIndex;
-      nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
-
-      tones[keyToTone[ikey]]->setWaveform(waveform);
-      tones[keyToTone[ikey]]->setVelocity(64);
-      tones[keyToTone[ikey]]->setEnvelope(0, 1000, 192, 500);
-      tones[keyToTone[ikey]]->noteOn(64 + keyToNote[ikey]);
-
-      dispUpdate = true;
-    }
-    if (input::wasReleased(keys[ikey])) {
-      if (keyToTone[ikey] >= 0) {
-        tones[keyToTone[ikey]]->noteOff();
-        keyToTone[ikey] = -1;
-      }
-      dispUpdate = true;
-    }
-  }
-
-  if (dispUpdate) {
-    dispUpdate = false;
-
-    frameBuffer->beginRender();
-
-    Graphics2D gfx = frameBuffer->createGraphics();
-
-    gfx->clear(0);
+    // stop all tones
     for (int i = 0; i < NUM_KEYS; i++) {
-      int x = display::WIDTH * i / NUM_KEYS + 2;
-      int y = display::HEIGHT / 4;
-      int w = display::WIDTH / NUM_KEYS - 4;
-      int h = display::HEIGHT / 2;
-      gfx->fillRect(x, y, w, h, (keyToTone[i] < 0) ? 0xFFF : 0x0D6);
+      if (keyToTone[i] >= 0) {
+        tones[keyToTone[i]]->noteOff();
+        keyToTone[i] = -1;
+      }
     }
 
-    static const int blackKeyX[] = {
-        display::HEIGHT * -1 / 8 + display::HEIGHT * 1 / 14,
-        display::HEIGHT * -1 / 8 + display::HEIGHT * 3 / 14,
-        display::HEIGHT * -1 / 8 + display::HEIGHT * 5 / 14,
-        display::HEIGHT * 3 / 8 + display::HEIGHT * 1 / 14,
-        display::HEIGHT * 3 / 8 + display::HEIGHT * 3 / 14,
-        display::HEIGHT * 6 / 8 + display::HEIGHT * 1 / 14,
-        display::HEIGHT * 6 / 8 + display::HEIGHT * 3 / 14,
-    };
-    static constexpr int NUM_BLACK_KEYS =
-        (int)(sizeof(blackKeyX) / sizeof(blackKeyX[0]));
-    for (int i = 0; i < NUM_BLACK_KEYS; i++) {
-      int x = blackKeyX[i];
-      int y = display::HEIGHT / 4;
-      int w = display::WIDTH / 12;
-      int h = display::HEIGHT * 3 / 10;
-      gfx->fillRect(x, y, w, h, 0x000);
-    }
-
-    frameBuffer->endRender();
+    displayUpdateRequested = true;
   }
+
+  if (keyboardMode) {
+    for (int ikey = 0; ikey < NUM_KEYS; ikey++) {
+      if (input::wasPressed(keys[ikey])) {
+        keyboardStateChanged(ikey, true);
+      }
+      if (input::wasReleased(keys[ikey])) {
+        keyboardStateChanged(ikey, false);
+      }
+    }
+  } else {
+    // Select parameter with UP/DOWN keys
+    if (input::wasPressed(input::Button::UP)) {
+      selectedParamIndex--;
+      if (selectedParamIndex < 0) {
+        selectedParamIndex = NUM_TONE_PARAMS - 1;
+      }
+      displayUpdateRequested = true;
+    }
+    if (input::wasPressed(input::Button::DOWN)) {
+      selectedParamIndex++;
+      if (selectedParamIndex >= NUM_TONE_PARAMS) {
+        selectedParamIndex = 0;
+      }
+      displayUpdateRequested = true;
+    }
+
+    ParamEntry &p = paramItems[selectedParamIndex];
+
+    // Adjust value with LEFT/RIGHT keys
+    int dir = 0;
+    if (input::isPressed(input::Button::LEFT)) {
+      dir -= 1;
+    }
+    if (input::isPressed(input::Button::RIGHT)) {
+      dir += 1;
+    }
+
+    if (dir == 0) {
+      // no direction, reset adjustment speed
+      paramAdjustStartMs = nowMs;
+      paramAdjustAccum = 1.0f;
+    } else {
+      // Accelerate adjustment speed based on dynamic range
+      uint64_t elapsedMs = nowMs - paramAdjustStartMs;
+      float speed = (p.max - p.min + 1) * elapsedMs * 0.00005f;
+      paramAdjustAccum += speed * dt;
+      int delta = (int)floorf(paramAdjustAccum);
+      paramAdjustAccum -= delta;
+      delta *= dir;
+
+      // Apply the parameter change
+      if (delta != 0) {
+        switch (p.type) {
+          case ToneParamType::ENUM: {
+            int *val = (int *)p.value;
+            *val = (int)((*val + delta + (p.max + 1)) % (p.max + 1));
+          }; break;
+          case ToneParamType::INT32: {
+            int *val = (int *)p.value;
+            *val = XMC_CLIP(p.min, p.max, *val + delta);
+          }; break;
+          default: break;
+        }
+        displayUpdateRequested = true;
+      }
+    }
+
+    if (input::wasPressed(input::Button::A)) {
+      keyboardStateChanged(3, true);
+    } else if (input::wasReleased(input::Button::A)) {
+      keyboardStateChanged(3, false);
+    }
+  }
+}
+
+void keyboardStateChanged(int ikey, bool pressed) {
+  if (pressed) {
+    // pressed
+    if (keyToTone[ikey] >= 0) {
+      // this key is already playing a tone, so stop it first
+      tones[keyToTone[ikey]]->noteOff();
+    }
+
+    keyToTone[ikey] = nextToneIndex;
+    nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
+
+    Tone &t = tones[keyToTone[ikey]];
+    t->setWaveform((Waveform)params.waveform);
+    t->setVelocity(params.velocity);
+    t->setEnvelope(params.attackMs, params.decayMs, params.sustainLevel,
+                   params.releaseMs);
+    t->setSweep(params.sweepDelta, params.sweepPeriodMs);
+    t->noteOn(params.keyShift + keyToNote[ikey]);
+  } else {
+    // released
+    if (keyToTone[ikey] >= 0) {
+      tones[keyToTone[ikey]]->noteOff();
+      keyToTone[ikey] = -1;
+    }
+  }
+  displayUpdateRequested = true;
+}
+
+void updateDisplay() {
+  if (!displayUpdateRequested) return;
+  displayUpdateRequested = false;
+
+  frameBuffer->beginRender();
+
+  Graphics2D gfx = frameBuffer->createGraphics();
+  gfx->clear(0);
+
+  gfx->setFont(&ShapoSansP_s12c09a01w02, 1);
+
+  int menuItemHeight = 15;
+  int menuHeight = NUM_TONE_PARAMS * menuItemHeight;
+  int menuTop = display::HEIGHT - STATUS_BAR_HEIGHT - menuHeight;
+  for (int i = 0; i < NUM_TONE_PARAMS; i++) {
+    ParamEntry &p = paramItems[i];
+
+    int x = 0;
+    int y = menuTop + i * menuItemHeight;
+
+    if (!keyboardMode && i == selectedParamIndex) {
+      gfx->fillRect(0, y, display::WIDTH, menuItemHeight, 0x06C);
+      gfx->setTextColor(0xFFF);
+    } else {
+      gfx->setTextColor(0xFFF);
+    }
+
+    x += 2;
+    y += 2;
+
+    gfx->setCursor(x, y);
+    gfx->drawString(p.name);
+
+    x = display::WIDTH / 2;
+    gfx->setCursor(x, y);
+    switch (p.type) {
+      case ToneParamType::ENUM: {
+        int val = *(int *)p.value;
+        if (p.unit) {
+          const char *const *enumNames = (const char *const *)p.unit;
+          gfx->drawString(enumNames[val]);
+        } else {
+          char buf[16];
+          snprintf(buf, sizeof(buf), "%d", val);
+          gfx->drawString(buf);
+        }
+      } break;
+
+      case ToneParamType::INT32: {
+        int val = *(int *)p.value;
+        char buf[16];
+        snprintf(buf, sizeof(buf), "%d", val);
+        gfx->drawString(buf);
+        if (p.unit) {
+          x = display::WIDTH * 3 / 4;
+          gfx->setCursor(x, y);
+          gfx->drawString((const char *)p.unit);
+        }
+      } break;
+      default: break;
+    }
+  }
+
+  int keyTop = STATUS_BAR_HEIGHT;
+  int whiteKeyBottom = menuTop - 5;
+  int whiteKeyHeight = whiteKeyBottom - keyTop;
+  int blackKeyHeight = whiteKeyHeight * 3 / 5;
+
+  for (int i = 0; i < NUM_KEYS; i++) {
+    int x = display::WIDTH * i / NUM_KEYS + 2;
+    int w = display::WIDTH / NUM_KEYS - 4;
+    gfx->fillRect(x, keyTop, w, whiteKeyHeight,
+                  (keyToTone[i] < 0) ? 0xFFF : 0x06C);
+  }
+
+  static const int blackKeyX[] = {
+      display::HEIGHT * -1 / 8 + display::HEIGHT * 1 / 14,
+      display::HEIGHT * -1 / 8 + display::HEIGHT * 3 / 14,
+      display::HEIGHT * -1 / 8 + display::HEIGHT * 5 / 14,
+      display::HEIGHT * 3 / 8 + display::HEIGHT * 1 / 14,
+      display::HEIGHT * 3 / 8 + display::HEIGHT * 3 / 14,
+      display::HEIGHT * 6 / 8 + display::HEIGHT * 1 / 14,
+      display::HEIGHT * 6 / 8 + display::HEIGHT * 3 / 14,
+  };
+  static constexpr int NUM_BLACK_KEYS =
+      (int)(sizeof(blackKeyX) / sizeof(blackKeyX[0]));
+
+  for (int i = 0; i < NUM_BLACK_KEYS; i++) {
+    int x = blackKeyX[i];
+    int w = display::WIDTH / 12;
+    gfx->fillRect(x, keyTop, w, blackKeyHeight, 0x000);
+  }
+
+  frameBuffer->endRender();
 }

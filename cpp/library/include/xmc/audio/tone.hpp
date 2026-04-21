@@ -9,6 +9,7 @@
 
 #include <math.h>
 #include <stdint.h>
+#include <memory>
 
 namespace xmc::audio {
 
@@ -100,15 +101,22 @@ class ToneClass {
   inline void setWaveform(Waveform wf) { waveform = wf; }
 
   /**
+   * Gets the current waveform of the tone.
+   * @return The current waveform of the tone.
+   */
+  inline Waveform getWaveform() const { return waveform; }
+
+  /**
    * Sets the velocity (volume) of the tone.
    * @param velo The velocity to set. The velocity must be between 0 and 127.
    */
-  inline void setVelocity(uint8_t velo) {
-    if (velo > 127) {
-      velo = 127;
-    }
-    velocity = velo;
-  }
+  inline void setVelocity(uint8_t velo) { velocity = XMC_CLIP(0, 127, velo); }
+
+  /**
+   * Gets the current velocity (volume) of the tone.
+   * @return The current velocity of the tone.
+   */
+  inline uint8_t getVelocity() const { return velocity; }
 
   /**
    * Sets the envelope of the tone. The envelope controls the amplitude of the
