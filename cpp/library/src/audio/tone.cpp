@@ -6,12 +6,12 @@ namespace xmc::audio {
 static void xmc_tone_request_data(void *buffer, uint32_t size_bytes,
                                   void *context);
 
-Tone::Tone() {
+ToneClass::ToneClass() {
   outputPort.requestData = xmc_tone_request_data;
   outputPort.context = this;
 }
 
-void Tone::init(uint32_t rate_hz) {
+void ToneClass::init(uint32_t rate_hz) {
   if (rate_hz == 0) {
     rate_hz = speaker::getStreamFormat().rateHz;
   }
@@ -36,13 +36,13 @@ void Tone::init(uint32_t rate_hz) {
   tickPhaseCounter = 0;
 }
 
-void Tone::noteOn(uint8_t note, uint32_t lenMs) {
+void ToneClass::noteOn(uint8_t note, uint32_t lenMs) {
   // todo: optimize
   uint32_t freq = 440 * pow(2, (note - 69) / 12.0);
   noteOnWithFreq(freq, lenMs);
 }
 
-void Tone::noteOnWithFreq(uint32_t freq, uint32_t lenMs) {
+void ToneClass::noteOnWithFreq(uint32_t freq, uint32_t lenMs) {
   if (freq == 0) {
     mute();
     return;
@@ -72,7 +72,7 @@ void Tone::noteOnWithFreq(uint32_t freq, uint32_t lenMs) {
   }
 }
 
-void Tone::noteOff() {
+void ToneClass::noteOff() {
   if (envelopeState != EnvelopeState::IDLE &&
       envelopeState != EnvelopeState::RELEASE) {
     if (releaseMs > 0) {
@@ -85,12 +85,12 @@ void Tone::noteOff() {
   }
 }
 
-void Tone::mute() {
+void ToneClass::mute() {
   envelopeState = EnvelopeState::IDLE;
   lengthCounter = 0;
 }
 
-void Tone::render(int16_t *buffer, uint32_t numSamples) {
+void ToneClass::render(int16_t *buffer, uint32_t numSamples) {
   if (envelopeState == EnvelopeState::IDLE) {
     return;
   }
@@ -139,7 +139,7 @@ void Tone::render(int16_t *buffer, uint32_t numSamples) {
   }
 }
 
-void Tone::tick() {
+void ToneClass::tick() {
   if (lengthCounter != TONE_LENGTH_INFINITE && lengthCounter > 0) {
     lengthCounter--;
     if (lengthCounter == 0) {
@@ -202,7 +202,7 @@ void Tone::tick() {
 
 static void xmc_tone_request_data(void *buffer, uint32_t numSamples,
                                   void *context) {
-  ((Tone *)context)->render((int16_t *)buffer, numSamples);
+  ((ToneClass *)context)->render((int16_t *)buffer, numSamples);
 }
 
 }  // namespace xmc::audio

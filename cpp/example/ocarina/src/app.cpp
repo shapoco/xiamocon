@@ -4,49 +4,47 @@ using namespace xmc;
 using namespace xmc::audio;
 using namespace xmc::input;
 
-static constexpr int NUM_TONES = 4;
-static constexpr int NUM_KEYS = 8;
-static constexpr uint32_t SAMPLE_RATE_HZ = 44100;
+constexpr int NUM_TONES = 4;
+constexpr int NUM_KEYS = 8;
 
-static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB444;
+constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB444;
 FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
 
-static Mixer mixer(NUM_TONES);
-static Tone tones[NUM_TONES];
+Mixer mixer = createMixer(NUM_TONES);
+Tone tones[NUM_TONES];
 
-static Waveform waveform = Waveform::SQUARE;
+Waveform waveform = Waveform::SQUARE;
 
-static int nextToneIndex = 0;
-static Button keys[] = {
+int nextToneIndex = 0;
+Button keys[] = {
     Button::DOWN, Button::LEFT, Button::UP, Button::RIGHT,
     Button::X,    Button::Y,    Button::A,  Button::B,
 };
-static int keyToTone[] = {-1, -1, -1, -1, -1, -1, -1, -1};
-static int keyToNote[] = {-5, -3, -1, 0, 2, 4, 5, 7};
+int keyToTone[] = {-1, -1, -1, -1, -1, -1, -1, -1};
+int keyToNote[] = {-5, -3, -1, 0, 2, 4, 5, 7};
 
 bool dispUpdate = false;
 
 AppConfig xmc::appGetConfig() {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
-  cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
-  cfg.speakerSampleRateHz = SAMPLE_RATE_HZ;
-  cfg.speakerLatencySamples = 512;
+  cfg.speakerEnabled = true;
   return cfg;
 }
 
 void xmc::appSetup() {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
-  
+
   for (int i = 0; i < NUM_TONES; i++) {
-    tones[i].init(SAMPLE_RATE_HZ);
-    mixer.setSource(i, tones[i].getOutputPort());
+    tones[i] = createTone();
+    tones[i]->init();
+    mixer->setSource(i, tones[i]->getOutputPort());
   }
   for (int i = 0; i < NUM_KEYS; i++) {
     keyToTone[i] = -1;
   }
 
-  speaker::setSourcePort(mixer.getOutputPort());
+  speaker::setSourcePort(mixer->getOutputPort());
   gpio::setDir(XMC_PIN_GPIO_0, true);
   speaker::setMuted(false);
 
@@ -63,22 +61,22 @@ void xmc::appLoop() {
     if (input::wasPressed(keys[ikey])) {
       if (keyToTone[ikey] >= 0) {
         // this key is already playing a tone, so stop it first
-        tones[keyToTone[ikey]].noteOff();
+        tones[keyToTone[ikey]]->noteOff();
       }
 
       keyToTone[ikey] = nextToneIndex;
       nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
 
-      tones[keyToTone[ikey]].setWaveform(waveform);
-      tones[keyToTone[ikey]].setVelocity(64);
-      tones[keyToTone[ikey]].setEnvelope(0, 1000, 192, 500);
-      tones[keyToTone[ikey]].noteOn(64 + keyToNote[ikey]);
+      tones[keyToTone[ikey]]->setWaveform(waveform);
+      tones[keyToTone[ikey]]->setVelocity(64);
+      tones[keyToTone[ikey]]->setEnvelope(0, 1000, 192, 500);
+      tones[keyToTone[ikey]]->noteOn(64 + keyToNote[ikey]);
 
       dispUpdate = true;
     }
     if (input::wasReleased(keys[ikey])) {
       if (keyToTone[ikey] >= 0) {
-        tones[keyToTone[ikey]].noteOff();
+        tones[keyToTone[ikey]]->noteOff();
         keyToTone[ikey] = -1;
       }
       dispUpdate = true;

@@ -131,7 +131,7 @@ SpriteFrame shapoAnimeDamage[] = {
     {0 * 64, 3 * 64, 64, 64, -48, -60},
 };
 
-static Mixer mixer(NUM_TONES);
+static Mixer mixer = createMixer(NUM_TONES);
 static Tone tones[NUM_TONES];
 
 static void generateCloud();
@@ -164,11 +164,12 @@ void xmc::appSetup() {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 
   for (int i = 0; i < NUM_TONES; i++) {
-    tones[i].init(audio::getPreferredSamplingRate());
-    mixer.setSource(i, tones[i].getOutputPort());
+    tones[i] = createTone();
+    tones[i]->init();
+    mixer->setSource(i, tones[i]->getOutputPort());
   }
 
-  speaker::setSourcePort(mixer.getOutputPort());
+  speaker::setSourcePort(mixer->getOutputPort());
   speaker::setMuted(false);
   gpio::setDir(XMC_PIN_GPIO_0, true);
 
@@ -188,34 +189,34 @@ void xmc::appSetup() {
 
   generateCloud();
 
-  tones[(int)Sound::STEP].setWaveform(Waveform::NOISE);
-  tones[(int)Sound::STEP].setEnvelope(0, 0, 255, 0);
-  tones[(int)Sound::STEP].setVelocity(48);
+  tones[(int)Sound::STEP]->setWaveform(Waveform::NOISE);
+  tones[(int)Sound::STEP]->setEnvelope(0, 0, 255, 0);
+  tones[(int)Sound::STEP]->setVelocity(48);
 
-  tones[(int)Sound::JUMP].setWaveform(Waveform::SQUARE);
-  tones[(int)Sound::JUMP].setEnvelope(0, 0, 255, 300);
-  tones[(int)Sound::JUMP].setSweep(0x400, 10);
-  tones[(int)Sound::JUMP].setVelocity(64);
+  tones[(int)Sound::JUMP]->setWaveform(Waveform::SQUARE);
+  tones[(int)Sound::JUMP]->setEnvelope(0, 0, 255, 300);
+  tones[(int)Sound::JUMP]->setSweep(0x400, 10);
+  tones[(int)Sound::JUMP]->setVelocity(64);
 
-  tones[(int)Sound::LAND].setWaveform(Waveform::SQUARE);
-  tones[(int)Sound::LAND].setEnvelope(0, 0, 255, 100);
-  tones[(int)Sound::LAND].setSweep(-0x1000, 10);
-  tones[(int)Sound::LAND].setVelocity(96);
+  tones[(int)Sound::LAND]->setWaveform(Waveform::SQUARE);
+  tones[(int)Sound::LAND]->setEnvelope(0, 0, 255, 100);
+  tones[(int)Sound::LAND]->setSweep(-0x1000, 10);
+  tones[(int)Sound::LAND]->setVelocity(96);
 
-  tones[(int)Sound::DAMAGE_NOISE].setWaveform(Waveform::NOISE);
-  tones[(int)Sound::DAMAGE_NOISE].setEnvelope(0, 0, 255, 0);
-  tones[(int)Sound::DAMAGE_NOISE].setSweep(-0x1000, 10);
-  tones[(int)Sound::DAMAGE_NOISE].setVelocity(64);
+  tones[(int)Sound::DAMAGE_NOISE]->setWaveform(Waveform::NOISE);
+  tones[(int)Sound::DAMAGE_NOISE]->setEnvelope(0, 0, 255, 0);
+  tones[(int)Sound::DAMAGE_NOISE]->setSweep(-0x1000, 10);
+  tones[(int)Sound::DAMAGE_NOISE]->setVelocity(64);
 
-  tones[(int)Sound::DAMAGE_PULSE].setWaveform(Waveform::SQUARE);
-  tones[(int)Sound::DAMAGE_PULSE].setEnvelope(0, 0, 255, 0);
-  tones[(int)Sound::DAMAGE_PULSE].setSweep(-0x800, 10);
-  tones[(int)Sound::DAMAGE_PULSE].setVelocity(32);
+  tones[(int)Sound::DAMAGE_PULSE]->setWaveform(Waveform::SQUARE);
+  tones[(int)Sound::DAMAGE_PULSE]->setEnvelope(0, 0, 255, 0);
+  tones[(int)Sound::DAMAGE_PULSE]->setSweep(-0x800, 10);
+  tones[(int)Sound::DAMAGE_PULSE]->setVelocity(32);
 
-  tones[(int)Sound::GAME_OVER].setWaveform(Waveform::SQUARE);
-  tones[(int)Sound::GAME_OVER].setEnvelope(0, 0, 255, 0);
-  tones[(int)Sound::GAME_OVER].setSweep(-0x400, 10);
-  tones[(int)Sound::GAME_OVER].setVelocity(64);
+  tones[(int)Sound::GAME_OVER]->setWaveform(Waveform::SQUARE);
+  tones[(int)Sound::GAME_OVER]->setEnvelope(0, 0, 255, 0);
+  tones[(int)Sound::GAME_OVER]->setSweep(-0x400, 10);
+  tones[(int)Sound::GAME_OVER]->setVelocity(64);
 }
 
 void xmc::appLoop() {
@@ -341,7 +342,7 @@ static void updateShapo(uint64_t nowMs) {
         shapoVY = 0;
         shapoState = ShapoState::LAND;
         shapoAnimeIndex = 0;
-        tones[(int)Sound::LAND].noteOn(52, 1);
+        tones[(int)Sound::LAND]->noteOn(52, 1);
       }
       break;
     case ShapoState::LAND:
@@ -381,8 +382,8 @@ static void updateShapo(uint64_t nowMs) {
           shapoLife--;
         }
         shapoLastDamageTimeMs = nowMs;
-        tones[(int)Sound::DAMAGE_NOISE].noteOn(48, 200);
-        tones[(int)Sound::DAMAGE_PULSE].noteOn(112, 200);
+        tones[(int)Sound::DAMAGE_NOISE]->noteOn(48, 200);
+        tones[(int)Sound::DAMAGE_PULSE]->noteOn(112, 200);
         break;
       }
     }
@@ -397,12 +398,12 @@ static void updateShapo(uint64_t nowMs) {
   shapoAnimeIndex = ((nowMs - shapoStateChangeTimeMs) / 100) % num_anime_frames;
   if (shapoState == ShapoState::RUN && shapoAnimeIndex != last_anime_index &&
       shapoAnimeIndex % 3 == 1) {
-    tones[(int)Sound::STEP].noteOn(32, 1);
+    tones[(int)Sound::STEP]->noteOn(32, 1);
   }
 
   if (shapoLife <= 0 && elapsedFromDamage > DAMAGING_MS) {
     shapoState = ShapoState::GAME_OVER;
-    tones[(int)Sound::GAME_OVER].noteOn(64, 1000);
+    tones[(int)Sound::GAME_OVER]->noteOn(64, 1000);
   }
 }
 
@@ -447,7 +448,7 @@ static void shapoJump() {
   shapoState = ShapoState::JUMP;
   shapoJumpingUp = true;
   shapoAnimeIndex = 0;
-  tones[(int)Sound::JUMP].noteOn(76, 1);
+  tones[(int)Sound::JUMP]->noteOn(76, 1);
 }
 
 static void renderScene(Graphics2D &gfx) {

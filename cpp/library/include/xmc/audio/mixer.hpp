@@ -8,8 +8,11 @@
 
 #include "xmc/audio_common.hpp"
 
+#include <memory>
+
 namespace xmc::audio {
-class Mixer {
+
+class MixerClass {
  private:
   const int numSources;
   SourcePort **sources;
@@ -20,9 +23,9 @@ class Mixer {
    * @param numSources The number of audio sources that can be mixed together.
    * This
    */
-  Mixer(int numSources);
+  MixerClass(int numSources);
 
-  ~Mixer();
+  ~MixerClass();
 
   /**
    * Sets the audio source for a given index. The mixer will mix together all
@@ -51,6 +54,12 @@ class Mixer {
   inline SourcePort *getOutputPort() { return &output; }
 };
 
-}  // namespace xmc
+using Mixer = std::shared_ptr<MixerClass>;
+
+static inline Mixer createMixer(int numSources) {
+  return std::make_shared<MixerClass>(numSources);
+}
+
+}  // namespace xmc::audio
 
 #endif

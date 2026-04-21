@@ -54,7 +54,7 @@ FrameBuffer frameBuffer = createFrameBuffer(PixelFormat::RGB444, true);
 FpsKeeper fpsKeeper(60.0f);
 
 Brick bricks[BRICK_ROWS][BRICK_COLS];
-Mixer mixer(NUM_TONES);
+Mixer mixer = createMixer(NUM_TONES);
 Tone tones[NUM_TONES];
 
 GameState gameState = GameState::Serve;
@@ -76,11 +76,11 @@ void playTone(uint8_t note, uint32_t lenMs, audio::Waveform waveform,
   audio::Tone &tone = tones[nextToneIndex];
   nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
 
-  tone.setWaveform(waveform);
-  tone.setVelocity(velocity);
-  tone.setEnvelope(attackMs, decayMs, sustain, releaseMs);
-  tone.setSweep(sweep_delta, sweepPeriodMs);
-  tone.noteOn(note, lenMs);
+  tone->setWaveform(waveform);
+  tone->setVelocity(velocity);
+  tone->setEnvelope(attackMs, decayMs, sustain, releaseMs);
+  tone->setSweep(sweep_delta, sweepPeriodMs);
+  tone->noteOn(note, lenMs);
 }
 
 void sfxLaunch() {
@@ -306,10 +306,11 @@ AppConfig xmc::appGetConfig() {
 
 void xmc::appSetup() {
   for (int i = 0; i < NUM_TONES; ++i) {
-    tones[i].init();
-    mixer.setSource(i, tones[i].getOutputPort());
+    tones[i] = createTone();
+    tones[i]->init();
+    mixer->setSource(i, tones[i]->getOutputPort());
   }
-  speaker::setSourcePort(mixer.getOutputPort());
+  speaker::setSourcePort(mixer->getOutputPort());
   speaker::setMuted(false);
 
   resetGame();

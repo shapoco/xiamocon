@@ -5,7 +5,7 @@ namespace xmc::audio {
 static void xmc_mixerRequestData(void *buffer, uint32_t numSamples,
                                    void *context);
 
-Mixer::Mixer(int numSources) : numSources(numSources) {
+MixerClass::MixerClass(int numSources) : numSources(numSources) {
   sources = new SourcePort *[numSources];
   for (int i = 0; i < numSources; i++) {
     sources[i] = nullptr;
@@ -14,9 +14,9 @@ Mixer::Mixer(int numSources) : numSources(numSources) {
   output.context = this;
 }
 
-Mixer::~Mixer() { delete[] sources; }
+MixerClass::~MixerClass() { delete[] sources; }
 
-void Mixer::render(int16_t *buffer, uint32_t numSamples) {
+void MixerClass::render(int16_t *buffer, uint32_t numSamples) {
   for (int i = 0; i < numSources; i++) {
     if (sources[i]) {
       sources[i]->requestData(buffer, numSamples, sources[i]->context);
@@ -26,7 +26,7 @@ void Mixer::render(int16_t *buffer, uint32_t numSamples) {
 
 static void xmc_mixerRequestData(void *buffer, uint32_t numSamples,
                                    void *context) {
-  ((Mixer *)context)->render((int16_t *)buffer, numSamples);
+  ((MixerClass *)context)->render((int16_t *)buffer, numSamples);
 }
 
 }  // namespace xmc::audio

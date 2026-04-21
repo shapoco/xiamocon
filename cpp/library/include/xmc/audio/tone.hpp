@@ -56,7 +56,7 @@ static constexpr uint32_t TONE_LENGTH_INFINITE = 0xFFFFFFFF;
  * frequency, length, and envelope. The tone can be used as an audio source for
  * the speaker or for mixing with other tones using the mixer.
  */
-class Tone {
+class ToneClass {
  private:
   uint32_t rateHz = 44100;
   uint32_t tickPhaseStep = 0;
@@ -84,7 +84,7 @@ class Tone {
   SourcePort outputPort;
 
  public:
-  Tone();
+  ToneClass();
 
   /**
    * Initializes the tone generator with the given sample rate.
@@ -120,7 +120,7 @@ class Tone {
    * @param releaseMs The duration of the release phase in milliseconds.
    */
   inline void setEnvelope(uint16_t attackMs, uint16_t decayMs,
-                           uint16_t sustainLevel, uint16_t releaseMs) {
+                          uint16_t sustainLevel, uint16_t releaseMs) {
     this->attackMs = attackMs;
     this->decayMs = decayMs;
     this->sustainLevel = sustainLevel;
@@ -215,6 +215,10 @@ class Tone {
   void tick();
 };
 
-}  // namespace xmc
+using Tone = std::shared_ptr<ToneClass>;
+
+static inline Tone createTone() { return std::make_shared<ToneClass>(); }
+
+}  // namespace xmc::audio
 
 #endif

@@ -14,7 +14,7 @@ float x = display::WIDTH / 2, y = display::HEIGHT / 2;
 float dx = 1.0f, dy = 1.11f;
 
 FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, true);
-Tone tone;
+Tone tone = createTone();
 
 Waveform waveform = Waveform::SQUARE;
 
@@ -28,8 +28,8 @@ AppConfig xmc::appGetConfig() {
 
 void xmc::appSetup() {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
-  tone.init(SAMPLE_RATE_HZ);
-  speaker::setSourcePort(tone.getOutputPort());
+  tone->init(SAMPLE_RATE_HZ);
+  speaker::setSourcePort(tone->getOutputPort());
   speaker::setMuted(false);
 }
 
@@ -58,17 +58,17 @@ void xmc::appLoop() {
   }
 
   if (input::wasPressed(input::Button::A)) {
-    // tone.setWaveform(Waveform::SQUARE);
-    tone.setWaveform(waveform);
-    // tone.setWaveform(Waveform::TRIANGLE);
-    tone.setVelocity(127);
-    tone.setEnvelope(0, 2000, 0, 500);
-    // tone.setSweep(1600, 10);
-    tone.noteOn(64 + 12);
+    // tone->setWaveform(Waveform::SQUARE);
+    tone->setWaveform(waveform);
+    // tone->setWaveform(Waveform::TRIANGLE);
+    tone->setVelocity(127);
+    tone->setEnvelope(0, 2000, 0, 500);
+    // tone->setSweep(1600, 10);
+    tone->noteOn(64 + 12);
     dx += 1;
   }
   if (input::wasReleased(input::Button::A)) {
-    tone.noteOff();
+    tone->noteOff();
   }
 
   dy += 0.1f;
