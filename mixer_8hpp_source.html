@@ -100,35 +100,44 @@ $(document).ready(function(){initNavTree('mixer_8hpp_source.html',''); initResiz
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;xmc/audio_common.hpp&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>xmc::audio {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1Mixer.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="classxmc_1_1audio_1_1Mixer.html">Mixer</a> {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> numSources;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> **sources;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> output;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1Mixer.html#a32ec28eb0c6cdd4495489db328c3c95f">   23</a></span>  <a class="code hl_function" href="classxmc_1_1audio_1_1Mixer.html#a32ec28eb0c6cdd4495489db328c3c95f">Mixer</a>(<span class="keywordtype">int</span> numSources);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <a class="code hl_class" href="classxmc_1_1audio_1_1Mixer.html">~Mixer</a>();</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595">   33</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595">setSource</a>(<span class="keywordtype">int</span> index, <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> *source) {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    sources[index] = source;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  }</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b">   45</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b">render</a>(int16_t *buffer, uint32_t numSamples);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1Mixer.html#a8a0929f66cc9a08a31e0e7854446fc04">   51</a></span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> *<a class="code hl_function" href="classxmc_1_1audio_1_1Mixer.html#a8a0929f66cc9a08a31e0e7854446fc04">getOutputPort</a>() { <span class="keywordflow">return</span> &amp;output; }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>};</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}  <span class="comment">// namespace xmc</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassxmc_1_1audio_1_1Mixer_html"><div class="ttname"><a href="classxmc_1_1audio_1_1Mixer.html">xmc::audio::Mixer</a></div><div class="ttdef"><b>Definition:</b> mixer.hpp:12</div></div>
-<div class="ttc" id="aclassxmc_1_1audio_1_1Mixer_html_a32ec28eb0c6cdd4495489db328c3c95f"><div class="ttname"><a href="classxmc_1_1audio_1_1Mixer.html#a32ec28eb0c6cdd4495489db328c3c95f">xmc::audio::Mixer::Mixer</a></div><div class="ttdeci">Mixer(int numSources)</div></div>
-<div class="ttc" id="aclassxmc_1_1audio_1_1Mixer_html_a5860b50fa5343d668ccf798372ed4595"><div class="ttname"><a href="classxmc_1_1audio_1_1Mixer.html#a5860b50fa5343d668ccf798372ed4595">xmc::audio::Mixer::setSource</a></div><div class="ttdeci">void setSource(int index, SourcePort *source)</div><div class="ttdef"><b>Definition:</b> mixer.hpp:33</div></div>
-<div class="ttc" id="aclassxmc_1_1audio_1_1Mixer_html_a8a0929f66cc9a08a31e0e7854446fc04"><div class="ttname"><a href="classxmc_1_1audio_1_1Mixer.html#a8a0929f66cc9a08a31e0e7854446fc04">xmc::audio::Mixer::getOutputPort</a></div><div class="ttdeci">SourcePort * getOutputPort()</div><div class="ttdef"><b>Definition:</b> mixer.hpp:51</div></div>
-<div class="ttc" id="aclassxmc_1_1audio_1_1Mixer_html_a944894fe258ab118717701af857a810b"><div class="ttname"><a href="classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b">xmc::audio::Mixer::render</a></div><div class="ttdeci">void render(int16_t *buffer, uint32_t numSamples)</div></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>xmc::audio {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1MixerClass.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classxmc_1_1audio_1_1MixerClass.html">MixerClass</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> numSources;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> **sources;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> output;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1MixerClass.html#a775c498700d8d1f5e276fe0f9147e2a4">   26</a></span>  <a class="code hl_function" href="classxmc_1_1audio_1_1MixerClass.html#a775c498700d8d1f5e276fe0f9147e2a4">MixerClass</a>(<span class="keywordtype">int</span> numSources);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <a class="code hl_class" href="classxmc_1_1audio_1_1MixerClass.html">~MixerClass</a>();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1MixerClass.html#aef4e7be8d63f8b20497d0ff526f41923">   36</a></span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1audio_1_1MixerClass.html#aef4e7be8d63f8b20497d0ff526f41923">setSource</a>(<span class="keywordtype">int</span> index, <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> *source) {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    sources[index] = source;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1MixerClass.html#a8dc471463446805f3aea459a21cb1246">   48</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classxmc_1_1audio_1_1MixerClass.html#a8dc471463446805f3aea459a21cb1246">render</a>(int16_t *buffer, uint32_t numSamples);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classxmc_1_1audio_1_1MixerClass.html#a0fb118b1cc23cd6014158e1b2fd8f125">   54</a></span>  <span class="keyword">inline</span> <a class="code hl_struct" href="structxmc_1_1audio_1_1SourcePort.html">SourcePort</a> *<a class="code hl_function" href="classxmc_1_1audio_1_1MixerClass.html#a0fb118b1cc23cd6014158e1b2fd8f125">getOutputPort</a>() { <span class="keywordflow">return</span> &amp;output; }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>};</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">using </span>Mixer = std::shared_ptr&lt;MixerClass&gt;;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">static</span> <span class="keyword">inline</span> Mixer createMixer(<span class="keywordtype">int</span> numSources) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordflow">return</span> std::make_shared&lt;MixerClass&gt;(numSources);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}  <span class="comment">// namespace xmc::audio</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassxmc_1_1audio_1_1MixerClass_html"><div class="ttname"><a href="classxmc_1_1audio_1_1MixerClass.html">xmc::audio::MixerClass</a></div><div class="ttdef"><b>Definition:</b> mixer.hpp:15</div></div>
+<div class="ttc" id="aclassxmc_1_1audio_1_1MixerClass_html_a0fb118b1cc23cd6014158e1b2fd8f125"><div class="ttname"><a href="classxmc_1_1audio_1_1MixerClass.html#a0fb118b1cc23cd6014158e1b2fd8f125">xmc::audio::MixerClass::getOutputPort</a></div><div class="ttdeci">SourcePort * getOutputPort()</div><div class="ttdef"><b>Definition:</b> mixer.hpp:54</div></div>
+<div class="ttc" id="aclassxmc_1_1audio_1_1MixerClass_html_a775c498700d8d1f5e276fe0f9147e2a4"><div class="ttname"><a href="classxmc_1_1audio_1_1MixerClass.html#a775c498700d8d1f5e276fe0f9147e2a4">xmc::audio::MixerClass::MixerClass</a></div><div class="ttdeci">MixerClass(int numSources)</div></div>
+<div class="ttc" id="aclassxmc_1_1audio_1_1MixerClass_html_a8dc471463446805f3aea459a21cb1246"><div class="ttname"><a href="classxmc_1_1audio_1_1MixerClass.html#a8dc471463446805f3aea459a21cb1246">xmc::audio::MixerClass::render</a></div><div class="ttdeci">void render(int16_t *buffer, uint32_t numSamples)</div></div>
+<div class="ttc" id="aclassxmc_1_1audio_1_1MixerClass_html_aef4e7be8d63f8b20497d0ff526f41923"><div class="ttname"><a href="classxmc_1_1audio_1_1MixerClass.html#aef4e7be8d63f8b20497d0ff526f41923">xmc::audio::MixerClass::setSource</a></div><div class="ttdeci">void setSource(int index, SourcePort *source)</div><div class="ttdef"><b>Definition:</b> mixer.hpp:36</div></div>
 <div class="ttc" id="astructxmc_1_1audio_1_1SourcePort_html"><div class="ttname"><a href="structxmc_1_1audio_1_1SourcePort.html">xmc::audio::SourcePort</a></div><div class="ttdef"><b>Definition:</b> audio_common.hpp:52</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

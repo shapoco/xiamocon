@@ -1,7 +1,7 @@
 var searchData=
 [
   ['identity_0',['identity',['../structxmc_1_1mat4.html#a33289a39a5e9005e7be0ab5786652406',1,'xmc::mat4']]],
-  ['init_1',['init',['../classxmc_1_1audio_1_1Tone.html#a5b77135e6cfad640f6fa847299af031f',1,'xmc::audio::Tone::init()'],['../power_8hpp.html#a179c622ee944c851fd5827be67f883b0',1,'xmc::power::init()'],['../input_8hpp.html#a96ecd3a6e8ed1f536c747755d9f1e66a',1,'xmc::input::init()'],['../ioex_8hpp.html#a85258116c21e98fd08152f83cc7fa276',1,'xmc::ioex::init()'],['../speaker_8hpp.html#a791629d3f4ac2fcfb0f84475359efc03',1,'xmc::speaker::init()']]],
+  ['init_1',['init',['../classxmc_1_1audio_1_1ToneClass.html#ac479b5935abf8318ff9743173ad69c78',1,'xmc::audio::ToneClass::init()'],['../power_8hpp.html#a179c622ee944c851fd5827be67f883b0',1,'xmc::power::init()'],['../input_8hpp.html#a96ecd3a6e8ed1f536c747755d9f1e66a',1,'xmc::input::init()'],['../ioex_8hpp.html#a85258116c21e98fd08152f83cc7fa276',1,'xmc::ioex::init()'],['../speaker_8hpp.html#a791629d3f4ac2fcfb0f84475359efc03',1,'xmc::speaker::init()']]],
   ['intersect_2',['intersect',['../structxmc_1_1Rect.html#a6e42f00f339c871099965b3d79be8d64',1,'xmc::Rect']]],
   ['isdoublebuffered_3',['isDoubleBuffered',['../classxmc_1_1FrameBufferClass.html#ab93b25073a7bb3ff02f390e4a11ff351',1,'xmc::FrameBufferClass']]],
   ['isframeskipping_4',['isFrameSkipping',['../classxmc_1_1FpsKeeper.html#ad81df5934137c77260c36d801dcf3bbc',1,'xmc::FpsKeeper']]],

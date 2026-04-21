@@ -4,7 +4,7 @@ var searchData=
   ['getbackbuffer_1',['getBackBuffer',['../classxmc_1_1FrameBufferClass.html#abd98e519db2d5525a3d5ba0d801fbd1b',1,'xmc::FrameBufferClass']]],
   ['getfrontbuffer_2',['getFrontBuffer',['../classxmc_1_1FrameBufferClass.html#a2b535c7cc0de8f2af6e559c556e14949',1,'xmc::FrameBufferClass']]],
   ['getheight_3',['getHeight',['../classxmc_1_1FrameBufferClass.html#a8681486322ccd7e124185b7ae6d4693a',1,'xmc::FrameBufferClass']]],
-  ['getoutputport_4',['getOutputPort',['../classxmc_1_1audio_1_1Tone.html#a6046d95b1b5af9f5046bb08c348211db',1,'xmc::audio::Tone::getOutputPort()'],['../classxmc_1_1audio_1_1Mixer.html#a8a0929f66cc9a08a31e0e7854446fc04',1,'xmc::audio::Mixer::getOutputPort()']]],
+  ['getoutputport_4',['getOutputPort',['../classxmc_1_1audio_1_1ToneClass.html#a5c61fef182d24f1d07b9580745341c6b',1,'xmc::audio::ToneClass::getOutputPort()'],['../classxmc_1_1audio_1_1MixerClass.html#a0fb118b1cc23cd6014158e1b2fd8f125',1,'xmc::audio::MixerClass::getOutputPort()']]],
   ['getpixelformat_5',['getPixelFormat',['../classxmc_1_1FrameBufferClass.html#a7ba9802d4e7fa55f5c43ca6f9ef5c4be',1,'xmc::FrameBufferClass']]],
   ['getstate_6',['getState',['../input_8hpp.html#a9576b8802b332182319c61d7c61e5f55',1,'xmc::input']]],
   ['getstreamformat_7',['getStreamFormat',['../speaker_8hpp.html#ac2fb3f133410fb18a963895fc506d88e',1,'xmc::speaker::getStreamFormat()'],['../classxmc_1_1audio_1_1StreamingDac.html#aeacb0685b1c4f1deb248b6ed028ab883',1,'xmc::audio::StreamingDac::getStreamFormat()']]],

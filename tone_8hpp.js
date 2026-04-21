@@ -1,6 +1,6 @@
 var tone_8hpp =
 [
-    [ "xmc::audio::Tone", "classxmc_1_1audio_1_1Tone.html", "classxmc_1_1audio_1_1Tone" ],
+    [ "xmc::audio::ToneClass", "classxmc_1_1audio_1_1ToneClass.html", "classxmc_1_1audio_1_1ToneClass" ],
     [ "EnvelopeState", "tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70", [
       [ "IDLE", "tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70aa5daf7f2ebbba4975d61dab1c40188c7", null ],
       [ "ATTACK", "tone_8hpp.html#aa4ce516185b07a41936a294ea2064c70ac6ddd0f72ff2fd344693b9ca8d483871", null ],

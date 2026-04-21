@@ -2,12 +2,12 @@ var annotated_dup =
 [
     [ "xmc", null, [
       [ "audio", null, [
-        [ "Mixer", "classxmc_1_1audio_1_1Mixer.html", "classxmc_1_1audio_1_1Mixer" ],
+        [ "MixerClass", "classxmc_1_1audio_1_1MixerClass.html", "classxmc_1_1audio_1_1MixerClass" ],
         [ "SdacConfig", "structxmc_1_1audio_1_1SdacConfig.html", null ],
         [ "SourcePort", "structxmc_1_1audio_1_1SourcePort.html", null ],
         [ "StreamFormat", "structxmc_1_1audio_1_1StreamFormat.html", null ],
         [ "StreamingDac", "classxmc_1_1audio_1_1StreamingDac.html", "classxmc_1_1audio_1_1StreamingDac" ],
-        [ "Tone", "classxmc_1_1audio_1_1Tone.html", "classxmc_1_1audio_1_1Tone" ]
+        [ "ToneClass", "classxmc_1_1audio_1_1ToneClass.html", "classxmc_1_1audio_1_1ToneClass" ]
       ] ],
       [ "diagnostic", null, [
         [ "App", "classxmc_1_1diagnostic_1_1App.html", null ]

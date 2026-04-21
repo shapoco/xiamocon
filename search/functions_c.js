@@ -3,7 +3,7 @@ var searchData=
   ['read_0',['read',['../classxmc_1_1fs_1_1File.html#a0b691cb07f2d0c6d36d1396cadfba323',1,'xmc::fs::File::read()'],['../gpio_8hpp.html#ab304c03428869f55f1da059811bd44f3',1,'xmc::gpio::read()'],['../ioex_8hpp.html#a39e16b40f3acb590481242c4b3177bc7',1,'xmc::ioex::read(Pin pin, bool *value)']]],
   ['readall_1',['readAll',['../ioex_8hpp.html#af07ff39e2d0b543a010b76997922a587',1,'xmc::ioex']]],
   ['readmasked_2',['readMasked',['../ioex_8hpp.html#a43673d54af51d89d61c4fd72cb4c5590',1,'xmc::ioex']]],
-  ['render_3',['render',['../classxmc_1_1audio_1_1Mixer.html#a944894fe258ab118717701af857a810b',1,'xmc::audio::Mixer::render()'],['../classxmc_1_1audio_1_1Tone.html#a4ce4f2b69fe4bad4676393f985eb32c0',1,'xmc::audio::Tone::render()']]],
+  ['render_3',['render',['../classxmc_1_1audio_1_1MixerClass.html#a8dc471463446805f3aea459a21cb1246',1,'xmc::audio::MixerClass::render()'],['../classxmc_1_1audio_1_1ToneClass.html#a60c098c904d8598188fa0cd1e4079b7c',1,'xmc::audio::ToneClass::render()']]],
   ['renderdebugbar_4',['renderDebugBar',['../classxmc_1_1FrameBufferClass.html#a69578395d1a22dc8a3b141ad165ab2ac',1,'xmc::FrameBufferClass']]],
   ['renderstatusbar_5',['renderStatusBar',['../classxmc_1_1FrameBufferClass.html#abed04965a8dc6a7872c500beeede57ac',1,'xmc::FrameBufferClass']]],
   ['reset_6',['reset',['../power_8hpp.html#aa4cfb95c97a0a0815dee19c63482bd67',1,'xmc::power']]],

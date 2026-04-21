@@ -92,7 +92,9 @@ $(document).ready(function(){initNavTree('mixer_8hpp.html',''); initResizable();
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">mixer.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -100,13 +102,15 @@ $(document).ready(function(){initNavTree('mixer_8hpp.html',''); initResizable();
 <p>A simple audio mixer that can mix multiple audio sources together.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;xmc/audio_common.hpp&quot;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mixer.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="mixer_8hpp__incl.png" border="0" usemap="#acpp_2library_2include_2xmc_2audio_2mixer_8hpp" alt=""/></div>
 <map name="acpp_2library_2include_2xmc_2audio_2mixer_8hpp" id="acpp_2library_2include_2xmc_2audio_2mixer_8hpp">
-<area shape="rect" title="A simple audio mixer that can mix multiple audio sources together." alt="" coords="131,5,293,45"/>
+<area shape="rect" title="A simple audio mixer that can mix multiple audio sources together." alt="" coords="208,5,371,45"/>
 <area shape="rect" href="audio__common_8hpp_source.html" title=" " alt="" coords="121,93,303,119"/>
+<area shape="rect" title=" " alt="" coords="328,93,405,119"/>
 <area shape="rect" href="xmc__common_8hpp_source.html" title=" " alt="" coords="125,167,299,192"/>
 <area shape="rect" href="xmc__status_8h_source.html" title=" " alt="" coords="5,240,147,265"/>
 <area shape="rect" title=" " alt="" coords="171,240,253,265"/>
@@ -128,8 +132,20 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1Mixer.html">xmc::audio::Mixer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxmc_1_1audio_1_1MixerClass.html">xmc::audio::MixerClass</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:af59656c6a37710c5345bd45c446c10fa"><td class="memItemLeft" align="right" valign="top"><a id="af59656c6a37710c5345bd45c446c10fa" name="af59656c6a37710c5345bd45c446c10fa"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>xmc::audio::Mixer</b> = std::shared_ptr&lt; MixerClass &gt;</td></tr>
+<tr class="separator:af59656c6a37710c5345bd45c446c10fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a89b930f0d43d8129ac282610ebb83358"><td class="memItemLeft" align="right" valign="top"><a id="a89b930f0d43d8129ac282610ebb83358" name="a89b930f0d43d8129ac282610ebb83358"></a>
+static Mixer&#160;</td><td class="memItemRight" valign="bottom"><b>xmc::audio::createMixer</b> (int numSources)</td></tr>
+<tr class="separator:a89b930f0d43d8129ac282610ebb83358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple audio mixer that can mix multiple audio sources together. </p>
