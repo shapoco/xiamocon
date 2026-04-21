@@ -1,4 +1,4 @@
 var frame__buffer_8hpp =
 [
-    [ "xmc::FrameBuffer", "classxmc_1_1FrameBuffer.html", "classxmc_1_1FrameBuffer" ]
+    [ "xmc::FrameBufferClass", "classxmc_1_1FrameBufferClass.html", "classxmc_1_1FrameBufferClass" ]
 ];

@@ -32,7 +32,7 @@ var annotated_dup =
       [ "EdgeScanVars", "structxmc_1_1EdgeScanVars.html", null ],
       [ "EnvironmentMapShader", "classxmc_1_1EnvironmentMapShader.html", null ],
       [ "FpsKeeper", "classxmc_1_1FpsKeeper.html", "classxmc_1_1FpsKeeper" ],
-      [ "FrameBuffer", "classxmc_1_1FrameBuffer.html", "classxmc_1_1FrameBuffer" ],
+      [ "FrameBufferClass", "classxmc_1_1FrameBufferClass.html", "classxmc_1_1FrameBufferClass" ],
       [ "GlyphMetrics", "structxmc_1_1GlyphMetrics.html", null ],
       [ "GlyphRenderer", "classxmc_1_1GlyphRenderer.html", null ],
       [ "GlyphRendererAgfx", "classxmc_1_1GlyphRendererAgfx.html", null ],

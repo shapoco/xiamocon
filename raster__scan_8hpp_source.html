@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XMC_GFX_RASTER_SCANNER_HPP</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;xmc/gfx2d/color8p24.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;xmc/gfx2d/gfx_common.hpp&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;xmc/gfx2d/gfx2d_common.hpp&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>xmc {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -142,7 +142,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    skip();</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  }</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  XMC_INLINE <span class="keywordtype">void</span> push444(uint16_t color) {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> (convert444ToGray1(color)) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> (color444ToGray1(color)) {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      temp |= mask;</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      temp &amp;= ~mask;</div>
@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    skip();</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  XMC_INLINE <span class="keywordtype">void</span> push565(uint16_t color) {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">if</span> (convert565ToGray1(color)) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">if</span> (color565ToGray1(color)) {</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      temp |= mask;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      temp &amp;= ~mask;</div>
@@ -227,7 +227,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      *(ptr++) = color &amp; 0xFF;</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    }</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  }</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  XMC_INLINE <span class="keywordtype">void</span> push565(uint16_t color) { push444(convert565To444(color)); }</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>  XMC_INLINE <span class="keywordtype">void</span> push565(uint16_t color) { push444(color565To444(color)); }</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  XMC_INLINE <span class="keywordtype">void</span> push4444(uint16_t color) {</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    uint16_t a1 = color &amp; 0xF000;</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordflow">if</span> (a1 == 0xF000) {</div>
@@ -259,7 +259,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>      ptr++;</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    }</div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  XMC_INLINE <span class="keywordtype">void</span> push444(uint16_t color) { push565(convert444To565(color)); }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  XMC_INLINE <span class="keywordtype">void</span> push444(uint16_t color) { push565(color444To565(color)); }</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  XMC_INLINE <span class="keywordtype">void</span> push565(uint16_t color) { *ptr++ = color; }</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  XMC_INLINE <span class="keywordtype">void</span> push4444(uint16_t color) {</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    uint16_t a1 = color &amp; 0xF000;</div>
@@ -303,7 +303,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>  }</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  XMC_INLINE <span class="keywordtype">void</span> push444(uint16_t color) { *(ptr++) = color | 0xF000; }</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>  XMC_INLINE <span class="keywordtype">void</span> push565(uint16_t color) {</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    *(ptr++) = convert565To444(color) | 0xF000;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    *(ptr++) = color565To444(color) | 0xF000;</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>  }</div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  XMC_INLINE <span class="keywordtype">void</span> push4444(uint16_t color) {</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    uint32_t a1 = color &amp; 0xF000;</div>
@@ -328,7 +328,7 @@ $(document).ready(function(){initNavTree('raster__scan_8hpp_source.html',''); in
 <div class="ttc" id="aclassxmc_1_1RasterScan444_html"><div class="ttname"><a href="classxmc_1_1RasterScan444.html">xmc::RasterScan444</a></div><div class="ttdef"><b>Definition:</b> raster_scan.hpp:95</div></div>
 <div class="ttc" id="aclassxmc_1_1RasterScan565_html"><div class="ttname"><a href="classxmc_1_1RasterScan565.html">xmc::RasterScan565</a></div><div class="ttdef"><b>Definition:</b> raster_scan.hpp:149</div></div>
 <div class="ttc" id="aclassxmc_1_1RasterScanGray1_html"><div class="ttname"><a href="classxmc_1_1RasterScanGray1.html">xmc::RasterScanGray1</a></div><div class="ttdef"><b>Definition:</b> raster_scan.hpp:9</div></div>
-<div class="ttc" id="astructxmc_1_1TextRenderArgs_html"><div class="ttname"><a href="structxmc_1_1TextRenderArgs.html">xmc::TextRenderArgs</a></div><div class="ttdef"><b>Definition:</b> gfx_common.hpp:175</div></div>
+<div class="ttc" id="astructxmc_1_1TextRenderArgs_html"><div class="ttname"><a href="structxmc_1_1TextRenderArgs.html">xmc::TextRenderArgs</a></div><div class="ttdef"><b>Definition:</b> gfx2d_common.hpp:216</div></div>
 <div class="ttc" id="astructxmc_1_1color8p24_html"><div class="ttname"><a href="structxmc_1_1color8p24.html">xmc::color8p24</a></div><div class="ttdef"><b>Definition:</b> color8p24.hpp:10</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

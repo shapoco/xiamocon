@@ -18,7 +18,7 @@ var hierarchy =
     [ "xmc::fs::File", "classxmc_1_1fs_1_1File.html", null ],
     [ "xmc::fs::FileInfo", "structxmc_1_1fs_1_1FileInfo.html", null ],
     [ "xmc::FpsKeeper", "classxmc_1_1FpsKeeper.html", null ],
-    [ "xmc::FrameBuffer", "classxmc_1_1FrameBuffer.html", null ],
+    [ "xmc::FrameBufferClass", "classxmc_1_1FrameBufferClass.html", null ],
     [ "GFXfont", "structGFXfont.html", null ],
     [ "GFXglyph", "structGFXglyph.html", null ],
     [ "xmc::GlyphMetrics", "structxmc_1_1GlyphMetrics.html", null ],

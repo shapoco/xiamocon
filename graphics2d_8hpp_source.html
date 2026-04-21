@@ -119,62 +119,99 @@ $(document).ready(function(){initNavTree('graphics2d_8hpp_source.html',''); init
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    state.clipRect = {0, 0, target-&gt;<a class="code hl_variable" href="structxmc_1_1Rect.html#a81e564223079ab0e4c328dd767eb41d3">width</a>, target-&gt;height};</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  }</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keywordtype">void</span> setTarget(Sprite &amp;s);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">inline</span> Sprite getTarget()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> target; }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keywordtype">void</span> setClipRect(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a> &amp;rect);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> setClipRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    setClipRect(<a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a>{x, y, w, h});</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  }</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keywordtype">void</span> clearClipRect();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a> getBounds();</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <a class="code hl_struct" href="structxmc_1_1GraphicsState2D.html">GraphicsState2D</a> getState() { <span class="keywordflow">return</span> state; }</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keywordtype">void</span> setState(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1GraphicsState2D.html">GraphicsState2D</a> &amp;s) { state = s; }</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> clear(RawColor color) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    fillRect(state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#ab3a31895d00f45bfbb1bba04d8d3b093">x</a>, state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a278fd96d70c3c6526c5192fd2ae6e48a">y</a>, state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a81e564223079ab0e4c328dd767eb41d3">width</a>,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>             state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a4be73a97a5e0d664cabe6edbfb79ba96">height</a>, color);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordtype">void</span> fillRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, RawColor color);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keywordtype">void</span> drawRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, RawColor color);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  <span class="keywordtype">void</span> fillSmokeRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">bool</span> white = <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keywordtype">void</span> drawImage(<span class="keyword">const</span> Sprite &amp;image, <span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">int</span> sx,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                 <span class="keywordtype">int</span> sy, <span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1TextRenderArgs.html">TextRenderArgs</a> &amp;tra);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> drawImage(<span class="keyword">const</span> Sprite &amp;image, <span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                        <span class="keywordtype">int</span> sx, <span class="keywordtype">int</span> sy) {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_struct" href="structxmc_1_1TextRenderArgs.html">TextRenderArgs</a> tra;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    tra.foreColor = 0xFFFF;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    tra.backColor = 0x0000;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    drawImage(image, dx, dy, w, h, sx, sy, tra);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">inline</span> PixelFormat getPixelFormat()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> target ? target-&gt;format : display::getPixelFormat();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  }</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">inline</span> DevColor devColor(<span class="keywordtype">int</span> r, <span class="keywordtype">int</span> g, <span class="keywordtype">int</span> b, <span class="keywordtype">int</span> a = 255) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    r = XMC_CLIP(0, 255, r);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    g = XMC_CLIP(0, 255, g);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    b = XMC_CLIP(0, 255, b);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordflow">switch</span> (getPixelFormat()) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>      <span class="keywordflow">case</span> PixelFormat::GRAY1: <span class="keywordflow">return</span> color888ToGray1((r &lt;&lt; 16) | (g &lt;&lt; 8) | b);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      <span class="keywordflow">case</span> PixelFormat::RGB444: <span class="keywordflow">return</span> pack444(r &gt;&gt; 4, g &gt;&gt; 4, b &gt;&gt; 4);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      <span class="keywordflow">case</span> PixelFormat::ARGB4444:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">return</span> pack4444(a &gt;&gt; 4, r &gt;&gt; 4, g &gt;&gt; 4, b &gt;&gt; 4);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      <span class="keywordflow">case</span> PixelFormat::RGB565: <span class="keywordflow">return</span> pack565(r &gt;&gt; 3, g &gt;&gt; 2, b &gt;&gt; 3);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">// todo: support RGB666</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keyword">inline</span> DevColor devColor(Colors color) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">switch</span> (getPixelFormat()) {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      <span class="keywordflow">case</span> PixelFormat::GRAY1: <span class="keywordflow">return</span> color888ToGray1((uint32_t)color);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      <span class="keywordflow">case</span> PixelFormat::RGB444: <span class="keywordflow">return</span> color888To444((uint32_t)color);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      <span class="keywordflow">case</span> PixelFormat::ARGB4444: <span class="keywordflow">return</span> color8888To4444((uint32_t)color);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      <span class="keywordflow">case</span> PixelFormat::RGB565: <span class="keywordflow">return</span> color888To565((uint32_t)color);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      <span class="keywordflow">default</span>: <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  }</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> setFont(<span class="keyword">const</span> <a class="code hl_struct" href="structGFXfont.html">GFXfont</a> *font, <span class="keywordtype">int</span> size) {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    setFont(font);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    setFontSize(size);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <span class="keywordtype">void</span> setFont(<span class="keyword">const</span> <a class="code hl_struct" href="structGFXfont.html">GFXfont</a> *font);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordtype">void</span> setFontSize(<span class="keywordtype">int</span> size);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordtype">void</span> setCursor(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <span class="keywordtype">void</span> setTextColor(RawColor fg);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="keywordtype">void</span> setTextColor(RawColor fg, RawColor bg);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="keywordtype">void</span> drawString(<span class="keyword">const</span> <span class="keywordtype">char</span> *str);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">int</span> drawChar(<a class="code hl_class" href="classxmc_1_1GlyphRenderer.html">GlyphRenderer</a> &amp;renderer, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> code);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>};</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keyword">using </span>Graphics2D = std::shared_ptr&lt;Graphics2DClass&gt;;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">static</span> <span class="keyword">inline</span> Graphics2D createGraphics2D() {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordflow">return</span> std::make_shared&lt;Graphics2DClass&gt;();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordtype">void</span> setTarget(Sprite &amp;s);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">inline</span> Sprite getTarget()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> target; }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keywordtype">void</span> setClipRect(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a> &amp;rect);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> setClipRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    setClipRect(<a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a>{x, y, w, h});</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordtype">void</span> clearClipRect();</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <a class="code hl_struct" href="structxmc_1_1Rect.html">Rect</a> getBounds();</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <a class="code hl_struct" href="structxmc_1_1GraphicsState2D.html">GraphicsState2D</a> getState() { <span class="keywordflow">return</span> state; }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <span class="keywordtype">void</span> setState(<span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1GraphicsState2D.html">GraphicsState2D</a> &amp;s) { state = s; }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> clear(DevColor color) {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    fillRect(state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#ab3a31895d00f45bfbb1bba04d8d3b093">x</a>, state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a278fd96d70c3c6526c5192fd2ae6e48a">y</a>, state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a81e564223079ab0e4c328dd767eb41d3">width</a>,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>             state.clipRect.<a class="code hl_variable" href="structxmc_1_1Rect.html#a4be73a97a5e0d664cabe6edbfb79ba96">height</a>, color);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  <span class="keywordtype">void</span> fillRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, DevColor color);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  <span class="keywordtype">void</span> drawRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, DevColor color);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keywordtype">void</span> fillSmokeRect(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">bool</span> white = <span class="keyword">false</span>);</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">static</span> <span class="keyword">inline</span> Graphics2D createGraphics2D(Sprite target) {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keywordflow">return</span> std::make_shared&lt;Graphics2DClass&gt;(target);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}  <span class="comment">// namespace xmc</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keywordtype">void</span> drawImage(<span class="keyword">const</span> Sprite &amp;image, <span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">int</span> sx,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                 <span class="keywordtype">int</span> sy, <span class="keyword">const</span> <a class="code hl_struct" href="structxmc_1_1TextRenderArgs.html">TextRenderArgs</a> &amp;tra);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> drawImage(<span class="keyword">const</span> Sprite &amp;image, <span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                        <span class="keywordtype">int</span> sx, <span class="keywordtype">int</span> sy) {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_struct" href="structxmc_1_1TextRenderArgs.html">TextRenderArgs</a> tra;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    tra.foreColor = 0xFFFF;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    tra.backColor = 0x0000;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    drawImage(image, dx, dy, w, h, sx, sy, tra);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> drawImage(<span class="keyword">const</span> Sprite &amp;image, <span class="keywordtype">int</span> dx, <span class="keywordtype">int</span> dy) {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_struct" href="structxmc_1_1TextRenderArgs.html">TextRenderArgs</a> tra;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    tra.foreColor = 0xFFFF;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    tra.backColor = 0x0000;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    tra.flags = TextRenderFlags::DRAW_FORE | TextRenderFlags::DRAW_BACK;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    drawImage(image, dx, dy, image-&gt;width, image-&gt;height, 0, 0, tra);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> setFont(<span class="keyword">const</span> <a class="code hl_struct" href="structGFXfont.html">GFXfont</a> *font, <span class="keywordtype">int</span> size) {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    setFont(font);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    setFontSize(size);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keywordtype">void</span> setFont(<span class="keyword">const</span> <a class="code hl_struct" href="structGFXfont.html">GFXfont</a> *font);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="keywordtype">void</span> setFontSize(<span class="keywordtype">int</span> size);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="keywordtype">void</span> setCursor(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="keywordtype">void</span> setTextColor(DevColor fg);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="keywordtype">void</span> setTextColor(DevColor fg, DevColor bg);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <span class="keywordtype">void</span> drawString(<span class="keyword">const</span> <span class="keywordtype">char</span> *str);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="keywordtype">int</span> drawChar(<a class="code hl_class" href="classxmc_1_1GlyphRenderer.html">GlyphRenderer</a> &amp;renderer, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> code);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>};</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keyword">using </span>Graphics2D = std::shared_ptr&lt;Graphics2DClass&gt;;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">static</span> <span class="keyword">inline</span> Graphics2D createGraphics2D() {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  <span class="keywordflow">return</span> std::make_shared&lt;Graphics2DClass&gt;();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="keyword">static</span> <span class="keyword">inline</span> Graphics2D createGraphics2D(Sprite target) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordflow">return</span> std::make_shared&lt;Graphics2DClass&gt;(target);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}  <span class="comment">// namespace xmc</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassxmc_1_1GlyphRenderer_html"><div class="ttname"><a href="classxmc_1_1GlyphRenderer.html">xmc::GlyphRenderer</a></div><div class="ttdef"><b>Definition:</b> glyph_renderer.hpp:11</div></div>
 <div class="ttc" id="aclassxmc_1_1Graphics2DClass_html"><div class="ttname"><a href="classxmc_1_1Graphics2DClass.html">xmc::Graphics2DClass</a></div><div class="ttdef"><b>Definition:</b> graphics2d.hpp:13</div></div>
 <div class="ttc" id="astructGFXfont_html"><div class="ttname"><a href="structGFXfont.html">GFXfont</a></div><div class="ttdoc">Data stored for FONT AS A WHOLE.</div><div class="ttdef"><b>Definition:</b> gfxfont.h:54</div></div>
@@ -184,7 +221,7 @@ $(document).ready(function(){initNavTree('graphics2d_8hpp_source.html',''); init
 <div class="ttc" id="astructxmc_1_1Rect_html_a4be73a97a5e0d664cabe6edbfb79ba96"><div class="ttname"><a href="structxmc_1_1Rect.html#a4be73a97a5e0d664cabe6edbfb79ba96">xmc::Rect::height</a></div><div class="ttdeci">int height</div><div class="ttdef"><b>Definition:</b> rect.hpp:16</div></div>
 <div class="ttc" id="astructxmc_1_1Rect_html_a81e564223079ab0e4c328dd767eb41d3"><div class="ttname"><a href="structxmc_1_1Rect.html#a81e564223079ab0e4c328dd767eb41d3">xmc::Rect::width</a></div><div class="ttdeci">int width</div><div class="ttdef"><b>Definition:</b> rect.hpp:14</div></div>
 <div class="ttc" id="astructxmc_1_1Rect_html_ab3a31895d00f45bfbb1bba04d8d3b093"><div class="ttname"><a href="structxmc_1_1Rect.html#ab3a31895d00f45bfbb1bba04d8d3b093">xmc::Rect::x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> rect.hpp:10</div></div>
-<div class="ttc" id="astructxmc_1_1TextRenderArgs_html"><div class="ttname"><a href="structxmc_1_1TextRenderArgs.html">xmc::TextRenderArgs</a></div><div class="ttdef"><b>Definition:</b> gfx_common.hpp:175</div></div>
+<div class="ttc" id="astructxmc_1_1TextRenderArgs_html"><div class="ttname"><a href="structxmc_1_1TextRenderArgs.html">xmc::TextRenderArgs</a></div><div class="ttdef"><b>Definition:</b> gfx2d_common.hpp:216</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

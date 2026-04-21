@@ -6,7 +6,7 @@ var searchData=
   ['fps_5fkeeper_2ehpp_3',['fps_keeper.hpp',['../fps__keeper_8hpp.html',1,'']]],
   ['fpskeeper_4',['FpsKeeper',['../classxmc_1_1FpsKeeper.html',1,'xmc']]],
   ['frame_5fbuffer_2ehpp_5',['frame_buffer.hpp',['../frame__buffer_8hpp.html',1,'']]],
-  ['framebuffer_6',['FrameBuffer',['../classxmc_1_1FrameBuffer.html',1,'xmc']]],
+  ['framebufferclass_6',['FrameBufferClass',['../classxmc_1_1FrameBufferClass.html',1,'xmc']]],
   ['fromaxisangle_7',['fromAxisAngle',['../structxmc_1_1quat.html#aab80f364f165c663c656be0550d7096e',1,'xmc::quat']]],
   ['fromeuler_8',['fromEuler',['../structxmc_1_1quat.html#ac2a67156e74aab5918c89fe21a455663',1,'xmc::quat']]],
   ['fromquat_9',['fromQuat',['../structxmc_1_1mat4.html#ae992d70f9207b82c746145316612d929',1,'xmc::mat4']]],

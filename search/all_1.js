@@ -2,7 +2,7 @@ var searchData=
 [
   ['b_0',['B',['../input_8hpp.html#ab1219a85bcf8f63141590e1621cdf934a9d5ed678fe57bcca610140957afab571',1,'xmc::input']]],
   ['battery_2ehpp_1',['battery.hpp',['../battery_8hpp.html',1,'']]],
-  ['beginrender_2',['beginRender',['../classxmc_1_1FrameBuffer.html#a8afe08e4219dfaa560369078676a44fd',1,'xmc::FrameBuffer']]],
+  ['beginrender_2',['beginRender',['../classxmc_1_1FrameBufferClass.html#a8a1bcd2347c76e86b6ae5d4bcf490110',1,'xmc::FrameBufferClass']]],
   ['bitmap_3',['bitmap',['../structGFXfont.html#a867b14d604450addbeaf62ae1e4799a7',1,'GFXfont']]],
   ['bitmapoffset_4',['bitmapOffset',['../structGFXglyph.html#a24d52036821c10af52a742a1d7fbd9b8',1,'GFXglyph']]],
   ['bottom_5',['bottom',['../structxmc_1_1Rect.html#a1606eaf869de2b254b473052330e8c80',1,'xmc::Rect']]],
