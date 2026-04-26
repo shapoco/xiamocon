@@ -893,8 +893,14 @@ private:
             this->transactions.push_back(std::move(trans_ext));
         }
         if (short_size > 0) {
-            const uint8_t* short_tx_buf = tx_buf + aligned_size;
-            uint8_t* short_rx_buf = rx_buf + aligned_size;
+            const uint8_t* short_tx_buf = nullptr;
+            uint8_t* short_rx_buf = nullptr;
+            if (tx_buf != nullptr) {
+                short_tx_buf = tx_buf + aligned_size;
+            }
+            if (rx_buf != nullptr) {
+                short_rx_buf = rx_buf + aligned_size;
+            }
             spi_transaction_ext_t short_ext = generateTransaction(command_bits, address_bits, dummy_bits, flags, cmd, addr, short_size, short_tx_buf, short_rx_buf);
             this->transactions.push_back(std::move(short_ext));
         }

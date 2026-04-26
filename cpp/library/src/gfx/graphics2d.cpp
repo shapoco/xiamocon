@@ -39,23 +39,11 @@ void Graphics2DClass::fillRect(int x, int y, int w, int h, DevColor color) {
   } else {
     auto fmt = display::getPixelFormat();
     fillRectUnchecked(fmt, lineBuffer, 0, dstRect.width, 1, 0, color);
-    uint32_t writeSize = 0;
-    switch (fmt) {
-      case PixelFormat::RGB444: {
-        writeSize = dstRect.width * 3 / 2;
-      } break;
-      case PixelFormat::RGB565: {
-        writeSize = dstRect.width * 2;
-      } break;
-      default:
-        // todo: support Gray1 and RGB666
-        return;
-    }
-
+    uint32_t txSize = calcStride(fmt, dstRect.width);
     display::writePixelsComplete();
     for (int j = 0; j < dstRect.height; j++) {
       display::setWindow(dstRect.x, dstRect.y + j, dstRect.width, 1);
-      display::writePixelsStart(lineBuffer, writeSize, false);
+      display::writePixelsStart(lineBuffer, txSize, false);
       display::writePixelsComplete();
     }
   }
