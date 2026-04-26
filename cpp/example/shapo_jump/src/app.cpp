@@ -315,14 +315,14 @@ static void updateShapo(uint64_t nowMs) {
 
   uint64_t elapsedFromDamage = nowMs - shapoLastDamageTimeMs;
 
-  int num_anime_frames = 1;
+  int numAnimeFrames = 1;
   switch (shapoState) {
     default:
     case ShapoState::RUN:
       shapoX += (64 - shapoX) * 0.05f;
       shapoY = groundY;
       lastMs = nowMs;
-      num_anime_frames = 6;
+      numAnimeFrames = 6;
       if (wasPressed(Button::A) && elapsedFromDamage > DAMAGING_MS) {
         shapoJump();
       }
@@ -336,7 +336,7 @@ static void updateShapo(uint64_t nowMs) {
       }
       shapoX += shapoVX;
       shapoY += shapoVY;
-      num_anime_frames = 2;
+      numAnimeFrames = 2;
       if (shapoY >= groundY) {
         shapoY = groundY;
         shapoVY = 0;
@@ -394,9 +394,9 @@ static void updateShapo(uint64_t nowMs) {
     shapoStateChangeTimeMs = nowMs;
   }
 
-  int last_anime_index = shapoAnimeIndex;
-  shapoAnimeIndex = ((nowMs - shapoStateChangeTimeMs) / 100) % num_anime_frames;
-  if (shapoState == ShapoState::RUN && shapoAnimeIndex != last_anime_index &&
+  int lastAnimeIndex = shapoAnimeIndex;
+  shapoAnimeIndex = ((nowMs - shapoStateChangeTimeMs) / 100) % numAnimeFrames;
+  if (shapoState == ShapoState::RUN && shapoAnimeIndex != lastAnimeIndex &&
       shapoAnimeIndex % 3 == 1) {
     tones[(int)Sound::STEP]->noteOn(32, 1);
   }
@@ -482,9 +482,9 @@ static void renderScene(Graphics2D &gfx) {
   switch (shapoState) {
     case ShapoState::RUN: shapoFrame = &shapoAnimeRun[shapoAnimeIndex]; break;
     case ShapoState::JUMP:
-      if (shapoVY < -2.0f) {
+      if (shapoVY < -1.0f) {
         shapoFrame = &shapoAnimeJumpUp[shapoAnimeIndex];
-      } else if (shapoVY > 2.0f) {
+      } else if (shapoVY > 1.0f) {
         shapoFrame = &shapoAnimeJumpDown[shapoAnimeIndex];
       } else {
         shapoFrame = &shapoAnimeJumpTop[0];

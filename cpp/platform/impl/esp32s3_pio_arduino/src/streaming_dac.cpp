@@ -12,8 +12,8 @@ struct SdacHwEsp {
   SdacConfig cfg;
   SourcePort *source;
   i2s_chan_handle_t audio_i2s_ch;
-  uint32_t wrPtr;
-  uint32_t rdPtr;
+  uint32_t writePos;
+  uint32_t readPos;
   bool full;
   uint8_t *srcFmtBuff;
   int16_t *s16Buff;
@@ -49,8 +49,8 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
 
   SdacHwEsp *hw = (SdacHwEsp *)handle;
   hw->cfg = cfg;
-  hw->rdPtr = 0;
-  hw->wrPtr = 0;
+  hw->readPos = 0;
+  hw->writePos = 0;
   hw->full = false;
   hw->source = nullptr;
   hw->srcFmtBuff = nullptr;
@@ -170,17 +170,24 @@ static void maintain(StreamingDac &inst, bool preload) {
 
   SdacHwEsp *hw = (SdacHwEsp *)inst.handle;
 
-  if (hw->rdPtr <= hw->wrPtr && !hw->full) {
-    fillBuffer(inst, hw->cfg.latencySamples - hw->wrPtr);
+  int fillSize, playSize;
+
+  playSize = hw->writePos - hw->readPos;
+  if (playSize < 0 || (playSize == 0 && hw->full)) {
+    pdmWrite(inst, hw->cfg.latencySamples - hw->readPos, preload);
   }
-  if (hw->wrPtr < hw->rdPtr) {
-    fillBuffer(inst, hw->rdPtr - hw->wrPtr);
+  playSize = hw->writePos - hw->readPos;
+  if (playSize > 0) {
+    pdmWrite(inst, playSize, preload);
   }
-  if (hw->wrPtr <= hw->rdPtr || hw->full) {
-    pdmWrite(inst, hw->cfg.latencySamples - hw->rdPtr, preload);
+
+  fillSize = hw->readPos - hw->writePos;
+  if (fillSize < 0 || (fillSize == 0 && !hw->full)) {
+    fillBuffer(inst, hw->cfg.latencySamples - hw->writePos);
   }
-  if (hw->rdPtr < hw->wrPtr) {
-    pdmWrite(inst, hw->wrPtr - hw->rdPtr, preload);
+  fillSize = hw->readPos - hw->writePos;
+  if (fillSize > 0) {
+    fillBuffer(inst, fillSize);
   }
 }
 
@@ -192,25 +199,25 @@ static void fillBuffer(StreamingDac &inst, uint32_t fillSamples) {
     switch (hw->cfg.format.sampleFormat) {
       default:
       case SampleFormat::LINEAR_PCM_S16_MONO:
-        memset(hw->s16Buff + hw->wrPtr, 0x00, fillBytes);
-        inst.source.requestData(hw->s16Buff + hw->wrPtr, fillSamples,
+        memset(hw->s16Buff + hw->writePos, 0x00, fillBytes);
+        inst.source.requestData(hw->s16Buff + hw->writePos, fillSamples,
                                 inst.source.context);
         break;
       case SampleFormat::LINEAR_PCM_U8_MONO:
-        memset(hw->srcFmtBuff + hw->wrPtr, 0x80, fillBytes);
-        inst.source.requestData(hw->srcFmtBuff + hw->wrPtr, fillSamples,
+        memset(hw->srcFmtBuff + hw->writePos, 0x80, fillBytes);
+        inst.source.requestData(hw->srcFmtBuff + hw->writePos, fillSamples,
                                 inst.source.context);
         for (int i = 0; i < fillSamples; i++) {
-          hw->s16Buff[hw->wrPtr + i] =
-              ((int16_t)hw->srcFmtBuff[hw->wrPtr + i] - 128) << 8;
+          hw->s16Buff[hw->writePos + i] =
+              ((int16_t)hw->srcFmtBuff[hw->writePos + i] - 128) << 8;
         }
         break;
     }
   } else {
-    memset(hw->s16Buff + hw->wrPtr, 0x00, fillBytes);
+    memset(hw->s16Buff + hw->writePos, 0x00, fillBytes);
   }
-  hw->wrPtr = (hw->wrPtr + fillSamples) % hw->cfg.latencySamples;
-  if (hw->wrPtr == hw->rdPtr) {
+  hw->writePos = (hw->writePos + fillSamples) % hw->cfg.latencySamples;
+  if (hw->writePos == hw->readPos) {
     hw->full = true;
   }
 }
@@ -219,19 +226,24 @@ static void pdmWrite(StreamingDac &inst, uint32_t numSamples, bool preload) {
   esp_err_t err;
   SdacHwEsp *hw = (SdacHwEsp *)inst.handle;
   uint32_t bytesPerSample = getBytesPerSample(hw->cfg.format.sampleFormat);
-  size_t size = numSamples * bytesPerSample;
-  size_t written = 0;
-  const void *data = &hw->s16Buff[hw->rdPtr];
+  size_t bytesToWrite = numSamples * bytesPerSample;
+  size_t bytesWritten = 0;
+  const void *data = &hw->s16Buff[hw->readPos];
   if (preload) {
-    err = i2s_channel_preload_data(hw->audio_i2s_ch, data, size, &written);
+    err = i2s_channel_preload_data(hw->audio_i2s_ch, data, bytesToWrite,
+                                   &bytesWritten);
   } else {
-    err = i2s_channel_write(hw->audio_i2s_ch, data, size, &written, 0);
+    err = i2s_channel_write(hw->audio_i2s_ch, data, bytesToWrite, &bytesWritten,
+                            0);
   }
   if (err != ESP_OK) {
     XMC_ERR_LOG(XMC_ERR_SPEAKER_STREAM_BROKEN);
   }
-  hw->rdPtr = (hw->rdPtr + written / bytesPerSample) % hw->cfg.latencySamples;
-  hw->full = false;
+  if (bytesWritten > 0) {
+    hw->readPos =
+        (hw->readPos + bytesWritten / bytesPerSample) % hw->cfg.latencySamples;
+    hw->full = false;
+  }
 }
 
 }  // namespace xmc::audio
