@@ -73,6 +73,11 @@ XmcStatus service() {
 }
 
 XmcStatus requestShutdown() {
+  input::deinit();
+  battery::deinit();
+  speaker::deinit();
+  fs::deinit();
+
   // show power off message
   {
     Graphics2D gfx = createGraphics2D();
@@ -82,13 +87,7 @@ XmcStatus requestShutdown() {
                    (display::HEIGHT - msg->height) / 2);
     sleepMs(3000);
   }
-
   display::deinit();
-  input::deinit();
-  battery::deinit();
-  speaker::deinit();
-  fs::deinit();
-
   spi::deinit();
 
   // shutdown peripherals

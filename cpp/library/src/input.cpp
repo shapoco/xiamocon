@@ -14,7 +14,7 @@ static Button lastState = Button::NONE;
 void init() {
   int num_game_buttons =
       sizeof(ioex::GAME_BUTTON_PINS) / sizeof(ioex::GAME_BUTTON_PINS[0]);
-  for (size_t i = 0; i < num_game_buttons; i++) {
+  for (int i = 0; i < num_game_buttons; i++) {
     ioex::setDir(ioex::GAME_BUTTON_PINS[i], false);
   }
   ioex::setDir(ioex::Pin::BTN_FUNC, false);

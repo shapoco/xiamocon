@@ -19,8 +19,8 @@ static const uint8_t DEV_ADDR = 0x22;
 static uint8_t dir[2] = {0xFF, 0x00};
 static uint8_t out[2] = {0xFF, 0xFF};
 
-static XmcStatus write_reg(reg_t reg, uint8_t value);
-static XmcStatus read_reg(reg_t reg, uint8_t *value);
+static XmcStatus writeReg(reg_t reg, uint8_t value);
+static XmcStatus readReg(reg_t reg, uint8_t *value);
 
 XmcStatus init() {
   XmcStatus status = XMC_OK;
@@ -56,22 +56,24 @@ XmcStatus deinit() {
 
 XmcStatus setDirMasked(int port, uint8_t mask, uint8_t value) {
   dir[port] = (dir[port] & ~mask) | (value & mask);
-  return write_reg(port == 0 ? REG_IODIRA : REG_IODIRB, ~dir[port]);
+  XMC_ERR_RET(writeReg(port == 0 ? REG_IODIRA : REG_IODIRB, ~dir[port]));
+  return XMC_OK;
 }
 
 XmcStatus writeMasked(int port, uint8_t mask, uint8_t value) {
   out[port] = (out[port] & ~mask) | (value & mask);
-  return write_reg(port == 0 ? REG_OLATA : REG_OLATB, out[port]);
+  XMC_ERR_RET(writeReg(port == 0 ? REG_OLATA : REG_OLATB, out[port]));
+  return XMC_OK;
 }
 
 XmcStatus readMasked(int port, uint8_t mask, uint8_t *value) {
   uint8_t reg_val;
-  XMC_ERR_RET(read_reg(port == 0 ? REG_GPIOA : REG_GPIOB, &reg_val));
+  XMC_ERR_RET(readReg(port == 0 ? REG_GPIOA : REG_GPIOB, &reg_val));
   *value = reg_val & mask;
   return XMC_OK;
 }
 
-static XmcStatus write_reg(reg_t reg, uint8_t value) {
+static XmcStatus writeReg(reg_t reg, uint8_t value) {
   uint8_t buf[2] = {(uint8_t)reg, value};
   XMC_ERR_RET(i2c::lock());
   XMC_ERR_RET(
@@ -81,7 +83,7 @@ static XmcStatus write_reg(reg_t reg, uint8_t value) {
   return XMC_OK;
 }
 
-static XmcStatus read_reg(reg_t reg, uint8_t *value) {
+static XmcStatus readReg(reg_t reg, uint8_t *value) {
   uint8_t reg_addr = (uint8_t)reg;
   XMC_ERR_RET(i2c::lock());
   XMC_ERR_RET(

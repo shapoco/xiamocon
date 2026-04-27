@@ -189,7 +189,8 @@ static inline XmcStatus setDir(Pin pin, bool output) {
   int i = static_cast<int>(pin);
   int port = i / 8;
   int bit = i % 8;
-  return setDirMasked(port, 1 << bit, output ? (1 << bit) : 0);
+  XMC_ERR_RET(setDirMasked(port, 1 << bit, output ? (1 << bit) : 0));
+  return XMC_OK;
 }
 
 /**
@@ -206,7 +207,8 @@ static inline XmcStatus write(Pin pin, bool value) {
   int i = static_cast<int>(pin);
   int port = i / 8;
   int bit = i % 8;
-  return writeMasked(port, 1 << bit, value ? (1 << bit) : 0);
+  XMC_ERR_RET(writeMasked(port, 1 << bit, value ? (1 << bit) : 0));
+  return XMC_OK;
 }
 
 /**
@@ -224,11 +226,9 @@ static inline XmcStatus read(Pin pin, bool *value) {
   int port = i / 8;
   int bit = i % 8;
   uint8_t temp;
-  XmcStatus status = readMasked(port, 1 << bit, &temp);
-  if (status == XMC_OK) {
-    *value = (temp != 0);
-  }
-  return status;
+  XMC_ERR_RET(readMasked(port, 1 << bit, &temp));
+  *value = (temp != 0);
+  return XMC_OK;
 }
 
 /**

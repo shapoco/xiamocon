@@ -79,8 +79,9 @@ float paramAdjustAccum = 1.0f;
 
 bool displayUpdateRequested = false;
 
-void acceptKeyInput(uint64_t nowMs, float dt);
+void acceptKeyEvent(uint64_t nowMs, float dt);
 void keyboardStateChanged(int ikey, bool pressed);
+void requestDisplayUpdate();
 void updateDisplay();
 
 AppConfig xmc::appGetConfig() {
@@ -96,19 +97,23 @@ void xmc::appSetup() {
   // Display updates are event-driven, FPS is not needed
   frameBuffer->disableFlag(FrameBufferFlags::SHOW_FPS);
 
+  // Create tone generators and set them as audio sources for the mixer.
   for (int i = 0; i < NUM_TONES; i++) {
     tones[i] = createTone();
     tones[i]->init();
     mixer->setSource(i, tones[i]->getOutputPort());
   }
+
+  // Initialize key to tone mapping
   for (int i = 0; i < NUM_KEYS; i++) {
     keyToTone[i] = -1;
   }
 
+  // Set the mixer output as the speaker source and unmute the speaker
   speaker::setSourcePort(mixer->getOutputPort());
   speaker::setMuted(false);
 
-  displayUpdateRequested = true;
+  requestDisplayUpdate();
 }
 
 void xmc::appLoop() {
@@ -116,15 +121,16 @@ void xmc::appLoop() {
   float dt = (nowMs - lastLoopTime) / 1000.0f;
   lastLoopTime = nowMs;
 
-  acceptKeyInput(nowMs, dt);
+  acceptKeyEvent(nowMs, dt);
   updateDisplay();
 }
 
-void acceptKeyInput(uint64_t nowMs, float dt) {
+void acceptKeyEvent(uint64_t nowMs, float dt) {
   if (input::wasPressed(input::Button::FUNC)) {
+    // Toggle mode
     keyboardMode = !keyboardMode;
 
-    // stop all tones
+    // Stop all tones
     for (int i = 0; i < NUM_KEYS; i++) {
       if (keyToTone[i] >= 0) {
         tones[keyToTone[i]]->noteOff();
@@ -132,10 +138,11 @@ void acceptKeyInput(uint64_t nowMs, float dt) {
       }
     }
 
-    displayUpdateRequested = true;
+    requestDisplayUpdate();
   }
 
   if (keyboardMode) {
+    // In keyboard mode, each key directly triggers a tone
     for (int ikey = 0; ikey < NUM_KEYS; ikey++) {
       if (input::wasPressed(keys[ikey])) {
         keyboardStateChanged(ikey, true);
@@ -145,20 +152,23 @@ void acceptKeyInput(uint64_t nowMs, float dt) {
       }
     }
   } else {
+    // In parameter mode, UP/DOWN keys select parameter, LEFT/RIGHT keys adjust
+    // value
+
     // Select parameter with UP/DOWN keys
     if (input::wasPressed(input::Button::UP)) {
       selectedParamIndex--;
       if (selectedParamIndex < 0) {
         selectedParamIndex = NUM_TONE_PARAMS - 1;
       }
-      displayUpdateRequested = true;
+      requestDisplayUpdate();
     }
     if (input::wasPressed(input::Button::DOWN)) {
       selectedParamIndex++;
       if (selectedParamIndex >= NUM_TONE_PARAMS) {
         selectedParamIndex = 0;
       }
-      displayUpdateRequested = true;
+      requestDisplayUpdate();
     }
 
     ParamEntry &p = paramItems[selectedParamIndex];
@@ -198,10 +208,12 @@ void acceptKeyInput(uint64_t nowMs, float dt) {
           }; break;
           default: break;
         }
-        displayUpdateRequested = true;
+        requestDisplayUpdate();
       }
     }
 
+    // In parameter mode, 'A' button can also be used to trigger the selected
+    // parameter for quick testing
     if (input::wasPressed(input::Button::A)) {
       keyboardStateChanged(3, true);
     } else if (input::wasReleased(input::Button::A)) {
@@ -212,15 +224,17 @@ void acceptKeyInput(uint64_t nowMs, float dt) {
 
 void keyboardStateChanged(int ikey, bool pressed) {
   if (pressed) {
-    // pressed
+    // Key pressed
     if (keyToTone[ikey] >= 0) {
-      // this key is already playing a tone, so stop it first
+      // This key is already playing a tone, so stop it first
       tones[keyToTone[ikey]]->noteOff();
     }
 
+    // Select next tone generator
     keyToTone[ikey] = nextToneIndex;
     nextToneIndex = (nextToneIndex + 1) % NUM_TONES;
 
+    // Configure and start the tone
     Tone &t = tones[keyToTone[ikey]];
     t->setWaveform((Waveform)params.waveform);
     t->setVelocity(params.velocity);
@@ -229,14 +243,16 @@ void keyboardStateChanged(int ikey, bool pressed) {
     t->setSweep(params.sweepDelta, params.sweepPeriodMs);
     t->noteOn(params.keyShift + keyToNote[ikey]);
   } else {
-    // released
+    // Key released
     if (keyToTone[ikey] >= 0) {
       tones[keyToTone[ikey]]->noteOff();
       keyToTone[ikey] = -1;
     }
   }
-  displayUpdateRequested = true;
+  requestDisplayUpdate();
 }
+
+void requestDisplayUpdate() { displayUpdateRequested = true; }
 
 void updateDisplay() {
   if (!displayUpdateRequested) return;
@@ -247,11 +263,12 @@ void updateDisplay() {
   Graphics2D gfx = frameBuffer->createGraphics();
   gfx->clear(0);
 
-  gfx->setFont(&ShapoSansP_s12c09a01w02, 1);
-
+  // Render menu items
   int menuItemHeight = 15;
   int menuHeight = NUM_TONE_PARAMS * menuItemHeight;
   int menuTop = display::HEIGHT - STATUS_BAR_HEIGHT - menuHeight;
+  gfx->setFont(&ShapoSansP_s12c09a01w02, 1);
+  gfx->setTextColor(0xFFF);
   for (int i = 0; i < NUM_TONE_PARAMS; i++) {
     ParamEntry &p = paramItems[i];
 
@@ -259,22 +276,22 @@ void updateDisplay() {
     int y = menuTop + i * menuItemHeight;
 
     if (!keyboardMode && i == selectedParamIndex) {
+      // Fill background for selected item
       gfx->fillRect(0, y, display::WIDTH, menuItemHeight, 0x06C);
-      gfx->setTextColor(0xFFF);
-    } else {
-      gfx->setTextColor(0xFFF);
     }
 
+    // Render parameter name
     x += 2;
     y += 2;
-
     gfx->setCursor(x, y);
     gfx->drawString(p.name);
 
+    // Render parameter value
     x = display::WIDTH / 2;
     gfx->setCursor(x, y);
     switch (p.type) {
       case ToneParamType::ENUM: {
+        // For enum value
         int val = *(int *)p.value;
         if (p.unit) {
           const char *const *enumNames = (const char *const *)p.unit;
@@ -287,6 +304,7 @@ void updateDisplay() {
       } break;
 
       case ToneParamType::INT32: {
+        // For integer value
         int val = *(int *)p.value;
         char buf[16];
         snprintf(buf, sizeof(buf), "%d", val);
@@ -301,11 +319,13 @@ void updateDisplay() {
     }
   }
 
+  // Keyboard layout
   int keyTop = STATUS_BAR_HEIGHT;
   int whiteKeyBottom = menuTop - 5;
   int whiteKeyHeight = whiteKeyBottom - keyTop;
   int blackKeyHeight = whiteKeyHeight * 3 / 5;
 
+  // Paint white keys
   for (int i = 0; i < NUM_KEYS; i++) {
     int x = display::WIDTH * i / NUM_KEYS + 2;
     int w = display::WIDTH / NUM_KEYS - 4;
@@ -313,6 +333,7 @@ void updateDisplay() {
                   (keyToTone[i] < 0) ? 0xFFF : 0x06C);
   }
 
+  // Paint black keys
   static const int blackKeyX[] = {
       display::HEIGHT * -1 / 8 + display::HEIGHT * 1 / 14,
       display::HEIGHT * -1 / 8 + display::HEIGHT * 3 / 14,
@@ -324,7 +345,6 @@ void updateDisplay() {
   };
   static constexpr int NUM_BLACK_KEYS =
       (int)(sizeof(blackKeyX) / sizeof(blackKeyX[0]));
-
   for (int i = 0; i < NUM_BLACK_KEYS; i++) {
     int x = blackKeyX[i];
     int w = display::WIDTH / 12;
