@@ -84,23 +84,23 @@ static XmcStatus writeReg(reg_t reg, uint8_t value) {
 }
 
 static XmcStatus readReg(reg_t reg, uint8_t *value) {
-  uint8_t reg_addr = (uint8_t)reg;
+  uint8_t regAddr = (uint8_t)reg;
   XMC_ERR_RET(i2c::lock());
   XMC_ERR_RET(
       i2c::setBaudrate(i2c::getPreferredFrequency(Chipset::IO_EXPANDER)));
-  XMC_ERR_RET(i2c::writeBlocking(DEV_ADDR, &reg_addr, 1, false));
+  XMC_ERR_RET(i2c::writeBlocking(DEV_ADDR, &regAddr, 1, false));
   XMC_ERR_RET(i2c::readBlocking(DEV_ADDR, value, 1, false));
   XMC_ERR_RET(i2c::unlock());
   return XMC_OK;
 }
 
 XmcStatus readAll(uint16_t *value) {
-  uint8_t reg_addr = (uint8_t)REG_GPIOA;
+  uint8_t regAddr = (uint8_t)REG_GPIOA;
   uint8_t data[2];
   XMC_ERR_RET(i2c::lock());
   XMC_ERR_RET(
       i2c::setBaudrate(i2c::getPreferredFrequency(Chipset::IO_EXPANDER)));
-  XMC_ERR_RET(i2c::writeBlocking(DEV_ADDR, &reg_addr, 1, false));
+  XMC_ERR_RET(i2c::writeBlocking(DEV_ADDR, &regAddr, 1, false));
   XMC_ERR_RET(i2c::readBlocking(DEV_ADDR, data, 2, false));
   XMC_ERR_RET(i2c::unlock());
   *value = data[0] | (((uint16_t)data[1]) << 8);
@@ -109,7 +109,7 @@ XmcStatus readAll(uint16_t *value) {
 
 bool tryReadAll(uint16_t *value) {
   XmcStatus status;
-  uint8_t reg_addr = (uint8_t)REG_GPIOA;
+  uint8_t regAddr = (uint8_t)REG_GPIOA;
   uint8_t data[2];
   if (!i2c::tryLock()) {
     return false;
@@ -117,7 +117,7 @@ bool tryReadAll(uint16_t *value) {
   do {
     XMC_ERR_BRK(status, i2c::setBaudrate(
                             i2c::getPreferredFrequency(Chipset::IO_EXPANDER)));
-    XMC_ERR_BRK(status, i2c::writeBlocking(DEV_ADDR, &reg_addr, 1, false));
+    XMC_ERR_BRK(status, i2c::writeBlocking(DEV_ADDR, &regAddr, 1, false));
     XMC_ERR_BRK(status, i2c::readBlocking(DEV_ADDR, data, 2, false));
     *value = data[0] | (((uint16_t)data[1]) << 8);
   } while (0);

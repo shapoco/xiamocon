@@ -69,7 +69,7 @@ static XmcStatus writeRegU8(Adc101c021 reg, uint8_t value) {
 
 static bool tryReadRegU16(Adc101c021 reg, uint16_t *value) {
   XmcStatus status = XMC_OK;
-  uint8_t reg_addr = (uint8_t)reg;
+  uint8_t regAddr = (uint8_t)reg;
   uint8_t data[2];
   if (!i2c::tryLock()) {
     return false;
@@ -79,7 +79,7 @@ static bool tryReadRegU16(Adc101c021 reg, uint16_t *value) {
         status,
         i2c::setBaudrate(i2c::getPreferredFrequency(Chipset::BATTERY_MONITOR)));
     XMC_ERR_BRK(status,
-                i2c::writeBlocking(ADC101C021_I2C_ADDR, &reg_addr, 1, false));
+                i2c::writeBlocking(ADC101C021_I2C_ADDR, &regAddr, 1, false));
     XMC_ERR_BRK(status, i2c::readBlocking(ADC101C021_I2C_ADDR, data, 2, false));
     *value = ((uint16_t)data[0] << 8) | data[1];
   } while (0);

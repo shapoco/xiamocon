@@ -13,8 +13,6 @@ bool isInited = false;
 
 uint32_t getPreferredFrequency(Chipset device) {
   switch (device) {
-    case Chipset::IO_EXPANDER: return 400000;
-    case Chipset::BATTERY_MONITOR: return 400000;
     default: return 400000;
   }
 }
@@ -106,17 +104,17 @@ XmcStatus resetBus() {
   return sts;
 }
 
-XmcStatus writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size,
+XmcStatus writeBlocking(uint8_t devAddr, const uint8_t *data, uint32_t size,
                         bool nostop) {
-  Wire.beginTransmission(dev_addr);
+  Wire.beginTransmission(devAddr);
   Wire.write(data, size);
   Wire.endTransmission(!nostop);
   return XMC_OK;
 }
 
-XmcStatus readBlocking(uint8_t dev_addr, uint8_t *data, uint32_t size,
+XmcStatus readBlocking(uint8_t devAddr, uint8_t *data, uint32_t size,
                        bool nostop) {
-  Wire.requestFrom(dev_addr, size, nostop);
+  Wire.requestFrom(devAddr, size, nostop);
   for (uint32_t i = 0; i < size; i++) {
     if (Wire.available()) {
       data[i] = Wire.read();

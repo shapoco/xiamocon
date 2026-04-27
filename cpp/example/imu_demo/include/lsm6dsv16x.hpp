@@ -141,7 +141,7 @@ static constexpr uint8_t CTRL9_HP_REF_MODE_XL = 0b1 << 6;
 
 class SensorI2C {
  public:
-  const uint8_t dev_addr;
+  const uint8_t devAddr;
   const uint32_t baudrate_hz;
 
  private:
@@ -150,7 +150,7 @@ class SensorI2C {
  public:
   // todo: test 1MHz
   SensorI2C(uint8_t addr = 0x6A, uint32_t baud = 400000)
-      : dev_addr(addr), baudrate_hz(baud) {}
+      : devAddr(addr), baudrate_hz(baud) {}
 
   XmcStatus init() {
     inited = false;
@@ -294,9 +294,9 @@ class SensorI2C {
     do {
       XMC_ERR_BRK(sts, i2c::setBaudrate(baudrate_hz));
       XMC_ERR_BRK(sts,
-                  i2c::writeBlocking(dev_addr, (uint8_t *)&reg, 1, false));
+                  i2c::writeBlocking(devAddr, (uint8_t *)&reg, 1, false));
       XMC_ERR_BRK(sts,
-                  i2c::readBlocking(dev_addr, value, num_bytes, false));
+                  i2c::readBlocking(devAddr, value, num_bytes, false));
     } while (0);
     XMC_ERR_RET(i2c::unlock());
     return sts;
@@ -317,7 +317,7 @@ class SensorI2C {
         buf[1 + i] = value[i];
       }
       XMC_ERR_BRK(sts,
-                  i2c::writeBlocking(dev_addr, buf, sizeof(buf), false));
+                  i2c::writeBlocking(devAddr, buf, sizeof(buf), false));
     } while (0);
     XMC_ERR_RET(i2c::unlock());
     return sts;

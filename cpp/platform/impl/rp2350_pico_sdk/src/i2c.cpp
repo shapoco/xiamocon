@@ -16,8 +16,6 @@ bool isInited = false;
 
 uint32_t getPreferredFrequency(Chipset device) {
   switch (device) {
-    case Chipset::IO_EXPANDER: return 400000;
-    case Chipset::BATTERY_MONITOR: return 400000;
     default: return 400000;
   }
 }
@@ -117,18 +115,18 @@ XmcStatus resetBus() {
   return sts;
 }
 
-XmcStatus writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size,
+XmcStatus writeBlocking(uint8_t devAddr, const uint8_t *data, uint32_t size,
                         bool nostop) {
-  int n = i2c_write_blocking(i2cInst, dev_addr, data, size, nostop);
+  int n = i2c_write_blocking(i2cInst, devAddr, data, size, nostop);
   if (n != (int)size) {
     XMC_ERR_RET(XMC_ERR_I2C_WRITE_FAILED);
   }
   return XMC_OK;
 }
 
-XmcStatus readBlocking(uint8_t dev_addr, uint8_t *data, uint32_t size,
+XmcStatus readBlocking(uint8_t devAddr, uint8_t *data, uint32_t size,
                        bool nostop) {
-  int n = i2c_read_blocking(i2cInst, dev_addr, data, size, nostop);
+  int n = i2c_read_blocking(i2cInst, devAddr, data, size, nostop);
   if (n != (int)size) {
     XMC_ERR_RET(XMC_ERR_I2C_READ_FAILED);
   }

@@ -87,22 +87,22 @@ XmcStatus resetBus();
 
 /**
  * Write data to an I2C device in a blocking manner.
- * @param dev_addr The 7-bit I2C address of the target device.
+ * @param devAddr The 7-bit I2C address of the target device.
  * @param data Pointer to the data buffer to be sent.
  * @param size The number of bytes to write from the data buffer.
  * @param nostop If true, do not send a STOP condition after the write.
  */
-XmcStatus writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size,
+XmcStatus writeBlocking(uint8_t devAddr, const uint8_t *data, uint32_t size,
                         bool nostop);
 
 /**
  * Read data from an I2C device in a blocking manner.
- * @param dev_addr The 7-bit I2C address of the target device.
+ * @param devAddr The 7-bit I2C address of the target device.
  * @param data Pointer to the data buffer to store the received data.
  * @param size The number of bytes to read into the data buffer.
  * @param nostop If true, do not send a STOP condition after the read.
  */
-XmcStatus readBlocking(uint8_t dev_addr, uint8_t *data, uint32_t size,
+XmcStatus readBlocking(uint8_t devAddr, uint8_t *data, uint32_t size,
                        bool nostop);
 
 }  // namespace xmc::i2c
