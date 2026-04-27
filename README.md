@@ -94,7 +94,7 @@ export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 
     ```sh
     cd ${XMC_REPO_PATH}
-    source ${XMC_REPO_PATH}/setup.shrc
+    source setup.shrc
     cd cpp/example/hello_world
     ```
 
@@ -119,7 +119,7 @@ export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 
     ```sh
     cd ${XMC_REPO_PATH}
-    source ${XMC_REPO_PATH}/setup.shrc
+    source setup.shrc
     cd cpp/example/hello_world
     ```
 
