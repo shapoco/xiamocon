@@ -7,20 +7,20 @@ I2C API
 I2C API は、I2C デバイスへの同期アクセスを行うための低レベル API です。
 複数タスクから安全に利用するため、アクセス時は `lock()` / `unlock()` でトランザクションを保護します。
 
-xmc::i2c::getPreferredFrequency
+初期化
 ================================================================================
+
+xmc::i2c::getPreferredFrequency
+--------------------------------------------------------------------------------
 
 .. code-block:: cpp
 
 	uint32_t xmc::i2c::getPreferredFrequency(Chipset device);
 
-デバイス種別に応じた推奨 I2C クロック [Hz] を返します。
+デバイス種別に応じた推奨 I2C クロック周波数 [Hz] を返します。
 
 `device` には接続先デバイス種別を指定します。
-戻り値は、そのデバイスで安全に使用できることを想定した推奨クロックです。
-
-初期化
-================================================================================
+戻り値は、そのデバイスで安全に使用できることを想定した推奨クロック周波数です。
 
 xmc::i2c::init
 --------------------------------------------------------------------------------
@@ -117,10 +117,10 @@ xmc::i2c::writeBlocking
 
 .. code-block:: cpp
 
-	XmcStatus xmc::i2c::writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size, bool nostop);
+	XmcStatus xmc::i2c::writeBlocking(uint8_t devAddr, const uint8_t *data, uint32_t size, bool nostop);
 
 I2C デバイスへデータを書き込みます。
-`dev_addr` は 7bit アドレスです。
+`devAddr` は 7bit アドレスです。
 
 `data` は送信するバッファ先頭アドレス、`size` は送信バイト数です。
 `nostop` を `true` にすると STOP 条件を出さずに終了するため、続けて repeated start を伴う操作を行えます。
@@ -132,7 +132,7 @@ xmc::i2c::readBlocking
 
 .. code-block:: cpp
 
-	XmcStatus xmc::i2c::readBlocking(uint8_t dev_addr, uint8_t *data, uint32_t size, bool nostop);
+	XmcStatus xmc::i2c::readBlocking(uint8_t devAddr, uint8_t *data, uint32_t size, bool nostop);
 
 I2C デバイスからデータを読み出します。
 

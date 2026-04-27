@@ -117,10 +117,10 @@ xmc::i2c::writeBlocking
 
 .. code-block:: cpp
 
-	XmcStatus xmc::i2c::writeBlocking(uint8_t dev_addr, const uint8_t *data, uint32_t size, bool nostop);
+	XmcStatus xmc::i2c::writeBlocking(uint8_t devAddr, const uint8_t *data, uint32_t size, bool nostop);
 
 I2C デバイスへデータを書き込みます。
-`dev_addr` は 7bit アドレスです。
+`devAddr` は 7bit アドレスです。
 
 `data` は送信するバッファ先頭アドレス、`size` は送信バイト数です。
 `nostop` を `true` にすると STOP 条件を出さずに終了するため、続けて repeated start を伴う操作を行えます。
@@ -132,7 +132,7 @@ xmc::i2c::readBlocking
 
 .. code-block:: cpp
 
-	XmcStatus xmc::i2c::readBlocking(uint8_t dev_addr, uint8_t *data, uint32_t size, bool nostop);
+	XmcStatus xmc::i2c::readBlocking(uint8_t devAddr, uint8_t *data, uint32_t size, bool nostop);
 
 I2C デバイスからデータを読み出します。
 

@@ -2,3 +2,4 @@ pygltflib
 Pillow
 numpy
 sphinx
+sphinx-rtd-theme
