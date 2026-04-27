@@ -27,6 +27,7 @@ def main():
         help="Target platform (e.g., rp2350_pico_sdk)",
     )
     parser.add_argument("-d", "--drive", help="Drive letter for XIAO RP2350")
+    parser.add_argument("-s", "--serial", help="Serial port for XIAO ESP32S3")
     
     args = parser.parse_args()
 
@@ -37,6 +38,10 @@ def main():
     default_drive = os.getenv("XMC_DEFAULT_DRIVE")
     if not args.drive and default_drive:
         args.drive = default_drive    
+
+    default_serial = os.getenv("XMC_DEFAULT_SERIAL")
+    if not args.serial and default_serial:
+        args.serial = default_serial
 
     if args.command == "init":
         xmc_init(args)
@@ -115,7 +120,10 @@ def xmc_run(args):
             print("Error: Unsupported OS for RP2350 upload")
             exit(1)
     elif args.platform == BOARD_ESP32S3_PIO_ARDUINO:
-        os.system("pio run -e esp32s3_arduino --target upload")
+        upload_port = ''
+        if args.serial:
+            upload_port = f"--upload-port {args.serial}"
+        os.system(f"pio run -e esp32s3_arduino --target upload {upload_port}")
     else:
         print(f"Error: Unsupported platform '{args.platform}'")
         exit(1)
