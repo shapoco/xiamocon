@@ -61,8 +61,16 @@ xmc::createSprite565 / 444 / 4444 / Gray1
 	xmc::Sprite xmc::createSpriteGray1(int width, int height, XmcRamCap caps = XMC_RAM_CAP_DMA);
 	xmc::Sprite xmc::createSpriteGray1(int width, int height, void *data, uint32_t stride = 0, bool autoFree = false);
 
-Sprite を生成します。
-`data` 付きのオーバーロードでは外部バッファを使用できます。
+Sprite を生成します。スプライトのピクセルフォーマットに応じた関数を使用します。
+
+width と height にはスプライトのサイズをピクセル単位で指定します。
+
+RAM 上にスプライトを作成する場合は、`caps` に RAM の種類を指定します。
+スプライトを DMA 転送に使用する場合は `XMC_RAM_CAP_DMA` を指定しなければなりません。
+
+RAM 上に既に確保されたバッファや Flash ROM 上のリソースをスプライトとして使用する場合は、`data` 引数にバッファの先頭アドレスを指定します。
+この場合、`stride` 引数に 1 ラインあたりのバイト数を指定します。0 を指定した場合は、幅に応じた値が自動計算されます。
+`autoFree` を `true` にすると、スプライトオブジェクトの寿命が尽きたときに `data` で指定されたバッファを自動的に解放します。
 
 xmc::SpriteClass
 --------------------------------------------------------------------------------
