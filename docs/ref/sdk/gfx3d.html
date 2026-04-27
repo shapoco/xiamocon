@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3D グラフィックス API &#8212; xiamocon  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
     <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="オーディオ API" href="audio.html" />
@@ -49,8 +49,8 @@
 <section id="xmc-cleartarget">
 <h3>xmc::ClearTarget<a class="headerlink" href="#xmc-cleartarget" title="Link to this heading">¶</a></h3>
 <p><cite>beginRender()</cite> 時にクリア対象を指定する列挙型です。</p>
-<table class="docutils align-default" id="id8">
-<caption><span class="caption-text">xmc::ClearTarget の値</span><a class="headerlink" href="#id8" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">xmc::ClearTarget の値</span><a class="headerlink" href="#id6" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -72,8 +72,8 @@
 <section id="xmc-renderflags3d">
 <h3>xmc::RenderFlags3D<a class="headerlink" href="#xmc-renderflags3d" title="Link to this heading">¶</a></h3>
 <p>3D レンダリングの機能フラグです。</p>
-<table class="docutils align-default" id="id9">
-<caption><span class="caption-text">xmc::RenderFlags3D の主な値</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">xmc::RenderFlags3D の主な値</span><a class="headerlink" href="#id7" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -110,8 +110,8 @@
 <section id="xmc-parallelmode3d">
 <h3>xmc::ParallelMode3D<a class="headerlink" href="#xmc-parallelmode3d" title="Link to this heading">¶</a></h3>
 <p>並列レンダリングモードです。</p>
-<table class="docutils align-default" id="id10">
-<caption><span class="caption-text">xmc::ParallelMode3D の値</span><a class="headerlink" href="#id10" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id8">
+<caption><span class="caption-text">xmc::ParallelMode3D の値</span><a class="headerlink" href="#id8" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -139,6 +139,8 @@
 </pre></div>
 </div>
 <p>シーンを生成します。<cite>Scene3DClass::rootNodes</cite> または <cite>addNode()</cite> でノードを追加します。</p>
+<p>戻り値として空の <cite>xmc::Scene3D</cite> オブジェクトを返します。
+複数のルートノードを持つシーンを構築したい場合の起点になります。</p>
 </section>
 <section id="xmc-createnode3d">
 <h3>xmc::createNode3D<a class="headerlink" href="#xmc-createnode3d" title="Link to this heading">¶</a></h3>
@@ -146,6 +148,10 @@
 </pre></div>
 </div>
 <p>メッシュとローカル変換行列からノードを生成します。</p>
+<p><cite>mesh</cite> には描画対象メッシュを指定します。
+<cite>transform</cite> にはノードに適用するローカル変換行列を指定します。</p>
+<p>戻り値として <cite>xmc::Node3D</cite> オブジェクトを返します。
+子ノードを <cite>children</cite> に追加することでシーングラフを構築できます。</p>
 </section>
 <section id="xmc-createmesh3d">
 <h3>xmc::createMesh3D<a class="headerlink" href="#xmc-createmesh3d" title="Link to this heading">¶</a></h3>
@@ -153,6 +159,8 @@
 </pre></div>
 </div>
 <p>プリミティブ集合からメッシュを生成します。</p>
+<p><cite>prims</cite> にはメッシュを構成するプリミティブ列を指定します。
+戻り値として <cite>xmc::Mesh3D</cite> を返します。</p>
 </section>
 <section id="xmc-createcube-createcoloredcube-createsphere">
 <h3>xmc::createCube / createColoredCube / createSphere<a class="headerlink" href="#xmc-createcube-createcoloredcube-createsphere" title="Link to this heading">¶</a></h3>
@@ -162,6 +170,11 @@
 </pre></div>
 </div>
 <p>定型メッシュを生成します。</p>
+<p><cite>createCube()</cite> の <cite>s</cite> は立方体の一辺の長さです。
+<cite>uv</cite> を <cite>true</cite> にすると UV 座標付きメッシュを生成します。</p>
+<p><cite>createColoredCube()</cite> は頂点色付き立方体を返します。</p>
+<p><cite>createSphere()</cite> では <cite>radius</cite> に半径、<cite>segments</cite> に経度方向分割数、<cite>rings</cite> に緯度方向分割数、<cite>col</cite> に球の基本色を指定します。</p>
+<p>いずれも戻り値は <cite>xmc::Mesh3D</cite> です。</p>
 </section>
 </section>
 <section id="id4">
@@ -173,12 +186,17 @@
 <span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Vec3Buffer</span><span class="w"> </span><span class="n">pos</span><span class="p">,</span>
 <span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Vec3Buffer</span><span class="w"> </span><span class="n">norm</span><span class="p">,</span>
 <span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">ColorBuffer</span><span class="w"> </span><span class="n">col</span><span class="p">,</span>
-<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Vec2Buffer</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">,</span>
-<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">IndexBuffer</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">,</span>
-<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Material3D</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">);</span>
+<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Vec2Buffer</span><span class="w"> </span><span class="n">uv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span>
+<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">IndexBuffer</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span>
+<span class="w">                </span><span class="n">xmc</span><span class="o">::</span><span class="n">Material3D</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>1 つの描画プリミティブを生成します。</p>
+<p><cite>mode</cite> には描画トポロジを指定します。
+<cite>pos</cite> は頂点位置配列、<cite>norm</cite> は法線配列、<cite>col</cite> は頂点カラー配列です。
+<cite>uv</cite> はテクスチャ座標、<cite>idx</cite> はインデックス配列、<cite>mat</cite> はマテリアルを指定します。</p>
+<p>使用しない属性は <cite>nullptr</cite> を指定できますが、レンダリングフラグやマテリアル設定と整合している必要があります。
+戻り値は <cite>xmc::Primitive3D</cite> です。</p>
 </section>
 <section id="xmc-creatematerial3d">
 <h3>xmc::createMaterial3D<a class="headerlink" href="#xmc-creatematerial3d" title="Link to this heading">¶</a></h3>
@@ -186,11 +204,12 @@
 </pre></div>
 </div>
 <p>マテリアルを生成します。</p>
+<p>戻り値として、各種見た目設定を書き込むための <cite>xmc::Material3D</cite> オブジェクトを返します。</p>
 </section>
 <section id="xmc-materialflags3d">
 <h3>xmc::MaterialFlags3D<a class="headerlink" href="#xmc-materialflags3d" title="Link to this heading">¶</a></h3>
-<table class="docutils align-default" id="id11">
-<caption><span class="caption-text">xmc::MaterialFlags3D の値</span><a class="headerlink" href="#id11" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id9">
+<caption><span class="caption-text">xmc::MaterialFlags3D の値</span><a class="headerlink" href="#id9" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -211,8 +230,8 @@
 </section>
 <section id="xmc-material3dclass">
 <h3>xmc::Material3DClass の主なメンバー<a class="headerlink" href="#xmc-material3dclass" title="Link to this heading">¶</a></h3>
-<table class="docutils align-default" id="id12">
-<caption><span class="caption-text">xmc::Material3DClass の主なメンバー</span><a class="headerlink" href="#id12" title="Link to this table">¶</a></caption>
+<table class="docutils align-default" id="id10">
+<caption><span class="caption-text">xmc::Material3DClass の主なメンバー</span><a class="headerlink" href="#id10" title="Link to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>型</p></th>
 <th class="head"><p>メンバー</p></th>
@@ -256,6 +275,11 @@
 </pre></div>
 </div>
 <p>頂点属性配列を生成します。</p>
+<p>サイズ指定版では指定要素数のバッファを新規確保して返します。
+<cite>caps</cite> には確保先 RAM の特性を指定します。</p>
+<p>ポインタ指定版では既存配列を属性バッファとしてラップします。
+<cite>data</cite> は配列先頭、<cite>size</cite> は要素数です。
+<cite>autoFree</cite> を <cite>true</cite> にするとオブジェクト破棄時に <cite>data</cite> が自動解放されます。</p>
 </section>
 <section id="graphics3d">
 <h2>Graphics3D<a class="headerlink" href="#graphics3d" title="Link to this heading">¶</a></h2>
@@ -265,60 +289,137 @@
 </pre></div>
 </div>
 <p>3D 描画コンテキストを生成します。</p>
+<p><cite>width</cite>, <cite>height</cite> には描画先サイズをピクセル単位で指定します。
+<cite>stackSize</cite> は変換状態を保持するスタック深さです。</p>
+<p>戻り値として <cite>xmc::Graphics3D</cite> オブジェクトを返します。</p>
 </section>
-<section id="xmc-graphics3dclass">
-<h3>xmc::Graphics3DClass の主な設定関数<a class="headerlink" href="#xmc-graphics3dclass" title="Link to this heading">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setTarget</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="n">target</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setTarget</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">viewport</span><span class="p">);</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">setParallelMode</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">ParallelMode3D</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span>
-<span class="n">xmc</span><span class="o">::</span><span class="n">ParallelMode3D</span><span class="w"> </span><span class="nf">getParallelMode</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">setFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">enableFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">disableFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">setBlendMode</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">BlendMode</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setEnvironmentLight</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">colorf</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setParallelLight</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">colorf</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color</span><span class="p">);</span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">setProjection</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mat</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setOrthoProjection</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">bottom</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01f</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">far</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setPerspectiveProjection</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">fovY</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">aspect</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01f</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">far</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">setViewMatrix</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mv</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">lookAt</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">eye</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">focus</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">up</span><span class="p">);</span>
+<section id="xmc-graphics3dclass-settarget">
+<h3>xmc::Graphics3DClass::setTarget<a class="headerlink" href="#xmc-graphics3dclass-settarget" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setTarget</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="n">target</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setTarget</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="n">target</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">viewport</span><span class="p">);</span>
 </pre></div>
 </div>
+<p>3D 描画先 Sprite を設定します。</p>
+<p><cite>target</cite> には描画先 Sprite を指定します。
+<cite>viewport</cite> 指定版では、Sprite 内の描画領域を矩形で指定できます。
+ビューポート省略版では Sprite 全体が描画領域になります。</p>
 </section>
-<section id="id6">
-<h3>xmc::Graphics3DClass の行列操作<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">pushState</span><span class="p">();</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">popState</span><span class="p">();</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">loadIdentity</span><span class="p">();</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">loadMatrix</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">quat</span><span class="w"> </span><span class="o">&amp;</span><span class="n">q</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">axis</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">s</span><span class="p">);</span>
+<section id="xmc-graphics3dclass-setparallelmode-getparallelmode">
+<h3>xmc::Graphics3DClass::setParallelMode / getParallelMode<a class="headerlink" href="#xmc-graphics3dclass-setparallelmode-getparallelmode" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setParallelMode</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">ParallelMode3D</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">ParallelMode3D</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::getParallelMode</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>モデル変換スタックを操作します。</p>
+<p>並列レンダリングモードを設定・取得します。</p>
+<p><cite>mode</cite> には <cite>xmc::ParallelMode3D</cite> の値を指定します。
+<cite>getParallelMode()</cite> は現在の並列レンダリングモードを返します。</p>
 </section>
-<section id="id7">
-<h3>xmc::Graphics3DClass の描画関数<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">beginRender</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">ClearTarget</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">ClearTarget</span><span class="o">::</span><span class="n">ALL</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Scene3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">scene</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Node3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">node</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Mesh3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mesh</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Primitive3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">prim</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">endRender</span><span class="p">();</span>
+<section id="xmc-graphics3dclass-setflags-enableflags-disableflags">
+<h3>xmc::Graphics3DClass::setFlags / enableFlags / disableFlags<a class="headerlink" href="#xmc-graphics3dclass-setflags-enableflags-disableflags" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::enableFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::disableFlags</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">RenderFlags3D</span><span class="w"> </span><span class="n">flags</span><span class="p">);</span>
 </pre></div>
 </div>
-<p><cite>beginRender()</cite> と <cite>endRender()</cite> の間で <cite>render()</cite> を呼び出して描画します。</p>
+<p>レンダリング機能フラグを設定します。</p>
+<p><cite>setFlags()</cite> はフラグ全体を置き換えます。
+<cite>enableFlags()</cite> と <cite>disableFlags()</cite> は指定したフラグだけを個別に有効化・無効化します。</p>
+</section>
+<section id="xmc-graphics3dclass-setblendmode">
+<h3>xmc::Graphics3DClass::setBlendMode<a class="headerlink" href="#xmc-graphics3dclass-setblendmode" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setBlendMode</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">BlendMode</span><span class="w"> </span><span class="n">mode</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>ブレンドモードを設定します。
+<cite>mode</cite> には <cite>xmc::BlendMode</cite> の値を指定します。</p>
+</section>
+<section id="xmc-graphics3dclass-setenvironmentlight-setparallellight">
+<h3>xmc::Graphics3DClass::setEnvironmentLight / setParallelLight<a class="headerlink" href="#xmc-graphics3dclass-setenvironmentlight-setparallellight" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setEnvironmentLight</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">colorf</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setParallelLight</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">dir</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">colorf</span><span class="w"> </span><span class="o">&amp;</span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>ライティング条件を設定します。</p>
+<p><cite>setEnvironmentLight()</cite> は環境光の色を設定します。
+<cite>setParallelLight()</cite> は平行光源の方向 <cite>dir</cite> と色 <cite>color</cite> を設定します。</p>
+</section>
+<section id="xmc-graphics3dclass-setprojection-setorthoprojection-setperspectiveprojection">
+<h3>xmc::Graphics3DClass::setProjection / setOrthoProjection / setPerspectiveProjection<a class="headerlink" href="#xmc-graphics3dclass-setprojection-setorthoprojection-setperspectiveprojection" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setProjection</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mat</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setOrthoProjection</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">bottom</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01f</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">far</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setPerspectiveProjection</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">fovY</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">aspect</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">near</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01f</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">far</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>投影行列を設定します。</p>
+<p><cite>setProjection()</cite> は投影行列を直接設定します。
+<cite>setOrthoProjection()</cite> は平行投影、<cite>setPerspectiveProjection()</cite> は透視投影を簡易に設定する補助関数です。</p>
+</section>
+<section id="xmc-graphics3dclass-setviewmatrix-lookat">
+<h3>xmc::Graphics3DClass::setViewMatrix / lookAt<a class="headerlink" href="#xmc-graphics3dclass-setviewmatrix-lookat" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::setViewMatrix</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mv</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::lookAt</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">eye</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">focus</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">up</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>ビュー行列を設定します。</p>
+<p><cite>setViewMatrix()</cite> はビュー行列を直接設定します。
+<cite>lookAt()</cite> は視点 <cite>eye</cite>、注視点 <cite>focus</cite>、上方向 <cite>up</cite> からビュー行列を生成して設定します。</p>
+</section>
+<section id="xmc-graphics3dclass-pushstate-popstate">
+<h3>xmc::Graphics3DClass::pushState / popState<a class="headerlink" href="#xmc-graphics3dclass-pushstate-popstate" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::pushState</span><span class="p">();</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::popState</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>変換状態スタックを保存・復元します。
+階層構造をたどりながら個別の変換を適用したい場合に使用します。</p>
+</section>
+<section id="xmc-graphics3dclass-loadidentity-loadmatrix-transform">
+<h3>xmc::Graphics3DClass::loadIdentity / loadMatrix / transform<a class="headerlink" href="#xmc-graphics3dclass-loadidentity-loadmatrix-transform" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::loadIdentity</span><span class="p">();</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::loadMatrix</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">m</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::transform</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">mat4</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>現在のモデル変換行列を設定します。</p>
+<p><cite>loadIdentity()</cite> は単位行列へ初期化します。
+<cite>loadMatrix()</cite> は行列を直接設定します。
+<cite>transform()</cite> は現在行列に変換行列を乗算します。</p>
+</section>
+<section id="xmc-graphics3dclass-translate-rotate-scale">
+<h3>xmc::Graphics3DClass::translate / rotate / scale<a class="headerlink" href="#xmc-graphics3dclass-translate-rotate-scale" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::translate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::translate</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::rotate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">quat</span><span class="w"> </span><span class="o">&amp;</span><span class="n">q</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::rotate</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">pitch</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">yaw</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">roll</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::rotate</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">axis</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">angle</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::scale</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec3</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::scale</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">s</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>現在のモデル変換に平行移動、回転、拡大縮小を適用します。
+オーバーロードによりベクトル指定と成分指定の両方を使用できます。</p>
+</section>
+<section id="xmc-graphics3dclass-beginrender-endrender">
+<h3>xmc::Graphics3DClass::beginRender / endRender<a class="headerlink" href="#xmc-graphics3dclass-beginrender-endrender" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::beginRender</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">ClearTarget</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">ClearTarget</span><span class="o">::</span><span class="n">ALL</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::endRender</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>1 フレーム分の 3D 描画を開始・終了します。</p>
+<p><cite>beginRender()</cite> の <cite>target</cite> にはクリア対象を指定します。
+通常は既定値の <cite>xmc::ClearTarget::ALL</cite> を使用します。</p>
+</section>
+<section id="xmc-graphics3dclass-render">
+<h3>xmc::Graphics3DClass::render<a class="headerlink" href="#xmc-graphics3dclass-render" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Scene3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">scene</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Node3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">node</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Mesh3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">mesh</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics3DClass::render</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Primitive3D</span><span class="w"> </span><span class="o">&amp;</span><span class="n">prim</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>シーンまたは描画要素をレンダリングします。</p>
+<p>大きなシーン全体を描く場合は <cite>Scene3D</cite> を、個別に制御したい場合は <cite>Node3D</cite>、<cite>Mesh3D</cite>、<cite>Primitive3D</cite> を直接渡します。
+<cite>beginRender()</cite> と <cite>endRender()</cite> の間で呼び出します。</p>
 </section>
 </section>
 </section>
@@ -351,6 +452,7 @@
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Xiamocon アプリケーションの基本構造</a></li>
 <li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
@@ -392,7 +494,7 @@
       &#169;2026, Shapoco.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |

@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>タイマー API &#8212; xiamocon  documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
     <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="2D グラフィックス API" href="gfx2d.html" />
@@ -49,6 +49,7 @@
 </div>
 <p>周期タイマーのコールバック型です。
 戻り値が <cite>true</cite> の場合は継続、<cite>false</cite> の場合はタイマーを停止します。</p>
+<p>引数 <cite>context</cite> には <cite>startMs()</cite> 呼び出し時に渡したポインタがそのまま渡されます。</p>
 </section>
 </section>
 <section id="repeatingtimer">
@@ -59,6 +60,8 @@
 </pre></div>
 </div>
 <p>指定周期 [ms] でコールバックを呼び出すタイマーを開始します。</p>
+<p><cite>intervalMs</cite> には呼び出し周期、<cite>cb</cite> にはコールバック関数、<cite>context</cite> にはコールバックへ引き渡す任意のポインタを指定します。</p>
+<p>戻り値は <cite>XmcStatus</cite> です。成功時は <cite>XMC_OK</cite> が返ります。</p>
 </section>
 <section id="xmc-repeatingtimer-cancel">
 <h3>xmc::RepeatingTimer::cancel<a class="headerlink" href="#xmc-repeatingtimer-cancel" title="Link to this heading">¶</a></h3>
@@ -66,6 +69,7 @@
 </pre></div>
 </div>
 <p>動作中タイマーを停止します。</p>
+<p>タイマーが動作していない場合に呼び出しても問題ありません。</p>
 </section>
 </section>
 <section id="id3">
@@ -76,6 +80,8 @@
 </pre></div>
 </div>
 <p>現在時刻をミリ秒単位で取得します。</p>
+<p>戻り値は実装依存エポックからの経過時間です。
+経過時間計測やタイムアウト判定に使用できます。</p>
 </section>
 <section id="xmc-gettimeus">
 <h3>xmc::getTimeUs<a class="headerlink" href="#xmc-gettimeus" title="Link to this heading">¶</a></h3>
@@ -84,6 +90,7 @@
 </div>
 <p>現在時刻をマイクロ秒単位で取得します。</p>
 <p>エポックは実装依存ですが、単調増加する時刻として使用できます。</p>
+<p>戻り値は <cite>uint64_t</cite> で、高分解能の経過時間測定に使用できます。</p>
 </section>
 </section>
 <section id="id4">
@@ -94,6 +101,7 @@
 </pre></div>
 </div>
 <p>指定ミリ秒だけスリープします。</p>
+<p><cite>ms</cite> には待機時間をミリ秒単位で指定します。</p>
 </section>
 <section id="xmc-sleepus">
 <h3>xmc::sleepUs<a class="headerlink" href="#xmc-sleepus" title="Link to this heading">¶</a></h3>
@@ -101,6 +109,7 @@
 </pre></div>
 </div>
 <p>指定マイクロ秒だけスリープします。</p>
+<p><cite>us</cite> には待機時間をマイクロ秒単位で指定します。</p>
 </section>
 </section>
 </section>
@@ -133,6 +142,7 @@
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Xiamocon アプリケーションの基本構造</a></li>
 <li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">タイマー API</a><ul>
@@ -173,7 +183,7 @@
       &#169;2026, Shapoco.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
