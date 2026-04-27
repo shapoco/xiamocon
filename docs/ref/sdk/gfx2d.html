@@ -188,8 +188,7 @@
 </div>
 <p><cite>Graphics2D</cite> インスタンスを生成します。
 <cite>target</cite> 指定版は描画先 Sprite を初期設定した状態で生成します。</p>
-<p>引数なし版は、まだ描画先が決まっていない場合に使用します。
-この場合は、使用前に <cite>setTarget()</cite> で描画先 Sprite を設定する必要があります。</p>
+<p>引数を指定しなかった場合、スプライトではなくディスプレイへ直接描画されます。</p>
 <p>戻り値として <cite>xmc::Graphics2D</cite> オブジェクトを返します。</p>
 </section>
 <section id="xmc-graphics2dclass-settarget-gettarget">
@@ -239,7 +238,8 @@
 <p><cite>clear(color)</cite> は現在のクリップ範囲全体を <cite>color</cite> で塗りつぶします。
 <cite>fillRect()</cite> は矩形内部を塗りつぶし、<cite>drawRect()</cite> は矩形の枠線のみを描画します。</p>
 <p><cite>fillSmokeRect()</cite> は白または黒ベースのスモーク表現を描画する補助関数です。
-<cite>white</cite> を <cite>true</cite> にすると白系、<cite>false</cite> にすると黒系の見た目になります。</p>
+<cite>white</cite> を <cite>true</cite> にすると各ピクセルを現在の色と白の中間色で塗りつぶし、
+<cite>false</cite> の場合は現在の色と黒の中間色で塗りつぶします。</p>
 </section>
 <section id="xmc-graphics2dclass-drawimage">
 <h3>xmc::Graphics2DClass::drawImage<a class="headerlink" href="#xmc-graphics2dclass-drawimage" title="Link to this heading">¶</a></h3>
