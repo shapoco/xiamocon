@@ -20,7 +20,10 @@ struct FlameParticle {
   vec3 pos;
   vec3 vel;
 };
-FlameParticle particles[COLS * (ROWS + 1)];
+
+// Allocate particles in PSRAM because ESP32S3 has limited SRAM
+FlameParticle *particles = (FlameParticle *)xmcMalloc(
+    sizeof(FlameParticle) * COLS * (ROWS + 1), XMC_RAM_CAP_SPIRAM);
 
 constexpr float COL_SHIFT_INTERVAL = 0.05f;
 float timeAccum = 0;
@@ -29,7 +32,13 @@ float flameBuoyancy = 10.0f;    // 浮力
 float flameAttraction = 0.55f;  // 引力
 float flameRepulsion = 0.035f;  // 斥力
 
-void setupFlame() { fireMat->flags |= MaterialFlags3D::DOUBLE_SIDED; }
+void setupFlame() {
+  fireMat->flags |= MaterialFlags3D::DOUBLE_SIDED;
+  for (int i = 0; i < COLS * (ROWS + 1); i++) {
+    particles[i].pos = {0, 0, 0};
+    particles[i].vel = {0, 0, 0};
+  }
+}
 
 void updateFlame(float dt) {
   constexpr float ROOT_RADIUS = 0.05f;
@@ -40,8 +49,8 @@ void updateFlame(float dt) {
 
   // shift vertex data up the column every COL_SHIFT_INTERVAL seconds
   timeAccum += dt;
-  if (timeAccum >= COL_SHIFT_INTERVAL) {
-    timeAccum -= COL_SHIFT_INTERVAL * floorf(timeAccum / COL_SHIFT_INTERVAL);
+  while (timeAccum >= COL_SHIFT_INTERVAL) {
+    timeAccum -= COL_SHIFT_INTERVAL;
     for (int row = ROWS; row >= 1; row--) {
       memcpy(&particles[row * COLS], &particles[(row - 1) * COLS],
              sizeof(FlameParticle) * COLS);

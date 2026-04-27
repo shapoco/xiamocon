@@ -8,7 +8,10 @@ static constexpr float PARTICLE_MAX_Y = 10;
 struct Particle {
   vec3 vel;
 };
-Particle particleArray[NUM_PARTICLES];
+// Allocate particles in PSRAM because ESP32S3 has limited SRAM
+Particle *particleArray =
+    (Particle *)xmcMalloc(sizeof(Particle) * NUM_PARTICLES, XMC_RAM_CAP_SPIRAM);
+
 Vec3Buffer particleVerts = createVec3Buffer(NUM_PARTICLES);
 Primitive3D particlePrim =
     createPrimitive3D(PrimitiveMode::POINTS, particleVerts, nullptr, nullptr);
