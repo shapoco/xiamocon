@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Xiamocon アプリケーションの基本構造 &#8212; xiamocon  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="xiamocon">
+<h1>Xiamocon アプリケーションの基本構造<a class="headerlink" href="#xiamocon" title="Link to this heading">¶</a></h1>
+<p>Xiamocon アプリケーションは 4 つの関数から構成されます。</p>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Xiamocon アプリケーションの関数</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>関数</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmcAppGetConfig</p></td>
+<td><p>アプリケーションのコンフィグレーション情報を返す関数</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmcAppSetup</p></td>
+<td><p>アプリケーションのセットアップを行う関数。</p></td>
+</tr>
+<tr class="row-even"><td><p>xmcAppLoop</p></td>
+<td><p>アプリケーションのメインループ関数。</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmcAppTerminate</p></td>
+<td><p>アプリケーションの終了処理を行う関数。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="xmcappgetconfig">
+<h2>xmcAppGetConfig<a class="headerlink" href="#xmcappgetconfig" title="Link to this heading">¶</a></h2>
+<p>プロトタイプ宣言:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">AppConfig</span><span class="w"> </span><span class="n">xmcAppGetConfig</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>xmcAppGetConfig 関数は、アプリケーションのコンフィグレーション情報を返す関数です。
+xmc::AppConfig 構造体には、システムを初期化するための基本的なコンフィグレーション情報が含まれます。</p>
+<p>通常は xmc::getDefaultAppConfig() 関数を使用してデフォルトのコンフィグレーションを取得し、必要に応じて値を変更してから返します。</p>
+<table class="docutils align-default" id="id2">
+<caption><span class="caption-text">xmc::AppConfig のメンバー</span><a class="headerlink" href="#id2" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>メンバー</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::PixelFormat</p></td>
+<td><p>displayPixelFormat</p></td>
+<td><p>ディスプレイのピクセルフォーマットを指定する列挙型。</p></td>
+</tr>
+<tr class="row-odd"><td><p>bool</p></td>
+<td><p>speakerEnabled</p></td>
+<td><p>スピーカーの有効/無効を指定するブール値。</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::audio::SampleFormat</p></td>
+<td><p>speakerSampleFormat</p></td>
+<td><p>スピーカーのサンプルフォーマットを指定する列挙型。</p></td>
+</tr>
+<tr class="row-odd"><td><p>uint32_t</p></td>
+<td><p>speakerSampleRateHz</p></td>
+<td><p>スピーカーのサンプルレートを指定する整数。</p></td>
+</tr>
+<tr class="row-even"><td><p>uint32_t</p></td>
+<td><p>speakerLatencySamples</p></td>
+<td><p>スピーカーのレイテンシをサンプル単位で指定する整数。</p></td>
+</tr>
+</tbody>
+</table>
+<section id="displaypixelformat">
+<h3>displayPixelFormat<a class="headerlink" href="#displaypixelformat" title="Link to this heading">¶</a></h3>
+<p>ディスプレイのピクセルフォーマットを xmc::PixelFormat 列挙型で指定します。Xiamocon SDK では、現在のところ次のピクセルフォーマットがサポートされます。</p>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">xmc::PixelFormat 列挙型の値</span><a class="headerlink" href="#id3" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::PixelFormat::RGB444</p></td>
+<td><p>12 ビット RGB フォーマット。赤、緑、青がそれぞれ 4 ビットで表されます。</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::PixelFormat::RGB565 (デフォルト)</p></td>
+<td><p>16 ビット RGB フォーマット。赤が 5 ビット、緑が 6 ビット、青が 5 ビットで表されます。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="speakerenabled">
+<h3>speakerEnabled<a class="headerlink" href="#speakerenabled" title="Link to this heading">¶</a></h3>
+<p>スピーカーの有効/無効を指定するブール値です。
+true の場合、プラットフォーム側のオーディオ出力機能が有効になります。</p>
+<p>プラットフォーム側の機能を使用せず独自にオーディオ出力を実装する場合は false を指定します。</p>
+</section>
+<section id="speakersampleformat">
+<h3>speakerSampleFormat<a class="headerlink" href="#speakersampleformat" title="Link to this heading">¶</a></h3>
+<p>スピーカーのサンプルフォーマットを xmc::audio::SampleFormat 列挙型で指定します。
+Xiamocon SDK では、現在のところ次のサンプルフォーマットがサポートされます。</p>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">xmc::audio::SampleFormat 列挙型の値</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::audio::SampleFormat::LINEAR_PCM_U8_MONO</p></td>
+<td><p>8 ビット符号なし整数フォーマット。</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::audio::SampleFormat::LINEAR_PCM_S16_MONO (デフォルト)</p></td>
+<td><p>16 ビット符号付き整数フォーマット。</p></td>
+</tr>
+</tbody>
+</table>
+<p>LINEAR_PCM_U8_MONO フォーマットは使用するメモリは少なくなりますが、
+プラットフォーム側で 16 ビット符号付きへ変換されるため、若干のパフォーマンス上のオーバーヘッドがあります。</p>
+</section>
+<section id="speakersampleratehz">
+<h3>speakerSampleRateHz<a class="headerlink" href="#speakersampleratehz" title="Link to this heading">¶</a></h3>
+<p>スピーカーのサンプリングレートを指定します。単位はヘルツ (Hz) です。</p>
+<p>基本的にこの値は変更しないで下さい。
+サンプリングレートはプラットフォーム側の PDM 変換処理と密接に関係するため、
+この値を変更するとオーディオ出力が正常に行えなくなったり、ノイズが発生する可能性があります。</p>
+<p>RP2350 では 20.833 kHz、ESP32S3 では 24 kHz がデフォルトで使用されます。</p>
+</section>
+<section id="speakerlatencysamples">
+<h3>speakerLatencySamples<a class="headerlink" href="#speakerlatencysamples" title="Link to this heading">¶</a></h3>
+<p>スピーカーのレイテンシをサンプル数で指定します。</p>
+<p>この値を小さくするとレイテンシが小さくなりますが、
+グラフィックス処理等でシステムに負荷がかかると音が途切れやすくなります。</p>
+<p>デフォルトでは 1024 サンプルが使用されます。</p>
+</section>
+</section>
+<section id="xmcappsetup">
+<h2>xmcAppSetup<a class="headerlink" href="#xmcappsetup" title="Link to this heading">¶</a></h2>
+<p>xmcAppSetup 関数は、アプリケーションのセットアップを行う関数です。
+この関数内で各種リソースの確保や外部デバイスの初期化などを行います。</p>
+</section>
+<section id="xmcapploop">
+<h2>xmcAppLoop<a class="headerlink" href="#xmcapploop" title="Link to this heading">¶</a></h2>
+<p>xmcAppLoop 関数は、アプリケーションのメインループ関数です。
+この関数は、アプリケーションが実行されている間、繰り返し呼び出されます。</p>
+<p>キーパッドの入力処理、オーディオ出力の維持、バッテリー監視などは
+プラットフォーム側で行われるため、この関数内で行う必要はありません。</p>
+<p>この関数内では、アプリケーションのロジックやグラフィックス処理などを実装します。</p>
+</section>
+<section id="xmcappterminate">
+<h2>xmcAppTerminate<a class="headerlink" href="#xmcappterminate" title="Link to this heading">¶</a></h2>
+<p>xmcAppTerminate 関数は、アプリケーションの終了処理を行う関数です。</p>
+<p>システムが電源ボタンが押されたことを検知するとこの関数が呼び出されます。
+この関数内で、確保したリソースの解放や外部デバイスの終了処理などを行います。</p>
+<p>この関数が XMC_OK を返すとシステムの電源が切れます。</p>
+<p>XMC_OK 以外を返すことでシャットダウンをキャンセルすることができますが、
+I/O 処理など、どうしても中断できない処理を行っている場合に限るべきです。</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">xiamocon</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Shapoco.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/sdk/app.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

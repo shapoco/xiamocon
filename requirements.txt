@@ -1,3 +1,4 @@
 pygltflib
 Pillow
 numpy
+sphinx

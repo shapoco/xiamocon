@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SPI API &#8212; xiamocon  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="タイマー API" href="timer.html" />
+    <link rel="prev" title="I2C API" href="i2c.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="spi-api">
+<h1>SPI API<a class="headerlink" href="#spi-api" title="Link to this heading">¶</a></h1>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>SPI API は、同期転送と DMA 転送の両方を提供します。
+複数タスクから利用する場合は <cite>lock()</cite> / <cite>unlock()</cite> でトランザクションを保護します。</p>
+</section>
+<section id="xmc-spi-getpreferredfrequency">
+<h2>xmc::spi::getPreferredFrequency<a class="headerlink" href="#xmc-spi-getpreferredfrequency" title="Link to this heading">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">xmc::spi::getPreferredFrequency</span><span class="p">(</span><span class="n">Chipset</span><span class="w"> </span><span class="n">device</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>デバイス種別に応じた推奨 SPI クロック [Hz] を返します。</p>
+</section>
+<section id="id2">
+<h2>初期化<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="xmc-spi-init">
+<h3>xmc::spi::init<a class="headerlink" href="#xmc-spi-init" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::init</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>SPI ペリフェラルを初期化します。</p>
+</section>
+<section id="xmc-spi-deinit">
+<h3>xmc::spi::deinit<a class="headerlink" href="#xmc-spi-deinit" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::spi::deinit</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>SPI ペリフェラルを終了します。</p>
+</section>
+</section>
+<section id="id3">
+<h2>トランザクション制御<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="xmc-spi-trylock">
+<h3>xmc::spi::tryLock<a class="headerlink" href="#xmc-spi-trylock" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">xmc::spi::tryLock</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>非ブロッキングで SPI ロック取得を試みます。</p>
+</section>
+<section id="xmc-spi-lock">
+<h3>xmc::spi::lock<a class="headerlink" href="#xmc-spi-lock" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::lock</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>ロックが取得できるまで待機してから SPI トランザクションを開始します。</p>
+</section>
+<section id="xmc-spi-unlock">
+<h3>xmc::spi::unlock<a class="headerlink" href="#xmc-spi-unlock" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::unlock</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>SPI トランザクションを終了します。</p>
+</section>
+</section>
+<section id="id4">
+<h2>通信設定<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="xmc-spi-setbaudrate">
+<h3>xmc::spi::setBaudrate<a class="headerlink" href="#xmc-spi-setbaudrate" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::setBaudrate</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">baudrate</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>SPI 通信速度 [Hz] を設定します。</p>
+</section>
+</section>
+<section id="id5">
+<h2>同期転送<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<section id="xmc-spi-writeblocking">
+<h3>xmc::spi::writeBlocking<a class="headerlink" href="#xmc-spi-writeblocking" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::writeBlocking</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>SPI へブロッキング書き込みを行います。</p>
+</section>
+<section id="xmc-spi-readblocking">
+<h3>xmc::spi::readBlocking<a class="headerlink" href="#xmc-spi-readblocking" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::readBlocking</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">repeated_byte</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>読み出し中に <cite>repeated_byte</cite> を送信しながら、<cite>size</cite> バイト受信します。</p>
+</section>
+</section>
+<section id="dma">
+<h2>DMA 転送<a class="headerlink" href="#dma" title="Link to this heading">¶</a></h2>
+<section id="xmc-spi-dmawritestart">
+<h3>xmc::spi::dmaWriteStart<a class="headerlink" href="#xmc-spi-dmawritestart" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::dmaWriteStart</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">dma</span><span class="o">::</span><span class="n">Config</span><span class="w"> </span><span class="o">*</span><span class="n">cfg</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">csPin</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>DMA 書き込みを開始します。関数は転送完了を待たずに返ります。</p>
+<p><cite>cfg</cite> の主なメンバー:</p>
+<ul class="simple">
+<li><p><cite>ptr</cite>: 転送元バッファ</p></li>
+<li><p><cite>elementSize</cite>: 要素サイズ [byte]</p></li>
+<li><p><cite>length</cite>: 要素数</p></li>
+</ul>
+<p><cite>csPin</cite> に 0 以上を指定すると、転送中のみ CS を自動制御します。</p>
+</section>
+<section id="xmc-spi-dmacomplete">
+<h3>xmc::spi::dmaComplete<a class="headerlink" href="#xmc-spi-dmacomplete" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::spi::dmaComplete</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>進行中 DMA 転送の完了を待機します。</p>
+</section>
+<section id="xmc-spi-dmaisbusy">
+<h3>xmc::spi::dmaIsBusy<a class="headerlink" href="#xmc-spi-dmaisbusy" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">xmc::spi::dmaIsBusy</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>DMA 転送中かどうかを返します。</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">xiamocon</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SPI API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#xmc-spi-getpreferredfrequency">xmc::spi::getPreferredFrequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">初期化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">トランザクション制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">通信設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">同期転送</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dma">DMA 転送</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="i2c.html" title="previous chapter">I2C API</a></li>
+      <li>Next: <a href="timer.html" title="next chapter">タイマー API</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Shapoco.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/sdk/spi.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

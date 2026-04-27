@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Xiamocon Reference Manual &#8212; xiamocon  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Xiamocon アプリケーションの基本構造" href="sdk/app.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="xiamocon-reference-manual">
+<h1>Xiamocon Reference Manual<a class="headerlink" href="#xiamocon-reference-manual" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sdk/app.html">Xiamocon アプリケーションの基本構造</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/app.html#xmcappgetconfig">xmcAppGetConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/app.html#xmcappsetup">xmcAppSetup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/app.html#xmcapploop">xmcAppLoop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/app.html#xmcappterminate">xmcAppTerminate</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/i2c.html">I2C API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#xmc-i2c-getpreferredfrequency">xmc::i2c::getPreferredFrequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id2">初期化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id3">トランザクション制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id4">通信設定とバス復旧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id5">データ転送</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/spi.html">SPI API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#xmc-spi-getpreferredfrequency">xmc::spi::getPreferredFrequency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#id2">初期化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#id3">トランザクション制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#id4">通信設定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#id5">同期転送</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spi.html#dma">DMA 転送</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/timer.html">タイマー API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#id2">型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#repeatingtimer">RepeatingTimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#id3">時刻取得</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#id4">待機</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx2d.html">2D グラフィックス API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id2">ピクセルフォーマット</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#sprite">Sprite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#graphics2d">Graphics2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#framebuffer">FrameBuffer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx3d.html">3D グラフィックス API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id2">描画制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id3">シーン構築</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id4">プリミティブとマテリアル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id5">属性バッファ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#graphics3d">Graphics3D</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/audio.html">オーディオ API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#id1">グローバル関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#mixer">Mixer クラス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#tone">Toneクラス</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">xiamocon</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sdk/app.html">Xiamocon アプリケーションの基本構造</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/audio.html">オーディオ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="sdk/app.html" title="next chapter">Xiamocon アプリケーションの基本構造</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Shapoco.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

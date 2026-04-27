@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>タイマー API &#8212; xiamocon  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2D グラフィックス API" href="gfx2d.html" />
+    <link rel="prev" title="SPI API" href="spi.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api">
+<h1>タイマー API<a class="headerlink" href="#api" title="Link to this heading">¶</a></h1>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>タイマー API では、周期コールバックを行う <cite>RepeatingTimer</cite> と、
+時刻取得・スリープ関数を提供します。</p>
+</section>
+<section id="id2">
+<h2>型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="xmc-timercallback">
+<h3>xmc::TimerCallback<a class="headerlink" href="#xmc-timercallback" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">TimerCallback</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>周期タイマーのコールバック型です。
+戻り値が <cite>true</cite> の場合は継続、<cite>false</cite> の場合はタイマーを停止します。</p>
+</section>
+</section>
+<section id="repeatingtimer">
+<h2>RepeatingTimer<a class="headerlink" href="#repeatingtimer" title="Link to this heading">¶</a></h2>
+<section id="xmc-repeatingtimer-startms">
+<h3>xmc::RepeatingTimer::startMs<a class="headerlink" href="#xmc-repeatingtimer-startms" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::RepeatingTimer::startMs</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">intervalMs</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">TimerCallback</span><span class="w"> </span><span class="n">cb</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">context</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>指定周期 [ms] でコールバックを呼び出すタイマーを開始します。</p>
+</section>
+<section id="xmc-repeatingtimer-cancel">
+<h3>xmc::RepeatingTimer::cancel<a class="headerlink" href="#xmc-repeatingtimer-cancel" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::RepeatingTimer::cancel</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>動作中タイマーを停止します。</p>
+</section>
+</section>
+<section id="id3">
+<h2>時刻取得<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="xmc-gettimems">
+<h3>xmc::getTimeMs<a class="headerlink" href="#xmc-gettimems" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">xmc::getTimeMs</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>現在時刻をミリ秒単位で取得します。</p>
+</section>
+<section id="xmc-gettimeus">
+<h3>xmc::getTimeUs<a class="headerlink" href="#xmc-gettimeus" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint64_t</span><span class="w"> </span><span class="nf">xmc::getTimeUs</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>現在時刻をマイクロ秒単位で取得します。</p>
+<p>エポックは実装依存ですが、単調増加する時刻として使用できます。</p>
+</section>
+</section>
+<section id="id4">
+<h2>待機<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="xmc-sleepms">
+<h3>xmc::sleepMs<a class="headerlink" href="#xmc-sleepms" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::sleepMs</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">ms</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>指定ミリ秒だけスリープします。</p>
+</section>
+<section id="xmc-sleepus">
+<h3>xmc::sleepUs<a class="headerlink" href="#xmc-sleepus" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::sleepUs</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">us</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>指定マイクロ秒だけスリープします。</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">xiamocon</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">タイマー API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#repeatingtimer">RepeatingTimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">時刻取得</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">待機</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="spi.html" title="previous chapter">SPI API</a></li>
+      <li>Next: <a href="gfx2d.html" title="next chapter">2D グラフィックス API</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Shapoco.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/sdk/timer.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

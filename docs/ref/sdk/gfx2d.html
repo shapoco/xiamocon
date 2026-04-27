@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2D グラフィックス API &#8212; xiamocon  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3D グラフィックス API" href="gfx3d.html" />
+    <link rel="prev" title="タイマー API" href="timer.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="d-api">
+<h1>2D グラフィックス API<a class="headerlink" href="#d-api" title="Link to this heading">¶</a></h1>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>2D 描画は主に次の 3 つの要素で構成されます。</p>
+<ul class="simple">
+<li><p>Sprite: 画像バッファ</p></li>
+<li><p>Graphics2D: Sprite への描画操作</p></li>
+<li><p>FrameBuffer: 画面転送を含む描画フレーム管理</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2>ピクセルフォーマット<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<section id="xmc-pixelformat">
+<h3>xmc::PixelFormat<a class="headerlink" href="#xmc-pixelformat" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">xmc::PixelFormat の値</span><a class="headerlink" href="#id4" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::PixelFormat::GRAY1</p></td>
+<td><p>1bit グレイスケール</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::PixelFormat::RGB444</p></td>
+<td><p>12bit RGB</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::PixelFormat::ARGB4444</p></td>
+<td><p>16bit ARGB</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::PixelFormat::RGB565</p></td>
+<td><p>16bit RGB</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="xmc-colors">
+<h3>xmc::Colors<a class="headerlink" href="#xmc-colors" title="Link to this heading">¶</a></h3>
+<p>代表的な色定数です。</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">xmc::Colors の主な値</span><a class="headerlink" href="#id5" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::Colors::BLACK</p></td>
+<td><p>黒</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::Colors::WHITE</p></td>
+<td><p>白</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::Colors::RED</p></td>
+<td><p>赤</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::Colors::GREEN</p></td>
+<td><p>緑</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::Colors::BLUE</p></td>
+<td><p>青</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::Colors::YELLOW</p></td>
+<td><p>黄</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::Colors::CYAN</p></td>
+<td><p>シアン</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::Colors::MAGENTA</p></td>
+<td><p>マゼンタ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sprite">
+<h2>Sprite<a class="headerlink" href="#sprite" title="Link to this heading">¶</a></h2>
+<section id="xmc-createsprite565-444-4444-gray1">
+<h3>xmc::createSprite565 / 444 / 4444 / Gray1<a class="headerlink" href="#xmc-createsprite565-444-4444-gray1" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite565</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">XmcRamCap</span><span class="w"> </span><span class="n">caps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMC_RAM_CAP_DMA</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite565</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoFree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite444</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">XmcRamCap</span><span class="w"> </span><span class="n">caps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMC_RAM_CAP_DMA</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite444</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoFree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite4444</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">XmcRamCap</span><span class="w"> </span><span class="n">caps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMC_RAM_CAP_DMA</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSprite4444</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoFree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSpriteGray1</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">XmcRamCap</span><span class="w"> </span><span class="n">caps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">XMC_RAM_CAP_DMA</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::createSpriteGray1</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">stride</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">autoFree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sprite を生成します。
+<cite>data</cite> 付きのオーバーロードでは外部バッファを使用できます。</p>
+</section>
+<section id="xmc-spriteclass">
+<h3>xmc::SpriteClass<a class="headerlink" href="#xmc-spriteclass" title="Link to this heading">¶</a></h3>
+<p>Sprite の実体クラスです。<cite>xmc::Sprite</cite> は <cite>std::shared_ptr&lt;xmc::SpriteClass&gt;</cite> の別名です。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">xmc::SpriteClass の主なメンバー</span><a class="headerlink" href="#id6" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>型</p></th>
+<th class="head"><p>メンバー</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::PixelFormat</p></td>
+<td><p>format</p></td>
+<td><p>ピクセルフォーマット</p></td>
+</tr>
+<tr class="row-odd"><td><p>int</p></td>
+<td><p>width</p></td>
+<td><p>画像幅</p></td>
+</tr>
+<tr class="row-even"><td><p>int</p></td>
+<td><p>height</p></td>
+<td><p>画像高さ</p></td>
+</tr>
+<tr class="row-odd"><td><p>uint32_t</p></td>
+<td><p>stride</p></td>
+<td><p>1 ラインあたりのバイト数</p></td>
+</tr>
+<tr class="row-even"><td><p>void *</p></td>
+<td><p>data</p></td>
+<td><p>ピクセルデータ先頭ポインタ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="xmc-spriteclass-lineptr">
+<h3>xmc::SpriteClass::linePtr<a class="headerlink" href="#xmc-spriteclass-lineptr" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">xmc::SpriteClass::linePtr</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>指定行の先頭ポインタを取得します。範囲外の <cite>y</cite> を指定した場合は <cite>nullptr</cite> を返します。</p>
+</section>
+</section>
+<section id="graphics2d">
+<h2>Graphics2D<a class="headerlink" href="#graphics2d" title="Link to this heading">¶</a></h2>
+<section id="xmc-creategraphics2d">
+<h3>xmc::createGraphics2D<a class="headerlink" href="#xmc-creategraphics2d" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">Graphics2D</span><span class="w"> </span><span class="nf">xmc::createGraphics2D</span><span class="p">();</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Graphics2D</span><span class="w"> </span><span class="nf">xmc::createGraphics2D</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="n">target</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><cite>Graphics2D</cite> インスタンスを生成します。
+<cite>target</cite> 指定版は描画先 Sprite を初期設定した状態で生成します。</p>
+</section>
+<section id="xmc-graphics2dclass-settarget-gettarget">
+<h3>xmc::Graphics2DClass::setTarget / getTarget<a class="headerlink" href="#xmc-graphics2dclass-settarget-gettarget" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::setTarget</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::getTarget</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>描画先 Sprite を設定・取得します。</p>
+</section>
+<section id="xmc-graphics2dclass-setcliprect-clearcliprect">
+<h3>xmc::Graphics2DClass::setClipRect / clearClipRect<a class="headerlink" href="#xmc-graphics2dclass-setcliprect-clearcliprect" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::setClipRect</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="o">&amp;</span><span class="n">rect</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::setClipRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::clearClipRect</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>描画クリップ矩形を設定します。</p>
+</section>
+<section id="xmc-graphics2dclass-devcolor">
+<h3>xmc::Graphics2DClass::devColor<a class="headerlink" href="#xmc-graphics2dclass-devcolor" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::devColor</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">255</span><span class="p">);</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::devColor</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Colors</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>描画対象のピクセルフォーマットに合わせて色を変換します。</p>
+</section>
+<section id="xmc-graphics2dclass">
+<h3>xmc::Graphics2DClass の基本描画<a class="headerlink" href="#xmc-graphics2dclass" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">fillRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">drawRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">fillSmokeRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">white</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>矩形塗りつぶし、矩形枠、半透明風のスモーク塗りつぶしを行います。</p>
+</section>
+<section id="xmc-graphics2dclass-drawimage">
+<h3>xmc::Graphics2DClass::drawImage<a class="headerlink" href="#xmc-graphics2dclass-drawimage" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">drawImage</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="o">&amp;</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sy</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">TextRenderArgs</span><span class="w"> </span><span class="o">&amp;</span><span class="n">tra</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">drawImage</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="o">&amp;</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sy</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">drawImage</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="o">&amp;</span><span class="n">image</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">dy</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Sprite を描画します。
+転送元矩形を指定する版と、画像全体を描画する簡易版があります。</p>
+</section>
+<section id="id3">
+<h3>xmc::Graphics2DClass のテキスト描画<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setFont</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">GFXfont</span><span class="w"> </span><span class="o">*</span><span class="n">font</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setFont</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">GFXfont</span><span class="w"> </span><span class="o">*</span><span class="n">font</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setFontSize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setCursor</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setTextColor</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">fg</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setTextColor</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">fg</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">bg</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">drawString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">str</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フォント、描画位置、文字色を設定して文字列を描画します。</p>
+</section>
+</section>
+<section id="framebuffer">
+<h2>FrameBuffer<a class="headerlink" href="#framebuffer" title="Link to this heading">¶</a></h2>
+<section id="xmc-framebufferflags">
+<h3>xmc::FrameBufferFlags<a class="headerlink" href="#xmc-framebufferflags" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">xmc::FrameBufferFlags の値</span><a class="headerlink" href="#id7" title="Link to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>xmc::FrameBufferFlags::SHOW_STATUS_BAR</p></td>
+<td><p>ステータスバー表示</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::FrameBufferFlags::SHOW_BATTERY_LEVEL</p></td>
+<td><p>バッテリー表示</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::FrameBufferFlags::SHOW_FPS</p></td>
+<td><p>FPS 表示</p></td>
+</tr>
+<tr class="row-odd"><td><p>xmc::FrameBufferFlags::SHOW_DEBUG_INFO</p></td>
+<td><p>デバッグ情報表示</p></td>
+</tr>
+<tr class="row-even"><td><p>xmc::FrameBufferFlags::DEFAULT</p></td>
+<td><p>標準フラグ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="xmc-createframebuffer">
+<h3>xmc::createFrameBuffer<a class="headerlink" href="#xmc-createframebuffer" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">FrameBuffer</span><span class="w"> </span><span class="nf">xmc::createFrameBuffer</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">PixelFormat</span><span class="w"> </span><span class="n">fmt</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">doubleBuffered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">display</span><span class="o">::</span><span class="n">WIDTH</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">display</span><span class="o">::</span><span class="n">HEIGHT</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フレームバッファを生成します。</p>
+</section>
+<section id="xmc-framebufferclass">
+<h3>xmc::FrameBufferClass の主な関数<a class="headerlink" href="#xmc-framebufferclass" title="Link to this heading">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">isDoubleBuffered</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">getWidth</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">getHeight</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">PixelFormat</span><span class="w"> </span><span class="nf">getPixelFormat</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">getFrontBuffer</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Sprite</span><span class="w"> </span><span class="nf">getBackBuffer</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<span class="n">xmc</span><span class="o">::</span><span class="n">Graphics2D</span><span class="w"> </span><span class="nf">createGraphics</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+
+<span class="n">XmcStatus</span><span class="w"> </span><span class="nf">beginRender</span><span class="p">();</span>
+<span class="n">XmcStatus</span><span class="w"> </span><span class="nf">endRender</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">transferToDisplay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">enableFlag</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">FrameBufferFlags</span><span class="w"> </span><span class="n">flag</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">disableFlag</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">FrameBufferFlags</span><span class="w"> </span><span class="n">flag</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><cite>beginRender()</cite> から <cite>endRender()</cite> までが 1 フレームの描画区間です。
+<cite>transferToDisplay</cite> を <cite>true</cite> にすると描画内容がディスプレイへ転送されます。</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">xiamocon</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2D グラフィックス API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ピクセルフォーマット</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sprite">Sprite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graphics2d">Graphics2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#framebuffer">FrameBuffer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="timer.html" title="previous chapter">タイマー API</a></li>
+      <li>Next: <a href="gfx3d.html" title="next chapter">3D グラフィックス API</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Shapoco.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/sdk/gfx2d.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

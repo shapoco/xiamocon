@@ -16,7 +16,7 @@ namespace xmc::speaker {
  * the SDAC as its underlying audio output.
  * @return A bitmask of supported audio sample formats for the speaker.
  */
-static inline audio::SampleFormat xmc_speakerGetSupportedFormats(void) {
+static inline audio::SampleFormat getSupportedFormats(void) {
   return audio::sdacGetSupportedFormats();
 }
 
@@ -25,7 +25,7 @@ static inline audio::SampleFormat xmc_speakerGetSupportedFormats(void) {
  * latency. This function will set up the underlying SDAC instance with the
  * specified configuration and prepare the speaker for use.
  * @param format The audio sample format to use for the speaker. This must be
- * one of the formats returned by xmc_speakerGetSupportedFormats().
+ * one of the formats returned by getSupportedFormats().
  * @param rateHz The sample rate in Hz to use for the speaker.
  * @param latencySamples The latency in samples for the speaker.
  * @param actualRateHz A pointer to a variable that will receive the actual
