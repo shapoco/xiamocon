@@ -26,14 +26,11 @@ struct SdacHwRp {
   uint8_t *srcFmtBuff;
   int16_t *s16Buff;
   uint32_t *dmaBuff;
-  // uint16_t ditherPhase;
   uint32_t extraOversample;
   int32_t pdmLastInput;
   int32_t pdmLastQt;
   int32_t pdmWork0;
   int32_t pdmWork1;
-  // int32_t pdmWork2;
-  // int32_t pdmWork3;
   uint32_t pdmLfsr;
 };
 
@@ -52,7 +49,7 @@ static void fillBuffer(StreamingDac &inst);
 static void dmaHandlerFast(void *context);
 static void dmaHandlerSlow(void *context);
 
-static inline void updateLfsr(uint32_t *lfsr) {
+static XMC_INLINE void updateLfsr(uint32_t *lfsr) {
   uint32_t bit =
       ((*lfsr >> 0) ^ (*lfsr >> 10) ^ (*lfsr >> 30) ^ (*lfsr >> 31)) & 1;
   *lfsr = (*lfsr >> 1) | (bit << 31);
@@ -63,7 +60,10 @@ static constexpr SampleFormat SUPPORTED_FORMATS =
 
 SampleFormat sdacGetSupportedFormats(void) { return SUPPORTED_FORMATS; }
 
-uint32_t getPreferredSamplingRate(void) { return 25000; }
+uint32_t getPreferredSamplingRate(void) {
+  // Select a frequency that minimizes aliasing around 20-25kHz
+  return 20833;  // = 250MHz / 32 / 375
+}
 
 StreamingDac::StreamingDac(int pin) : pin(pin) {
   handle = malloc(sizeof(SdacHwRp));
@@ -80,16 +80,10 @@ StreamingDac::~StreamingDac() {
 XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
 
-  // todo: calculate actualRateHz based on cfg.format.rateHz and
-  // hardware capabilities
-  *actualRateHz = cfg.format.rateHz;
-
   SdacHwRp *hw = (SdacHwRp *)handle;
   hw->cfg = cfg;
   hw->pdmWork0 = 0;
   hw->pdmWork1 = 0;
-  // hw->pdmWork2 = 0;
-  // hw->pdmWork3 = 0;
   hw->pdmLastInput = 0;
   hw->pdmLfsr = 0xFFFFFFFF;
 
@@ -99,14 +93,15 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   if (hw->extraOversample < 1) hw->extraOversample = 1;
   pdmClkFreq *= hw->extraOversample;
 
+  *actualRateHz = (float)pdmClkFreq / hw->extraOversample / 32;
+
   if (!(cfg.format.sampleFormat & SUPPORTED_FORMATS)) {
     XMC_ERR_RET(XMC_ERR_SPEAKER_UNSUPPORTED_FORMAT);
   }
 
   if (cfg.format.sampleFormat != SampleFormat::LINEAR_PCM_S16_MONO) {
-    int bytes_per_sample = getBytesPerSample(hw->cfg.format.sampleFormat);
-    hw->srcFmtBuff =
-        (uint8_t *)malloc(hw->cfg.latencySamples * bytes_per_sample);
+    int bytesPerSample = getBytesPerSample(hw->cfg.format.sampleFormat);
+    hw->srcFmtBuff = (uint8_t *)malloc(hw->cfg.latencySamples * bytesPerSample);
     if (!hw->srcFmtBuff) {
       stop();
       return XMC_ERR_RAM_ALLOC_FAILED;
@@ -264,7 +259,7 @@ static void fillBuffer(StreamingDac &inst) {
         memset(hw->srcFmtBuff, 0x80, buffSizeBytes);
         inst.source.requestData(hw->srcFmtBuff, hw->cfg.latencySamples,
                                 inst.source.context);
-        for (int i = 0; i < hw->cfg.latencySamples; i++) {
+        for (uint32_t i = 0; i < hw->cfg.latencySamples; i++) {
           hw->s16Buff[i] = ((int16_t)hw->srcFmtBuff[i] - 128) << 8;
         }
         break;
@@ -273,72 +268,40 @@ static void fillBuffer(StreamingDac &inst) {
     int16_t *src = (int16_t *)hw->s16Buff;
     int32_t lastInput = hw->pdmLastInput;
     int32_t lastQt = hw->pdmLastQt;
-    for (int isrc = 0; isrc < hw->cfg.latencySamples; isrc++) {
-      int32_t newInput = src[isrc] * 0x100 + 0x1000;
-
-      for (int ieos = 0; ieos < hw->extraOversample; ieos++) {
+    for (uint32_t isrc = 0; isrc < hw->cfg.latencySamples; isrc++) {
+      int32_t newInput = src[isrc];
+      for (uint32_t ieos = 0; ieos < hw->extraOversample; ieos++) {
         uint32_t pdmOutput = 0;
-        // updateLfsr(&(hw->pdmLfsr));
-        // updateLfsr(&(hw->pdmLfsr));
-        // updateLfsr(&(hw->pdmLfsr));
-        // uint32_t dither = hw->pdmLfsr;
-        updateLfsr(&(hw->pdmLfsr));
-        int32_t dither = (int32_t)(hw->pdmLfsr & 0x4) - 0x2;
-        // uint32_t noise = hw->pdmLfsr;
-        //  int32_t dither = (hw->pdmLfsr & 0xF) - 0x8;
-        //  newInput += (noise & 0x2) - 0x1;
 #if 0
-            // todo: use interpolator
-            int32_t over_sample = (newInput * j + lastInput * (32 - j)) / 32;
+        int32_t overSample = (newInput * j + lastInput * (32 - j)) / 32;
 #else
-        int32_t over_sample = newInput;
+        int32_t overSample = newInput;
 #endif
+        updateLfsr(&(hw->pdmLfsr));
+        int32_t dither = (int32_t)(hw->pdmLfsr & 0xF);
+        overSample += dither;
         for (int ibit = 0; ibit < 32; ibit++) {
-          // over_sample += ((dither & 1) * 2 - 1) * 0x800;
-          // dither >>= 1;
-          // int32_t dither = ((noise & 1) * 2 - 1) * 0xFF;
-          // noise >>= 1;
-
-          // over_sample += dither;
-
-          // const int dither_period = 0x80;
-          // const int dither_amp = 4;
-          // hw->ditherPhase = (hw->ditherPhase + 1) & (dither_period - 1);
-          // int32_t dither = hw->ditherPhase;
-          // if (dither >= dither_period / 2) {
-          //   dither = dither_period - dither;
-          // }
-          // dither -= dither_period / 4;
-          // dither *= dither_amp;
-
-          hw->pdmWork0 += over_sample - lastQt;
+          hw->pdmWork0 += overSample - lastQt;
           hw->pdmWork1 += hw->pdmWork0 - lastQt;
 
-          // hw->pdmWork1 += dither;
-          // updateLfsr(&(hw->pdmLfsr));
-          // int32_t dither = (int32_t)(hw->pdmLfsr & 0xFFFF) - 0x8000;
-
-          // hw->pdmWork2 += hw->pdmWork1 - lastQt;
-          // hw->pdmWork3 += hw->pdmWork2 - lastQt;
           pdmOutput >>= 1;
           if (hw->pdmWork1 >= 0) {
             pdmOutput |= 0x80000000;
-            lastQt = 0xFEDCBA;
+            lastQt = 0x10000;
           } else {
-            lastQt = -0xFEDCBA;
+            pdmOutput &= 0x7FFFFFFF;
+            lastQt = -0x10000;
           }
         }
         lastInput = newInput;
         dst[isrc * hw->extraOversample + ieos] = pdmOutput;
-        // hw->pdmWork0 -= hw->pdmWork0 / 256;
-        // hw->pdmWork1 -= hw->pdmWork1 / 256;
       }
       hw->pdmLastInput = lastInput;
       hw->pdmLastQt = lastQt;
     }
   } else {
     uint32_t sample = 0x55555555;
-    for (int i = 0; i < dstSamples; i++) {
+    for (uint32_t i = 0; i < dstSamples; i++) {
       dst[i] = sample;
     }
   }
