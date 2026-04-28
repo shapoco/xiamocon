@@ -6,7 +6,7 @@
 #include "xmc/display.hpp"
 #include "xmc/geo.hpp"
 #include "xmc/gfx2d/gfx2d_common.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <memory>
 #include <string>
@@ -46,7 +46,7 @@ static constexpr inline uint32_t calcStride(PixelFormat format, int width) {
 }
 
 static inline Sprite createSprite565(int width, int height,
-                                     XmcRamCap caps = XMC_RAM_CAP_DMA) {
+                                     XmcHeapCap caps = XMC_HEAP_CAP_DMA) {
   return std::make_shared<SpriteClass>(PixelFormat::RGB565, width, height,
                                        caps);
 }
@@ -59,7 +59,7 @@ static inline Sprite createSprite565(int width, int height, void *data,
 }
 
 static inline Sprite createSprite444(int width, int height,
-                                     XmcRamCap caps = XMC_RAM_CAP_DMA) {
+                                     XmcHeapCap caps = XMC_HEAP_CAP_DMA) {
   return std::make_shared<SpriteClass>(PixelFormat::RGB444, width, height,
                                        caps);
 }
@@ -72,7 +72,7 @@ static inline Sprite createSprite444(int width, int height, void *data,
 }
 
 static inline Sprite createSprite4444(int width, int height,
-                                      XmcRamCap caps = XMC_RAM_CAP_DMA) {
+                                      XmcHeapCap caps = XMC_HEAP_CAP_DMA) {
   return std::make_shared<SpriteClass>(PixelFormat::ARGB4444, width, height,
                                        caps);
 }
@@ -85,7 +85,7 @@ static inline Sprite createSprite4444(int width, int height, void *data,
 }
 
 static inline Sprite createSpriteGray1(int width, int height,
-                                       XmcRamCap caps = XMC_RAM_CAP_DMA) {
+                                       XmcHeapCap caps = XMC_HEAP_CAP_DMA) {
   return std::make_shared<SpriteClass>(PixelFormat::GRAY1, width, height, caps);
 }
 
@@ -126,7 +126,7 @@ class SpriteClass {
         autoFree(autoFree) {}
 
   SpriteClass(PixelFormat format, int width, int height,
-              XmcRamCap caps = XMC_RAM_CAP_DMA)
+              XmcHeapCap caps = XMC_HEAP_CAP_DMA)
       : format(format),
         width(width),
         height(height),

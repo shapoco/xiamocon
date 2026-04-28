@@ -1,12 +1,12 @@
 #include "xmc/hw/spinlock.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <Arduino.h>
 
 namespace xmc {
 
 SpinLock::SpinLock() {
-  spinlock_t *spinlock = (spinlock_t *)xmcMalloc(sizeof(spinlock_t), XMC_RAM_CAP_DMA);
+  spinlock_t *spinlock = (spinlock_t *)xmcMalloc(sizeof(spinlock_t), XMC_HEAP_CAP_DMA);
   if (!spinlock) return;
   handle = spinlock;
   spinlock_initialize(spinlock);

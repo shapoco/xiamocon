@@ -23,7 +23,7 @@ struct FlameParticle {
 
 // Allocate particles in PSRAM because ESP32S3 has limited SRAM
 FlameParticle *particles = (FlameParticle *)xmcMalloc(
-    sizeof(FlameParticle) * COLS * (ROWS + 1), XMC_RAM_CAP_SPIRAM);
+    sizeof(FlameParticle) * COLS * (ROWS + 1), XMC_HEAP_CAP_SPIRAM);
 
 constexpr float COL_SHIFT_INTERVAL = 0.05f;
 float timeAccum = 0;

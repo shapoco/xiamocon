@@ -10,7 +10,7 @@ struct Particle {
 };
 // Allocate particles in PSRAM because ESP32S3 has limited SRAM
 Particle *particleArray =
-    (Particle *)xmcMalloc(sizeof(Particle) * NUM_PARTICLES, XMC_RAM_CAP_SPIRAM);
+    (Particle *)xmcMalloc(sizeof(Particle) * NUM_PARTICLES, XMC_HEAP_CAP_SPIRAM);
 
 Vec3Buffer particleVerts = createVec3Buffer(NUM_PARTICLES);
 Primitive3D particlePrim =

@@ -1,10 +1,10 @@
 /**
- * @file ram.hpp
+ * @file heap.hpp
  * @brief RAM management interface
  */
 
-#ifndef XMC_HW_RAM_HPP
-#define XMC_HW_RAM_HPP
+#ifndef XMC_HW_HEAP_HPP
+#define XMC_HW_HEAP_HPP
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -16,12 +16,12 @@ extern "C" {
 /** RAM capabilities */
 typedef enum {
   /** No special capabilities */
-  XMC_RAM_CAP_NONE = 0,
+  XMC_HEAP_CAP_NONE = 0,
   /** Supports DMA operations */
-  XMC_RAM_CAP_DMA = 1 << 0,
+  XMC_HEAP_CAP_DMA = 1 << 0,
   /** Supports SPIRAM */
-  XMC_RAM_CAP_SPIRAM = 1 << 1,
-} XmcRamCap;
+  XMC_HEAP_CAP_SPIRAM = 1 << 1,
+} XmcHeapCap;
 
 /**
  * Allocate memory with specific RAM capabilities.
@@ -29,7 +29,7 @@ typedef enum {
  * @param caps The RAM capabilities required for the allocation.
  * @return A pointer to the allocated memory, or NULL if the allocation fails.
  */
-void *xmcMalloc(size_t size, XmcRamCap caps);
+void *xmcMalloc(size_t size, XmcHeapCap caps);
 
 /**
  * Free memory allocated with xmcMalloc.

@@ -1,7 +1,7 @@
 #include "xmc/hw/streaming_dac.hpp"
 #include "xmc/hw/gpio.hpp"
 #include "xmc/hw/pins.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <driver/i2s_pdm.h>
 #include <string.h>
@@ -31,7 +31,7 @@ SampleFormat sdacGetSupportedFormats(void) { return SUPPORTED_FORMATS; }
 uint32_t getPreferredSamplingRate(void) { return 24000; }
 
 StreamingDac::StreamingDac(int pin) : pin(pin) {
-  handle = xmcMalloc(sizeof(SdacHwEsp), XMC_RAM_CAP_DMA);
+  handle = xmcMalloc(sizeof(SdacHwEsp), XMC_HEAP_CAP_DMA);
   memset(handle, 0, sizeof(SdacHwEsp));
 }
 
@@ -63,7 +63,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   if (cfg.format.sampleFormat != SampleFormat::LINEAR_PCM_S16_MONO) {
     int bytesPerSample = getBytesPerSample(hw->cfg.format.sampleFormat);
     hw->srcFmtBuff = (uint8_t *)xmcMalloc(
-        hw->cfg.latencySamples * bytesPerSample, XMC_RAM_CAP_DMA);
+        hw->cfg.latencySamples * bytesPerSample, XMC_HEAP_CAP_DMA);
     if (!hw->srcFmtBuff) {
       stop();
       XMC_ERR_RET(XMC_ERR_RAM_ALLOC_FAILED);
@@ -73,7 +73,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
   }
 
   hw->s16Buff = (int16_t *)xmcMalloc(hw->cfg.latencySamples * sizeof(int16_t),
-                                     XMC_RAM_CAP_DMA);
+                                     XMC_HEAP_CAP_DMA);
   if (!hw->s16Buff) {
     stop();
     XMC_ERR_RET(XMC_ERR_RAM_ALLOC_FAILED);

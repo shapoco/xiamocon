@@ -179,16 +179,16 @@ xmc::Material3DClass の主なメンバー
 
 .. code-block:: cpp
 
-	xmc::Vec2Buffer xmc::createVec2Buffer(int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM);
+	xmc::Vec2Buffer xmc::createVec2Buffer(int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM);
 	xmc::Vec2Buffer xmc::createVec2Buffer(xmc::vec2 *data, int size, bool autoFree = false);
 
-	xmc::Vec3Buffer xmc::createVec3Buffer(int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM);
+	xmc::Vec3Buffer xmc::createVec3Buffer(int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM);
 	xmc::Vec3Buffer xmc::createVec3Buffer(xmc::vec3 *data, int size, bool autoFree = false);
 
-	xmc::ColorBuffer xmc::createColorBuffer(int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM);
+	xmc::ColorBuffer xmc::createColorBuffer(int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM);
 	xmc::ColorBuffer xmc::createColorBuffer(xmc::colorf *data, int size, bool autoFree = false);
 
-	xmc::IndexBuffer xmc::createIndexBuffer(int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM);
+	xmc::IndexBuffer xmc::createIndexBuffer(int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM);
 	xmc::IndexBuffer xmc::createIndexBuffer(uint16_t *data, int size, bool autoFree = false);
 
 頂点属性配列を生成します。

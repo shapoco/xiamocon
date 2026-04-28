@@ -1,5 +1,5 @@
 #include "xmc/hw/timer.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <pico/stdlib.h>
 #include <stdlib.h>
@@ -21,12 +21,12 @@ void sleepUs(uint32_t us) { sleep_us(us); }
 
 RepeatingTimer::RepeatingTimer() {
   RepeatingTimerHwRp *hw =
-      (RepeatingTimerHwRp *)xmcMalloc(sizeof(RepeatingTimerHwRp), XMC_RAM_CAP_DMA);
+      (RepeatingTimerHwRp *)xmcMalloc(sizeof(RepeatingTimerHwRp), XMC_HEAP_CAP_DMA);
 
   if (!hw) return;
   handle = hw;
   hw->timer = (repeating_timer_t *)xmcMalloc(sizeof(repeating_timer_t),
-                                             XMC_RAM_CAP_DMA);
+                                             XMC_HEAP_CAP_DMA);
 }
 
 RepeatingTimer::~RepeatingTimer() {

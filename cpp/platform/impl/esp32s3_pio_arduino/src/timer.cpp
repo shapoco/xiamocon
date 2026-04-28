@@ -1,5 +1,5 @@
 #include "xmc/hw/timer.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <Arduino.h>
 
@@ -20,7 +20,7 @@ void sleepUs(uint32_t us) { delayMicroseconds(us); }
 
 RepeatingTimer::RepeatingTimer() {
   RepeatingTimerHwEsp *hw = (RepeatingTimerHwEsp *)xmcMalloc(
-      sizeof(RepeatingTimerHwEsp), XMC_RAM_CAP_DMA);
+      sizeof(RepeatingTimerHwEsp), XMC_HEAP_CAP_DMA);
   if (!hw) return;
   handle = hw;
   hw->timer = nullptr;

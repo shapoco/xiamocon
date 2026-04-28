@@ -61,9 +61,9 @@ class Graphics3DClass {
   Graphics3DClass(int w, int h, uint32_t stackSize)
       : width(w), height(h), stackSize(stackSize) {
     depthBuff = (Depth3D *)xmcMalloc(sizeof(Depth3D) * width * height,
-                                     XMC_RAM_CAP_SPIRAM);
+                                     XMC_HEAP_CAP_SPIRAM);
     stateStack =
-        (State3D *)xmcMalloc(sizeof(State3D) * stackSize, XMC_RAM_CAP_DMA);
+        (State3D *)xmcMalloc(sizeof(State3D) * stackSize, XMC_HEAP_CAP_DMA);
     screenMatrix = mat4::identity();
     projectionMatrix = mat4::identity();
     viewMatrix = mat4::identity();

@@ -4,7 +4,7 @@
 #include "xmc/geo.hpp"
 #include "xmc/gfx2d/colorf.hpp"
 #include "xmc/gfx3d/gfx3d_common.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <memory>
 
@@ -23,7 +23,7 @@ class AttributeBufferClass {
   AttributeBufferClass(T *data, int size, bool autoFree = false)
       : data(data), size(size), autoFree(autoFree) {}
 
-  AttributeBufferClass(int size, XmcRamCap caps)
+  AttributeBufferClass(int size, XmcHeapCap caps)
       : data((T *)xmcMalloc(sizeof(T) * size, caps)),
         size(size),
         autoFree(true) {}
@@ -40,7 +40,7 @@ class AttributeBufferClass {
 
 using Vec2Buffer = std::shared_ptr<AttributeBufferClass<vec2>>;
 static inline Vec2Buffer createVec2Buffer(int size,
-                                          XmcRamCap caps = XMC_RAM_CAP_SPIRAM) {
+                                          XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM) {
   return std::make_shared<AttributeBufferClass<vec2>>(size, caps);
 }
 static inline Vec2Buffer createVec2Buffer(vec2 *data, int size,
@@ -50,7 +50,7 @@ static inline Vec2Buffer createVec2Buffer(vec2 *data, int size,
 
 using Vec3Buffer = std::shared_ptr<AttributeBufferClass<vec3>>;
 static inline Vec3Buffer createVec3Buffer(int size,
-                                          XmcRamCap caps = XMC_RAM_CAP_SPIRAM) {
+                                          XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM) {
   return std::make_shared<AttributeBufferClass<vec3>>(size, caps);
 }
 static inline Vec3Buffer createVec3Buffer(vec3 *data, int size,
@@ -60,7 +60,7 @@ static inline Vec3Buffer createVec3Buffer(vec3 *data, int size,
 
 using ColorBuffer = std::shared_ptr<AttributeBufferClass<colorf>>;
 static inline ColorBuffer createColorBuffer(
-    int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM) {
+    int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM) {
   return std::make_shared<AttributeBufferClass<colorf>>(size, caps);
 }
 static inline ColorBuffer createColorBuffer(colorf *data, int size,
@@ -70,7 +70,7 @@ static inline ColorBuffer createColorBuffer(colorf *data, int size,
 
 using IndexBuffer = std::shared_ptr<AttributeBufferClass<uint16_t>>;
 static inline IndexBuffer createIndexBuffer(
-    int size, XmcRamCap caps = XMC_RAM_CAP_SPIRAM) {
+    int size, XmcHeapCap caps = XMC_HEAP_CAP_SPIRAM) {
   return std::make_shared<AttributeBufferClass<uint16_t>>(size, caps);
 }
 

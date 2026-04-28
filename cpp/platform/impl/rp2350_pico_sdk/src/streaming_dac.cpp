@@ -1,7 +1,7 @@
 #include "xmc/hw/streaming_dac.hpp"
 #include "xmc/hw/dma_irq.hpp"
 #include "xmc/hw/pins.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <hardware/clocks.h>
 #include <hardware/dma.h>
@@ -118,7 +118,7 @@ XmcStatus StreamingDac::start(const SdacConfig &cfg, float *actualRateHz) {
 
   uint32_t dmaBuffSize =
       hw->cfg.latencySamples * hw->extraOversample * sizeof(uint32_t) * 2;
-  hw->dmaBuff = (uint32_t *)xmcMalloc(dmaBuffSize, XMC_RAM_CAP_DMA);
+  hw->dmaBuff = (uint32_t *)xmcMalloc(dmaBuffSize, XMC_HEAP_CAP_DMA);
   if (!hw->dmaBuff) {
     stop();
     return XMC_ERR_RAM_ALLOC_FAILED;

@@ -1,5 +1,5 @@
 #include "xmc/hw/pwm.hpp"
-#include "xmc/hw/ram.hpp"
+#include "xmc/hw/heap.hpp"
 
 #include <driver/ledc.h>
 
@@ -11,7 +11,7 @@ typedef struct {
 } PwmHw;
 
 Driver::Driver(int pin) : pin(pin) {
-  handle = (PwmHw *)xmcMalloc(sizeof(PwmHw), XMC_RAM_CAP_DMA);
+  handle = (PwmHw *)xmcMalloc(sizeof(PwmHw), XMC_HEAP_CAP_DMA);
 }
 
 Driver::~Driver() {
