@@ -149,6 +149,10 @@ xmc init
 cp -r ${XMC_REPO_PATH}/cpp/example/hello_world/src .
 ```
 
+## Detailed Documentation
+
+See the [Reference Manual](https://shapoco.github.io/xiamocon/ref/).
+
 ## Photos
 
 ![](./image/front.jpg)
