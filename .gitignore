@@ -12,6 +12,7 @@ tmp.*/
 .platformio/
 *.log
 __pycache__/
+docs/
 
 # for KiCad
 *-backups/
