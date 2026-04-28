@@ -4,7 +4,7 @@
 #include <string.h>
 
 // todo: delete
-#include "xmc/hw/gpio.hpp"
+#include "xmc/gpio.hpp"
 //        gpio::setDir(XMC_PIN_GPIO_0, true);
 //        gpio::write(XMC_PIN_GPIO_0, true);
 //        gpio::write(XMC_PIN_GPIO_0, false);

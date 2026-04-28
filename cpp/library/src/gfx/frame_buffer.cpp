@@ -1,6 +1,6 @@
 #include "xmc/gfx2d/frame_buffer.hpp"
 #include "xmc/display.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/timer.hpp"
 #include "xmc/path.hpp"
 
 namespace xmc {

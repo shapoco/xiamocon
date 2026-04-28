@@ -1,5 +1,5 @@
 #include "xmc/ioex.hpp"
-#include "xmc/hw/i2c.hpp"
+#include "xmc/i2c.hpp"
 
 namespace xmc::ioex {
 

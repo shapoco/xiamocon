@@ -1,6 +1,6 @@
-#include "xmc/hw/power.hpp"
-#include "xmc/hw/i2c.hpp"
-#include "xmc/hw/pins.hpp"
+#include "xmc/power.hpp"
+#include "xmc/i2c.hpp"
+#include "xmc/pins.hpp"
 
 #include <hardware/clocks.h>
 #include <hardware/powman.h>

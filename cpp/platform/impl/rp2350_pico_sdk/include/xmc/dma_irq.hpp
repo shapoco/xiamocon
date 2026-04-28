@@ -6,7 +6,7 @@
 #ifndef XMC_HW_DMA_IRQ_HPP
 #define XMC_HW_DMA_IRQ_HPP
 
-#include "xmc/hw/dma.hpp"
+#include "xmc/dma.hpp"
 
 namespace xmc::dma {
 

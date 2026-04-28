@@ -1,4 +1,4 @@
-#include "xmc/hw/semaphore.hpp"
+#include "xmc/semaphore.hpp"
 
 #include <Arduino.h>
 

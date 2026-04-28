@@ -1,8 +1,8 @@
 #include "xmc/display.hpp"
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/pins.hpp"
-#include "xmc/hw/spi.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/spi.hpp"
+#include "xmc/timer.hpp"
 #include "xmc/ioex.hpp"
 
 namespace xmc::display {

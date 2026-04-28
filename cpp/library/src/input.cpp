@@ -1,5 +1,5 @@
 #include "xmc/input.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/timer.hpp"
 #include "xmc/ioex.hpp"
 
 #include <stddef.h>

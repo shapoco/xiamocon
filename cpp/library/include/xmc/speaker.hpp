@@ -6,7 +6,7 @@
 #ifndef XMC_SPEAKER_H
 #define XMC_SPEAKER_H
 
-#include "xmc/hw/streaming_dac.hpp"
+#include "xmc/streaming_dac.hpp"
 
 namespace xmc::speaker {
 

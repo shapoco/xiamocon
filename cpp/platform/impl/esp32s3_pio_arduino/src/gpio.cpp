@@ -1,5 +1,5 @@
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/hw_common.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/hw_common.hpp"
 
 #include <Arduino.h>
 

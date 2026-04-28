@@ -1,4 +1,4 @@
-#include "xmc/hw/heap.hpp"
+#include "xmc/heap.hpp"
 
 #include <pico/stdlib.h>
 

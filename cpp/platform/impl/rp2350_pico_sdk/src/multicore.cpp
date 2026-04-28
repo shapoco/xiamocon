@@ -1,5 +1,5 @@
 #include "xmc/multicore.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/timer.hpp"
 
 #include <pico/multicore.h>
 

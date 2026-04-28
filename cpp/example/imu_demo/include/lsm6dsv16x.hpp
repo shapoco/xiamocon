@@ -1,7 +1,7 @@
 #ifndef LSM6DSV16X_HPP
 #define LSM6DSV16X_HPP
 
-#include <xmc/hw/i2c.hpp>
+#include <xmc/i2c.hpp>
 
 namespace lsm6dsv16x {
 

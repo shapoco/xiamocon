@@ -1,8 +1,8 @@
-#include "xmc/hw/i2c.hpp"
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/pins.hpp"
-#include "xmc/hw/semaphore.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/i2c.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/semaphore.hpp"
+#include "xmc/timer.hpp"
 
 #include <Wire.h>
 

@@ -1,4 +1,4 @@
-#include "xmc/hw/spinlock.hpp"
+#include "xmc/spinlock.hpp"
 
 #include <pico/sync.h>
 #include <stdlib.h>

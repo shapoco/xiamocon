@@ -1,4 +1,4 @@
-#include "xmc/hw/dma_irq.hpp"
+#include "xmc/dma_irq.hpp"
 
 #include <hardware/dma.h>
 #include <stddef.h>

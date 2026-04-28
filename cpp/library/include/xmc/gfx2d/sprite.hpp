@@ -6,7 +6,7 @@
 #include "xmc/display.hpp"
 #include "xmc/geo.hpp"
 #include "xmc/gfx2d/gfx2d_common.hpp"
-#include "xmc/hw/heap.hpp"
+#include "xmc/heap.hpp"
 
 #include <memory>
 #include <string>

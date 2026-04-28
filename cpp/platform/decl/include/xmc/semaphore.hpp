@@ -1,7 +1,7 @@
 #ifndef XMC_HW_SEMAPHORE_HPP
 #define XMC_HW_SEMAPHORE_HPP
 
-#include "xmc/hw/hw_common.hpp"
+#include "xmc/hw_common.hpp"
 
 namespace xmc {
 

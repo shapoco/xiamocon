@@ -1,6 +1,6 @@
 #include "xmc/fs.hpp"
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/pins.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/pins.hpp"
 
 #include <stdio.h>
 #include <string.h>

@@ -1,6 +1,6 @@
 #include "xmc/speaker.hpp"
 #include "xmc/audio_common.hpp"
-#include "xmc/hw/pins.hpp"
+#include "xmc/pins.hpp"
 #include "xmc/ioex.hpp"
 
 namespace xmc::speaker {

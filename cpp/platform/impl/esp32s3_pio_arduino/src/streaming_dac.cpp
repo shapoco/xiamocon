@@ -1,7 +1,7 @@
-#include "xmc/hw/streaming_dac.hpp"
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/pins.hpp"
-#include "xmc/hw/heap.hpp"
+#include "xmc/streaming_dac.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/heap.hpp"
 
 #include <driver/i2s_pdm.h>
 #include <string.h>

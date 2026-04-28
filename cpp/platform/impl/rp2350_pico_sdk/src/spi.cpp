@@ -1,7 +1,7 @@
-#include "xmc/hw/spi.hpp"
-#include "xmc/hw/gpio.hpp"
-#include "xmc/hw/pins.hpp"
-#include "xmc/hw/semaphore.hpp"
+#include "xmc/spi.hpp"
+#include "xmc/gpio.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/semaphore.hpp"
 
 #include <hardware/dma.h>
 #include <hardware/spi.h>

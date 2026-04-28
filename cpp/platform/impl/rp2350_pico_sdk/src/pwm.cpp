@@ -1,4 +1,4 @@
-#include "xmc/hw/pwm.hpp"
+#include "xmc/pwm.hpp"
 
 #include <hardware/clocks.h>
 #include <hardware/dma.h>

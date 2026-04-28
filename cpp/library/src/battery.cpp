@@ -1,6 +1,6 @@
 #include "xmc/battery.hpp"
-#include "xmc/hw/i2c.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/i2c.hpp"
+#include "xmc/timer.hpp"
 
 namespace xmc::battery {
 

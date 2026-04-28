@@ -1,5 +1,5 @@
-#include "xmc/hw/pwm.hpp"
-#include "xmc/hw/heap.hpp"
+#include "xmc/pwm.hpp"
+#include "xmc/heap.hpp"
 
 #include <driver/ledc.h>
 

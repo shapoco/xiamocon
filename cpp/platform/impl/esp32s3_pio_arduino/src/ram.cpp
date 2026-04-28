@@ -1,4 +1,4 @@
-#include "xmc/hw/heap.hpp"
+#include "xmc/heap.hpp"
 
 #include <Arduino.h>
 #include <esp_heap_caps.h>

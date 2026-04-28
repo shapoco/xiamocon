@@ -1,5 +1,5 @@
-#include "xmc/hw/timer.hpp"
-#include "xmc/hw/heap.hpp"
+#include "xmc/timer.hpp"
+#include "xmc/heap.hpp"
 
 #include <Arduino.h>
 

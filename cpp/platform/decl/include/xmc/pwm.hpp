@@ -6,8 +6,8 @@
 #ifndef XMC_HW_PWM_HPP
 #define XMC_HW_PWM_HPP
 
-#include "xmc/hw/dma.hpp"
-#include "xmc/hw/hw_common.hpp"
+#include "xmc/dma.hpp"
+#include "xmc/hw_common.hpp"
 
 namespace xmc::pwm {
 

@@ -2,7 +2,7 @@
 #include "xmc/app.hpp"
 #include "xmc/diagnostic.hpp"
 #include "xmc/fs.hpp"
-#include "xmc/hw/timer.hpp"
+#include "xmc/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/speaker.hpp"
 #include "xmc/system.hpp"

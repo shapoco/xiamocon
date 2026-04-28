@@ -1,7 +1,7 @@
-#include "xmc/hw/streaming_dac.hpp"
-#include "xmc/hw/dma_irq.hpp"
-#include "xmc/hw/pins.hpp"
-#include "xmc/hw/heap.hpp"
+#include "xmc/streaming_dac.hpp"
+#include "xmc/dma_irq.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/heap.hpp"
 
 #include <hardware/clocks.h>
 #include <hardware/dma.h>

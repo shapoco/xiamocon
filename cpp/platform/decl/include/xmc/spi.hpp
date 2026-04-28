@@ -6,8 +6,8 @@
 #ifndef XMC_HW_SPI_H
 #define XMC_HW_SPI_H
 
-#include "xmc/hw/dma.hpp"
-#include "xmc/hw/hw_common.hpp"
+#include "xmc/dma.hpp"
+#include "xmc/hw_common.hpp"
 
 #include <stdbool.h>
 #include <stdint.h>

@@ -6,7 +6,7 @@
 #ifndef XMC_GFX_FPS_KEEPER_HPP
 #define XMC_GFX_FPS_KEEPER_HPP
 
-#include "xmc/hw/timer.hpp"
+#include "xmc/timer.hpp"
 
 namespace xmc {
 

@@ -6,7 +6,7 @@
 #ifndef XMC_HW_I2C_H
 #define XMC_HW_I2C_H
 
-#include "xmc/hw/hw_common.hpp"
+#include "xmc/hw_common.hpp"
 
 #include <stdbool.h>
 #include <stdint.h>
