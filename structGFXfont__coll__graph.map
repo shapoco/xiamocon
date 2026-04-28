@@ -1,4 +1,0 @@
-<map id="GFXfont" name="GFXfont">
-<area shape="rect" id="node1" title="Data stored for FONT AS A WHOLE." alt="" coords="11,93,85,119"/>
-<area shape="rect" id="node2" href="$structGFXglyph.html" title="Font data stored PER GLYPH." alt="" coords="5,5,91,31"/>
-</map>
