@@ -336,3 +336,55 @@ xmc::FrameBufferClass::enableFlag / disableFlag
 `flag` には `xmc::FrameBufferFlags` の値を指定します。
 ステータスバー、バッテリー残量、FPS 表示などの付加表示を切り替える用途で使用します。
 
+FpsKeeper
+================================================================================
+
+xmc::FpsKeeper
+--------------------------------------------------------------------------------
+
+描画ループを目標 FPS に同期するための補助クラスです。
+
+.. code-block:: cpp
+
+	xmc::FpsKeeper::FpsKeeper(float fps, uint32_t maxJitter = 5000);
+
+`fps` には目標フレームレートを指定します。
+`maxJitter` は遅延許容値をマイクロ秒単位で指定します。
+
+`waitVsync()` 呼び出し時に目標時刻まで待機し、
+遅延が `maxJitter` を超えた場合は内部の同期時刻を現在時刻に再同期します。
+
+xmc::FpsKeeper::setTargetFps
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::FpsKeeper::setTargetFps(float fps);
+
+実行中に目標 FPS を変更します。
+
+xmc::FpsKeeper::waitVsync
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::FpsKeeper::waitVsync();
+
+次フレームの目標タイミングまで待機します。
+
+内部では、前回までの基準時刻と目標 FPS から次回時刻を計算します。
+処理が遅延している場合はフレームスキップ状態を更新し、
+必要に応じて同期時刻を補正します。
+
+xmc::FpsKeeper::isFrameSkipping
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	bool xmc::FpsKeeper::isFrameSkipping() const;
+
+現在フレームをスキップすべき状態かどうかを返します。
+
+戻り値が `true` のフレームでは描画負荷の高い処理を省略し、
+`false` のフレームで通常描画を行うことで、遅延からの回復を支援できます。
+
