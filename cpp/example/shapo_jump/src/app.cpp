@@ -153,14 +153,14 @@ static void renderSpriteFrame(Graphics2D &gfx, const Sprite &bmp,
                               const SpriteFrame &f, int x, int y);
 static void renderStatus(Graphics2D &gfx);
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = PixelFormat::RGB444;
   cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 
   for (int i = 0; i < NUM_TONES; i++) {
@@ -219,7 +219,7 @@ void xmc::appSetup() {
   tones[(int)Sound::GAME_OVER]->setVelocity(64);
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   updateScene();
 
   fpsKeeper.waitVsync();

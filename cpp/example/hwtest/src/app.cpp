@@ -18,7 +18,7 @@ Tone tone = createTone();
 
 Waveform waveform = Waveform::SQUARE;
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
   cfg.speakerSampleFormat = SampleFormat::LINEAR_PCM_S16_MONO;
@@ -26,14 +26,14 @@ AppConfig xmc::appGetConfig() {
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   tone->init(SAMPLE_RATE_HZ);
   speaker::setSourcePort(tone->getOutputPort());
   speaker::setMuted(false);
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   uint16_t battery_mv = battery::getVoltageMv();
   char buf[32];
   snprintf(buf, sizeof(buf), "Battery: %d mV", battery_mv);

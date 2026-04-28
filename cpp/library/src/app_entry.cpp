@@ -17,7 +17,7 @@ char fpsString[16] = {0};
 AppConfig appConfig;
 diagnostic::App *diagnosticApp = nullptr;
 
-AppConfig getDefaultAppConfig() {
+AppConfig getDefaultAppConfig(void) {
   AppConfig config = {
       .displayPixelFormat = PixelFormat::RGB565,
       .speakerEnabled = true,
@@ -28,7 +28,7 @@ AppConfig getDefaultAppConfig() {
   return config;
 }
 
-void libSetup() {
+void libSetup(void) {
   system::init();
   input::init();
   fs::init();
@@ -39,7 +39,7 @@ void libSetup() {
     diagnosticApp = new diagnostic::App();
     appConfig = diagnosticApp->getConfig();
   } else {
-    appConfig = appGetConfig();
+    appConfig = xmcAppGetConfig();
   }
 
   display::init(appConfig.displayPixelFormat, 0);
@@ -51,11 +51,11 @@ void libSetup() {
   if (diagnosticApp) {
     diagnosticApp->setup();
   } else {
-    appSetup();
+    xmcAppSetup();
   }
 }
 
-void libLoop() {
+void libLoop(void) {
   system::service();
   if (appConfig.speakerEnabled) {
     speaker::service();
@@ -63,7 +63,7 @@ void libLoop() {
   if (diagnosticApp) {
     diagnosticApp->loop();
   } else {
-    appLoop();
+    xmcAppLoop();
   }
 }
 

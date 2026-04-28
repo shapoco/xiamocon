@@ -11,18 +11,18 @@ FpsKeeper fpsKeeper(30);
 
 void drawButtonState(Graphics2D &gfx, Button btn, int x, int y);
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
   cfg.speakerEnabled = false;
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   fpsKeeper.waitVsync();
   if (!fpsKeeper.isFrameSkipping()) {
     frameBuffer->beginRender();

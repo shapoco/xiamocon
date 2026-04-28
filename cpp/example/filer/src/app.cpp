@@ -175,21 +175,21 @@ static inline void requestRenderAll() {
 XmcStatus render();
 XmcStatus renderAddressBar(Graphics2D &gfx);
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
   cfg.speakerEnabled = false;
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   fs::mount();
   fileList.requestUpdate();
   requestRenderAll();
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   uint64_t nowUs = getTimeUs();
 
   fileList.keyInput();

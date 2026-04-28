@@ -21,6 +21,10 @@ XmcStatus startCore1(Core1TaskFunc task) {
 }
 
 XmcStatus stopCore1(uint32_t timeoutMs) {
+  if (!core1Func) {
+    return XMC_OK;
+  }
+
   stopRequested = true;
   uint64_t expireMs = getTimeMs() + timeoutMs;
   while (core1Func) {

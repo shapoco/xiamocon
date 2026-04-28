@@ -33,13 +33,13 @@ static void renderScene();
 float yaw = 0, pitch = 0;
 float vyaw = 0, vpitch = 0;
 
-AppConfig appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   auto cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
   return cfg;
 }
 
-void appSetup() {
+void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
   imu.init();
   imuPos = {1, 0, 0, 0};
@@ -48,7 +48,7 @@ void appSetup() {
   earth->setMaterial(earthMaterial);
 }
 
-void appLoop() {
+void xmcAppLoop(void) {
   updateScene();
 
   frameBuffer->beginRender();

@@ -1,4 +1,5 @@
 #include "xmc/system.hpp"
+#include "xmc/app.hpp"
 #include "xmc/battery.hpp"
 #include "xmc/display.hpp"
 #include "xmc/fs.hpp"
@@ -11,6 +12,7 @@
 #include "xmc/hw/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/ioex.hpp"
+#include "xmc/multicore.hpp"
 #include "xmc/power_off_message.hpp"
 #include "xmc/speaker.hpp"
 
@@ -63,7 +65,7 @@ XmcStatus service() {
       }
     } else {
       if (powerButtonPressedCount >= 3) {
-        requestShutdown();
+        requestShutdown(ShutdownReason::POWER_SWITCH);
       }
       powerButtonPressedCount = 0;
     }
@@ -72,7 +74,10 @@ XmcStatus service() {
   return XMC_OK;
 }
 
-XmcStatus requestShutdown() {
+XmcStatus requestShutdown(ShutdownReason reason) {
+  XMC_ERR_RET(xmcAppTerminate(reason));
+
+  stopCore1();
   input::deinit();
   battery::deinit();
   speaker::deinit();

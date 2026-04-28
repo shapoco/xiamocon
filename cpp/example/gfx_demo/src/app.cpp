@@ -115,7 +115,7 @@ void updateCamera(float dt);
 void renderScene();
 void renderMenu(Graphics2D gfx);
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   if (isPressed(Button::X)) {
     displayFormat = PixelFormat::RGB444;
   }
@@ -126,7 +126,7 @@ AppConfig xmc::appGetConfig() {
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   frameBuffer = createFrameBuffer(displayFormat, true);
   setupGrass();
   setupFlame();
@@ -135,7 +135,7 @@ void xmc::appSetup() {
   startCore1(core1Loop);
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   updateScene();
 
   frameBuffer->beginRender();

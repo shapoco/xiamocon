@@ -3,9 +3,9 @@
 
 namespace xmc {
 
-void libSetup();
+void libSetup(void);
 
-void libLoop();
+void libLoop(void);
 
 }
 

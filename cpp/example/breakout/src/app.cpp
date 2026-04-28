@@ -297,14 +297,14 @@ void drawScene() {
 
 }  // namespace
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = PixelFormat::RGB444;
   cfg.speakerEnabled = true;
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   for (int i = 0; i < NUM_TONES; ++i) {
     tones[i] = createTone();
     tones[i]->init();
@@ -316,7 +316,7 @@ void xmc::appSetup() {
   resetGame();
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   const input::Button buttons = input::getState();
 
   movePaddle(buttons);

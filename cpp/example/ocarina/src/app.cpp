@@ -84,14 +84,14 @@ void keyboardStateChanged(int ikey, bool pressed);
 void requestDisplayUpdate();
 void updateDisplay();
 
-AppConfig xmc::appGetConfig() {
+AppConfig xmcAppGetConfig(void) {
   AppConfig cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = DISPLAY_FORMAT;
   cfg.speakerEnabled = true;
   return cfg;
 }
 
-void xmc::appSetup() {
+void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
 
   // Display updates are event-driven, FPS is not needed
@@ -116,7 +116,7 @@ void xmc::appSetup() {
   requestDisplayUpdate();
 }
 
-void xmc::appLoop() {
+void xmcAppLoop(void) {
   uint64_t nowMs = getTimeMs();
   float dt = (nowMs - lastLoopTime) / 1000.0f;
   lastLoopTime = nowMs;

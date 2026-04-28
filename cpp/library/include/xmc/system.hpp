@@ -11,6 +11,19 @@
 namespace xmc::system {
 
 /**
+ * Reasons for system shutdown.
+ */
+enum class ShutdownReason {
+  /** The system is shutting down due to the power switch being pressed. */
+  POWER_SWITCH,
+  /** The system is shutting down due to low battery. */
+  LOW_BATTERY,
+  /** The system is shutting down because it was requested by the application.
+   */
+  REQUESTED_BY_APPLICATION,
+};
+
+/**
  * Initialize the Xiamocon system.
  *
  * @warning This function is used internally by the platform API. It should not
@@ -19,7 +32,7 @@ namespace xmc::system {
  * @return XMC_OK if the system was successfully initialized, or an appropriate
  * error code if initialization failed.
  */
-XmcStatus init();
+XmcStatus init(void);
 
 /**
  * Perform periodic system tasks.
@@ -30,7 +43,7 @@ XmcStatus init();
  * @return XMC_OK if the system service was successfully performed, or an
  * appropriate error code if there was a problem.
  */
-XmcStatus service();
+XmcStatus service(void);
 
 /**
  * Request a system shutdown. This will attempt to gracefully shut down the
@@ -39,7 +52,7 @@ XmcStatus service();
  * @return XMC_OK if the system was successfully shut down, or an appropriate
  * error code if shutdown failed.
  */
-XmcStatus requestShutdown();
+XmcStatus requestShutdown(ShutdownReason reason);
 
 }  // namespace xmc::system
 

@@ -27,13 +27,19 @@ XmcStatus startCore1(Core1TaskFunc task) {
 }
 
 XmcStatus stopCore1(uint32_t timeoutMs) {
+  if (!core1TaskHandle || !core1Func) {
+    return XMC_OK;
+  }
   stopRequested = true;
   uint64_t expireMs = getTimeMs() + timeoutMs;
   while (core1Func) {
     if (getTimeMs() > expireMs) {
-      vTaskDelete(core1TaskHandle);
+      TaskHandle_t handle = core1TaskHandle;
+      if (handle) {
+        vTaskDelete(handle);
+      }
       core1TaskHandle = nullptr;
-      XMC_ERR_RET(XMC_ERR_MULTICORE_STOP_FAILED);
+      core1Func = nullptr;
     }
   }
   return XMC_OK;
@@ -52,9 +58,10 @@ void core1Loop(void *arg) {
 
     if (!task()) break;
   }
-  vTaskDelete(core1TaskHandle);
+  TaskHandle_t handle = core1TaskHandle;
   core1TaskHandle = nullptr;
   core1Func = nullptr;
+  vTaskDelete(handle);
 }
 
 static void feedWatchdog() {

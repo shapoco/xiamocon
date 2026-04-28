@@ -18,12 +18,12 @@ xmcAppGetConfig
 
 .. code-block:: c++
 
-    xmc::AppConfig xmcAppGetConfig()
+    xmc::AppConfig xmcAppGetConfig(void)
 
 xmcAppGetConfig 関数は、アプリケーションのコンフィグレーション情報を返す関数です。
 xmc::AppConfig 構造体には、システムを初期化するための基本的なコンフィグレーション情報が含まれます。
 
-通常は xmc::getDefaultAppConfig() 関数を使用してデフォルトのコンフィグレーションを取得し、必要に応じて値を変更してから返します。
+通常は getDefaultAppConfig() 関数を使用してデフォルトのコンフィグレーションを取得し、必要に応じて値を変更してから返します。
 
 .. csv-table:: xmc::AppConfig のメンバー
    :header: "型","メンバー", "説明"
