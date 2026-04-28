@@ -47,8 +47,8 @@
 <li class="toctree-l1"><a class="reference internal" href="app.html">Xiamocon アプリケーションの基本構造</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">I2C API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#xmc-i2c-getpreferredfrequency">xmc::i2c::getPreferredFrequency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">初期化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-i2c-getpreferredfrequency">xmc::i2c::getPreferredFrequency</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-i2c-init">xmc::i2c::init</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-i2c-deinit">xmc::i2c::deinit</a></li>
 </ul>
@@ -109,17 +109,17 @@
 <p>I2C API は、I2C デバイスへの同期アクセスを行うための低レベル API です。
 複数タスクから安全に利用するため、アクセス時は <cite>lock()</cite> / <cite>unlock()</cite> でトランザクションを保護します。</p>
 </section>
+<section id="id2">
+<h2>初期化<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <section id="xmc-i2c-getpreferredfrequency">
-<h2>xmc::i2c::getPreferredFrequency<a class="headerlink" href="#xmc-i2c-getpreferredfrequency" title="Link to this heading"></a></h2>
+<h3>xmc::i2c::getPreferredFrequency<a class="headerlink" href="#xmc-i2c-getpreferredfrequency" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">uint32_t</span><span class="w"> </span><span class="nf">xmc::i2c::getPreferredFrequency</span><span class="p">(</span><span class="n">Chipset</span><span class="w"> </span><span class="n">device</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>デバイス種別に応じた推奨 I2C クロック [Hz] を返します。</p>
+<p>デバイス種別に応じた推奨 I2C クロック周波数 [Hz] を返します。</p>
 <p><cite>device</cite> には接続先デバイス種別を指定します。
-戻り値は、そのデバイスで安全に使用できることを想定した推奨クロックです。</p>
+戻り値は、そのデバイスで安全に使用できることを想定した推奨クロック周波数です。</p>
 </section>
-<section id="id2">
-<h2>初期化<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <section id="xmc-i2c-init">
 <h3>xmc::i2c::init<a class="headerlink" href="#xmc-i2c-init" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::i2c::init</span><span class="p">();</span>
