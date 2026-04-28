@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPIO API &mdash; xiamocon  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="I2C API" href="i2c.html" />
+    <link rel="prev" title="オーディオ API" href="audio.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            xiamocon
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Xiamocon アプリケーションの基本構造</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GPIO API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">グローバル関数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-gpio-setdir">xmc::gpio::setDir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-gpio-write">xmc::gpio::write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-gpio-read">xmc::gpio::read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-gpio-setpullup">xmc::gpio::setPullup</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heap.html">Heap API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multicore.html">マルチコア API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="semaphore.html">セマフォ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spinlock.html">スピンロック API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xiamocon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">GPIO API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sdk/gpio.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="gpio-api">
+<h1>GPIO API<a class="headerlink" href="#gpio-api" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>GPIO API は、汎用デジタル入出力ピンの方向設定、出力、入力、およびプルアップ制御を行うための低レベル API です。</p>
+<p>ピン番号には <cite>xmc/pins.hpp</cite> で定義される定数 (例: <cite>XMC_PIN_GPIO_0</cite>) を指定して使用します。</p>
+</section>
+<section id="id2">
+<h2>グローバル関数<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="xmc-gpio-setdir">
+<h3>xmc::gpio::setDir<a class="headerlink" href="#xmc-gpio-setdir" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::gpio::setDir</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">pin</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>GPIO の方向を設定します。</p>
+<p><cite>pin</cite> には対象ピン番号を指定します。
+<cite>output</cite> が <cite>true</cite> の場合は出力、<cite>false</cite> の場合は入力として設定されます。</p>
+</section>
+<section id="xmc-gpio-write">
+<h3>xmc::gpio::write<a class="headerlink" href="#xmc-gpio-write" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::gpio::write</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">pin</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>GPIO 出力値を設定します。</p>
+<p><cite>value</cite> が <cite>true</cite> なら High、<cite>false</cite> なら Low を出力します。
+通常は事前に <cite>setDir(pin, true)</cite> で出力モードに設定してから使用します。</p>
+</section>
+<section id="xmc-gpio-read">
+<h3>xmc::gpio::read<a class="headerlink" href="#xmc-gpio-read" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">xmc::gpio::read</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">pin</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>GPIO 入力値を読み取ります。</p>
+<p>戻り値は、High レベルなら <cite>true</cite>、Low レベルなら <cite>false</cite> です。</p>
+</section>
+<section id="xmc-gpio-setpullup">
+<h3>xmc::gpio::setPullup<a class="headerlink" href="#xmc-gpio-setpullup" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::gpio::setPullup</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">pin</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">enable</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>GPIO の内部プルアップ抵抗を設定します。</p>
+<p><cite>enable</cite> が <cite>true</cite> の場合は有効、<cite>false</cite> の場合は無効です。
+入力ピンでの利用を想定しています。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="audio.html" class="btn btn-neutral float-left" title="オーディオ API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="i2c.html" class="btn btn-neutral float-right" title="I2C API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Shapoco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

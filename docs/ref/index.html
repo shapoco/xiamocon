@@ -44,12 +44,17 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sdk/app.html">Xiamocon アプリケーションの基本構造</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/i2c.html">I2C API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/spi.html">SPI API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/timer.html">タイマー API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/gfx2d.html">2D グラフィックス API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/gfx3d.html">3D グラフィックス API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/audio.html">オーディオ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gpio.html">GPIO API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/heap.html">Heap API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/multicore.html">マルチコア API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/semaphore.html">セマフォ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/spinlock.html">スピンロック API</a></li>
 </ul>
 
         </div>
@@ -88,6 +93,35 @@
 <li class="toctree-l2"><a class="reference internal" href="sdk/app.html#xmcappterminate">xmcAppTerminate</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx2d.html">2D グラフィックス API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id2">ピクセルフォーマット</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#sprite">Sprite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#graphics2d">Graphics2D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#framebuffer">FrameBuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#fpskeeper">FpsKeeper</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gfx3d.html">3D グラフィックス API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id2">描画制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id3">シーン構築</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id4">プリミティブとマテリアル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id5">属性バッファ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#graphics3d">Graphics3D</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/audio.html">オーディオ API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#id1">グローバル関数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#mixer">Mixer クラス</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#tone">Toneクラス</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/gpio.html">GPIO API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gpio.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/gpio.html#id2">グローバル関数</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sdk/i2c.html">I2C API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id1">概要</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sdk/i2c.html#id2">初期化</a></li>
@@ -114,28 +148,26 @@
 <li class="toctree-l2"><a class="reference internal" href="sdk/timer.html#id4">待機</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/gfx2d.html">2D グラフィックス API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id1">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#id2">ピクセルフォーマット</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#sprite">Sprite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#graphics2d">Graphics2D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#framebuffer">FrameBuffer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx2d.html#fpskeeper">FpsKeeper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/heap.html">Heap API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/heap.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/heap.html#id2">型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/heap.html#id3">グローバル関数</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/gfx3d.html">3D グラフィックス API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id1">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id2">描画制御</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id3">シーン構築</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id4">プリミティブとマテリアル</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#id5">属性バッファ</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/gfx3d.html#graphics3d">Graphics3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/multicore.html">マルチコア API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/multicore.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/multicore.html#id2">型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/multicore.html#id3">グローバル関数</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sdk/audio.html">オーディオ API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#id1">グローバル関数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#mixer">Mixer クラス</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sdk/audio.html#tone">Toneクラス</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/semaphore.html">セマフォ API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/semaphore.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/semaphore.html#semaphore">Semaphore クラス</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk/spinlock.html">スピンロック API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spinlock.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdk/spinlock.html#spinlock">SpinLock クラス</a></li>
 </ul>
 </li>
 </ul>

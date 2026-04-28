@@ -11,10 +11,14 @@ Xiamocon Reference Manual
    :caption: Contents:
 
    sdk/app.rst
-   sdk/i2c.rst
-   sdk/spi.rst
-   sdk/timer.rst
    sdk/gfx2d.rst
    sdk/gfx3d.rst
    sdk/audio.rst
-   
+   sdk/gpio.rst
+   sdk/i2c.rst
+   sdk/spi.rst
+   sdk/timer.rst
+   sdk/heap.rst
+   sdk/multicore.rst
+   sdk/semaphore.rst
+   sdk/spinlock.rst
