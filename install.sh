@@ -32,10 +32,10 @@ else
     git clone https://github.com/raspberrypi/pico-extras.git
 fi
 
-if [ -d "platformuio" ]; then
+if [ -d "platformio" ]; then
     echo "PlatformIO already exists, skipping installation."
 else
-    export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformuio
+    export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformio
     curl -L -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
     python3 get-platformio.py
     rm -f get-platformio.py
@@ -55,7 +55,7 @@ setup_file=${arg_install_dir}/setup.shrc
 rm -f ${setup_file}
 echo "export PICO_SDK_PATH=${arg_install_dir}/pico-sdk" >> ${setup_file}
 echo "export PICO_EXTRAS_PATH=${arg_install_dir}/pico-extras" >> ${setup_file}
-echo "export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformuio" >> ${setup_file}
+echo "export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformio" >> ${setup_file}
 echo "export XMC_REPO_PATH=${arg_install_dir}/xiamocon" >> ${setup_file}
 echo "source ${arg_install_dir}/.venv/bin/activate" >> ${setup_file}
 
