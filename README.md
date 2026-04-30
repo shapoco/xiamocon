@@ -43,7 +43,7 @@ See [Installing uv](https://docs.astral.sh/uv/getting-started/installation/).
 ### 2. Install the Xiamocon SDK
 
 ```sh
-curl -LsSf https://github.com/shapoco/xiamocon/blob/main/install.sh | bash
+curl -LsSf https://github.com/shapoco/xiamocon/raw/refs/heads/main/install.sh | bash
 ```
 
 ### 3. Configure Environment Variables
