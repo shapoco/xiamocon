@@ -13,76 +13,48 @@ Game-console-style motherboard for XIAO RP2350/ESP32S3
 
 ![](./image/arch-hw.png)
 
-## Development Environment Setup (Linux/WSL2)
+## Development Environment Setup (Ubuntu24.04/macOS)
 
 ### 1. Install Build Tools
 
-#### Install required packages
+#### Install uv
 
-```sh
-sudo apt update
-sudo apt -y install curl git
-sudo apt -y install build-essential cmake gcc-arm-none-eabi
-sudo apt -y install python3 python3-pip python3-venv
-```
+See [Installing uv](https://docs.astral.sh/uv/getting-started/installation/).
 
-#### For XIAO RP2350
+#### Install other required packages
 
-1. Install [Pico SDK](https://github.com/raspberrypi/pico-sdk) and set the `PICO_SDK_PATH` environment variable.
+- Ubuntu24.04 (WSL2):
 
     ```sh
-    mkdir -p ${HOME}/.xmc
-    cd ${HOME}/.xmc
-    git clone https://github.com/raspberrypi/pico-sdk.git
-    cd pico-sdk
-    git submodule update --init --recursive
-    export PICO_SDK_PATH=${HOME}/.xmc/pico-sdk
+    sudo apt update
+    sudo apt -y install curl git
+    sudo apt -y install build-essential cmake gcc-arm-none-eabi
     ```
 
-2. Install [Pico Extras](https://github.com/raspberrypi/pico-extras) and set the `PICO_EXTRAS_PATH` environment variable.
+- macOS:
+
+    First, install Command Line Developer Tools, [Homebrew](https://brew.sh/), and [CMake](https://cmake.org/download/), then run the following command:
 
     ```sh
-    mkdir -p ${HOME}/.xmc
-    cd ${HOME}/.xmc
-    git clone https://github.com/raspberrypi/pico-extras.git
-    export PICO_EXTRAS_PATH=${HOME}/.xmc/pico-extras
+    sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
+    brew install --cask gcc-arm-embedded
     ```
-
-#### For XIAO ESP32S3
-
-Install [PlatformIO](https://docs.platformio.org/) and update the `PATH` environment variable.
-
-```sh
-curl -L -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py
-python3 get-platformio.py
-export PATH=$PATH:${HOME}/.platformio/penv/bin
-```
 
 ### 2. Install the Xiamocon SDK
 
 ```sh
-cd ${HOME}/.xmc
-git clone https://github.com/shapoco/xiamocon
-export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
+curl -LsSf https://github.com/shapoco/xiamocon/blob/main/install.sh | bash
 ```
 
 ### 3. Configure Environment Variables
 
-To avoid setting these every time you open a new terminal, it is recommended to add the following environment variables to your shell configuration file (e.g., `.bashrc`, `.zshrc`).
+To avoid setting the repository path every time, add the following line to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`).
 
 ```sh
-# For RP2350:
-export PICO_SDK_PATH=${HOME}/.xmc/pico-sdk
-export PICO_EXTRAS_PATH=${HOME}/.xmc/pico-extras
-
-# For ESP32S3:
-export PATH=$PATH:${HOME}/.platformio/penv/bin
-
-# Common
 export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 ```
 
-## Build and Run the Hello World Sample (Linux/WSL2)
+## Build and Run the Hello World Sample (Ubuntu24.04/macOS)
 
 ### For XIAO RP2350
 
@@ -93,19 +65,19 @@ export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 2. Initialize the environment and move to the sample app directory.
 
     ```sh
+    source ${HOME}/.xmc/setup.shrc
     cd ${XMC_REPO_PATH}
-    source setup.shrc
     cd cpp/example/hello_world
     ```
 
 3. Build and flash the firmware.
-    - On WSL, you can specify the drive letter with the `-d` option to build and flash in one step (if the drive letter is E). You may be prompted for an administrator password.
+    - On WSL2, you can specify the drive letter with the `-d` option to build and flash in one step (if the drive letter is E). You may be prompted for an administrator password.
 
         ```sh
         xmc run -p rp2350_pico_sdk -d E
         ```
 
-    - On non-WSL environments, run `xmc build` instead of `xmc run`, then manually copy the generated UF2 file to the drive.
+    - On non-WSL2 environments, run `xmc build` instead of `xmc run`, then manually copy the generated UF2 file to the drive.
 
         ```sh
         xmc build -p rp2350_pico_sdk
@@ -114,12 +86,12 @@ export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 ### For XIAO ESP32S3
 
 1. Connect Xiamocon to your PC via USB and check the serial port.
-    - On WSL, use [WSL USB Manager](https://github.com/nickbeth/wsl-usb-manager) or similar tools to attach Xiamocon's USB device to WSL.
+    - On WSL2, use [WSL USB Manager](https://github.com/nickbeth/wsl-usb-manager) or similar tools to attach Xiamocon's USB device to WSL2.
 2. Initialize the environment and move to the sample app directory.
 
     ```sh
+    source ${HOME}/.xmc/setup.shrc
     cd ${XMC_REPO_PATH}
-    source setup.shrc
     cd cpp/example/hello_world
     ```
 
@@ -137,12 +109,12 @@ export XMC_REPO_PATH=${HOME}/.xmc/xiamocon
 > - You can omit the `-s` option by setting the serial port in the `XMC_DEFAULT_SERIAL` environment variable.
 
 >[!NOTE]
-> On ESP32S3, you can also build and flash using the PlatformIO extension in VS Code.
+> On ESP32S3, you can also build and flash using the PlatformIO extension in VSCode.
 
-## Create a Project (Linux/WSL2)
+## Create a Project (Ubuntu24.04/macOS)
 
 ```sh
-source ${XMC_REPO_PATH}/setup.shrc
+source ${HOME}/.xmc/setup.shrc
 mkdir -p my_project
 cd my_project
 xmc init
