@@ -46,6 +46,10 @@ See [Installing uv](https://docs.astral.sh/uv/getting-started/installation/).
 curl -LsSf https://github.com/shapoco/xiamocon/raw/refs/heads/main/install.sh | bash
 ```
 
+Python virtual enviroment, [Pico-SDK](https://github.com/raspberrypi/pico-sdk),
+[Pico-Extras](https://github.com/raspberrypi/pico-extras), [PlatformIO](https://platformio.org/),
+and this repository will be automatically installed in `${HOME}/.xmc/` directory.
+
 ### 3. Configure Environment Variables
 
 To avoid setting the repository path every time, add the following line to your shell configuration file (e.g., `~/.bashrc`, `~/.zshrc`).

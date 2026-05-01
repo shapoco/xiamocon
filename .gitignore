@@ -13,6 +13,7 @@ tmp.*/
 *.log
 __pycache__/
 docs/
+setup.shrc
 
 # for KiCad
 *-backups/
