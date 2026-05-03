@@ -10,6 +10,7 @@ Xiamocon Reference Manual
    :maxdepth: 2
    :caption: Contents:
 
+   hw/enclosure.rst
    sdk/app.rst
    sdk/gfx2d.rst
    sdk/gfx3d.rst

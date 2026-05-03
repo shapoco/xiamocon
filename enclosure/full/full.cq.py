@@ -214,7 +214,7 @@ volume_hole = volume_hole.union(
 )
 volume_hole = volume_hole.translate((volume_x, inner_h / 2, volume_hole_z))
 back = back.cut(volume_hole)
-back = back.cut(cyl(volume_x, inner_h / 2 - 13, volume_hole_z, 15, 99))
+back = back.cut(cyl(volume_x, inner_h / 2 - 10, volume_hole_z, 12, 99))
 
 # XIAO clearance hole
 
@@ -370,7 +370,7 @@ front = front.cut(cyl(xiao_hole_x + 5.5, board_h / 2 - 2, 0, 1.25, 99))
 cutter = (
     cq.Workplane("XY")
     .box(10, 5, 5, centered=[True, False, False])
-    .translate((15.5, case_h / 2 - wall_t, back_t - 5))
+    .translate((15.5, case_h / 2 - wall_t - 0.25, back_t - 5))
 )
 front = front.cut(cutter)
 
@@ -467,7 +467,9 @@ dpad_key_flange = (
     )
     .rotate((0, 0, 0), (0, 0, 1), 45)
 )
-dpad_key_flange = dpad_key_flange.union(dpad_key_flange.rotate((0, 0, 0), (0, 0, 1), 90))
+dpad_key_flange = dpad_key_flange.union(
+    dpad_key_flange.rotate((0, 0, 0), (0, 0, 1), 90)
+)
 dpad_key = dpad_key.union(dpad_key_flange)
 
 # 十字キートップのくぼみ
@@ -528,56 +530,79 @@ abxy_key = abxy_key.faces(">Z").fillet(0.5)
 abxy_key = abxy_key.cut(key_bottom_hole)
 
 # Power/Func Key
-top_key = cq.Workplane("XY").box(
-    top_key_w, 8.5, top_key_t, centered=[True, False, False]
-).translate((0, -8, 0))
-top_key = top_key .union(
-    cq.Workplane("XY").box(top_key_flange_w, 1, top_key_t, centered=[True , False, False]).translate((0, -wall_t, 0))
+top_key_h = 5.5
+top_key = (
+    cq.Workplane("XY")
+    .box(top_key_w, top_key_h + 1, top_key_t, centered=[True, False, False])
+    .translate((0, -top_key_h, 0))
 )
-top_key = top_key .cut(
-    cq.Workplane("XY").box(top_key_w, 3, 2, centered=[True , False, False]).translate((0, -6, 0))
+top_key = top_key.union(
+    cq.Workplane("XY")
+    .box(top_key_flange_w, 1, top_key_t, centered=[True, False, False])
+    .translate((0, -wall_t, 0))
+)
+top_key = top_key.cut(
+    cq.Workplane("XY")
+    .box(top_key_w, 3, 2.5, centered=[True, False, False])
+    .translate((0, -5.5, 0))
+)
+top_key = top_key.cut(
+    cq.Workplane("XY")
+    .box(2.5, 3, 2, centered=[True, False, False])
+    .translate((0, -4.5, 0))
+)
+top_key = top_key.edges(">Y").chamfer(0.5)
+top_key = top_key.edges("<Y and |Z").chamfer(1)
+
+front = front.cut(
+    top_key.translate((power_sw_x - 0.25, case_h / 2 - 0.75, back_t - top_key_t))
 )
 
-power_key = top_key.cut(
-    cq.Workplane("XY").box(10, 99, 99, centered=[False, True, True]).translate((-10 - top_key_w / 2, 0, 0))
-)
-func_key = top_key.cut(
-    cyl(6, -9, 0, 6, 99)
-)
+if True:
+    show_object(back, name="back_box")
+    
+if True:
+    show_object(
+        top_key.translate((power_sw_x, case_h / 2, back_t - top_key_t - 0.25)),
+        name="power_key",
+    )
+    show_object(
+        top_key.translate((func_sw_x, case_h / 2, back_t - top_key_t - 0.25)),
+        name="func_key",
+    )
 
-show_object(back, name="back_box")
-show_object(power_key.translate((power_sw_x, case_h / 2, back_t - top_key_t - 0.25)), name="power_key")
-show_object(func_key.translate((func_sw_x, case_h / 2, back_t - top_key_t - 0.25)), name="func_key")
+if False:
+    show_object(front, name="front_box")
 
-#show_object(front, name="front_box")
-#show_object(
-#    dpad_key.translate((-pad_center_x, pad_center_y, back_t - key_flange_t)),
-#    name="dpad_key",
-#)
-#show_object(
-#    abxy_key.translate(
-#        (pad_center_x - key_offset, pad_center_y, back_t - key_flange_t)
-#    ),
-#    name="y_key",
-#)
-#show_object(
-#    abxy_key.translate(
-#        (pad_center_x + key_offset, pad_center_y, back_t - key_flange_t)
-#    ),
-#    name="a_key",
-#)
-#show_object(
-#    abxy_key.translate(
-#        (pad_center_x, pad_center_y - key_offset, back_t - key_flange_t)
-#    ),
-#    name="b_key",
-#)
-#show_object(
-#    abxy_key.translate(
-#        (pad_center_x, pad_center_y + key_offset, back_t - key_flange_t)
-#    ),
-#    name="x_key",
-#)
+if False:
+    show_object(
+        dpad_key.translate((-pad_center_x, pad_center_y, back_t - key_flange_t)),
+        name="dpad_key",
+    )
+    show_object(
+        abxy_key.translate(
+            (pad_center_x - key_offset, pad_center_y, back_t - key_flange_t)
+        ),
+        name="y_key",
+    )
+    show_object(
+        abxy_key.translate(
+            (pad_center_x + key_offset, pad_center_y, back_t - key_flange_t)
+        ),
+        name="a_key",
+    )
+    show_object(
+        abxy_key.translate(
+            (pad_center_x, pad_center_y - key_offset, back_t - key_flange_t)
+        ),
+        name="b_key",
+    )
+    show_object(
+        abxy_key.translate(
+            (pad_center_x, pad_center_y + key_offset, back_t - key_flange_t)
+        ),
+        name="x_key",
+    )
 
 front = front.rotate((0, 0, back_t), (1, 0, back_t), 180).translate(
     (0, 0, -back_t + wall_t)
@@ -585,10 +610,12 @@ front = front.rotate((0, 0, back_t), (1, 0, back_t), 180).translate(
 
 dpad_key = dpad_key.rotate((0, 0, 0), (0, 0, 1), 45).rotate(
     (0, -dpad_w / 2, 0), (1, -dpad_w / 2, 0), 90
-)
+).translate((0, 0, -1.5))    
 abxy_key = abxy_key.rotate(
-    (0, -abxy_r - key_flange_t, 0), (1, -abxy_r - key_flange_t, 0), 90
+    (0, -abxy_r - 1, 0), (1, -abxy_r - 1, 0), 90
 )
+
+top_key = top_key.rotate((0, 0, 0), (1, 0, 0), 180).translate((0, 0, top_key_t))
 
 front.export("front.stl")
 front.export("front.step")
@@ -598,3 +625,26 @@ dpad_key.export("dpad_key.stl")
 dpad_key.export("dpad_key.step")
 abxy_key.export("abxy_key.stl")
 abxy_key.export("abxy_key.step")
+top_key.export("top_key.stl")
+top_key.export("top_key.step")
+
+full_body = back.translate((0, case_h / 2 + 1, 0))
+full_body = full_body.union(front.translate((0, -case_h / 2 - 1, 0)))
+if False:
+    show_object(full_body, name="full_body")
+
+full_keys = dpad_key.translate((-10, 20, 0))
+full_keys = full_keys.union(abxy_key.translate((-17, 5, 0)))
+full_keys = full_keys.union(abxy_key.translate((-6, 5, 0)))
+full_keys = full_keys.union(abxy_key.translate((6, 5, 0)))
+full_keys = full_keys.union(abxy_key.translate((17, 5, 0)))
+full_keys = full_keys.union(top_key.translate((7, 3, 0)))
+full_keys = full_keys.union(top_key.translate((17, 3, 0)))
+
+if False:
+    show_object(full_keys, name="full_keys")
+
+full_body.export("full_body.stl")
+full_body.export("full_body.step")
+full_keys.export("full_keys.stl")
+full_keys.export("full_keys.step")
