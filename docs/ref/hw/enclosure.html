@@ -45,8 +45,15 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">エンクロージャ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">簡易版</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">フル版 (暫定)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">簡易版</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#d">3D データ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">フル版</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3D データ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">組み立て手順</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../sdk/app.html">Xiamocon アプリケーションの基本構造</a></li>
@@ -91,7 +98,16 @@
 <h1>エンクロージャ<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <section id="id2">
 <h2>簡易版<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>タクトスイッチを用いる場合の簡易版エンクロージャです。</p>
+<p>タクトスイッチを用いる場合の簡易版エンクロージャです。
+フロントパネルはありません。</p>
+<figure class="align-default">
+<img alt="../_images/enclosure-simple-front.jpg" src="../_images/enclosure-simple-front.jpg" />
+</figure>
+<figure class="align-default">
+<img alt="../_images/enclosure-simple-back.jpg" src="../_images/enclosure-simple-back.jpg" />
+</figure>
+<section id="d">
+<h3>3D データ<a class="headerlink" href="#d" title="Link to this heading"></a></h3>
 <ul>
 <li><p>ボディ:</p>
 <blockquote>
@@ -102,11 +118,21 @@
 </div></blockquote>
 </li>
 </ul>
-<p>ネジ止めには M3x10 の超低頭タッピングネジを 4 つ使用します。</p>
+<p>ネジ止めには 3x8mm の低頭タッピングネジを 4 つ使用します。</p>
+<p>バッテリーを内蔵する場合は、中で揺れないようにクッションとしてスポンジなどを入れてください。</p>
+</section>
 </section>
 <section id="id3">
-<h2>フル版 (暫定)<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>スーパーファミコンのコントローラの修理用ゴムパッドを使ったエンクロージャです。</p>
+<h2>フル版<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>ゲーム機のコントローラの修理用ゴムパッドを使ったエンクロージャです。</p>
+<figure class="align-default">
+<img alt="../_images/enclosure-full-front.jpg" src="../_images/enclosure-full-front.jpg" />
+</figure>
+<figure class="align-default">
+<img alt="../_images/enclosure-full-back.jpg" src="../_images/enclosure-full-back.jpg" />
+</figure>
+<section id="id4">
+<h3>3D データ<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <ul>
 <li><p>ボディ:</p>
 <blockquote>
@@ -125,11 +151,36 @@
 </div></blockquote>
 </li>
 </ul>
-<p>キーのモデルは積層痕がボディと引っかからないよう、垂直に立てた状態になっています。
+</section>
+<section id="id5">
+<h3>組み立て手順<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p>以下のものを用意します。</p>
+<ul class="simple">
+<li><p>Xiamocon 本体</p></li>
+<li><p>PS4 / PS5 / スーパーファミコンのコントローラ用ゴムパッド (十字キー側のもの) x2</p></li>
+<li><p>3x12mm 皿頭タッピングネジ x4</p></li>
+<li><p>3D プリント部品</p></li>
+<li><p>バッテリー用クッション (必要に応じて)</p></li>
+</ul>
+<p>ゴムパッドは十字キー側のものを 2 つ使用しますので 2 セット調達してください。</p>
+<p>キーのモデルは積層痕がボディに引っかからないよう、垂直に立てた状態のモデルデータになっています。
 サポートを付けてプリントしてください。</p>
-<p>ゴムパッドは十字キー側のものを 2 つ使用しますので 2 セット調達してください。
-ケース内に収まるよう、ハサミ等でカットしてケースに収めます。</p>
-<p>ネジ止めには M3x12 の皿頭タッピングネジを 4 つ使用します。</p>
+<figure class="align-default">
+<img alt="../_images/enclosure-full-parts.jpg" src="../_images/enclosure-full-parts.jpg" />
+</figure>
+<p>ゲームコントローラの修理用ゴムパッドを、ケース内に収まるようハサミ等でカットします。</p>
+<figure class="align-default">
+<img alt="../_images/enclosure-full-keypad.jpg" src="../_images/enclosure-full-keypad.jpg" />
+</figure>
+<p>バッテリーを内蔵する場合は、中で揺れないようにクッションとしてスポンジなどを入れてください。</p>
+<p>バックパネルに Xiamocon 本体を載せ、加工したゴムパッドを配置し、キーを載せます。
+電源ボタンとファンクションボタンにもキーをかぶせ、フロントパネルを載せて四隅をネジ止めします。</p>
+<figure class="align-default">
+<img alt="../_images/enclosure-full-assembly.jpg" src="../_images/enclosure-full-assembly.jpg" />
+</figure>
+<p>ネジを強く締めすぎてネジ穴を舐めてしまわないようにご注意ください。</p>
+<p>接触が悪くなったときは、接点を鉛筆やシャープペンシルのペンでこすると復活します。</p>
+</section>
 </section>
 </section>
 
