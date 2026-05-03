@@ -11,7 +11,7 @@
     - `simple.step <https://github.com/shapoco/xiamocon/raw/refs/heads/main/enclosure/simple/simple.step>`__
     - `simple.stl <https://github.com/shapoco/xiamocon/raw/refs/heads/main/enclosure/simple/simple.stl>`__
 
-フル版
+フル版 (暫定)
 ================================================================================
 
 スーパーファミコンのコントローラの修理用ゴムパッドを使ったエンクロージャです。
