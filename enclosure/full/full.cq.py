@@ -29,9 +29,9 @@ xiao_hole_t = 4
 xiao_hole_z = wall_t + back_inner_t + 4.6
 xiao_hole_x = -board_w / 2 + 21.5
 
-disp_hole_w = 31
-disp_hole_h = 31
-disp_hole_y = 1
+disp_hole_w = 30
+disp_hole_h = 30
+disp_hole_y = 1.5
 
 pad_center_x = 33
 pad_center_y = -9
@@ -571,10 +571,10 @@ if True:
         name="func_key",
     )
 
-if False:
+if True:
     show_object(front, name="front_box")
 
-if False:
+if True:
     show_object(
         dpad_key.translate((-pad_center_x, pad_center_y, back_t - key_flange_t)),
         name="dpad_key",
