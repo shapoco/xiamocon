@@ -217,7 +217,7 @@ xmc::createGraphics3D
 
 戻り値として `xmc::Graphics3D` オブジェクトを返します。
 
-xmc::Graphics3DClass::setTarget
+setTarget
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -231,7 +231,7 @@ xmc::Graphics3DClass::setTarget
 `viewport` 指定版では、Sprite 内の描画領域を矩形で指定できます。
 ビューポート省略版では Sprite 全体が描画領域になります。
 
-xmc::Graphics3DClass::setParallelMode / getParallelMode
+setParallelMode / getParallelMode
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -244,7 +244,7 @@ xmc::Graphics3DClass::setParallelMode / getParallelMode
 `mode` には `xmc::ParallelMode3D` の値を指定します。
 `getParallelMode()` は現在の並列レンダリングモードを返します。
 
-xmc::Graphics3DClass::setFlags / enableFlags / disableFlags
+setFlags / enableFlags / disableFlags
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -258,7 +258,7 @@ xmc::Graphics3DClass::setFlags / enableFlags / disableFlags
 `setFlags()` はフラグ全体を置き換えます。
 `enableFlags()` と `disableFlags()` は指定したフラグだけを個別に有効化・無効化します。
 
-xmc::Graphics3DClass::setBlendMode
+setBlendMode
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -268,7 +268,7 @@ xmc::Graphics3DClass::setBlendMode
 ブレンドモードを設定します。
 `mode` には `xmc::BlendMode` の値を指定します。
 
-xmc::Graphics3DClass::setEnvironmentLight / setParallelLight
+setEnvironmentLight / setParallelLight
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -281,7 +281,7 @@ xmc::Graphics3DClass::setEnvironmentLight / setParallelLight
 `setEnvironmentLight()` は環境光の色を設定します。
 `setParallelLight()` は平行光源の方向 `dir` と色 `color` を設定します。
 
-xmc::Graphics3DClass::setProjection / setOrthoProjection / setPerspectiveProjection
+setProjection / setOrthoProjection / setPerspectiveProjection
 --------------------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -295,7 +295,7 @@ xmc::Graphics3DClass::setProjection / setOrthoProjection / setPerspectiveProject
 `setProjection()` は投影行列を直接設定します。
 `setOrthoProjection()` は平行投影、`setPerspectiveProjection()` は透視投影を簡易に設定する補助関数です。
 
-xmc::Graphics3DClass::setViewMatrix / lookAt
+setViewMatrix / lookAt
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -308,7 +308,7 @@ xmc::Graphics3DClass::setViewMatrix / lookAt
 `setViewMatrix()` はビュー行列を直接設定します。
 `lookAt()` は視点 `eye`、注視点 `focus`、上方向 `up` からビュー行列を生成して設定します。
 
-xmc::Graphics3DClass::pushState / popState
+pushState / popState
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -319,7 +319,7 @@ xmc::Graphics3DClass::pushState / popState
 変換状態スタックを保存・復元します。
 階層構造をたどりながら個別の変換を適用したい場合に使用します。
 
-xmc::Graphics3DClass::loadIdentity / loadMatrix / transform
+loadIdentity / loadMatrix / transform
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -334,7 +334,7 @@ xmc::Graphics3DClass::loadIdentity / loadMatrix / transform
 `loadMatrix()` は行列を直接設定します。
 `transform()` は現在行列に変換行列を乗算します。
 
-xmc::Graphics3DClass::translate / rotate / scale
+translate / rotate / scale
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -350,7 +350,7 @@ xmc::Graphics3DClass::translate / rotate / scale
 現在のモデル変換に平行移動、回転、拡大縮小を適用します。
 オーバーロードによりベクトル指定と成分指定の両方を使用できます。
 
-xmc::Graphics3DClass::beginRender / endRender
+beginRender / endRender
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
@@ -363,7 +363,7 @@ xmc::Graphics3DClass::beginRender / endRender
 `beginRender()` の `target` にはクリア対象を指定します。
 通常は既定値の `xmc::ClearTarget::ALL` を使用します。
 
-xmc::Graphics3DClass::render
+render
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
