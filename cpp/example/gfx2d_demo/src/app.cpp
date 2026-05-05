@@ -27,8 +27,10 @@ float sinTable[360];
 void updateScene();
 void renderScene();
 void renderDrops(Graphics2D &gfx, uint64_t nowMs);
-void renderStar(Graphics2D &gfx, float x, float y, float radius, float angle,
-                DevColor color);
+void renderLineStar(Graphics2D &gfx, float x, float y, float radius,
+                    float angle, DevColor color);
+void renderFilledStar(Graphics2D &gfx, float x, float y, float radius,
+                      float angle, DevColor color);
 
 AppConfig xmcAppGetConfig(void) {
   if (isPressed(Button::X)) {
@@ -98,7 +100,11 @@ void renderScene() {
     Star &s = stars[i];
     float angle = nowMs / 1000.0f + M_PI * 2 * i / NUM_STARS;
     DevColor color = gfx->devColorHSV(i * 360 / NUM_STARS, 255, 255);
-    renderStar(gfx, s.x, s.y, STAR_SIZE * s.zInv, angle, color);
+    if (i < NUM_STARS / 2) {
+      renderFilledStar(gfx, s.x, s.y, STAR_SIZE * s.zInv, angle, color);
+    } else {
+      renderLineStar(gfx, s.x, s.y, STAR_SIZE * s.zInv, angle, color);
+    }
   }
 }
 
@@ -119,8 +125,8 @@ void renderDrops(Graphics2D &gfx, uint64_t nowMs) {
   }
 }
 
-void renderStar(Graphics2D &gfx, float x, float y, float r, float a,
-                DevColor col) {
+void renderLineStar(Graphics2D &gfx, float x, float y, float r, float a,
+                    DevColor col) {
   float aStep = M_PI * 2 / 10.0f;
   int x0, y0;
   for (int i = 0; i <= 10; i++) {
@@ -134,4 +140,18 @@ void renderStar(Graphics2D &gfx, float x, float y, float r, float a,
     x0 = x1;
     y0 = y1;
   }
+}
+
+void renderFilledStar(Graphics2D &gfx, float x, float y, float r, float a,
+                      DevColor col) {
+  vec2i verts[10];
+  float aStep = M_PI * 2 / 10.0f;
+  int x0, y0;
+  for (int i = 0; i < 10; i++) {
+    float dist = (i % 2 == 1) ? r : (r / 2);
+    float theta = i * aStep + a;
+    verts[i].x = x + cosf(theta) * dist;
+    verts[i].y = y + sinf(theta) * dist;
+  }
+  gfx->fillPolygon(verts, 10, col);
 }

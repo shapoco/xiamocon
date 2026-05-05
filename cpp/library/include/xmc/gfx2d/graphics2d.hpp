@@ -111,6 +111,8 @@ class Graphics2DClass {
     fillEllipse(Rect{x, y, w, h}, color);
   }
 
+  void fillPolygon(const vec2i *vertices, int numVertices, DevColor color);
+
   void fillSmokeRect(Rect dstRect, bool white = false);
   inline void fillSmokeRect(int x, int y, int w, int h, bool white = false) {
     fillSmokeRect(Rect{x, y, w, h}, white);

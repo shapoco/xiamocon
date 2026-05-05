@@ -3,6 +3,7 @@
 #include "xmc/display.hpp"
 #include "xmc/gfx2d/ellipse_scan.hpp"
 #include "xmc/gfx2d/line_scan.hpp"
+#include "xmc/gfx2d/polygon_scan.hpp"
 
 namespace xmc {
 
@@ -92,11 +93,39 @@ void Graphics2DClass::fillEllipse(Rect dstRect, DevColor color) {
     void *ptr = target->linePtr(0);
     uint32_t stride = target->stride;
     PixelFormat fmt = target->format;
-    while (scan.nextLine(&py, &px, &pw)) {
+    while (scan.nextLine(&px, &py, &pw)) {
       fillRectUnsafe(fmt, ptr + py * stride, px, pw, 1, stride, color);
     }
   } else {
-    while (scan.nextLine(&py, &px, &pw)) {
+    while (scan.nextLine(&px, &py, &pw)) {
+      display::setWindow(px, py, pw, 1);
+      display::writePixelsStart(
+          lineBuffer, calcStride(display::getPixelFormat(), pw), false);
+      display::writePixelsComplete();
+    }
+  }
+}
+
+void Graphics2DClass::fillPolygon(const vec2i *vertices, int numVertices,
+                                  DevColor color) {
+  PolygonScan scan(vertices, numVertices, state.clipRect);
+
+  if (!target) {
+    // prepare line buffer for display write
+    int maxW = scan.getBoundingBox().width;
+    fillRectUnsafe(display::getPixelFormat(), lineBuffer, 0, maxW, 1, 0, color);
+  }
+
+  int px = 0, py = 0, pw = 0;
+  if (target) {
+    void *ptr = target->linePtr(0);
+    uint32_t stride = target->stride;
+    PixelFormat fmt = target->format;
+    while (scan.nextLine(&px, &py, &pw)) {
+      fillRectUnsafe(fmt, ptr + py * stride, px, pw, 1, stride, color);
+    }
+  } else {
+    while (scan.nextLine(&px, &py, &pw)) {
       display::setWindow(px, py, pw, 1);
       display::writePixelsStart(
           lineBuffer, calcStride(display::getPixelFormat(), pw), false);

@@ -6,6 +6,7 @@
 #include "xmc/geo/quat.hpp"
 #include "xmc/geo/rect.hpp"
 #include "xmc/geo/vec2.hpp"
+#include "xmc/geo/vec2i.hpp"
 #include "xmc/geo/vec3.hpp"
 
 #endif

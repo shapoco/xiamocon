@@ -29,12 +29,12 @@ class EllipseScan {
     y = yMin - 1;
   }
 
-  XMC_INLINE bool nextLine(int *py, int *px, int *pw) {
-    int dx2, dy2;
+  XMC_INLINE bool nextLine(int *px, int *py, int *pw) {
     do {
       if (++y > yMax) return false;
 
-      dy2 = y * 2 - cy2;
+      int dx2;
+      int dy2 = y * 2 - cy2;
       if (ry2 == 0) {
         dx2 = rx2;
       } else {
