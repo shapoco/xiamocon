@@ -71,6 +71,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#fillrect">fillRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawrect">drawRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fillellipse">fillEllipse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fillpolygon">fillPolygon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fillsmokerect">fillSmokeRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawline">drawLine</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawimage">drawImage</a></li>
@@ -381,6 +382,17 @@
 </div>
 <p><cite>dstRect</cite> で指定された矩形に内接する楕円を <cite>color</cite> で塗りつぶします。
 <cite>xmc::Rect</cite> 構造体で指定する版と、座標とサイズを個別に指定する版があります。</p>
+</section>
+<section id="fillpolygon">
+<h3>fillPolygon<a class="headerlink" href="#fillpolygon" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillPolygon</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">vec2i</span><span class="w"> </span><span class="o">*</span><span class="n">vertices</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">numVertices</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>多角形の内部を <cite>color</cite> で塗りつぶします。</p>
+<p><cite>vertices</cite> には頂点座標の配列先頭を指定します。
+<cite>numVertices</cite> には頂点数を指定します。
+最後の頂点と最初の頂点は自動的に接続されます。</p>
+<p>描画は現在のクリップ矩形の範囲内に制限されます。</p>
 </section>
 <section id="fillsmokerect">
 <h3>fillSmokeRect<a class="headerlink" href="#fillsmokerect" title="Link to this heading"></a></h3>

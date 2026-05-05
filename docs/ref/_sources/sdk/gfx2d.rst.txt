@@ -225,6 +225,21 @@ fillEllipse
 `dstRect` で指定された矩形に内接する楕円を `color` で塗りつぶします。
 `xmc::Rect` 構造体で指定する版と、座標とサイズを個別に指定する版があります。
 
+fillPolygon
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::fillPolygon(const xmc::vec2i *vertices, int numVertices, xmc::DevColor color);
+
+多角形の内部を `color` で塗りつぶします。
+
+`vertices` には頂点座標の配列先頭を指定します。
+`numVertices` には頂点数を指定します。
+最後の頂点と最初の頂点は自動的に接続されます。
+
+描画は現在のクリップ矩形の範囲内に制限されます。
+
 fillSmokeRect
 --------------------------------------------------------------------------------
 
