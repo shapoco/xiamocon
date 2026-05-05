@@ -65,9 +65,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-settarget-gettarget">xmc::Graphics2DClass::setTarget / getTarget</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-setcliprect-clearcliprect">xmc::Graphics2DClass::setClipRect / clearClipRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-devcolor">xmc::Graphics2DClass::devColor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass">xmc::Graphics2DClass の基本描画</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-devcolorhsv">xmc::Graphics2DClass::devColorHSV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-clear">xmc::Graphics2DClass::clear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-setpixel">xmc::Graphics2DClass::setPixel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-fillrect">xmc::Graphics2DClass::fillRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-drawrect">xmc::Graphics2DClass::drawRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-fillsmokerect">xmc::Graphics2DClass::fillSmokeRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-drawline">xmc::Graphics2DClass::drawLine</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass-drawimage">xmc::Graphics2DClass::drawImage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">xmc::Graphics2DClass のテキスト描画</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-graphics2dclass">xmc::Graphics2DClass のテキスト描画</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#framebuffer">FrameBuffer</a><ul>
@@ -142,8 +148,8 @@
 <h2>ピクセルフォーマット<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <section id="xmc-pixelformat">
 <h3>xmc::PixelFormat<a class="headerlink" href="#xmc-pixelformat" title="Link to this heading"></a></h3>
-<table class="docutils align-default" id="id4">
-<caption><span class="caption-text">xmc::PixelFormat の値</span><a class="headerlink" href="#id4" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id3">
+<caption><span class="caption-text">xmc::PixelFormat の値</span><a class="headerlink" href="#id3" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -168,8 +174,8 @@
 <section id="xmc-colors">
 <h3>xmc::Colors<a class="headerlink" href="#xmc-colors" title="Link to this heading"></a></h3>
 <p>代表的な色定数です。</p>
-<table class="docutils align-default" id="id5">
-<caption><span class="caption-text">xmc::Colors の主な値</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id4">
+<caption><span class="caption-text">xmc::Colors の主な値</span><a class="headerlink" href="#id4" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
@@ -232,8 +238,8 @@
 <section id="xmc-spriteclass">
 <h3>xmc::SpriteClass<a class="headerlink" href="#xmc-spriteclass" title="Link to this heading"></a></h3>
 <p>Sprite の実体クラスです。<cite>xmc::Sprite</cite> は <cite>std::shared_ptr&lt;xmc::SpriteClass&gt;</cite> の別名です。</p>
-<table class="docutils align-default" id="id6">
-<caption><span class="caption-text">xmc::SpriteClass の主なメンバー</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">xmc::SpriteClass の主なメンバー</span><a class="headerlink" href="#id5" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>型</p></th>
 <th class="head"><p>メンバー</p></th>
@@ -320,20 +326,64 @@
 <p><cite>devColor(xmc::Colors color)</cite> ではあらかじめ定義された色定数を使用できます。</p>
 <p>戻り値は、そのまま描画関数に渡せる <cite>xmc::DevColor</cite> です。</p>
 </section>
-<section id="xmc-graphics2dclass">
-<h3>xmc::Graphics2DClass の基本描画<a class="headerlink" href="#xmc-graphics2dclass" title="Link to this heading"></a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">fillRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">drawRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">fillSmokeRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">white</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<section id="xmc-graphics2dclass-devcolorhsv">
+<h3>xmc::Graphics2DClass::devColorHSV<a class="headerlink" href="#xmc-graphics2dclass-devcolorhsv" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::devColorHSV</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>矩形塗りつぶし、矩形枠、半透明風のスモーク塗りつぶしを行います。</p>
-<p><cite>clear(color)</cite> は現在のクリップ範囲全体を <cite>color</cite> で塗りつぶします。
-<cite>fillRect()</cite> は矩形内部を塗りつぶし、<cite>drawRect()</cite> は矩形の枠線のみを描画します。</p>
-<p><cite>fillSmokeRect()</cite> は白または黒ベースのスモーク表現を描画する補助関数です。
+<p>HSV 色空間で色を指定し、描画対象のピクセルフォーマットに合わせて変換します。</p>
+<p><cite>h</cite> は色相を 0〜359 の整数で指定します。範囲外の値は自動的に正規化されます。
+<cite>s</cite> は彩度、<cite>v</cite> は明度をそれぞれ 0〜255 の整数で指定します。</p>
+<p>戻り値は、そのまま描画関数に渡せる <cite>xmc::DevColor</cite> です。</p>
+</section>
+<section id="xmc-graphics2dclass-clear">
+<h3>xmc::Graphics2DClass::clear<a class="headerlink" href="#xmc-graphics2dclass-clear" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::clear</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>現在のクリップ範囲全体を <cite>color</cite> で塗りつぶします。</p>
+</section>
+<section id="xmc-graphics2dclass-setpixel">
+<h3>xmc::Graphics2DClass::setPixel<a class="headerlink" href="#xmc-graphics2dclass-setpixel" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::setPixel</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>1 ピクセルを描画します。</p>
+</section>
+<section id="xmc-graphics2dclass-fillrect">
+<h3>xmc::Graphics2DClass::fillRect<a class="headerlink" href="#xmc-graphics2dclass-fillrect" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillRect</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">dstRect</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>矩形内部を塗りつぶします。
+<cite>xmc::Rect</cite> 構造体で指定する版と、座標とサイズを個別に指定する版があります。</p>
+</section>
+<section id="xmc-graphics2dclass-drawrect">
+<h3>xmc::Graphics2DClass::drawRect<a class="headerlink" href="#xmc-graphics2dclass-drawrect" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::drawRect</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">dstRect</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::drawRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>矩形の枠線のみを描画します。
+<cite>xmc::Rect</cite> 構造体で指定する版と、座標とサイズを個別に指定する版があります。</p>
+</section>
+<section id="xmc-graphics2dclass-fillsmokerect">
+<h3>xmc::Graphics2DClass::fillSmokeRect<a class="headerlink" href="#xmc-graphics2dclass-fillsmokerect" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillSmokeRect</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">dstRect</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">white</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillSmokeRect</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">white</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>白または黒ベースのスモーク表現を描画する補助関数です。
 <cite>white</cite> を <cite>true</cite> にすると各ピクセルを現在の色と白の中間色で塗りつぶし、
 <cite>false</cite> の場合は現在の色と黒の中間色で塗りつぶします。</p>
+</section>
+<section id="xmc-graphics2dclass-drawline">
+<h3>xmc::Graphics2DClass::drawLine<a class="headerlink" href="#xmc-graphics2dclass-drawline" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::drawLine</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">x2</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y2</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>2 点間に直線を描画します。</p>
 </section>
 <section id="xmc-graphics2dclass-drawimage">
 <h3>xmc::Graphics2DClass::drawImage<a class="headerlink" href="#xmc-graphics2dclass-drawimage" title="Link to this heading"></a></h3>
@@ -350,8 +400,8 @@
 <cite>tra</cite> には前景色・背景色・描画フラグを指定し、1bit 画像やフォント画像の描画方法を制御できます。</p>
 <p>2 引数版は画像全体をそのまま描画し、7 引数版は <cite>tra</cite> に既定値を使って部分描画します。</p>
 </section>
-<section id="id3">
-<h3>xmc::Graphics2DClass のテキスト描画<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="xmc-graphics2dclass">
+<h3>xmc::Graphics2DClass のテキスト描画<a class="headerlink" href="#xmc-graphics2dclass" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">setFont</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">GFXfont</span><span class="w"> </span><span class="o">*</span><span class="n">font</span><span class="p">);</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">setFont</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">GFXfont</span><span class="w"> </span><span class="o">*</span><span class="n">font</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
 <span class="kt">void</span><span class="w"> </span><span class="nf">setFontSize</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
@@ -373,8 +423,8 @@
 <h2>FrameBuffer<a class="headerlink" href="#framebuffer" title="Link to this heading"></a></h2>
 <section id="xmc-framebufferflags">
 <h3>xmc::FrameBufferFlags<a class="headerlink" href="#xmc-framebufferflags" title="Link to this heading"></a></h3>
-<table class="docutils align-default" id="id7">
-<caption><span class="caption-text">xmc::FrameBufferFlags の値</span><a class="headerlink" href="#id7" title="Link to this table"></a></caption>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">xmc::FrameBufferFlags の値</span><a class="headerlink" href="#id6" title="Link to this table"></a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>値</p></th>
 <th class="head"><p>説明</p></th>
