@@ -160,24 +160,80 @@ xmc::Graphics2DClass::devColor
 
 戻り値は、そのまま描画関数に渡せる `xmc::DevColor` です。
 
-xmc::Graphics2DClass の基本描画
+xmc::Graphics2DClass::devColorHSV
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
 
-	void clear(xmc::DevColor color);
-	void fillRect(int x, int y, int w, int h, xmc::DevColor color);
-	void drawRect(int x, int y, int w, int h, xmc::DevColor color);
-	void fillSmokeRect(int x, int y, int w, int h, bool white = false);
+	xmc::DevColor xmc::Graphics2DClass::devColorHSV(int h, int s, int v);
 
-矩形塗りつぶし、矩形枠、半透明風のスモーク塗りつぶしを行います。
+HSV 色空間で色を指定し、描画対象のピクセルフォーマットに合わせて変換します。
 
-`clear(color)` は現在のクリップ範囲全体を `color` で塗りつぶします。
-`fillRect()` は矩形内部を塗りつぶし、`drawRect()` は矩形の枠線のみを描画します。
+`h` は色相を 0〜359 の整数で指定します。範囲外の値は自動的に正規化されます。
+`s` は彩度、`v` は明度をそれぞれ 0〜255 の整数で指定します。
 
-`fillSmokeRect()` は白または黒ベースのスモーク表現を描画する補助関数です。
+戻り値は、そのまま描画関数に渡せる `xmc::DevColor` です。
+
+xmc::Graphics2DClass::clear
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::clear(xmc::DevColor color);
+
+現在のクリップ範囲全体を `color` で塗りつぶします。
+
+xmc::Graphics2DClass::setPixel
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::setPixel(int x, int y, xmc::DevColor color);
+
+1 ピクセルを描画します。
+
+xmc::Graphics2DClass::fillRect
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::fillRect(xmc::Rect dstRect, xmc::DevColor color);
+	void xmc::Graphics2DClass::fillRect(int x, int y, int w, int h, xmc::DevColor color);
+
+矩形内部を塗りつぶします。
+`xmc::Rect` 構造体で指定する版と、座標とサイズを個別に指定する版があります。
+
+xmc::Graphics2DClass::drawRect
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::drawRect(xmc::Rect dstRect, xmc::DevColor color);
+	void xmc::Graphics2DClass::drawRect(int x, int y, int w, int h, xmc::DevColor color);
+
+矩形の枠線のみを描画します。
+`xmc::Rect` 構造体で指定する版と、座標とサイズを個別に指定する版があります。
+
+xmc::Graphics2DClass::fillSmokeRect
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::fillSmokeRect(xmc::Rect dstRect, bool white = false);
+	void xmc::Graphics2DClass::fillSmokeRect(int x, int y, int w, int h, bool white = false);
+
+白または黒ベースのスモーク表現を描画する補助関数です。
 `white` を `true` にすると各ピクセルを現在の色と白の中間色で塗りつぶし、
 `false` の場合は現在の色と黒の中間色で塗りつぶします。
+
+xmc::Graphics2DClass::drawLine
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::drawLine(int x1, int y1, int x2, int y2, xmc::DevColor color);
+
+2 点間に直線を描画します。
 
 xmc::Graphics2DClass::drawImage
 --------------------------------------------------------------------------------
