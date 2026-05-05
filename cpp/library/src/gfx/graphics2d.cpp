@@ -1,9 +1,13 @@
 #include "xmc/gfx2d/graphics2d.hpp"
 #include "xmc/display.hpp"
+#include "xmc/gfx2d/edge_scan.hpp"
 
 namespace xmc {
 
 uint8_t lineBuffer[display::WIDTH * 3];
+
+static void setPixelUnchecked(PixelFormat fmt, void *ptr, int x,
+                              DevColor color);
 
 static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,
                               uint32_t stride, DevColor color);
@@ -27,8 +31,21 @@ Rect Graphics2DClass::getBounds() {
   }
 }
 
-void Graphics2DClass::fillRect(int x, int y, int w, int h, DevColor color) {
-  Rect dstRect = {x, y, w, h};
+void Graphics2DClass::setPixel(int x, int y, DevColor color) {
+  if (!state.clipRect.contains(x, y)) return;
+  if (target) {
+    setPixelUnchecked(target->format, target->linePtr(y), x, color);
+  } else {
+    auto fmt = display::getPixelFormat();
+    setPixelUnchecked(fmt, lineBuffer, x, color);
+    display::setWindow(x, y, 1, 1);
+    display::writePixelsStart(lineBuffer, calcStride(fmt, 1), false);
+    display::writePixelsComplete();
+  }
+}
+
+void Graphics2DClass::fillRect(Rect dstRect, DevColor color) {
+  dstRect.normalizeInPlace();
   dstRect = dstRect.intersect(state.clipRect);
 
   if (dstRect.width <= 0 || dstRect.height <= 0) return;
@@ -49,23 +66,19 @@ void Graphics2DClass::fillRect(int x, int y, int w, int h, DevColor color) {
   }
 }
 
-void Graphics2DClass::drawRect(int x, int y, int w, int h, DevColor color) {
-  if (w < 0) {
-    x += w;
-    w = -w;
-  }
-  if (h < 0) {
-    y += h;
-    h = -h;
-  }
+void Graphics2DClass::drawRect(Rect dstRect, DevColor color) {
+  dstRect.normalizeInPlace();
+  int x = dstRect.x;
+  int y = dstRect.y;
+  int w = dstRect.width;
+  int h = dstRect.height;
   fillRect(x, y, w + 1, 1, color);
   fillRect(x, y + h, w + 1, 1, color);
   fillRect(x, y + 1, 1, h - 1, color);
   fillRect(x + w, y + 1, 1, h - 1, color);
 }
 
-void Graphics2DClass::fillSmokeRect(int x, int y, int w, int h, bool white) {
-  Rect dstRect = {x, y, w, h};
+void Graphics2DClass::fillSmokeRect(Rect dstRect, bool white) {
   dstRect = dstRect.intersect(state.clipRect);
   if (dstRect.width <= 0 || dstRect.height <= 0) return;
   if (target) {
@@ -103,8 +116,147 @@ void Graphics2DClass::fillSmokeRect(int x, int y, int w, int h, bool white) {
       }
     }
   } else {
-    fillRect(x, y, w, h, white ? 0xFFFFFFFF : 0);
+    fillRect(dstRect, white ? 0xFFFFFFFF : 0);
   }
+}
+
+void Graphics2DClass::drawLine(int x1, int y1, int x2, int y2, DevColor color) {
+#if 0
+  int i1 = x1;
+  int j1 = y1;
+  int i2 = x2;
+  int j2 = y2;
+  int iMin = state.clipRect.x;
+  int iMax = state.clipRect.right() - 1;
+  int jMin = state.clipRect.y;
+  int jMax = state.clipRect.bottom() - 1;
+
+  bool swapXY = abs(j2 - j1) > abs(i2 - i1);
+  if (swapXY) {
+    std::swap(i1, j1);
+    std::swap(i2, j2);
+    std::swap(iMin, jMin);
+    std::swap(iMax, jMax);
+  }
+
+  int iRange = i2 - i1;
+  int jRange = j2 - j1;
+
+  int iStep = iRange > 0 ? 1 : -1;
+  int32_t jSlope = jRange * 0x10000 / abs(iRange);
+  int32_t jFrac = j1 * 0x10000;
+
+  if (i1 < iMin) {
+    if (iStep <= 0) return;
+    jFrac += jSlope * abs(iMin - i1);
+    i1 = iMin;
+    j1 = jFrac >> 16;
+  } else if (i1 > iMax) {
+    if (iStep >= 0) return;
+    jFrac += jSlope * abs(i1 - iMax);
+    i1 = iMax;
+    j1 = jFrac >> 16;
+  }
+
+  if (i2 < iMin) {
+    if (iStep >= 0) return;
+    i2 = iMin;
+  } else if (i2 > iMax) {
+    if (iStep <= 0) return;
+    i2 = iMax;
+  }
+
+#if 0
+  // todo: debug
+  if (j1 < jMin) {
+    if (jSlope <= 0) return;
+    int iDelta = (jMin - j1) * 0x10000 / jSlope;
+    jFrac += jSlope * iDelta;
+    i1 += iDelta;
+    j1 = jFrac >> 16;
+  } else if (j1 > jMax) {
+    if (jSlope >= 0) return;
+    int iDelta = (jMax - j1) * 0x10000 / jSlope;
+    jFrac += jSlope * iDelta;
+    i1 += iDelta;
+    j1 = jFrac >> 16;
+  }
+
+  if (j2 < jMin) {
+    if (jSlope >= 0) return;
+    int iDelta = (jMin - j2) * 0x10000 / jSlope;
+    jFrac += jSlope * iDelta;
+    i2 += iDelta;
+    j2 = jFrac >> 16;
+  } else if (j2 > jMax) {
+    if (jSlope <= 0) return;
+    int iDelta = (jMax - j2) * 0x10000 / jSlope;
+    jFrac += jSlope * iDelta;
+    i2 += iDelta;
+    j2 = jFrac >> 16;
+  }
+#endif
+#endif
+
+  if (!target) {
+    int maxW = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    if (dy != 0) {
+      maxW = (maxW + dy - 1) / dy;
+    }
+    fillRectUnchecked(display::getPixelFormat(), lineBuffer, 0, maxW, 1, 0,
+                      color);
+  }
+
+  EdgeScan scan(x1, y1, x2, y2, state.clipRect);
+  if (target) {
+    int px, py;
+    PixelFormat fmt = target->format;
+    void *ptr = target->linePtr(0);
+    uint32_t stride = target->stride;
+    while (scan.yieldPixel(&px, &py)) {
+      setPixelUnchecked(fmt, ptr + py * stride, px, color);
+    }
+  } else {
+    int px, py;
+    PixelFormat fmt = display::getPixelFormat();
+    uint32_t txSize = calcStride(fmt, 1);
+    while (scan.yieldPixel(&px, &py)) {
+      display::setWindow(px, py, 1, 1);
+      display::writePixelsStart(lineBuffer, txSize, false);
+      display::writePixelsComplete();
+    }
+  }
+
+#if 0
+
+  // todo: optimize
+  int i = i1;
+  int n = (i2 - i1) / iStep;
+  while (n-- >= 0) {
+    jFrac += jSlope;
+    int j = (jFrac + 0x8000) >> 16;
+    if (jMin <= j && j <= jMax) {
+      int px, py;
+      if (swapXY) {
+        px = j;
+        py = i;
+      } else {
+        px = i;
+        py = j;
+      }
+      if (target) {
+        setPixelUnchecked(target->format, target->linePtr(py), px, color);
+      } else {
+        auto fmt = display::getPixelFormat();
+        display::setWindow(px, py, 1, 1);
+        display::writePixelsStart(lineBuffer, calcStride(fmt, 1), false);
+        display::writePixelsComplete();
+      }
+    }
+    i += iStep;
+  }
+#endif
 }
 
 void Graphics2DClass::drawImage(const Sprite &image, int dx, int dy, int w,
@@ -263,6 +415,40 @@ int Graphics2DClass::drawChar(GlyphRenderer &renderer, int x, int y, int code) {
     }
   }
   return metrics.xAdvance;
+}
+
+static void setPixelUnchecked(PixelFormat fmt, void *ptr, int x,
+                              DevColor color) {
+  switch (fmt) {
+    case PixelFormat::GRAY1: {
+      TextRenderArgs tra;
+      tra.foreColor = color;
+      tra.backColor = 0;
+      tra.flags = TextRenderFlags::DRAW_FORE;
+      RasterScanGray1 scan((uint8_t *)ptr, x);
+      scan.pushGray1(1, tra);
+    } break;
+
+    case PixelFormat::RGB444: {
+      uint16_t c = color;
+      RasterScan444 scan((uint8_t *)ptr, x);
+      scan.push444(c);
+    } break;
+
+    case PixelFormat::RGB565: {
+      uint16_t c = color;
+      RasterScan565 scan((uint16_t *)ptr, x);
+      scan.push565(c);
+    } break;
+
+    case PixelFormat::ARGB4444: {
+      uint16_t c = color;
+      RasterScan4444 scan((uint16_t *)ptr, x);
+      scan.push4444(c);
+    } break;
+
+    default: break;
+  }
 }
 
 static void fillRectUnchecked(PixelFormat fmt, void *ptr, int x, int w, int h,

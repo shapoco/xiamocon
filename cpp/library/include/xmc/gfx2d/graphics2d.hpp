@@ -53,6 +53,31 @@ class Graphics2DClass {
     }
   }
 
+  inline DevColor devColorHSV(int h, int s, int v) {
+    h = ((h % 360) + 360) % 360;  // normalize to [0, 360)
+    s = XMC_CLIP(0, 255, s);
+    v = XMC_CLIP(0, 255, v);
+    int r, g, b;
+    if (s == 0) {
+      r = g = b = v;
+    } else {
+      int coarse = h / 60;
+      int fine = (h % 60) * 256 / 60;
+      int p = (v * (255 - s)) / 255;
+      int q = (v * (255 - (s * fine) / 256)) / 255;
+      int t = (v * (255 - (s * (255 - fine)) / 256)) / 255;
+      switch (coarse) {
+        case 0: r = v; g = t; b = p; break;
+        case 1: r = q; g = v; b = p; break;
+        case 2: r = p; g = v; b = t; break;
+        case 3: r = p; g = q; b = v; break;
+        case 4: r = t; g = p; b = v; break;
+        default: r = v; g = p; b = q; break;
+      }
+    }
+    return devColor(r, g, b);
+  }
+
   void setTarget(Sprite &s);
   inline Sprite getTarget() const { return target; }
   void setClipRect(const Rect &rect);
@@ -68,9 +93,25 @@ class Graphics2DClass {
     fillRect(state.clipRect.x, state.clipRect.y, state.clipRect.width,
              state.clipRect.height, color);
   }
-  void fillRect(int x, int y, int w, int h, DevColor color);
-  void drawRect(int x, int y, int w, int h, DevColor color);
-  void fillSmokeRect(int x, int y, int w, int h, bool white = false);
+
+  void setPixel(int x, int y, DevColor color);
+
+  void fillRect(Rect dstRect, DevColor color);
+  inline void fillRect(int x, int y, int w, int h, DevColor color) {
+    fillRect(Rect{x, y, w, h}, color);
+  }
+
+  void drawRect(Rect dstRect, DevColor color);
+  inline void drawRect(int x, int y, int w, int h, DevColor color) {
+    drawRect(Rect{x, y, w, h}, color);
+  }
+
+  void fillSmokeRect(Rect dstRect, bool white = false);
+  inline void fillSmokeRect(int x, int y, int w, int h, bool white = false) {
+    fillSmokeRect(Rect{x, y, w, h}, white);
+  }
+
+void drawLine(int x1, int y1, int x2, int y2, DevColor color);
 
   void drawImage(const Sprite &image, int dx, int dy, int w, int h, int sx,
                  int sy, const TextRenderArgs &tra);

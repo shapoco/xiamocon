@@ -26,6 +26,18 @@ struct Rect {
   /** Get the y-coordinate of the bottom edge of the rectangle */
   inline int bottom() const { return y + height; }
 
+  /** Normalize the rectangle so that width and height are non-negative */
+  inline void normalizeInPlace() {
+    if (width < 0) {
+      x += width;
+      width = -width;
+    }
+    if (height < 0) {
+      y += height;
+      height = -height;
+    }
+  }
+
   /** Get the intersection of this rectangle with another rectangle */
   inline Rect intersect(const Rect& other) const {
     Rect result;

@@ -57,6 +57,7 @@ echo "export PICO_SDK_PATH=${arg_install_dir}/pico-sdk" >> ${setup_file}
 echo "export PICO_EXTRAS_PATH=${arg_install_dir}/pico-extras" >> ${setup_file}
 echo "export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformio" >> ${setup_file}
 echo "export XMC_REPO_PATH=${arg_install_dir}/xiamocon" >> ${setup_file}
+echo "export PATH=${XMC_REPO_PATH}/bin:${PLATFORMIO_CORE_DIR}/penv/bin:\$PATH" >> ${setup_file}
 echo "source ${arg_install_dir}/.venv/bin/activate" >> ${setup_file}
 
 deactivate
