@@ -70,6 +70,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#setpixel">setPixel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fillrect">fillRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawrect">drawRect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fillellipse">fillEllipse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fillsmokerect">fillSmokeRect</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawline">drawLine</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#drawimage">drawImage</a></li>
@@ -370,6 +371,15 @@
 </pre></div>
 </div>
 <p>矩形の枠線のみを描画します。
+<cite>xmc::Rect</cite> 構造体で指定する版と、座標とサイズを個別に指定する版があります。</p>
+</section>
+<section id="fillellipse">
+<h3>fillEllipse<a class="headerlink" href="#fillellipse" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillEllipse</span><span class="p">(</span><span class="n">xmc</span><span class="o">::</span><span class="n">Rect</span><span class="w"> </span><span class="n">dstRect</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">xmc::Graphics2DClass::fillEllipse</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="n">xmc</span><span class="o">::</span><span class="n">DevColor</span><span class="w"> </span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><cite>dstRect</cite> で指定された矩形に内接する楕円を <cite>color</cite> で塗りつぶします。
 <cite>xmc::Rect</cite> 構造体で指定する版と、座標とサイズを個別に指定する版があります。</p>
 </section>
 <section id="fillsmokerect">
