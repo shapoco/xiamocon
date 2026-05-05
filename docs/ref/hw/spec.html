@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ハードウェア仕様 &mdash; xiamocon  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="エンクロージャ" href="enclosure.html" />
+    <link rel="prev" title="Xiamocon Reference Manual" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            xiamocon
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ハードウェア仕様</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基本仕様</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">回路図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">電源</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vbus">VBUS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vbat">VBAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v3">3V3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vperi">VPERI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vcom">VCOM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vanl">VANL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">ペリフェラル</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">電源スイッチ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">ディスプレイ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">メモリーカード</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">オーディオ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpio">GPIO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#io">IO エキスパンダ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adc">バッテリー監視用 ADC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">拡張ポート</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="enclosure.html">エンクロージャ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/app.html">Xiamocon アプリケーションの基本構造</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/audio.html">オーディオ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/gpio.html">GPIO API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/heap.html">Heap API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/multicore.html">マルチコア API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/semaphore.html">セマフォ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk/spinlock.html">スピンロック API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xiamocon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ハードウェア仕様</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/hw/spec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>ハードウェア仕様<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<section id="id2">
+<h2>基本仕様<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>項目</p></th>
+<th class="head"><p>値</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>基板外形</p></td>
+<td><p>100x50mm</p></td>
+</tr>
+<tr class="row-odd"><td><p>MCU ボード</p></td>
+<td><p>Seeed Studio XIAO RP2350 または XIAO ESP32S3</p></td>
+</tr>
+<tr class="row-even"><td><p>ディスプレイ</p></td>
+<td><p>1.54インチ 240x240px IPS 液晶 (ST7789)</p></td>
+</tr>
+<tr class="row-odd"><td><p>スピーカー</p></td>
+<td><p>ダイナミックスピーカー</p></td>
+</tr>
+<tr class="row-even"><td><p>キーパッド</p></td>
+<td><p>タクトスイッチまたはゴム接点</p></td>
+</tr>
+<tr class="row-odd"><td><p>バッテリー(別売)</p></td>
+<td><p>DTP502535 (3.7V 400mAh)</p></td>
+</tr>
+<tr class="row-even"><td><p>メモリーカード(別売)</p></td>
+<td><p>SPIモード専用</p></td>
+</tr>
+<tr class="row-odd"><td><p>拡張ポート</p></td>
+<td><p>20pin ピンソケット (I2C、SPI、GPIOx5、オーディオ)</p></td>
+</tr>
+<tr class="row-even"><td><p>消費電力 (RP2350)</p></td>
+<td><p>約 400mW (100mA &#64; 4V)</p></td>
+</tr>
+<tr class="row-odd"><td><p>消費電力 (ESP32S3)</p></td>
+<td><p>約 500mW (120mA &#64; 4V)</p></td>
+</tr>
+<tr class="row-even"><td><p>待機電流 (RP2350)</p></td>
+<td><p>約 80μA</p></td>
+</tr>
+<tr class="row-odd"><td><p>待機電流 (ESP32S3)</p></td>
+<td><p>約 20μA</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2>回路図<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p><a class="reference external" href="https://kicanvas.org/?repo=https%3A%2F%2Fgithub.com%2Fshapoco%2Fxiamocon%2Fblob%2Fmain%2Fhardware%2Fkicad%2Fxiamocon.kicad_sch">xiamocon.kicad_sch</a></p>
+</section>
+<section id="id4">
+<h2>電源<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<section id="vbus">
+<h3>VBUS<a class="headerlink" href="#vbus" title="Link to this heading"></a></h3>
+<p>XIAO から供給される 5V の電源です。
+USB ケーブルが接続されていれば XIAO の MCU の状態に関わらず常に供給されます。</p>
+</section>
+<section id="vbat">
+<h3>VBAT<a class="headerlink" href="#vbat" title="Link to this heading"></a></h3>
+<p>バッテリーから供給される電源です。
+バッテリーが接続されていれば XIAO の MCU の状態に関わらず常に供給されます。</p>
+</section>
+<section id="v3">
+<h3>3V3<a class="headerlink" href="#v3" title="Link to this heading"></a></h3>
+<p>XIAO に内蔵された DC/DC コンバータによって生成される 3.3V の電源です。
+USB ケーブルまたはバッテリーが接続されていれば、XIAO の MCU の状態に関わらず常に供給されます。</p>
+</section>
+<section id="vperi">
+<h3>VPERI<a class="headerlink" href="#vperi" title="Link to this heading"></a></h3>
+<p>VPERI はペリフェラルに供給される 3.3V の電源です。
+次の条件が両方満たされると供給されます。</p>
+<ul class="simple">
+<li><p>IO エキスパンダの PERI_EN_N が Low であること</p></li>
+<li><p>ディスプレイの CS と DC が少なくとも短時間 High であること</p></li>
+</ul>
+<p>ディスプレイの CS と DC が長時間 Low またはハイインピーダンスになると、
+PERI_EN_N が Low であっても VPERI の供給は停止します。
+これにより XIAO のブートローダーが起動している間はペリフェラルの電源供給が停止します。</p>
+</section>
+<section id="vcom">
+<h3>VCOM<a class="headerlink" href="#vcom" title="Link to this heading"></a></h3>
+<p>VCOM は VBUS (5V) と VBAT (バッテリー電圧) のうち高い方が供給されます。
+VPERI とは無関係に供給されます。</p>
+</section>
+<section id="vanl">
+<h3>VANL<a class="headerlink" href="#vanl" title="Link to this heading"></a></h3>
+<p>VANL はオーディオ回路の供給される 3.3V の電源で、VCOM からシリーズレギュレータによって生成されます。
+シリーズレギュレータのイネーブルは VPERI と連動します。</p>
+</section>
+</section>
+<section id="id5">
+<h2>ペリフェラル<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<section id="id6">
+<h3>電源スイッチ<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>POWER</p></td>
+<td><p>GPIO 27</p></td>
+<td><p>GPIO 2</p></td>
+</tr>
+</tbody>
+</table>
+<p>電源スイッチは遅延回路を介して XIAO のリセット端子にも接続されており、
+長押しすることによってリセットすることができます。</p>
+</section>
+<section id="id7">
+<h3>ディスプレイ<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SCK</p></td>
+<td><p>GPIO 2</p></td>
+<td><p>GPIO 7</p></td>
+</tr>
+<tr class="row-odd"><td><p>MOSI</p></td>
+<td><p>GPIO 3</p></td>
+<td><p>GPIO 9</p></td>
+</tr>
+<tr class="row-even"><td><p>DC</p></td>
+<td><p>GPIO 28</p></td>
+<td><p>GPIO 3</p></td>
+</tr>
+<tr class="row-odd"><td><p>CS</p></td>
+<td><p>GPIO 5</p></td>
+<td><p>GPIO 4</p></td>
+</tr>
+</tbody>
+</table>
+<p>リセット端子は IO エキスパンダの PORTA の 5 番に接続されています。</p>
+<p>ディスプレイの電源は VPERI によって供給されます。</p>
+</section>
+<section id="id8">
+<h3>メモリーカード<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SCK</p></td>
+<td><p>GPIO 2</p></td>
+<td><p>GPIO 7</p></td>
+</tr>
+<tr class="row-odd"><td><p>MOSI</p></td>
+<td><p>GPIO 3</p></td>
+<td><p>GPIO 9</p></td>
+</tr>
+<tr class="row-even"><td><p>MISO</p></td>
+<td><p>GPIO 4</p></td>
+<td><p>GPIO 8</p></td>
+</tr>
+<tr class="row-odd"><td><p>CS</p></td>
+<td><p>GPIO 0</p></td>
+<td><p>GPIO 43</p></td>
+</tr>
+</tbody>
+</table>
+<p>CS ピンを Low にドライブするとアクセスランプが点灯します。</p>
+<p>メモリーカードの電源は VPERI によって供給されます。</p>
+</section>
+<section id="id9">
+<h3>オーディオ<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AUDIO_OUT</p></td>
+<td><p>GPIO 1</p></td>
+<td><p>GPIO 44</p></td>
+</tr>
+</tbody>
+</table>
+<p>オーディオ出力はバッファ、ローパスフィルタ、ボリュームを介してパワーアンプに接続されます。
+XIAO からの出力は PDM または PWM を想定しています。
+パワーアンプのミュート端子は IO エキスパンダのポート A の 6 番に接続されています。</p>
+</section>
+<section id="gpio">
+<h3>GPIO<a class="headerlink" href="#gpio" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>GPIO_0</p></td>
+<td><p>GPIO 26</p></td>
+<td><p>GPIO 1</p></td>
+</tr>
+</tbody>
+</table>
+<p>GPIO 端子は拡張ポートに接続されています。</p>
+</section>
+<section id="io">
+<h3>IO エキスパンダ<a class="headerlink" href="#io" title="Link to this heading"></a></h3>
+<p>デバイス: PCA9555</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>型番</p></th>
+<th class="head"><p>デバイスアドレス</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PCA9555</p></td>
+<td><p>0x22</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDA</p></td>
+<td><p>GPIO 6</p></td>
+<td><p>GPIO 5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SCL</p></td>
+<td><p>GPIO 7</p></td>
+<td><p>GPIO 6</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>接続先</p></th>
+<th class="head"><p>極性</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PORTA-0</p></td>
+<td><p>拡張ポート IOEX0</p></td>
+<td><p>ユーザー定義</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTA-1</p></td>
+<td><p>拡張ポート IOEX1</p></td>
+<td><p>ユーザー定義</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTA-2</p></td>
+<td><p>拡張ポート IOEX2</p></td>
+<td><p>ユーザー定義</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTA-3</p></td>
+<td><p>拡張ポート IOEX3</p></td>
+<td><p>ユーザー定義</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTA-4</p></td>
+<td><p>ペリフェラルイネーブル (PERI_EN_N)</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTA-5</p></td>
+<td><p>ディスプレイリセット</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTA-6</p></td>
+<td><p>オーディオミュート</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTA-7</p></td>
+<td><p>ファンクションスイッチ</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTB-0</p></td>
+<td><p>A ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTB-1</p></td>
+<td><p>B ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTB-2</p></td>
+<td><p>Y ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTB-3</p></td>
+<td><p>X ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTB-4</p></td>
+<td><p>↑ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTB-5</p></td>
+<td><p>↓ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-even"><td><p>PORTB-6</p></td>
+<td><p>←ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+<tr class="row-odd"><td><p>PORTB-7</p></td>
+<td><p>→ボタン</p></td>
+<td><p>Low アクティブ</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="adc">
+<h3>バッテリー監視用 ADC<a class="headerlink" href="#adc" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>型番</p></th>
+<th class="head"><p>デバイスアドレス</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ADC101C027</p></td>
+<td><p>0x52</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>信号名</p></th>
+<th class="head"><p>ピン (RP2350)</p></th>
+<th class="head"><p>ピン (ESP32S3)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDA</p></td>
+<td><p>GPIO 6</p></td>
+<td><p>GPIO 5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SCL</p></td>
+<td><p>GPIO 7</p></td>
+<td><p>GPIO 6</p></td>
+</tr>
+</tbody>
+</table>
+<p>ADC の電源は VPERI によって供給されます。</p>
+</section>
+</section>
+<section id="id10">
+<h2>拡張ポート<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<p>拡張ポートは基板の背面にあります。XIAO に近い側が 1 番ピンです。</p>
+<figure class="align-default">
+<img alt="../_images/ext-port-assign.png" src="../_images/ext-port-assign.png" />
+</figure>
+<p>EXT_AUDIO はオーディオ回路から分岐した信号で、XIAO からのオーディオ出力を外部へ出力したり、
+逆に外部からのオーディオ信号を入力して XIAO の出力とミックスしてスピーカーから出力できます。</p>
+<p>SPK_MUTE はパワーアンプのミュート端子に接続されており、
+High にドライブすることでXiamocon 本体のスピーカーをミュートできます。</p>
+<p>GPIO0 と IOEX0-3 の用途はアプリ側で自由に定義できます。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Xiamocon Reference Manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="enclosure.html" class="btn btn-neutral float-right" title="エンクロージャ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Shapoco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
