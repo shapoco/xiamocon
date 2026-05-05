@@ -106,6 +106,11 @@ class Graphics2DClass {
     drawRect(Rect{x, y, w, h}, color);
   }
 
+  void fillEllipse(Rect dstRect, DevColor color);
+  inline void fillEllipse(int x, int y, int w, int h, DevColor color) {
+    fillEllipse(Rect{x, y, w, h}, color);
+  }
+
   void fillSmokeRect(Rect dstRect, bool white = false);
   inline void fillSmokeRect(int x, int y, int w, int h, bool white = false) {
     fillSmokeRect(Rect{x, y, w, h}, white);

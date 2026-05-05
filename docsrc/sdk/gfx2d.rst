@@ -214,6 +214,17 @@ drawRect
 矩形の枠線のみを描画します。
 `xmc::Rect` 構造体で指定する版と、座標とサイズを個別に指定する版があります。
 
+fillEllipse
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::Graphics2DClass::fillEllipse(xmc::Rect dstRect, xmc::DevColor color);
+	void xmc::Graphics2DClass::fillEllipse(int x, int y, int w, int h, xmc::DevColor color);
+
+`dstRect` で指定された矩形に内接する楕円を `color` で塗りつぶします。
+`xmc::Rect` 構造体で指定する版と、座標とサイズを個別に指定する版があります。
+
 fillSmokeRect
 --------------------------------------------------------------------------------
 

@@ -7,6 +7,12 @@ PixelFormat displayFormat = PixelFormat::RGB565;
 FrameBuffer frameBuffer;
 FpsKeeper fpsKeeper(60);
 
+constexpr int DROP_SIZE = 32;
+constexpr int DROP_X_INTERVAL = DROP_SIZE * 1.5f;
+constexpr int DROP_Y_INTERVAL = DROP_SIZE * (1.5f * 0.866f);
+constexpr int DROP_COLS = display::WIDTH / DROP_X_INTERVAL + 1;
+constexpr int DROP_ROWS = (display::HEIGHT / DROP_Y_INTERVAL + 3) / 2 * 2;
+
 constexpr int NUM_STARS = 32;
 constexpr float STAR_SIZE = 40.0f;
 struct Star {
@@ -20,6 +26,7 @@ float sinTable[360];
 
 void updateScene();
 void renderScene();
+void renderDrops(Graphics2D &gfx, uint64_t nowMs);
 void renderStar(Graphics2D &gfx, float x, float y, float radius, float angle,
                 DevColor color);
 
@@ -86,11 +93,29 @@ void renderScene() {
   auto gfx = frameBuffer->createGraphics();
   gfx->clear(gfx->devColor(Colors::WHITE));
 
+  renderDrops(gfx, nowMs);
   for (int i = 0; i < NUM_STARS; i++) {
     Star &s = stars[i];
     float angle = nowMs / 1000.0f + M_PI * 2 * i / NUM_STARS;
     DevColor color = gfx->devColorHSV(i * 360 / NUM_STARS, 255, 255);
     renderStar(gfx, s.x, s.y, STAR_SIZE * s.zInv, angle, color);
+  }
+}
+
+void renderDrops(Graphics2D &gfx, uint64_t nowMs) {
+  DevColor col = gfx->devColor(192, 224, 255);
+  int scrollPeriodX = DROP_X_INTERVAL * DROP_COLS;
+  int scrollPeriodY = DROP_Y_INTERVAL * DROP_ROWS;
+  int shift = (nowMs / 50);
+  for (int i = 0; i < DROP_ROWS; i++) {
+    for (int j = 0; j < DROP_COLS; j++) {
+      int x = j * DROP_X_INTERVAL + (i % 2) * (DROP_X_INTERVAL / 2);
+      int y = i * DROP_Y_INTERVAL;
+      x = (x + shift) % scrollPeriodX - DROP_SIZE / 2;
+      y = (y + shift) % scrollPeriodY - DROP_SIZE / 2;
+      gfx->fillEllipse(x - DROP_SIZE / 2, y - DROP_SIZE / 2, DROP_SIZE,
+                       DROP_SIZE, col);
+    }
   }
 }
 

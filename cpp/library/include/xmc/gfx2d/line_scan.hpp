@@ -1,5 +1,5 @@
-#ifndef XMC_GFX2D_EDGE_SCAN_HPP
-#define XMC_GFX2D_EDGE_SCAN_HPP
+#ifndef XMC_GFX2D_LINE_SCAN_HPP
+#define XMC_GFX2D_LINE_SCAN_HPP
 
 #include <math.h>
 #include "xmc/geo.hpp"
@@ -7,7 +7,7 @@
 
 namespace xmc {
 
-class EdgeScan {
+class LineScan {
  private:
   int iMin, iMax;
   int jMin, jMax;
@@ -21,7 +21,7 @@ class EdgeScan {
   int numSteps;
 
  public:
-  XMC_INLINE EdgeScan(int x1, int y1, int x2, int y2, const Rect &clipRect) {
+  XMC_INLINE LineScan(int x1, int y1, int x2, int y2, const Rect &clipRect) {
     numSteps = 0;
 
     i1 = x1;
@@ -103,7 +103,7 @@ class EdgeScan {
     numSteps = (i2 - i1) / iStep;
   }
 
-  XMC_INLINE bool yieldPixel(int *px, int *py) {
+  XMC_INLINE bool nextPixel(int *px, int *py) {
     int j;
     do {
       if (numSteps <= 0) return false;
