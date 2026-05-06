@@ -20,7 +20,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="タイマー API" href="timer.html" />
-    <link rel="prev" title="SPI API" href="spi.html" /> 
+    <link rel="prev" title="PWM API" href="pwm.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="gpio.html">GPIO API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pwm.html">PWM API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ADC API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">設定</a><ul>
@@ -67,7 +68,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#getmaxvalue">getMaxValue</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#readraw">readRaw</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#readvoltage">readVoltage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rawtovoltage">rawToVoltage</a></li>
 </ul>
 </li>
 </ul>
@@ -178,17 +178,8 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::adc::AdcDriverClass::readVoltage</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>ADC を 1 回サンプリングし、電圧値 [V] として取得します。</p>
-<p>内部では <cite>readRaw()</cite> で取得した値を <cite>rawToVoltage()</cite> で変換します。
+<p>ADC を 1 回サンプリングし、電圧値 [V] として取得します。
 <cite>value</cite> に変換結果を書き込み、戻り値は <cite>XmcStatus</cite> です。</p>
-</section>
-<section id="rawtovoltage">
-<h3>rawToVoltage<a class="headerlink" href="#rawtovoltage" title="Link to this heading"></a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">float</span><span class="w"> </span><span class="nf">xmc::adc::AdcDriverClass::rawToVoltage</span><span class="p">(</span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">raw</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>RAW 値を電圧 [V] に変換します。
-変換時には <cite>getMaxValue()</cite> で取得した最大 RAW 値と最大電圧を使用します。</p>
 </section>
 </section>
 </section>
@@ -197,7 +188,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="spi.html" class="btn btn-neutral float-left" title="SPI API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pwm.html" class="btn btn-neutral float-left" title="PWM API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="timer.html" class="btn btn-neutral float-right" title="タイマー API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

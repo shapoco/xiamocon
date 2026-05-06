@@ -497,3 +497,74 @@ isFrameSkipping
 戻り値が `true` のフレームでは描画負荷の高い処理を省略し、
 `false` のフレームで通常描画を行うことで、遅延からの回復を支援できます。
 
+LineGraph
+================================================================================
+
+描画用の折れ線グラフデータを保持・描画するテンプレートクラスです。
+
+xmc::createLineGraph
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	template <typename TValue>
+	xmc::LineGraph<TValue> xmc::createLineGraph(int capacity, XmcHeapCap heapCap = XMC_HEAP_CAP_SPIRAM);
+
+`LineGraph` インスタンスを生成します。
+
+`TValue` にはグラフのデータ型を指定します（例：`float`, `uint16_t`）。
+`capacity` には保持するデータ点数を指定します。
+`heapCap` にはデータバッファを確保する RAM の種類を指定します。
+
+xmc::LineGraphClass
+--------------------------------------------------------------------------------
+
+LineGraph の実体クラスです。`xmc::LineGraph<TValue>` は `std::shared_ptr<xmc::LineGraphClass<TValue>>` の別名です。
+
+clear
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::LineGraphClass<TValue>::clear();
+
+グラフデータをすべて消去します。
+
+push
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::LineGraphClass<TValue>::push(TValue value);
+
+グラフにデータ点を追加します。
+データ点数が `capacity` に達している場合は、最も古いデータが破棄されます。
+
+setYRange / getYRange
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::LineGraphClass<TValue>::setYRange(TValue min, TValue max);
+	void xmc::LineGraphClass<TValue>::getYRange(TValue *min = nullptr, TValue *max = nullptr);
+
+グラフの Y 軸の表示範囲を設定・取得します。
+
+`setYRange()` の `min`, `max` にはそれぞれ最小値・最大値を指定します。
+`getYRange()` では `min`, `max` が `nullptr` でない場合に対応する値を書き込みます。
+
+render
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	void xmc::LineGraphClass<TValue>::render(xmc::Graphics2D &gfx, int x, int y, int w, int h, xmc::DevColor color);
+
+グラフを描画します。
+
+`gfx` には描画先の `Graphics2D` を指定します。
+`x`, `y` は描画領域の左上座標、`w`, `h` は描画領域のサイズです。
+`color` には折れ線の色を指定します。
+
+データ点が 2 点未満の場合、または Y 軸範囲が 0 の場合は何も描画されません。
+
