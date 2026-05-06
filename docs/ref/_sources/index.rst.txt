@@ -19,6 +19,7 @@ Xiamocon Reference Manual
    sdk/gpio.rst
    sdk/i2c.rst
    sdk/spi.rst
+   sdk/adc.rst
    sdk/timer.rst
    sdk/heap.rst
    sdk/multicore.rst
