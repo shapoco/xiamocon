@@ -24,3 +24,4 @@ Xiamocon Reference Manual
    sdk/multicore.rst
    sdk/semaphore.rst
    sdk/spinlock.rst
+   troubleshoot.rst

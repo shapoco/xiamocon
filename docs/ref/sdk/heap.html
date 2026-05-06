@@ -70,6 +70,7 @@
 <li class="toctree-l1"><a class="reference internal" href="multicore.html">マルチコア API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="semaphore.html">セマフォ API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spinlock.html">スピンロック API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshoot.html">トラブルシューティング</a></li>
 </ul>
 
         </div>
@@ -141,6 +142,9 @@
 <p>指定サイズのメモリ領域を確保します。</p>
 <p><cite>size</cite> には確保バイト数、<cite>caps</cite> には要求する RAM 特性を指定します。
 確保に成功した場合は確保領域へのポインタを返し、失敗した場合は <cite>NULL</cite> を返します。</p>
+<p>ESP32S3 版では、第二引数に XMC_HEAP_CAP_SPIRAM を指定すると PSRAM に確保されます。
+これは SRAM の不足を回避するのに有効です。</p>
+<p>RP2350 版では第二引数は無視され、常に SRAM に確保されます。</p>
 </section>
 <section id="xmcfree">
 <h3>xmcFree<a class="headerlink" href="#xmcfree" title="Link to this heading"></a></h3>
