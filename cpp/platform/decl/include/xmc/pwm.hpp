@@ -8,26 +8,31 @@
 
 #include "xmc/dma.hpp"
 #include "xmc/hw_common.hpp"
+#include "xmc/pins.hpp"
+
+#include <memory>
 
 namespace xmc::pwm {
 
-struct Config {
+struct PwmConfig {
   uint32_t freqHz;
   uint32_t period;
 };
 
-class Driver {
+PwmConfig getDefaultPwmConfig();
+
+class PwmDriverClass {
  public:
   const int pin;
   void *handle = nullptr;
-  Driver(int pin);
-  ~Driver();
+  PwmDriverClass(int pin);
+  ~PwmDriverClass();
 
   /**
    * Start the PWM signal generation.
    * @return XmcStatus indicating success or failure.
    */
-  XmcStatus start(const Config &cfg, float *actualFreqHz = nullptr);
+  XmcStatus start(const PwmConfig &cfg, float *actualFreqHz = nullptr);
 
   /**
    * Stop the PWM signal generation.
@@ -40,8 +45,14 @@ class Driver {
    * @param cycle The duty cycle value.
    * @return XmcStatus indicating success or failure.
    */
-  XmcStatus setDutyCycle(uint32_t cycle);
+  XmcStatus write(uint32_t cycle);
 };
+
+using PwmDriver = std::shared_ptr<PwmDriverClass>;
+
+static inline PwmDriver createPwmDriver(int pin = XMC_PIN_GPIO_0) {
+  return std::make_shared<PwmDriverClass>(pin);
+}
 
 }  // namespace xmc::pwm
 

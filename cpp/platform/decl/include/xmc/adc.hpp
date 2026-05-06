@@ -27,20 +27,7 @@ class AdcDriverClass {
   void deinit();
   void getMaxValue(uint16_t *raw = nullptr, float *voltage = nullptr);
   XmcStatus readRaw(uint16_t *value);
-
-  XmcStatus readVoltage(float *value) {
-    uint16_t valueRaw;
-    XMC_ERR_RET(readRaw(&valueRaw));
-    *value = rawToVoltage(valueRaw);
-    return XMC_OK;
-  }
-
-  float rawToVoltage(uint16_t raw) {
-    uint16_t maxRaw;
-    float maxVoltage;
-    getMaxValue(&maxRaw, &maxVoltage);
-    return (raw / (float)maxRaw) * maxVoltage;
-  }
+  XmcStatus readVoltage(float *value);
 };
 
 using AdcDriver = std::shared_ptr<AdcDriverClass>;

@@ -53,7 +53,8 @@
                 "${workspaceFolder}/cpp/platform/impl/rp2350_pico_sdk/include",
                 "${workspaceFolder}/cpp/library/include",
                 "${workspaceFolder}/cpp/library/ext/fatfs",
-                "${workspaceFolder}/cpp/library/ext/tjpgd"
+                "${workspaceFolder}/cpp/library/ext/tjpgd",
+                "${workspaceFolder}/cpp/library/ext/gfxfont"
             ],
             "defines": [
                 "SHAPOFONT_INCLUDE_GFXFONT"

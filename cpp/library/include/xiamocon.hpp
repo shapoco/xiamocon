@@ -13,6 +13,7 @@
 #include "xmc/multicore.hpp"
 #include "xmc/path.hpp"
 #include "xmc/pins.hpp"
+#include "xmc/pwm.hpp"
 #include "xmc/random.hpp"
 #include "xmc/speaker.hpp"
 #include "xmc/system.hpp"

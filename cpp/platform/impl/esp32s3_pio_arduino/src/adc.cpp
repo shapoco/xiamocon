@@ -26,6 +26,7 @@ AdcDriverClass::~AdcDriverClass() {
 XmcStatus AdcDriverClass::init(const AdcConfig &cfg) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
   gpio::setDir(pin, false);
+  analogSetAttenuation(ADC_11db);
   return XMC_OK;
 }
 
@@ -41,6 +42,12 @@ void AdcDriverClass::getMaxValue(uint16_t *raw, float *voltage) {
 XmcStatus AdcDriverClass::readRaw(uint16_t *value) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
   *value = analogRead(pin);
+  return XMC_OK;
+}
+
+XmcStatus AdcDriverClass::readVoltage(float *value) {
+  if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
+  *value = analogReadMilliVolts(pin) / 1000.0f;
   return XMC_OK;
 }
 

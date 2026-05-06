@@ -6,13 +6,14 @@ using namespace xmc::input;
 static constexpr PixelFormat DISPLAY_FORMAT = PixelFormat::RGB565;
 FrameBuffer frameBuffer = createFrameBuffer(DISPLAY_FORMAT, false);
 FpsKeeper fpsKeeper(30);
-adc::AdcDriver adcDriver = adc::createAdcDriver();
-LineGraph<float> lineGraph = createLineGraph<float>(display::WIDTH);
 
-uint16_t maxRaw;
-float maxVoltage;
+pwm::PwmDriver pwmDriver = pwm::createPwmDriver();
+LineGraph<uint16_t> lineGraph = createLineGraph<uint16_t>(display::WIDTH);
 
-void renderMeter(Graphics2D &gfx, uint16_t rawValue, float adcVoltage);
+int pwmPeriod = 256;
+int pwmDutyCycle = 0;
+
+void renderMeter(Graphics2D &gfx);
 void renderGraph(Graphics2D &gfx);
 
 AppConfig xmcAppGetConfig(void) {
@@ -24,18 +25,30 @@ AppConfig xmcAppGetConfig(void) {
 
 void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
-  adcDriver->init(adc::getDefaultAdcConfig());
-
-  adcDriver->getMaxValue(&maxRaw, &maxVoltage);
-  lineGraph->setYRange(0, maxVoltage);
+  auto pwmCfg = pwm::getDefaultPwmConfig();
+  pwmPeriod = pwmCfg.period;
+  pwmDriver->start(pwmCfg);
+  lineGraph->setYRange(0, pwmPeriod);
 }
 
 void xmcAppLoop(void) {
-  uint16_t adcRawValue;
-  float adcVoltage;
-  adcDriver->readRaw(&adcRawValue);
-  adcDriver->readVoltage(&adcVoltage);
-  lineGraph->push(adcVoltage);
+  if (isPressed(Button::UP) || isPressed(Button::RIGHT)) {
+    pwmDutyCycle += 4;
+    if (pwmDutyCycle > 255) {
+      pwmDutyCycle = 255;
+    }
+    pwmDriver->write(pwmDutyCycle);
+  }
+
+  if (isPressed(Button::DOWN) || isPressed(Button::LEFT)) {
+    pwmDutyCycle -= 4;
+    if (pwmDutyCycle < 0) {
+      pwmDutyCycle = 0;
+    }
+    pwmDriver->write(pwmDutyCycle);
+  }
+
+  lineGraph->push(pwmDutyCycle);
 
   fpsKeeper.waitVsync();
   if (!fpsKeeper.isFrameSkipping()) {
@@ -43,14 +56,14 @@ void xmcAppLoop(void) {
     auto gfx = frameBuffer->createGraphics();
     gfx->clear(gfx->devColor(Colors::BLACK));
 
-    renderMeter(gfx, adcRawValue, adcVoltage);
+    renderMeter(gfx);
     renderGraph(gfx);
 
     frameBuffer->endRender();
   }
 }
 
-void renderMeter(Graphics2D &gfx, uint16_t rawValue, float voltage) {
+void renderMeter(Graphics2D &gfx) {
   int yTop = STATUS_BAR_HEIGHT;
   int yBottom = display::HEIGHT / 2;
   int height = yBottom - yTop;
@@ -70,7 +83,8 @@ void renderMeter(Graphics2D &gfx, uint16_t rawValue, float voltage) {
   }
 
   {
-    float angle = angleMin + (voltage / maxVoltage) * (angleMax - angleMin);
+    float angle =
+        angleMin + ((float)pwmDutyCycle / pwmPeriod) * (angleMax - angleMin);
     int x1 = display::WIDTH / 2;
     int y1 = yBottom;
     int x2 = x1 + cosf(angle) * length;
@@ -79,18 +93,16 @@ void renderMeter(Graphics2D &gfx, uint16_t rawValue, float voltage) {
   }
 
   char buf[16];
-  int percent = (int)roundf((float)(voltage * 100) / maxVoltage);
+  int percent = (int)roundf((float)(pwmDutyCycle * 100) / (pwmPeriod - 1));
   gfx->setFont(&ShapoSansP_s12c09a01w02);
   gfx->setTextColor(gfx->devColor(Colors::GREEN));
   gfx->setCursor(5, yBottom - 30);
-  gfx->drawString("Raw:");
+  gfx->drawString("Duty:");
   gfx->setCursor(5, yBottom - 15);
-  snprintf(buf, sizeof(buf), "%1d", rawValue);
+  snprintf(buf, sizeof(buf), "%1d", pwmDutyCycle);
   gfx->drawString(buf);
-  gfx->setCursor(display::WIDTH - 40, yBottom - 30);
-  gfx->drawString("Volt:");
-  gfx->setCursor(display::WIDTH - 40, yBottom - 15);
-  snprintf(buf, sizeof(buf), "%4.2fV", voltage);
+  gfx->setCursor(40, yBottom - 15);
+  snprintf(buf, sizeof(buf), "%d%%", percent);
   gfx->drawString(buf);
 }
 

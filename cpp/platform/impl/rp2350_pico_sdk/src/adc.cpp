@@ -10,9 +10,7 @@ struct AdcHwRp2350 {
   int adcChannel;
 };
 
-AdcConfig getDefaultAdcConfig() {
-  return {};
-}
+AdcConfig getDefaultAdcConfig() { return {}; }
 
 AdcDriverClass::AdcDriverClass(int pin) : pin(pin) {
   AdcHwRp2350 *hw = new AdcHwRp2350();
@@ -51,6 +49,16 @@ XmcStatus AdcDriverClass::readRaw(uint16_t *value) {
   AdcHwRp2350 *hw = (AdcHwRp2350 *)handle;
   adc_select_input(hw->adcChannel);
   *value = adc_read();
+  return XMC_OK;
+}
+
+XmcStatus AdcDriverClass::readVoltage(float *value) {
+  uint16_t valueRaw;
+  XMC_ERR_RET(readRaw(&valueRaw));
+  uint16_t maxRaw;
+  float maxVoltage;
+  getMaxValue(&maxRaw, &maxVoltage);
+  *value = (valueRaw / (float)maxRaw) * maxVoltage;
   return XMC_OK;
 }
 

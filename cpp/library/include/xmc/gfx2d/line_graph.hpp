@@ -38,7 +38,7 @@ class LineGraphClass {
     count = 0;
   }
 
-  void pushValue(TValue value) {
+  void push(TValue value) {
     if (!data) return;
     int writePos = (readPos + count) % capacity;
     data[writePos] = value;
@@ -78,11 +78,13 @@ class LineGraphClass {
   }
 };
 
-using LineGraph = std::shared_ptr<LineGraphClass<uint16_t>>;
+template <typename TValue>
+using LineGraph = std::shared_ptr<LineGraphClass<TValue>>;
 
-static inline LineGraph createLineGraph(
+template <typename TValue>
+static inline LineGraph<TValue> createLineGraph(
     int capacity, XmcHeapCap heapCap = XMC_HEAP_CAP_SPIRAM) {
-  return std::make_shared<LineGraphClass<uint16_t>>(capacity, heapCap);
+  return std::make_shared<LineGraphClass<TValue>>(capacity, heapCap);
 }
 
 }  // namespace xmc

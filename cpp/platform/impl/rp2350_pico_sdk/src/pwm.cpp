@@ -8,34 +8,42 @@
 
 namespace xmc::pwm {
 
-typedef struct {
+struct PwmHwRp {
   uint sliceNum;
   uint channel;
-} PwmHw;
+};
 
-Driver::Driver(int pin) : pin(pin) { handle = (PwmHw *)malloc(sizeof(PwmHw)); }
+PwmConfig getDefaultPwmConfig() {
+  PwmConfig cfg;
+  cfg.freqHz = 1000;
+  cfg.period = 256;
+  return cfg;
+}
 
-Driver::~Driver() {
+PwmDriverClass::PwmDriverClass(int pin) : pin(pin) { handle = (PwmHwRp *)malloc(sizeof(PwmHwRp)); }
+
+PwmDriverClass::~PwmDriverClass() {
   if (handle) {
     free(handle);
     handle = nullptr;
   }
 }
 
-XmcStatus Driver::start(const Config &cfg, float *actualFreqHz) {
+XmcStatus PwmDriverClass::start(const PwmConfig &cfg, float *actualFreqHz) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
-  PwmHw *hw = (PwmHw *)handle;
+  PwmHwRp *hw = (PwmHwRp *)handle;
 
   uint32_t periClkFreq = clock_get_hz(clk_peri);
   uint sliceNum = pwm_gpio_to_slice_num(pin);
   pwm_config pc = pwm_get_default_config();
-  pwm_config_set_clkdiv(&pc, (float)periClkFreq / cfg.freqHz / cfg.period);
+  pwm_config_set_clkdiv(&pc, (float)periClkFreq * cfg.period / cfg.freqHz);
+  pwm_config_set_wrap(&pc, cfg.period - 1);
   pwm_init(sliceNum, &pc, true);
   gpio_set_function(pin, GPIO_FUNC_PWM);
 
   if (actualFreqHz) {
-    pwm_slice_hw_t *hw = &(pwm_hw->slice[sliceNum]);
-    *actualFreqHz = (float)periClkFreq / (hw->top + 1) / ((float)hw->div / 16);
+    pwm_slice_hw_t *sliceHw = &(pwm_hw->slice[sliceNum]);
+    *actualFreqHz = (float)periClkFreq / (sliceHw->top + 1) / ((float)sliceHw->div / 16);
   }
 
   hw->sliceNum = sliceNum;
@@ -43,18 +51,18 @@ XmcStatus Driver::start(const Config &cfg, float *actualFreqHz) {
   return XMC_OK;
 }
 
-XmcStatus Driver::stop() {
+XmcStatus PwmDriverClass::stop() {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
-  PwmHw *hw = (PwmHw *)handle;
+  PwmHwRp *hw = (PwmHwRp *)handle;
   pwm_set_enabled(hw->sliceNum, false);
   free(hw);
   handle = nullptr;
   return XMC_OK;
 }
 
-XmcStatus Driver::setDutyCycle(uint32_t cycle) {
+XmcStatus PwmDriverClass::write(uint32_t cycle) {
   if (!handle) XMC_ERR_RET(XMC_ERR_NOT_INITIALIZED);
-  PwmHw *hw = (PwmHw *)handle;
+  PwmHwRp *hw = (PwmHwRp *)handle;
 #if 0
   if (cycle > pwm_hw->slice[sliceNum].top) {
     return XMC_ERR_PWM_INVALID_DUTY_CYCLE;
