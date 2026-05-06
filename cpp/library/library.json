@@ -24,14 +24,16 @@
             "-ftree-switch-conversion",
             "-Iinclude",
             "-Iext/fatfs",
-            "-Iext/tjpgd"
+            "-Iext/tjpgd",
+            "-Iext/gfxfont"
         ]
     },
     "export": {
         "include": [
             "include",
             "ext/fatfs",
-            "ext/tjpgd"
+            "ext/tjpgd",
+            "ext/gfxfont"
         ]
     },
     "platforms": "*",

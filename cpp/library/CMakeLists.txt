@@ -29,4 +29,5 @@ target_include_directories(${LIB_NAME} PUBLIC
     ${LIB_INC_DIR}
     ${LIB_EXT_DIR}/fatfs
     ${LIB_EXT_DIR}/tjpgd
+    ${LIB_EXT_DIR}/gfxfont
 )
