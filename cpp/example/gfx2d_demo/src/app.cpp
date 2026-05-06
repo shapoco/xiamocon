@@ -22,8 +22,6 @@ struct Star {
 };
 Star stars[NUM_STARS];
 
-float sinTable[360];
-
 void updateScene();
 void renderScene();
 void renderDrops(Graphics2D &gfx, uint64_t nowMs);
@@ -36,7 +34,7 @@ AppConfig xmcAppGetConfig(void) {
   if (isPressed(Button::X)) {
     displayFormat = PixelFormat::RGB444;
   }
-  frameBuffer = createFrameBuffer(displayFormat, false);
+  frameBuffer = createFrameBuffer(displayFormat, true);
 
   auto cfg = getDefaultAppConfig();
   cfg.displayPixelFormat = displayFormat;
@@ -46,11 +44,6 @@ AppConfig xmcAppGetConfig(void) {
 
 void xmcAppSetup(void) {
   frameBuffer->enableFlag(FrameBufferFlags::SHOW_DEBUG_INFO);
-
-  for (int i = 0; i < 360; i++) {
-    float angle = i * M_PI / 180.0f;
-    sinTable[i] = sinf(angle);
-  }
 
   for (int i = 0; i < NUM_STARS; i++) {
     stars[i].x = randomF32() * display::WIDTH;
