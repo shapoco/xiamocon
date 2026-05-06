@@ -4,6 +4,7 @@
 #include "xmc/gfx2d/colorf.hpp"
 #include "xmc/gfx2d/frame_buffer.hpp"
 #include "xmc/gfx2d/graphics2d.hpp"
+#include "xmc/gfx2d/line_graph.hpp"
 #include "xmc/gfx2d/sprite.hpp"
 
 #include "xmc/gfx3d/custom_shader.hpp"
