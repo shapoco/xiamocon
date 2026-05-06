@@ -96,16 +96,4 @@ readVoltage
 	XmcStatus xmc::adc::AdcDriverClass::readVoltage(float *value);
 
 ADC を 1 回サンプリングし、電圧値 [V] として取得します。
-
-内部では `readRaw()` で取得した値を `rawToVoltage()` で変換します。
 `value` に変換結果を書き込み、戻り値は `XmcStatus` です。
-
-rawToVoltage
---------------------------------------------------------------------------------
-
-.. code-block:: cpp
-
-	float xmc::adc::AdcDriverClass::rawToVoltage(uint16_t raw);
-
-RAW 値を電圧 [V] に変換します。
-変換時には `getMaxValue()` で取得した最大 RAW 値と最大電圧を使用します。
