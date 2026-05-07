@@ -4,4 +4,11 @@ if [ "$SHELL" = "/bin/bash" ] || [ "$SHELL" = "/usr/bin/bash" ]; then
       source "$bash_file"
     fi
   done
+elif [ "$SHELL" = "/bin/zsh" ] || [ "$SHELL" = "/usr/bin/zsh" ]; then
+  autoload -Uz compinit && compinit
+  for zsh_file in ${XMC_REPO_PATH}/bin/completion/zsh/*.zsh; do
+    if [ -f "$zsh_file" ]; then
+      source "$zsh_file"
+    fi
+  done
 fi
