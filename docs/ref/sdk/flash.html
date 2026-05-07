@@ -124,8 +124,13 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::flash::getRange</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">size</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>フラッシュメモリの使用可能領域のベースオフセットとサイズを取得します。</p>
-<p><cite>base</cite> が <cite>nullptr</cite> でない場合はベースオフセット [バイト] を書き込み、<cite>size</cite> が <cite>nullptr</cite> でない場合は領域全体のサイズ [バイト] を書き込みます。</p>
+<p>フラッシュメモリの読み可能な領域のベースオフセットとサイズを取得します。</p>
+<p><cite>base</cite> が <cite>nullptr</cite> でない場合はベースオフセット [バイト] を書き込み、
+<cite>size</cite> が <cite>nullptr</cite> でない場合は領域全体のサイズ [バイト] を書き込みます。</p>
+<p>RP2350 版ではプログラムデータを含む Flash 領域全体の空間を返します。
+書き込みを行う場合、通常は使用されていない末尾から使用します。</p>
+<p>ESP32S3 版では SPIFFS パーティションの領域を返します。
+書き込みを行うと、既存のファイルシステムは破壊されます。</p>
 </section>
 </section>
 <section id="id3">
