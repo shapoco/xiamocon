@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flash API &mdash; xiamocon  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="セマフォ API" href="semaphore.html" />
+    <link rel="prev" title="マルチコア API" href="multicore.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            xiamocon
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../hw/spec.html">ハードウェア仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hw/enclosure.html">エンクロージャ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app.html">Xiamocon アプリケーションの基本構造</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx2d.html">2D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfx3d.html">3D グラフィックス API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="audio.html">オーディオ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpio.html">GPIO API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="i2c.html">I2C API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spi.html">SPI API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pwm.html">PWM API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adc.html">ADC API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timer.html">タイマー API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="heap.html">Heap API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multicore.html">マルチコア API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Flash API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">情報取得</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-getsectorsize">xmc::flash::getSectorSize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-getrange">xmc::flash::getRange</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">書き込み・マップ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-write">xmc::flash::write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-mmap">xmc::flash::mmap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-munmap">xmc::flash::munmap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="semaphore.html">セマフォ API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spinlock.html">スピンロック API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../troubleshoot.html">トラブルシューティング</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xiamocon</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Flash API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/sdk/flash.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="flash-api">
+<h1>Flash API<a class="headerlink" href="#flash-api" title="Link to this heading"></a></h1>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>Flash API は、内蔵フラッシュメモリへのデータ書き込みおよびメモリマップアクセスを提供する低レベル API です。</p>
+<p><cite>xmc::flash::init()</cite> で初期化した後、<cite>write()</cite> でデータを書き込み、<cite>mmap()</cite> / <cite>munmap()</cite> でメモリマップ読み出しを行います。</p>
+</section>
+<section id="id2">
+<h2>情報取得<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<section id="xmc-flash-getsectorsize">
+<h3>xmc::flash::getSectorSize<a class="headerlink" href="#xmc-flash-getsectorsize" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">size_t</span><span class="w"> </span><span class="nf">xmc::flash::getSectorSize</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>フラッシュメモリのセクターサイズをバイト単位で返します。
+書き込み・消去の最小単位として使用します。</p>
+</section>
+<section id="xmc-flash-getrange">
+<h3>xmc::flash::getRange<a class="headerlink" href="#xmc-flash-getrange" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::flash::getRange</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">base</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="o">*</span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フラッシュメモリの使用可能領域のベースオフセットとサイズを取得します。</p>
+<p><cite>base</cite> が <cite>nullptr</cite> でない場合はベースオフセット [バイト] を書き込み、<cite>size</cite> が <cite>nullptr</cite> でない場合は領域全体のサイズ [バイト] を書き込みます。</p>
+</section>
+</section>
+<section id="id3">
+<h2>書き込み・マップ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="xmc-flash-write">
+<h3>xmc::flash::write<a class="headerlink" href="#xmc-flash-write" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::flash::write</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フラッシュメモリにデータを書き込みます。</p>
+<p><cite>offset</cite> には書き込み先のオフセット [バイト] を指定します。
+<cite>data</cite> には書き込むデータのポインタを指定します。
+<cite>length</cite> には書き込むバイト数を指定します。</p>
+<p>戻り値は <cite>XmcStatus</cite> で、成功時は <cite>XMC_OK</cite> です。</p>
+</section>
+<section id="xmc-flash-mmap">
+<h3>xmc::flash::mmap<a class="headerlink" href="#xmc-flash-mmap" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::flash::mmap</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">**</span><span class="n">handle</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">**</span><span class="n">outPtr</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フラッシュメモリの指定領域をメモリマップします。</p>
+<p><cite>offset</cite> にはマップ開始オフセット [バイト] を指定します。
+<cite>size</cite> にはマップするサイズ [バイト] を指定します。
+<cite>handle</cite> にはマップ解除時に <cite>munmap()</cite> へ渡すハンドルが書き込まれます。
+<cite>outPtr</cite> にはマップ後のアドレスが書き込まれます。</p>
+<p>戻り値は <cite>XmcStatus</cite> で、成功時は <cite>XMC_OK</cite> です。</p>
+</section>
+<section id="xmc-flash-munmap">
+<h3>xmc::flash::munmap<a class="headerlink" href="#xmc-flash-munmap" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">xmc::flash::munmap</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">handle</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><cite>mmap()</cite> でマップした領域を解除します。
+<cite>handle</cite> には <cite>mmap()</cite> で取得したハンドルを指定します。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="multicore.html" class="btn btn-neutral float-left" title="マルチコア API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="semaphore.html" class="btn btn-neutral float-right" title="セマフォ API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Shapoco.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

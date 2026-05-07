@@ -24,6 +24,7 @@ Xiamocon Reference Manual
    sdk/timer.rst
    sdk/heap.rst
    sdk/multicore.rst
+   sdk/flash.rst
    sdk/semaphore.rst
    sdk/spinlock.rst
    troubleshoot.rst
