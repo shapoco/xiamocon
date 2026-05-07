@@ -40,4 +40,5 @@ target_link_libraries(
     hardware_vreg
     hardware_watchdog
     hardware_sleep
+    hardware_flash
 )

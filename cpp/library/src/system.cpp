@@ -2,19 +2,20 @@
 #include "xmc/app.hpp"
 #include "xmc/battery.hpp"
 #include "xmc/display.hpp"
+#include "xmc/flash.hpp"
 #include "xmc/fs.hpp"
 #include "xmc/gfx2d/graphics2d.hpp"
 #include "xmc/gpio.hpp"
 #include "xmc/i2c.hpp"
-#include "xmc/pins.hpp"
-#include "xmc/power.hpp"
-#include "xmc/spi.hpp"
-#include "xmc/timer.hpp"
 #include "xmc/input.hpp"
 #include "xmc/ioex.hpp"
 #include "xmc/multicore.hpp"
+#include "xmc/pins.hpp"
+#include "xmc/power.hpp"
 #include "xmc/power_off_message.hpp"
 #include "xmc/speaker.hpp"
+#include "xmc/spi.hpp"
+#include "xmc/timer.hpp"
 
 namespace xmc::system {
 
@@ -32,6 +33,7 @@ XmcStatus init() {
   ioex::setDirMasked(1, 0xFF, 0xFF);
 
   battery::init();
+  flash::init();
 
   // Mute speaker during initialization to avoid noise
   ioex::write(ioex::Pin::PERI_EN, true);
@@ -80,6 +82,7 @@ XmcStatus requestShutdown(ShutdownReason reason) {
   stopCore1();
   input::deinit();
   battery::deinit();
+  flash::deinit();
   speaker::deinit();
   fs::deinit();
 

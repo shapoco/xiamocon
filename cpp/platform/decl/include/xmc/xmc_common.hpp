@@ -4,6 +4,7 @@
 #include "xmc/xmc_status.h"
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 #define XMC_INLINE inline __attribute__((always_inline))
@@ -29,6 +30,8 @@
     return ((TBase)value & (TBase)flag) != 0;                                  \
   }
 
+#define XMC_MIN(a, b) ((a) < (b) ? (a) : (b))
+#define XMC_MAX(a, b) ((a) > (b) ? (a) : (b))
 #define XMC_CLIP(min, max, value) \
   ((value) < (min) ? (min) : ((value) > (max) ? (max) : (value)))
 
