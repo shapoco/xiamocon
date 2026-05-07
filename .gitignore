@@ -14,6 +14,7 @@ tmp.*/
 __pycache__/
 docs/
 setup.shrc
+uv.lock
 
 # for KiCad
 *-backups/

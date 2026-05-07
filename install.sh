@@ -59,6 +59,7 @@ echo "export PLATFORMIO_CORE_DIR=${arg_install_dir}/platformio" >> ${setup_file}
 echo "export XMC_REPO_PATH=${arg_install_dir}/xiamocon" >> ${setup_file}
 echo "export PATH=${XMC_REPO_PATH}/bin:${PLATFORMIO_CORE_DIR}/penv/bin:\$PATH" >> ${setup_file}
 echo "source ${arg_install_dir}/.venv/bin/activate" >> ${setup_file}
+echo "source ${XMC_REPO_PATH}/bin/completion/install.sh" >> ${setup_file}
 
 deactivate
 

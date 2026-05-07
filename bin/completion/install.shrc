@@ -1,0 +1,7 @@
+if [ "$SHELL" = "/bin/bash" ] || [ "$SHELL" = "/usr/bin/bash" ]; then
+  for bash_file in ${XMC_REPO_PATH}/bin/completion/bash/*.bash; do
+    if [ -f "$bash_file" ]; then
+      source "$bash_file"
+    fi
+  done
+fi
