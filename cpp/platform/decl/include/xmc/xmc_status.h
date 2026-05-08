@@ -66,7 +66,7 @@ typedef enum {
   XMC_ERR_FILENAME_TOO_LONG = XMC_ERR_BASE_PATH + 1,
   XMC_ERR_PATH_TOO_LONG = XMC_ERR_BASE_PATH + 2,
   XMC_ERR_BASE_USER = 0x8000,
-  XMC_USER_GENERIC_ERROR = XMC_ERR_BASE_USER + 1,
+  XMC_ERR_USER_GENERIC = XMC_ERR_BASE_USER + 1,
 } XmcStatus;
 
 #define XMC_ERR_LOG(status)                             \

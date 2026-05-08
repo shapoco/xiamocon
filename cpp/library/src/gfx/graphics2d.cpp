@@ -90,7 +90,7 @@ void Graphics2DClass::fillEllipse(Rect dstRect, DevColor color) {
   EllipseScan scan(dstRect, state.clipRect);
   int px = 0, py = 0, pw = 0;
   if (target) {
-    void *ptr = target->linePtr(0);
+    uint8_t *ptr = (uint8_t *)target->linePtr(0);
     uint32_t stride = target->stride;
     PixelFormat fmt = target->format;
     while (scan.nextLine(&px, &py, &pw)) {
@@ -118,7 +118,7 @@ void Graphics2DClass::fillPolygon(const vec2i *vertices, int numVertices,
 
   int px = 0, py = 0, pw = 0;
   if (target) {
-    void *ptr = target->linePtr(0);
+    uint8_t *ptr = (uint8_t *)target->linePtr(0);
     uint32_t stride = target->stride;
     PixelFormat fmt = target->format;
     while (scan.nextLine(&px, &py, &pw)) {
@@ -191,7 +191,7 @@ void Graphics2DClass::drawLine(int x1, int y1, int x2, int y2, DevColor color) {
   if (target) {
     int px, py;
     PixelFormat fmt = target->format;
-    void *ptr = target->linePtr(0);
+    uint8_t *ptr = (uint8_t *)target->linePtr(0);
     uint32_t stride = target->stride;
     while (scan.nextPixel(&px, &py)) {
       setPixelUnsafe(fmt, ptr + py * stride, px, color);

@@ -162,7 +162,7 @@ class SensorI2C {
       if (sts == XMC_OK && (ctrl3 & (CTRL3_BOOT | CTRL3_SW_RESET)) == 0) {
         break;
       } else if (i == 0) {
-        return XMC_USER_GENERIC_ERROR;
+        return XMC_ERR_USER_GENERIC;
       }
     }
 
@@ -170,7 +170,7 @@ class SensorI2C {
       uint8_t who_am_i;
       XMC_ERR_RET(read_reg(REG_WHO_AM_I, &who_am_i));
       if (who_am_i != 0x70) {
-        return XMC_USER_GENERIC_ERROR;
+        return XMC_ERR_USER_GENERIC;
       }
     }
 
@@ -274,7 +274,7 @@ class SensorI2C {
 
   XmcStatus read_sensor_raw(int16_t *values) {
     if (!inited) {
-      return XMC_USER_GENERIC_ERROR;
+      return XMC_ERR_USER_GENERIC;
     }
     uint8_t buf[14] = {0};
     XMC_ERR_RET(read_reg(REG_OUT_TEMP_L, buf, sizeof(buf)));

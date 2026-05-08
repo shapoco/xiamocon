@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include <esp_heap_caps.h>
 
+bool xmcHasSpiRam() { return true; }
 void *xmcMalloc(size_t size, XmcHeapCap caps) {
   int heapCaps = 0;
   void *ptr = nullptr;

@@ -23,7 +23,7 @@ void Graphics3DClass::beginRender(ClearTarget target) {
 
 void Graphics3DClass::endRender() {
   if (stateStackTop) {
-    XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
+    XMC_ERR_LOG(XMC_ERR_USER_GENERIC);
   }
 }
 

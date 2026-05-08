@@ -149,7 +149,6 @@ class Graphics3DClass {
 
   inline void pushState() {
     if (stateStackTop >= stackSize - 1) {
-      XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
       return;
     }
     stateStackTop++;
@@ -161,7 +160,6 @@ class Graphics3DClass {
 
   inline void popState() {
     if (stateStackTop <= 0) {
-      XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
       return;
     }
     stateStackTop--;

@@ -78,7 +78,7 @@ void xmcAppLoop(void) {
       y += 20;
       gfx->setCursor(10, y);
       gfx->drawString("Number of Error Bytes: ");
-      snprintf(buf, sizeof(buf), "%u", testErrors);
+      snprintf(buf, sizeof(buf), "%lu", testErrors);
       gfx->drawString(buf);
 
       y += 20;
@@ -112,6 +112,7 @@ XmcStatus flashTest(uint32_t *numErrors, uint32_t *resultCrc) {
   *resultCrc = 0;
 
   do {
+    XMC_ERR_BRK(sts, flash::erase(offset, TEST_SIZE));
     XMC_ERR_BRK(sts, flash::write(offset, buff, TEST_SIZE));
     XMC_ERR_BRK(sts, flash::mmap(offset, TEST_SIZE, &mmapHandle, &mmapPtr));
 
@@ -129,11 +130,11 @@ XmcStatus flashTest(uint32_t *numErrors, uint32_t *resultCrc) {
   uint32_t testCrc = crc32(buff, TEST_SIZE);
   *resultCrc = crc32(mmapPtr, TEST_SIZE);
   if (testCrc != *resultCrc) {
-    XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
+    XMC_ERR_LOG(XMC_ERR_USER_GENERIC);
   }
 
   if (*numErrors != 0) {
-    XMC_ERR_LOG(XMC_USER_GENERIC_ERROR);
+    XMC_ERR_LOG(XMC_ERR_USER_GENERIC);
   }
 
   return sts;
