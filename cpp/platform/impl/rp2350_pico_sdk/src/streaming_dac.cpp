@@ -1,7 +1,7 @@
 #include "xmc/streaming_dac.hpp"
 #include "xmc/dma_irq.hpp"
-#include "xmc/pins.hpp"
 #include "xmc/heap.hpp"
+#include "xmc/pins.hpp"
 
 #include <hardware/clocks.h>
 #include <hardware/dma.h>
@@ -245,22 +245,22 @@ static void fillBuffer(StreamingDac &inst) {
   uint32_t dstSamples = hw->cfg.latencySamples * hw->extraOversample;
   uint32_t *dst = hw->dmaBuff + (hw->nextWriteBank * dstSamples);
 
-  if (inst.source.requestData) {
+  if (inst.source.callback) {
     uint32_t buffSizeBytes =
         hw->cfg.latencySamples * getBytesPerSample(hw->cfg.format.sampleFormat);
     switch (hw->cfg.format.sampleFormat) {
       default:
       case SampleFormat::LINEAR_PCM_S16_MONO:
         memset(hw->s16Buff, 0x00, buffSizeBytes);
-        inst.source.requestData(hw->s16Buff, hw->cfg.latencySamples,
-                                inst.source.context);
+        inst.source.callback(hw->s16Buff, hw->cfg.latencySamples,
+                             inst.source.context);
         break;
       case SampleFormat::LINEAR_PCM_U8_MONO:
         memset(hw->srcFmtBuff, 0x80, buffSizeBytes);
-        inst.source.requestData(hw->srcFmtBuff, hw->cfg.latencySamples,
-                                inst.source.context);
+        inst.source.callback(hw->srcFmtBuff, hw->cfg.latencySamples,
+                             inst.source.context);
         for (uint32_t i = 0; i < hw->cfg.latencySamples; i++) {
-          hw->s16Buff[i] = ((int16_t)hw->srcFmtBuff[i] - 128) << 8;
+          hw->s16Buff[i] = ((int16_t)hw->srcFmtBuff[i] - 128) * 512;
         }
         break;
     }

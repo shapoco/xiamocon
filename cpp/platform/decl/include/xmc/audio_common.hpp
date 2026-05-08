@@ -39,7 +39,7 @@ struct StreamFormat {
  * number of samples to write, and a context pointer that can be used to pass
  * user-defined data to the callback function.
  */
-typedef void (*StreamRequestCb)(void *buffer, uint32_t numSamples,
+using StreamCallback = void (*)(void *buffer, uint32_t numSamples,
                                 void *context);
 
 // todo: change to class
@@ -50,7 +50,7 @@ typedef void (*StreamRequestCb)(void *buffer, uint32_t numSamples,
  * data to the callback function.
  */
 struct SourcePort {
-  StreamRequestCb requestData;
+  StreamCallback callback;
   void *context;
 };
 

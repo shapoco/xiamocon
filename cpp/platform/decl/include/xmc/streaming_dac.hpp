@@ -73,7 +73,7 @@ class StreamingDac {
   StreamFormat getStreamFormat() const;
 
   /**
-   * Set the audio source for the SDAC. The SDAC will call the requestData
+   * Set the audio source for the SDAC. The SDAC will call the callback
    * callback of the source port when it needs more audio data to output.
    * @param src The audio source port to set for the SDAC.
    * @return XmcStatus indicating success or failure of the operation.
@@ -82,7 +82,7 @@ class StreamingDac {
 
   /**
    * Service the SDAC. This should be called periodically to allow the SDAC to
-   * process audio data and output it. The SDAC will call the requestData
+   * process audio data and output it. The SDAC will call the callback
    * callback of the source port as needed to get more audio data to output.
    * @return XmcStatus indicating success or failure of the operation.
    */

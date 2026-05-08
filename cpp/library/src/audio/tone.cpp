@@ -7,7 +7,7 @@ static void xmc_tone_request_data(void *buffer, uint32_t size_bytes,
                                   void *context);
 
 ToneClass::ToneClass() {
-  outputPort.requestData = xmc_tone_request_data;
+  outputPort.callback = xmc_tone_request_data;
   outputPort.context = this;
 }
 

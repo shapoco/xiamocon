@@ -1,7 +1,7 @@
 #include "xmc/streaming_dac.hpp"
 #include "xmc/gpio.hpp"
-#include "xmc/pins.hpp"
 #include "xmc/heap.hpp"
+#include "xmc/pins.hpp"
 
 #include <driver/i2s_pdm.h>
 #include <string.h>
@@ -195,21 +195,20 @@ static void fillBuffer(StreamingDac &inst, uint32_t fillSamples) {
   SdacHwEsp *hw = (SdacHwEsp *)inst.handle;
   uint32_t bytesPerSample = getBytesPerSample(hw->cfg.format.sampleFormat);
   uint32_t fillBytes = fillSamples * bytesPerSample;
-  if (inst.source.requestData) {
+  if (inst.source.callback) {
     switch (hw->cfg.format.sampleFormat) {
       default:
       case SampleFormat::LINEAR_PCM_S16_MONO:
         memset(hw->s16Buff + hw->writePos, 0x00, fillBytes);
-        inst.source.requestData(hw->s16Buff + hw->writePos, fillSamples,
-                                inst.source.context);
+        inst.source.callback(hw->s16Buff + hw->writePos, fillSamples,
+                             inst.source.context);
         break;
       case SampleFormat::LINEAR_PCM_U8_MONO:
-        memset(hw->srcFmtBuff + hw->writePos, 0x80, fillBytes);
-        inst.source.requestData(hw->srcFmtBuff + hw->writePos, fillSamples,
-                                inst.source.context);
+        memset(hw->srcFmtBuff, 0x80, fillBytes);
+        inst.source.callback(hw->srcFmtBuff, fillSamples, inst.source.context);
         for (int i = 0; i < fillSamples; i++) {
           hw->s16Buff[hw->writePos + i] =
-              ((int16_t)hw->srcFmtBuff[hw->writePos + i] - 128) << 8;
+              ((int16_t)hw->srcFmtBuff[i] - 128) * 512;
         }
         break;
     }
@@ -225,8 +224,7 @@ static void fillBuffer(StreamingDac &inst, uint32_t fillSamples) {
 static void pdmWrite(StreamingDac &inst, uint32_t numSamples, bool preload) {
   esp_err_t err;
   SdacHwEsp *hw = (SdacHwEsp *)inst.handle;
-  uint32_t bytesPerSample = getBytesPerSample(hw->cfg.format.sampleFormat);
-  size_t bytesToWrite = numSamples * bytesPerSample;
+  size_t bytesToWrite = numSamples * sizeof(int16_t);
   size_t bytesWritten = 0;
   const void *data = &hw->s16Buff[hw->readPos];
   if (preload) {
@@ -241,7 +239,7 @@ static void pdmWrite(StreamingDac &inst, uint32_t numSamples, bool preload) {
   }
   if (bytesWritten > 0) {
     hw->readPos =
-        (hw->readPos + bytesWritten / bytesPerSample) % hw->cfg.latencySamples;
+        (hw->readPos + bytesWritten / sizeof(int16_t)) % hw->cfg.latencySamples;
     hw->full = false;
   }
 }

@@ -49,7 +49,7 @@ class MixerClass {
 
   /**
    * Returns the output audio source port of the mixer. The mixer will call the
-   * requestData callback of the output port when it needs more audio data.
+   * callback of the output port when it needs more audio data.
    */
   inline SourcePort *getOutputPort() { return &output; }
 };

@@ -10,7 +10,7 @@ MixerClass::MixerClass(int numSources) : numSources(numSources) {
   for (int i = 0; i < numSources; i++) {
     sources[i] = nullptr;
   }
-  output.requestData = xmc_mixerRequestData;
+  output.callback = xmc_mixerRequestData;
   output.context = this;
 }
 
@@ -19,7 +19,7 @@ MixerClass::~MixerClass() { delete[] sources; }
 void MixerClass::render(int16_t *buffer, uint32_t numSamples) {
   for (int i = 0; i < numSources; i++) {
     if (sources[i]) {
-      sources[i]->requestData(buffer, numSamples, sources[i]->context);
+      sources[i]->callback(buffer, numSamples, sources[i]->context);
     }
   }
 }
