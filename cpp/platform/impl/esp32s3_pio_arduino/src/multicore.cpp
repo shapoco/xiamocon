@@ -73,4 +73,6 @@ static void feedWatchdog() {
   TIMERG1.wdtwprotect.val = 0;
 }
 
+bool isCore1Running() { return core1Func != nullptr; }
+
 }  // namespace xmc

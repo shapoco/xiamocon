@@ -34,6 +34,12 @@ XmcStatus startCore1(Core1TaskFunc task);
  */
 XmcStatus stopCore1(uint32_t timeoutMs = 1000);
 
+/**
+ * @brief Check if the second core is currently running a task.
+ * @return true if the second core is running, false otherwise.
+ */
+bool isCore1Running();
+
 }  // namespace xmc
 
 #endif

@@ -17,8 +17,11 @@ size_t getSectorSize();
 // Get the base offset and size of the flash memory.
 void getRange(size_t *base, size_t *size);
 
+// Erase a region of flash memory.
+XmcStatus erase(uint32_t offset, size_t size);
+
 // Write data to flash memory.
-XmcStatus write(uint32_t offset, const void *data, size_t length);
+XmcStatus write(uint32_t offset, const void *data, size_t size);
 
 // Map a region of flash memory.
 XmcStatus mmap(uint32_t offset, size_t size, void **handle,

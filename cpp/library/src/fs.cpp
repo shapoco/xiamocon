@@ -1,5 +1,7 @@
 #include "xmc/fs.hpp"
+#include "xmc/flash.hpp"
 #include "xmc/gpio.hpp"
+#include "xmc/heap.hpp"
 #include "xmc/pins.hpp"
 
 #include <stdio.h>
@@ -84,7 +86,6 @@ XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
     size_t maxFiles;
     size_t numFiles;
   } data{out, maxFiles, 0};
-  // 既存の enumFiles を使用
   XmcStatus sts = enumFiles(
       path,
       [](const FileInfo& info, void* userData) {
@@ -93,7 +94,7 @@ XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
           data->out[data->numFiles++] = info;
           return true;
         }
-        return false;  // これ以上ファイル情報を格納できない場合は列挙を停止
+        return false;
       },
       &data);
   if (sts != XMC_OK) {
@@ -105,7 +106,7 @@ XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
   return XMC_OK;
 }
 
-size_t getSize(const char* path) {
+size_t getFileSize(const char* path) {
   FILINFO fi;
   FRESULT res = f_stat(path, &fi);
   if (res != FR_OK) return 0;
@@ -184,8 +185,8 @@ XmcStatus removeFile(const char* path) {
   return XMC_OK;
 }
 
-File::File(const char* path, FileMode mode) {
-  size = getSize(path);
+FileClass::FileClass(const char* path, FileMode mode) {
+  size = getFileSize(path);
 
   handle = new FIL;
   BYTE fattrib = 0;
@@ -200,11 +201,11 @@ File::File(const char* path, FileMode mode) {
   }
 }
 
-File::~File() { close(); }
+FileClass::~FileClass() { close(); }
 
-bool File::isOpen() const { return handle != nullptr; }
+bool FileClass::isOpen() const { return handle != nullptr; }
 
-XmcStatus File::close() {
+XmcStatus FileClass::close() {
   if (!handle) return XMC_OK;
   FRESULT res = f_close((FIL*)handle);
   if (res != FR_OK) {
@@ -215,12 +216,12 @@ XmcStatus File::close() {
   return XMC_OK;
 }
 
-bool File::eof() const {
+bool FileClass::eof() const {
   if (!handle) return true;
   return position >= size;
 }
 
-size_t File::read(void* buffer, size_t size) {
+size_t FileClass::read(void* buffer, size_t size) {
   if (!handle) return 0;
   UINT bytesRead;
   FRESULT res = f_read((FIL*)handle, buffer, size, &bytesRead);
@@ -231,7 +232,7 @@ size_t File::read(void* buffer, size_t size) {
   return bytesRead;
 }
 
-size_t File::write(const void* buffer, size_t size) {
+size_t FileClass::write(const void* buffer, size_t size) {
   if (!handle) return 0;
   UINT bytesWritten;
   FRESULT res = f_write((FIL*)handle, buffer, size, &bytesWritten);
@@ -245,7 +246,7 @@ size_t File::write(const void* buffer, size_t size) {
   return bytesWritten;
 }
 
-XmcStatus File::seek(int32_t offset, SeekOrigin origin) {
+XmcStatus FileClass::seek(int32_t offset, SeekOrigin origin) {
   if (!handle) XMC_ERR_RET(XMC_ERR_FS_NOT_OPENED);
   FSIZE_t newPos;
   switch (origin) {
@@ -262,7 +263,7 @@ XmcStatus File::seek(int32_t offset, SeekOrigin origin) {
   return XMC_OK;
 }
 
-XmcStatus File::truncate(size_t size) {
+XmcStatus FileClass::truncate(size_t size) {
   if (!handle) XMC_ERR_RET(XMC_ERR_FS_NOT_OPENED);
   FRESULT res = f_truncate((FIL*)handle);
   if (res != FR_OK) {
@@ -273,6 +274,46 @@ XmcStatus File::truncate(size_t size) {
     position = size;
   }
   return XMC_OK;
+}
+
+XmcStatus copyFileToFlash(const char* srcPath, size_t srcOffset, size_t size,
+                          size_t destOffset, size_t bufferSize) {
+  auto file = fs::openFile(srcPath, fs::FileMode::READ);
+  if (!file) {
+    XMC_ERR_RET(XMC_ERR_FS_OPEN_FAILED);
+  }
+
+  if (bufferSize == 0) {
+    bufferSize = flash::getSectorSize();
+  }
+
+  XmcStatus sts = XMC_OK;
+  uint8_t* buffer =
+      static_cast<uint8_t*>(xmcMalloc(bufferSize, XMC_HEAP_CAP_SPIRAM));
+  if (!buffer) {
+    XMC_ERR_RET(XMC_ERR_RAM_ALLOC_FAILED);
+  }
+
+  do {
+    XMC_ERR_BRK(sts, file->seek(srcOffset));
+
+    XMC_ERR_BRK(sts, flash::erase(destOffset, size));
+
+    while (size > 0) {
+      size_t chunkSize = std::min(size, bufferSize);
+      size_t bytesRead = file->read(buffer, chunkSize);
+      if (bytesRead != chunkSize) {
+        XMC_ERR_BRK(sts, XMC_ERR_FS_READ_FAILED);
+      }
+      XMC_ERR_BRK(sts, flash::write(destOffset, buffer, chunkSize));
+      destOffset += chunkSize;
+      srcOffset += chunkSize;
+      size -= chunkSize;
+    }
+  } while (false);
+  file->close();
+  xmcFree(buffer);
+  return sts;
 }
 
 }  // namespace xmc::fs

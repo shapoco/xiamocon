@@ -24,6 +24,11 @@ typedef enum {
 } XmcHeapCap;
 
 /**
+ * Check if SPIRAM is available on the system.
+ */
+bool xmcHasSpiRam();
+
+/**
  * Allocate memory with specific RAM capabilities.
  * @param size The size of the memory block to allocate.
  * @param caps The RAM capabilities required for the allocation.

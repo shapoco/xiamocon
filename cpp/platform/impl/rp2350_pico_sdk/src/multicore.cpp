@@ -38,11 +38,14 @@ XmcStatus stopCore1(uint32_t timeoutMs) {
 }
 
 void core1Loop() {
+  multicore_lockout_victim_init();
   Core1TaskFunc task = core1Func;
   while (!stopRequested) {
     if (!task()) break;
   }
   core1Func = nullptr;
 }
+
+bool isCore1Running() { return core1Func != nullptr; }
 
 }  // namespace xmc

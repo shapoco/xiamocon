@@ -4,8 +4,7 @@
 #include "xmc/path.hpp"
 #include "xmc/xmc_common.hpp"
 
-#include <stddef.h>
-#include <stdint.h>
+#include <memory>
 
 namespace xmc::fs {
 
@@ -86,7 +85,7 @@ XmcStatus enumFiles(const char* path, FileInfo* out, size_t maxFiles,
  * @return The size of the file in bytes, or 0 if the file does not exist or is
  * a directory.
  */
-size_t getSize(const char* path);
+size_t getFileSize(const char* path);
 
 /**
  * Check if a path is a directory.
@@ -118,10 +117,24 @@ XmcStatus removeDirectory(const char* path);
 XmcStatus removeFile(const char* path);
 
 /**
+ * Copy a file from the filesystem to flash memory.
+ * @param srcPath The path of the source file in the filesystem.
+ * @param srcOffset The offset in the source file to start copying from, in
+ * bytes.
+ * @param size The number of bytes to copy.
+ * @param destOffset The offset in flash memory to write the data to, in bytes.
+ * @param bufferSize The size of the buffer to use for copying, in bytes. If 0,
+ * a default size will be used.
+ * @return XMC_OK on success, or an error code on failure.
+ */
+XmcStatus copyFileToFlash(const char* srcPath, size_t srcOffset, size_t size,
+                          size_t destOffset, size_t bufferSize = 0);
+
+/**
  * Class representing an open file. The file is automatically closed when the
  * object is destroyed.
  */
-class File {
+class FileClass {
  private:
   void* handle = nullptr;
   bool opened = false;
@@ -134,12 +147,18 @@ class File {
    * @param path The path of the file to open.
    * @param mode The access mode for the file (read, write, append).
    */
-  File(const char* path, FileMode mode);
+  FileClass(const char* path, FileMode mode);
 
   /**
    * Destructor that closes the file if it is still open.
    */
-  ~File();
+  ~FileClass();
+
+  /**
+   * Get the size of the file in bytes.
+   * @return The size of the file in bytes, or 0 if the file is not open.
+   */
+  inline size_t getSize() const { return size; }
 
   /** @return true if the file is open, false otherwise. */
   bool isOpen() const;
@@ -192,6 +211,12 @@ class File {
    */
   XmcStatus truncate(size_t size);
 };
+
+using File = std::shared_ptr<FileClass>;
+
+static inline File openFile(const char* path, FileMode mode) {
+  return std::make_shared<FileClass>(path, mode);
+}
 
 }  // namespace xmc::fs
 

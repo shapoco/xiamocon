@@ -1,11 +1,16 @@
 #include "xmc/flash.hpp"
+#include "xmc/multicore.hpp"
 
 #include <hardware/flash.h>
 #include <hardware/sync.h>
+#include <pico/multicore.h>
 
 namespace xmc::flash {
 
-XmcStatus init() {}
+XmcStatus init() {
+  multicore_lockout_victim_init();
+  return XMC_OK;
+}
 
 void deinit() {}
 
@@ -16,11 +21,24 @@ void getRange(size_t *base, size_t *size) {
   if (size) *size = PICO_FLASH_SIZE_BYTES;
 }
 
-XmcStatus write(uint32_t offset, const void *data, size_t size) {
-  save_and_disable_interrupts();
+XmcStatus erase(uint32_t offset, size_t size) {
+  bool core1Running = isCore1Running();
+  if (core1Running) multicore_lockout_start_blocking();
+  uint32_t irq_state = save_and_disable_interrupts();
 
   size_t numSectors = (size + FLASH_SECTOR_SIZE - 1) / FLASH_SECTOR_SIZE;
   flash_range_erase(offset, numSectors * FLASH_SECTOR_SIZE);
+
+  restore_interrupts(irq_state);
+  if (core1Running) multicore_lockout_end_blocking();
+  return XMC_OK;
+}
+
+XmcStatus write(uint32_t offset, const void *data, size_t size) {
+  bool core1Running = isCore1Running();
+
+  if (core1Running) multicore_lockout_start_blocking();
+  uint32_t irq_state = save_and_disable_interrupts();
 
   size_t remaining = size;
   const uint8_t *ptr = static_cast<const uint8_t *>(data);
@@ -34,7 +52,8 @@ XmcStatus write(uint32_t offset, const void *data, size_t size) {
     remaining -= bytesToWrite;
   }
 
-  restore_interrupts(0);
+  restore_interrupts(irq_state);
+  if (core1Running) multicore_lockout_end_blocking();
 
   return XMC_OK;
 }

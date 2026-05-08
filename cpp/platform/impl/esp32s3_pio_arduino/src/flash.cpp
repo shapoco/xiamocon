@@ -25,7 +25,7 @@ void getRange(size_t *base, size_t *size) {
   if (size) *size = inesPartition->size;
 }
 
-XmcStatus write(uint32_t offset, const void *data, size_t size) {
+XmcStatus erase(uint32_t offset, size_t size) {
   esp_err_t espErr;
   size_t sectorOffset = offset / SPI_FLASH_SEC_SIZE * SPI_FLASH_SEC_SIZE;
   size_t eraseSize = (offset + size - sectorOffset + SPI_FLASH_SEC_SIZE - 1) /
@@ -34,6 +34,14 @@ XmcStatus write(uint32_t offset, const void *data, size_t size) {
   if (espErr != ESP_OK) {
     XMC_ERR_RET(XMC_ERR_FLASH_ERASE_FAILED);
   }
+  return XMC_OK;
+}
+
+XmcStatus write(uint32_t offset, const void *data, size_t size) {
+  esp_err_t espErr;
+  size_t sectorOffset = offset / SPI_FLASH_SEC_SIZE * SPI_FLASH_SEC_SIZE;
+  size_t eraseSize = (offset + size - sectorOffset + SPI_FLASH_SEC_SIZE - 1) /
+                     SPI_FLASH_SEC_SIZE * SPI_FLASH_SEC_SIZE;
   espErr = esp_partition_write(inesPartition, offset, data, size);
   if (espErr != ESP_OK) {
     XMC_ERR_RET(XMC_ERR_FLASH_WRITE_FAILED);
