@@ -11,7 +11,7 @@ else()
 endif()
 
 if ("${XMC_PLATFORM}" STREQUAL "rp2350_pico_sdk")
-    set(PICO_BOARD pico2)
+    set(PICO_BOARD seeed_xiao_rp2350)
     include($ENV{XMC_REPO_PATH}/cpp/pico_sdk_import.cmake)
     include($ENV{XMC_REPO_PATH}/cpp/pico_extras_import.cmake)
 endif()
