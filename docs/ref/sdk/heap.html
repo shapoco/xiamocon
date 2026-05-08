@@ -63,6 +63,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">グローバル関数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmchasspiram">xmcHasSpiRam</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmcmalloc">xmcMalloc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmcfree">xmcFree</a></li>
 </ul>
@@ -137,6 +138,14 @@
 </section>
 <section id="id3">
 <h2>グローバル関数<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="xmchasspiram">
+<h3>xmcHasSpiRam<a class="headerlink" href="#xmchasspiram" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">xmcHasSpiRam</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>システムに SPIRAM (PSRAM) が搭載されているかどうかを返します。</p>
+<p>SPIRAM が利用可能であれば <cite>true</cite> を、利用不可であれば <cite>false</cite> を返します。</p>
+</section>
 <section id="xmcmalloc">
 <h3>xmcMalloc<a class="headerlink" href="#xmcmalloc" title="Link to this heading"></a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">xmcMalloc</span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">XmcHeapCap</span><span class="w"> </span><span class="n">caps</span><span class="p">);</span>

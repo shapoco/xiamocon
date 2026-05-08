@@ -42,18 +42,34 @@ ESP32S3 版では SPIFFS パーティションの領域を返します。
 書き込み・マップ
 ================================================================================
 
+xmc::flash::erase
+--------------------------------------------------------------------------------
+
+.. code-block:: cpp
+
+	XmcStatus xmc::flash::erase(uint32_t offset, size_t size);
+
+フラッシュメモリの指定領域を消去します。
+
+`offset` には消去開始オフセット [バイト] を指定します。
+`size` には消去するバイト数を指定します。実際にはセクターサイズに切り上げて消去されます。
+
+戻り値は `XmcStatus` で、成功時は `XMC_OK` です。
+
 xmc::flash::write
 --------------------------------------------------------------------------------
 
 .. code-block:: cpp
 
-	XmcStatus xmc::flash::write(uint32_t offset, const void *data, size_t length);
+	XmcStatus xmc::flash::write(uint32_t offset, const void *data, size_t size);
 
 フラッシュメモリにデータを書き込みます。
 
 `offset` には書き込み先のオフセット [バイト] を指定します。
 `data` には書き込むデータのポインタを指定します。
-`length` には書き込むバイト数を指定します。
+`size` には書き込むバイト数を指定します。
+
+書き込み前に対象領域を消去する場合は `erase()` を別途呼び出してください。
 
 戻り値は `XmcStatus` で、成功時は `XMC_OK` です。
 

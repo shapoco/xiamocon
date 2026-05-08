@@ -66,6 +66,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">書き込み・マップ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-flash-erase">xmc::flash::erase</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-flash-write">xmc::flash::write</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-flash-mmap">xmc::flash::mmap</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-flash-munmap">xmc::flash::munmap</a></li>
@@ -135,15 +136,26 @@
 </section>
 <section id="id3">
 <h2>書き込み・マップ<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<section id="xmc-flash-erase">
+<h3>xmc::flash::erase<a class="headerlink" href="#xmc-flash-erase" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::flash::erase</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>フラッシュメモリの指定領域を消去します。</p>
+<p><cite>offset</cite> には消去開始オフセット [バイト] を指定します。
+<cite>size</cite> には消去するバイト数を指定します。実際にはセクターサイズに切り上げて消去されます。</p>
+<p>戻り値は <cite>XmcStatus</cite> で、成功時は <cite>XMC_OK</cite> です。</p>
+</section>
 <section id="xmc-flash-write">
 <h3>xmc::flash::write<a class="headerlink" href="#xmc-flash-write" title="Link to this heading"></a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::flash::write</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">length</span><span class="p">);</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">XmcStatus</span><span class="w"> </span><span class="nf">xmc::flash::write</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">offset</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>フラッシュメモリにデータを書き込みます。</p>
 <p><cite>offset</cite> には書き込み先のオフセット [バイト] を指定します。
 <cite>data</cite> には書き込むデータのポインタを指定します。
-<cite>length</cite> には書き込むバイト数を指定します。</p>
+<cite>size</cite> には書き込むバイト数を指定します。</p>
+<p>書き込み前に対象領域を消去する場合は <cite>erase()</cite> を別途呼び出してください。</p>
 <p>戻り値は <cite>XmcStatus</cite> で、成功時は <cite>XMC_OK</cite> です。</p>
 </section>
 <section id="xmc-flash-mmap">

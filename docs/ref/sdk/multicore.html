@@ -66,6 +66,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id3">グローバル関数</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-startcore1">xmc::startCore1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xmc-stopcore1">xmc::stopCore1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmc-iscore1running">xmc::isCore1Running</a></li>
 </ul>
 </li>
 </ul>
@@ -139,6 +140,14 @@
 <p><cite>timeoutMs</cite> には停止完了を待つ最大時間 [ms] を指定します。
 停止要求後、タスクが終了しない場合はプラットフォーム実装に応じて core1 が強制的にリセットされます。</p>
 <p>戻り値は <cite>XmcStatus</cite> です。成功時は <cite>XMC_OK</cite>、停止失敗時はエラーコードが返されます。</p>
+</section>
+<section id="xmc-iscore1running">
+<h3>xmc::isCore1Running<a class="headerlink" href="#xmc-iscore1running" title="Link to this heading"></a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="nf">xmc::isCore1Running</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>core1 が現在タスクを実行中かどうかを返します。</p>
+<p>core1 が起動中であれば <cite>true</cite> を、停止中であれば <cite>false</cite> を返します。</p>
 </section>
 </section>
 </section>
